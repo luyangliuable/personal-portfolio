@@ -1,0 +1,3 @@
+cargo:rerun-if-changed=build/main.rs
+cargo:rustc-env=TYPENUM_BUILD_CONSTS=/Users/blackfish/personal_profile/server/target/debug/build/typenum-6914acc21e98b875/out/consts.rs
+cargo:rustc-env=TYPENUM_BUILD_OP=/Users/blackfish/personal_profile/server/target/debug/build/typenum-6914acc21e98b875/out/op.rs
