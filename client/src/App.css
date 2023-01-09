@@ -40,8 +40,46 @@
 
 .navbar {
     background: #1e1e1e;
+    z-index: 10;
+    display: flex;
+    justify-content: flex-start;
+    border-bottom: 1px solid #FFF;
+    box-shadow: 1px 1px 10px #EAD2A8;
+}
+
+.logo {
+    font-weight: 800;
+    background: linear-gradient(
+        90deg,
+        #00bfff 0%,
+        #897ed3 50%,
+        #00bfff 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-width: .1px;
+    -webkit-text-stroke-color: #1E1E1E;
+    background-clip: text;
+    text-fill-color: transparent;
+    background-size: 200% auto;
+    animation: animateBg 3s linear infinite;
+    font-size: 24px;
+}
+
+
+@keyframes animateBg {
+    0% {
+        background-position: 200% 0%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+.navbar-left {
     padding: 10px;
     display: flex;
+    width: 40vw;
     justify-content: space-around;
     flex-direction: row;
 }
@@ -58,3 +96,24 @@
 .navbar-item:hover {
     background: #888;
 }
+
+
+.hero {
+    display: flex;
+    padding: 2px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1vh;
+    background: #1e1e1e;
+    width: 90vw;
+    height: 88vh;
+    border-radius: 2px;
+    color: #FFF;
+}
+
+.landing-page-content {
+    display: flex;
+    justify-content: center;
+    height: 500vh;
+}
+
