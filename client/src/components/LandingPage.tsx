@@ -1,40 +1,72 @@
 import React, {Component} from 'react';
 import Hero from "./Hero";
+import AbcState from "../interface/AbcState";
 
-interface AbcState {
-    state: any
-};
 
-class LandingPage extends Component<{}, AbcState> {
+
+class LandingPage extends Component implements AbcState {
     constructor(props: any) {
         super(props);
-
-        this.state = {}
+        /* this.state = {}; */
     }
 
-    get NavBarHeight() {
+    get navBarHeight() : number {
         const element = document.querySelector('.navbar');
-        return window.getComputedStyle(element).height;
+        const navBarHeight = element.getBoundingClientRect().height;
+        return navBarHeight;
     }
 
-    componentDidUpdate() {
-        if (this.state.scrolled > this.NavBarHeight) {
-            console.log("Detach.");
-        }
+    detachNavBar(): void {
+        const element = document.querySelector('.navbar');
+        element.classList.add("detached");
     }
 
-    componentDidMount() {
+    makeContentTopEqualNavBarHeight(): void {
+        const top = this.navBarHeight;
+        const el = document.getElementById("landing-page-content");
+        el.style.top = `${top}px`;
+    }
+
+    attachNavBar(): void {
+        const element = document.querySelector('.navbar');
+        element.classList.remove("detached");
+    }
+
+    updateScrolledProgress(progress: number): void {
+        /* const element = document.querySelector(".scroll-progress"); */
+        const element = document.getElementById('scroll-progress');
+        element.style.width = `${progress*100}vw`;
+    }
+
+    componentDidUpdate(): void {
+        /* if (this.state.scrolled > this.navBarHeight) {
+         *     console.log("Detach.");
+         * } */
+    }
+
+    componentDidMount(): void {
+        this.makeContentTopEqualNavBarHeight();
         window.addEventListener("scroll", () => {
             const scrolled = window.scrollY;
-            console.log(`Scrolled ${scrolled}.`);
-            console.log(this.NavBarHeight);
+
+            if ( scrolled > this.navBarHeight ) {
+                this.detachNavBar();
+            } else {
+                this.attachNavBar();
+            }
+
+            const element = document.querySelector("#landing-page-content");
+            const pageHeight = element.getBoundingClientRect().height - window.innerHeight;
+
+            this.updateScrolledProgress(scrolled/pageHeight);
+
         });
     }
 
-    render() {
+    render(): React.ReactElement<any, any> {
         return (
             <>
-                <div className="landing-page-content">
+                <div id="landing-page-content">
                     <Hero />
                 </div>
             </>

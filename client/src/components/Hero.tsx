@@ -25,6 +25,7 @@ class Hero extends Component<{}, AbcState> {
     render(): any {
         return (
             <div className="hero">
+                <div className="hero-accordion-button hero-accordion-left" />
                 <div style={{textAlign: "left"}}>
                     <ul>
                         <h1>
@@ -45,7 +46,7 @@ class Hero extends Component<{}, AbcState> {
                         🤔 I’m looking for help with building decentralised systems for startups
                     </ul>
                 </div>
-
+                <div className="hero-accordion-button hero-accordion-right"  />
             </div>
         );
     }
