@@ -1,18 +1,36 @@
 import React, {Component, useRef} from 'react';
 
-type Props = {
+type iProps = {
     name?: string,
     current?: string,
     [category: string]: any
 }
 
-interface AbcState {}
+type iState = {
+    mainContent: {
+        heading: string,
+        items: string[]
+    }
+}
+
+/* interface AbcState {}; */
 
 
-class Hero extends Component<{}, AbcState> {
+class Hero extends Component<iProps, iState> {
 
-    constructor(props: Props) {
+    constructor(props: iProps) {
         super(props);
+        this.state = {
+            mainContent: {
+                heading: "Hi There 👋",
+                items: [
+                    "🔭 I’m currently working on a personal profile website.",
+                    "🌱 I’m currently learning mlops and cybersecurity out of interest.",
+                    "👯 I’m looking to collaborate on building a start up.",
+                    "🤔 I’m looking for people to talk to about programming."
+                ]
+            }
+        }
     }
 
 
@@ -20,33 +38,44 @@ class Hero extends Component<{}, AbcState> {
         window.addEventListener("scroll", () => {
             console.log("scrolled");
         });
-    }
+}
 
     render(): any {
         return (
-            <div className="hero">
-                <div className="hero-accordion-button hero-accordion-left" />
-                <div style={{textAlign: "left"}}>
-                    <ul>
-                        <h1>
-                            Hi There 👋
-                        </h1>
-                    </ul>
-                    <ul>
-                        🔭 I’m currently working on a personal 3D profile website with threes.js, NLP for comments inside open source projects
-                    </ul>
-                    <ul>
-                        🌱 I’m currently learning blockchain algorithms and looking into web3.0
-                    </ul>
-                    <ul>
-                        👯 I’m looking to collaborate on building a start up
-                    </ul>
+            <div className="landing-page-content">
+                <div className="home-container">
+                    {/* <div className="hero-accordion-button hero-accordion-left" /> */}
+                    <div style={{textAlign: "left"}}>
+                        <ul>
+                            <h1>
+                                {(this.state && this.state.mainContent ) ? this.state.mainContent.heading: ""}
+                            </h1>
+                        </ul>
 
-                    <ul>
-                        🤔 I’m looking for help with building decentralised systems for startups
-                    </ul>
+                        {
+                            this.state.mainContent.items.map((item: string, index: number) => {
+                                return (
+                                    <ul key={index}>
+                                        <li>{item}</li>
+                                    </ul>
+                                )
+                            })
+                        }
+                    </div>
+                    {/* <div className="hero-accordion-button hero-accordion-right"  /> */}
                 </div>
-                <div className="hero-accordion-button hero-accordion-right"  />
+
+                <div className="home-container blogs">
+                    <div style={{textAlign: "left"}}>
+                        <h1>Blogs</h1>
+                    </div>
+                </div>
+
+                <div className="home-container Experience">
+                    <div style={{textAlign: "left"}}>
+                        <h1>My Experiences</h1>
+                    </div>
+                </div>
             </div>
         );
     }

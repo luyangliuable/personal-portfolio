@@ -136,25 +136,31 @@
 }
 
 
-.hero {
+.home-container {
     display: flex;
-    padding: 2px;
+    padding: 10px;
     justify-content: space-between;
-    align-items: center;
-    margin-top: 1vh;
-    background: #1e1e1e;
+    align-items: flex-start;
+    background: #F9F9F9;
+    border: 1px solid #EEE;
+    box-shadow: 1px 1px 1px #EEE;
     width: 90vw;
-    height: 88vh;
-    border-radius: 2px;
-    color: #FFF;
+    height: 40vh;
+    border-radius: 14px;
+    /* color: #FFF; */
 }
 
-#landing-page-content {
+.landing-page-content {
     display: flex;
     justify-content: center;
-    height: 500vh;
     position: absolute;
     width: 100%;
+    align-items: center;
+    position: absolute;
+    height: 180vh;
+    flex-direction: column;
+    justify-content: space-around
+
 }
 
 

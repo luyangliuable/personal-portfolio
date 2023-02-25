@@ -55,7 +55,7 @@ class LandingPage extends Component implements AbcState {
                 this.attachNavBar();
             }
 
-            const element = document.querySelector("#landing-page-content");
+            const element = document.querySelector(".landing-page-content");
             const pageHeight = element.getBoundingClientRect().height - window.innerHeight;
 
             this.updateScrolledProgress(scrolled/pageHeight);
