@@ -56,7 +56,7 @@ class Hero extends Component<iProps, iState> {
                             this.state.mainContent.items.map((item: string, index: number) => {
                                 return (
                                     <ul key={index}>
-                                        <li>{item}</li>
+                                        <p className="light-black-text">{item}</p>
                                     </ul>
                                 )
                             })
