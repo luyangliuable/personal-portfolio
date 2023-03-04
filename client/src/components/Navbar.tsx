@@ -1,4 +1,5 @@
-import React, {Component, useRef} from 'react';
+import React, { Component, useRef } from 'react';
+import { NavLink } from 'react-router-dom';
 
 type Props = {
     name?: string,
@@ -40,10 +41,14 @@ class NavBar extends Component<{}, AbcState> {
                 <div className="navbar-content">
                     <h1 className="logo" style={{marginLeft: "10px"}}>{this.state.name}</h1>
                     <div className="navbar-left">
-                        <div className="navbar-item" id="home">Home</div>
+                        <NavLink to="">
+                            <div className="navbar-item" id="home">Home</div>
+                        </NavLink>
                         <div className="navbar-item" id="Experience">Experience</div>
                         <div className="navbar-item" id="Projects">Projects</div>
-                        <div className="navbar-item" id="Blog">Blog</div>
+                        <NavLink to="blog">
+                            <div className="navbar-item" id="Blog">Blog</div>
+                        </NavLink>
                     </div>
                 </div>
                 <div id="scroll-progress"></div>

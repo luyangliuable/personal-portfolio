@@ -138,7 +138,7 @@
 
 .home-container {
     display: flex;
-    padding: 10px;
+    padding: 3vw;
     justify-content: space-between;
     align-items: flex-start;
     background: #F9F9F9;
@@ -191,4 +191,8 @@
 
 .hero-accordion-right {
     border-radius: 2vw 0vw 0vw 2vw;
+}
+
+.light-black-text {
+    color: #333;
 }
