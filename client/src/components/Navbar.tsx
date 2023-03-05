@@ -4,12 +4,12 @@ import { NavLink } from 'react-router-dom';
 type Props = {
     name?: string,
     current?: string,
-    [category: string]: any
+    /* [category: string]: any */
 }
 
 interface AbcState {
     name: string,
-    current: string
+    links: {name: string, to: string}[],
     render?: () => React.ReactElement<any, any>,
 }
 
@@ -19,20 +19,69 @@ class NavBar extends Component<{}, AbcState> {
     constructor(props: Props) {
         super(props);
         this.state = {
+            links: [{name: 'Home', to: '/'}, {name: 'Blog', to: '/blog'}, {name: 'Project', to: '/project'}],
             name: "Luyang's Portfolio",
-            current: "home"
         };
     }
 
-    componentDidMount() : void {
-        document.getElementById(this.state.current).style.background="#897ed3";
+    attachNavBar(): void {
+        const element = document.querySelector('.navbar');
+        element.classList.remove("detached");
+    }
 
-        window.addEventListener("scrolled", () => {
-            const scrolled = window.scrollY;
-        });
+
+    detachNavBar(): void {
+        const element = document.querySelector('.navbar');
+        element.classList.add("detached");
+    }
+
+
+    get navBarHeight() : number {
+        const element = document.querySelector('.navbar');
+        const navBarHeight = element.getBoundingClientRect().height;
+        return navBarHeight;
+    }
+
+
+    updateScrolledProgress(progress: number): void {
+        /* const element = document.querySelector(".scroll-progress"); */
+        const element = document.getElementById('scroll-progress');
+        element.style.width = `${progress*100}vw`;
+    }
+
+    componentDidMount() : void {
+        /* document.getElementById(this.state.current).style.background="#897ed3"; */
+
+        this.makeContentTopEqualNavBarHeight();
+        this.listenScrollProgress();
     }
 
     componentDidUpdate() : void {
+    }
+
+
+    makeContentTopEqualNavBarHeight(): void {
+        const top = this.navBarHeight;
+        const el = document.getElementById("landing-page-content");
+        el.style.top = `${top}px`;
+    }
+
+    listenScrollProgress() {
+        window.addEventListener("scroll", () => {
+            const scrolled = window.scrollY;
+
+            if ( scrolled > this.navBarHeight ) {
+                this.detachNavBar();
+            } else {
+                this.attachNavBar();
+            }
+
+            const element = document.querySelector(".landing-page-content");
+            const pageHeight = element.getBoundingClientRect().height - window.innerHeight;
+
+            this.updateScrolledProgress(scrolled/pageHeight);
+
+        });
     }
 
     render(): React.ReactElement<any, any> {
@@ -41,14 +90,22 @@ class NavBar extends Component<{}, AbcState> {
                 <div className="navbar-content">
                     <h1 className="logo" style={{marginLeft: "10px"}}>{this.state.name}</h1>
                     <div className="navbar-left">
-                        <NavLink to="">
+                        {this.state.links.map((link) => {
+                            return (
+                                <NavLink to={link.to} className={({ isActive }) => ["navbar-item", isActive ? "active-link" : null,].filter(Boolean).join(" ")} key={link.name}>
+                                    {link.name}
+                                </NavLink>
+                            );
+                        })}
+
+                        {/* <NavLink to="">
                             <div className="navbar-item" id="home">Home</div>
-                        </NavLink>
-                        <div className="navbar-item" id="Experience">Experience</div>
-                        <div className="navbar-item" id="Projects">Projects</div>
-                        <NavLink to="blog">
+                            </NavLink>
+                            <div className="navbar-item" id="Experience">Experience</div>
+                            <div className="navbar-item" id="Projects">Projects</div>
+                            <NavLink to="blog">
                             <div className="navbar-item" id="Blog">Blog</div>
-                        </NavLink>
+                            </NavLink> */}
                     </div>
                 </div>
                 <div id="scroll-progress"></div>
