@@ -1,47 +1,63 @@
+@font-face {
+    font-family: 'Fira Code';
+    src: url('fonts/FiraCode/FiraCode-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Proxima Nova';
+    src: url('fonts/ProximaNova/ProximaNova-Regular.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'Proxima Nova Bold';
+    src: url('fonts/ProximaNova/ProximaNova-Bold.otf') format('opentype');
+}
+
 :root {
     --slightly-black: #1e1e1e
 }
 
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+    height: 40vmin;
+    pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .App-link {
-  color: #61dafb;
+    color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .navbar {
+    font-family: 'Proxima Nova';
     background: var(--slightly-black);
     z-index: 10;
     transition: background .5s ease-in-out, box-shadow .5s ease-in-out;
@@ -59,6 +75,7 @@
 .detached {
     position: fixed;
     backdrop-filter: blur(18px);
+    /* background: rgba(50,50,50, .8); */
     background: rgba(210,210,210,.5);
     box-shadow: 1px 1px 3px #888;
 }
@@ -67,6 +84,7 @@
 .detached .navbar-content .navbar-left .navbar-item {
     color: black;
 }
+
 
 .logo {
     font-weight: 800;
@@ -85,6 +103,7 @@
     background-size: 200% auto;
     animation: animateBg 3s linear infinite;
     font-size: 24px;
+    font-family: 'Proxima Nova Bold', monospace;
 }
 
 .detached .navbar-content .logo {
@@ -123,6 +142,7 @@
 }
 
 .navbar-item {
+    text-decoration: none;
     cursor: pointer;
     color: #FFF;
     padding: 10px;
@@ -151,6 +171,7 @@
 }
 
 .landing-page-content {
+    font-family: 'Proxima Nova';
     display: flex;
     justify-content: center;
     position: absolute;
@@ -159,10 +180,15 @@
     position: absolute;
     height: 180vh;
     flex-direction: column;
-    justify-content: space-around
-
+    justify-content: space-around;
+    font-family: "Proxima Nova";
 }
 
+.blog-content {
+    padding: 8vh 14vw 8vh 14vw;
+    font-family: "Proxima Nova";
+    text-align: left;
+}
 
 #scroll-progress {
     background: #00bfff;
@@ -196,3 +222,9 @@
 .light-black-text {
     color: #333;
 }
+
+.active-link {
+    background: #897ed3;
+}
+
+
