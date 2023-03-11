@@ -184,10 +184,37 @@
     font-family: "Proxima Nova";
 }
 
-.blog-content {
+.blog-container {
     padding: 8vh 14vw 8vh 14vw;
     font-family: "Proxima Nova";
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.blog-content {
+    text-align: center;
+    margin-top: 1vh;
+    padding: 2vh 2vw 2vh 2vw;
+    border-radius: .5vh;
+    width: 70%;
+    background: #F1F1F1;
+    text-decoration: none;
+    color: #000;
+    transition: background .3s ease-in;
+}
+
+.blog-content:hover {
+    text-align: center;
+    margin-top: 1vh;
+    padding: 2vh 2vw 2vh 2vw;
+    border-radius: .5vh;
+    width: 70%;
+    background: #897ed3;
+    text-decoration: none;
+    color: #000;
 }
 
 #scroll-progress {
