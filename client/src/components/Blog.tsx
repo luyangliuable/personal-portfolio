@@ -58,12 +58,14 @@ class Blog extends Component<{}, AbcState> {
 
     render() {
         return (
-            <div className="blog-content">
+            <div className="blog-container">
                 {
                     this.state.content.map((content) => {
                         return (
-                            <h3><a href={content.url}>{content.heading}</a></h3>)
-                    })
+                            <a className="blog-content" href={content.url}>
+                                    {content.heading}
+                            </a>
+                    )})
                 }
             </div>
         )
