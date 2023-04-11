@@ -9,7 +9,7 @@ type Props = {
 
 interface AbcState {
     name: string,
-    links: {name: string, to: string}[],
+    links: { name: string, to: string }[],
     render?: () => React.ReactElement<any, any>,
 }
 
@@ -19,7 +19,7 @@ class NavBar extends Component<{}, AbcState> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            links: [{name: 'Home', to: '/'}, {name: 'Blog', to: '/blog'}, {name: 'Project', to: '/project'}],
+            links: [{ name: 'Home', to: '/' }, { name: 'Blog', to: '/blog' }, { name: 'Project', to: '/project' }],
             name: "Luyang's Portfolio",
         };
     }
@@ -36,7 +36,7 @@ class NavBar extends Component<{}, AbcState> {
     }
 
 
-    get navBarHeight() : number {
+    get navBarHeight(): number {
         const element = document.querySelector('.navbar');
         const navBarHeight = element.getBoundingClientRect().height;
         return navBarHeight;
@@ -46,17 +46,17 @@ class NavBar extends Component<{}, AbcState> {
     updateScrolledProgress(progress: number): void {
         /* const element = document.querySelector(".scroll-progress"); */
         const element = document.getElementById('scroll-progress');
-        element.style.width = `${progress*100}vw`;
+        element.style.width = `${progress * 100}vw`;
     }
 
-    componentDidMount() : void {
+    componentDidMount(): void {
         /* document.getElementById(this.state.current).style.background="#897ed3"; */
 
         this.makeContentTopEqualNavBarHeight();
         this.listenScrollProgress();
     }
 
-    componentDidUpdate() : void {
+    componentDidUpdate(): void {
     }
 
 
@@ -70,7 +70,7 @@ class NavBar extends Component<{}, AbcState> {
         window.addEventListener("scroll", () => {
             const scrolled = window.scrollY;
 
-            if ( scrolled > this.navBarHeight ) {
+            if (scrolled > this.navBarHeight) {
                 this.detachNavBar();
             } else {
                 this.attachNavBar();
@@ -79,7 +79,7 @@ class NavBar extends Component<{}, AbcState> {
             const element = document.querySelector(".landing-page-content");
             const pageHeight = element.getBoundingClientRect().height - window.innerHeight;
 
-            this.updateScrolledProgress(scrolled/pageHeight);
+            this.updateScrolledProgress(scrolled / pageHeight);
 
         });
     }
@@ -88,15 +88,17 @@ class NavBar extends Component<{}, AbcState> {
         return (
             <div className="navbar">
                 <div className="navbar-content">
-                    <h1 className="logo" style={{marginLeft: "10px"}}>{this.state.name}</h1>
+                    <h1 className="logo" style={{ marginLeft: "10px" }}>{this.state.name}</h1>
                     <div className="navbar-left">
-                        {this.state.links.map((link) => {
-                            return (
-                                <NavLink to={link.to} className={({ isActive }) => ["navbar-item", isActive ? "active-link" : null,].filter(Boolean).join(" ")} key={link.name}>
-                                    {link.name}
-                                </NavLink>
-                            );
-                        })}
+                        {
+                            this.state.links.map((link) => {
+                                return (
+                                    <NavLink to={link.to} className={({ isActive }) => ["navbar-item", isActive ? "active-link" : null,].filter(Boolean).join(" ")} key={link.name}>
+                                        {link.name}
+                                    </NavLink>
+                                );
+                            })
+                        }
 
                         {/* <NavLink to="">
                             <div className="navbar-item" id="home">Home</div>
