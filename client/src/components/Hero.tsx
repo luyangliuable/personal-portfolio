@@ -42,40 +42,26 @@ class Hero extends Component<iProps, iState> {
 
     render(): any {
         return (
-            <div className="landing-page-content">
-                <div className="home-container">
-                    {/* <div className="hero-accordion-button hero-accordion-left" /> */}
-                    <div style={{textAlign: "left"}}>
-                        <ul>
-                            <h1>
-                                {(this.state && this.state.mainContent ) ? this.state.mainContent.heading: ""}
-                            </h1>
-                        </ul>
+            <div className="home-container">
+                {/* <div className="hero-accordion-button hero-accordion-left" /> */}
+                <div style={{textAlign: "left"}}>
+                    <ul>
+                        <h1>
+                            {(this.state && this.state.mainContent ) ? this.state.mainContent.heading: ""}
+                        </h1>
+                    </ul>
 
-                        {
-                            this.state.mainContent.items.map((item: string, index: number) => {
-                                return (
-                                    <ul key={index}>
-                                        <p className="light-black-text">{item}</p>
-                                    </ul>
-                                )
-                            })
-                        }
-                    </div>
-                    {/* <div className="hero-accordion-button hero-accordion-right"  /> */}
+                    {
+                        this.state.mainContent.items.map((item: string, index: number) => {
+                            return (
+                                <ul key={index}>
+                                    <p className="light-black-text">{item}</p>
+                                </ul>
+                            )
+                        })
+                    }
                 </div>
-
-                <div className="home-container blogs">
-                    <div style={{textAlign: "left"}}>
-                        <h1>Blogs</h1>
-                    </div>
-                </div>
-
-                <div className="home-container Experience">
-                    <div style={{textAlign: "left"}}>
-                        <h1>My Experiences</h1>
-                    </div>
-                </div>
+                {/* <div className="hero-accordion-button hero-accordion-right"  /> */}
             </div>
         );
     }

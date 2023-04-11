@@ -34,6 +34,8 @@ type blogContent = {
 class Blog extends Component<{}, AbcState> {
     constructor(props: {}) {
         super(props);
+
+
         this.state = {
             content: [
                 {
@@ -56,6 +58,9 @@ class Blog extends Component<{}, AbcState> {
         }
     }
 
+    componentDidMount() {
+    }
+
     render() {
         return (
             <div className="blog-container">
@@ -63,9 +68,10 @@ class Blog extends Component<{}, AbcState> {
                     this.state.content.map((content) => {
                         return (
                             <a className="blog-content" href={content.url}>
-                                    {content.heading}
+                                {content.heading}
                             </a>
-                    )})
+                        )
+                    })
                 }
             </div>
         )
