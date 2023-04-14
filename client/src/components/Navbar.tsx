@@ -52,7 +52,7 @@ class NavBar extends Component<{}, AbcState> {
     componentDidMount(): void {
         /* document.getElementById(this.state.current).style.background="#897ed3"; */
 
-        this.makeContentTopEqualNavBarHeight();
+        /* this.makeContentTopEqualNavBarHeight(); */
         this.listenScrollProgress();
     }
 
@@ -61,6 +61,8 @@ class NavBar extends Component<{}, AbcState> {
 
 
     makeContentTopEqualNavBarHeight(): void {
+        // TODO this method does not work
+
         const top = this.navBarHeight;
         const el = document.getElementById("landing-page-content");
         el.style.top = `${top}px`;
@@ -108,6 +110,7 @@ class NavBar extends Component<{}, AbcState> {
                             <NavLink to="blog">
                             <div className="navbar-item" id="Blog">Blog</div>
                             </NavLink> */}
+
                     </div>
                 </div>
                 <div id="scroll-progress"></div>
