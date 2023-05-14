@@ -1,9 +1,7 @@
 import React, { Component, useRef } from 'react';
-import { NavLink } from 'react-router-dom';
-import { createStore } from 'redux';
+import './Blogs.css'
 
 const initialState = '';
-
 const blogManager = (state: string | undefined = initialState, action: blogManagerActionType) => {
     switch (action.type) {
         case 'get':
@@ -31,34 +29,24 @@ type blogContent = {
 }
 
 
-class Blog extends Component<{}, AbcState> {
+class Blogs extends Component<{}, AbcState> {
     constructor(props: {}) {
         super(props);
 
-
         this.state = {
             content: [
-                {
-                    heading: "Blog 1",
-                    url: "http://www.google.com"
-                },
-                {
-                    heading: "Blog 2",
-                    url: "http://www.google.com"
-                },
-                {
-                    heading: "Blog 3",
-                    url: "http://www.google.com"
-                },
-                {
-                    heading: "Blog 4",
-                    url: "http://www.google.com"
-                },
             ]
         }
     }
 
     componentDidMount() {
+        fetch("./Blogs.json")
+            .then(response => response.)
+            .then(data => {
+                console.log(JSON.stringify( data ));
+                return data;
+            });
+
     }
 
     render() {
@@ -78,4 +66,4 @@ class Blog extends Component<{}, AbcState> {
     }
 }
 
-export default Blog;
+export default Blogs;

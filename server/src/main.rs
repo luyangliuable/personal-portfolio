@@ -1,16 +1,21 @@
 #[macro_use] extern crate rocket;
 
+mod api; 
+mod models;
+mod repository;
+
+
 #[get("/")]
 fn index() -> &'static str {
-    "Hello, world!"
+    "Live!"
 }
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build().mount("/", routes![index])
-}
+    println!("Starting server...");
 
-#[get("/hello/<name>")]
-fn hello(name: String) -> String {
-    return format!("Hello {}", name);
+    rocket::build()
+    // .mount("/", routes!([index]))
+        .mount("/", routes![index])
+        .mount("/", routes![api::blogs::get_blog_posts])
 }
