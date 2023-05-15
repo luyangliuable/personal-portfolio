@@ -1,26 +1,10 @@
 use rocket::serde::{json::Json, Serialize};
+use mongodb::bson::oid::ObjectId;
+use rocket::{http::Status, State};
+use crate::{models::blog_model::BlogPost, repository::mongodb_repo::MongoRepo};
+use mongodb::results::InsertOneResult;
 
-// #[serde(crate="rocket::serde")]
-
-/// A blog post.
-#[derive(Serialize, Debug)]
-pub struct BlogPost {
-    pub heading:  String,
-    pub body: Vec<String>
-}
-
-// pub struct CustomStatus<T: Responder<'static>>(Status, T);
-
-// impl<'r, T: Responder<'r>> Responder<'r> for CustomStatus<T> {
-//     fn respond_to(self, req: &'r Request) -> response::Result<'r> {
-//         Response::build_from(self.1.respond_to(req)?)
-//             .status(self.0)
-//             .ok()
-//     }
-// }
-
-
-#[get("/blogs")]
+#[get("/blogs/test")]
 pub fn get_blog_posts() -> Json<BlogPost> {
     /// Returns a list of blog posts
     ///
@@ -30,6 +14,7 @@ pub fn get_blog_posts() -> Json<BlogPost> {
     /// ```
 
     let blog_post = BlogPost {
+        id: Some(ObjectId::new()),
         heading: "Hello World".to_string(),
         body: vec!["This is a blog post".to_string()]
     };
@@ -37,3 +22,21 @@ pub fn get_blog_posts() -> Json<BlogPost> {
     Json(blog_post)
 }
 
+#[post("/blogs", data = "<new_blog>")]
+pub fn create_blog(
+    db: &State<MongoRepo>,
+    new_blog: Json<BlogPost>
+) -> Result<Json<InsertOneResult>, Status> {
+    let data = BlogPost {
+        id: None,
+        heading: new_blog.heading.to_owned(),
+        body: new_blog.body.to_owned(),
+    };
+
+    let user_detail = db.create_blog(data);
+
+    match user_detail {
+        Ok(user) => Ok(Json(user)),
+        Err(_) => Err(Status::InternalServerError),
+    }
+}
