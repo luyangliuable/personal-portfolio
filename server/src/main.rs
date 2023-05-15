@@ -1,16 +1,23 @@
 #[macro_use] extern crate rocket;
 
+mod api; 
+mod models;
+mod repository;
+use repository::mongodb_repo::MongoRepo;
+
 #[get("/")]
 fn index() -> &'static str {
-    "Hello, world!"
+    "Live!"
 }
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build().mount("/", routes![index])
-}
+    println!("Starting server...");
+    let db = MongoRepo::init();
 
-#[get("/hello/<name>")]
-fn hello(name: String) -> String {
-    return format!("Hello {}", name);
+    rocket::build()
+        .manage(db)
+        .mount("/", routes![index])
+        .mount("/", routes![api::blogs::get_blog_posts])
+        .mount("/", routes![api::blogs::create_blog])
 }

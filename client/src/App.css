@@ -165,7 +165,9 @@
     border: 1px solid #EEE;
     box-shadow: 1px 1px 1px #EEE;
     width: 90vw;
-    height: 40vh;
+    margin-top: 3vw;
+    margin-bottom: 3vw;
+    /* height: 40vh; */
     border-radius: 14px;
     /* color: #FFF; */
 }
@@ -178,42 +180,9 @@
     align-items: center;
     position: absolute;
     width: 100%;
-    height: 180vh;
+    /* height: 180vh; */
     flex-direction: column;
     font-family: "Proxima Nova";
-}
-
-.blog-container {
-    padding: 8vh 14vw 8vh 14vw;
-    font-family: "Proxima Nova";
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.blog-content {
-    text-align: center;
-    margin-top: 1vh;
-    padding: 2vh 2vw 2vh 2vw;
-    border-radius: .5vh;
-    width: 70%;
-    background: #F1F1F1;
-    text-decoration: none;
-    color: #000;
-    transition: background .3s ease-in;
-}
-
-.blog-content:hover {
-    text-align: center;
-    margin-top: 1vh;
-    padding: 2vh 2vw 2vh 2vw;
-    border-radius: .5vh;
-    width: 70%;
-    background: #897ed3;
-    text-decoration: none;
-    color: #000;
 }
 
 #scroll-progress {

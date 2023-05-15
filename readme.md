@@ -14,3 +14,20 @@
   * [ ] Make it compatible with phone screen
   * [ ] Make it compatible with old browsers
   * [ ] Deploy
+
+
+## Development
+### Frontend
+
+```sh
+npm i
+npm start
+```
+
+### Backend
+
+```sh
+rustup override set nightly
+cargo build
+cargo run
+```
