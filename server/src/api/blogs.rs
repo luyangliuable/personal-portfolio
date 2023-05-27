@@ -1,18 +1,11 @@
-use rocket::serde::{json::Json, Serialize};
-use mongodb::bson::oid::ObjectId;
+use rocket::serde::json::Json;
+use mongodb::bson::{oid::ObjectId};
 use rocket::{http::Status, State};
 use crate::{models::blog_model::BlogPost, repository::mongodb_repo::MongoRepo};
 use mongodb::results::InsertOneResult;
 
 #[get("/blogs/test")]
 pub fn get_blog_posts() -> Json<BlogPost> {
-    /// Returns a list of blog posts
-    ///
-    /// # Arguments
-    ///
-    /// # Examples
-    /// ```
-
     let blog_post = BlogPost {
         id: Some(ObjectId::new()),
         heading: "Hello World".to_string(),
@@ -37,6 +30,16 @@ pub fn create_blog(
 
     match user_detail {
         Ok(user) => Ok(Json(user)),
+        Err(_) => Err(Status::InternalServerError),
+    }
+}
+
+#[get("/blogs")]
+pub fn get_blog(db: &State<MongoRepo>) -> Result<Json<Vec<BlogPost>>, Status> {
+    let blog = db.get_blogs();
+
+    match blog {
+        Ok(blog) => Ok(Json(blog)),
         Err(_) => Err(Status::InternalServerError),
     }
 }
