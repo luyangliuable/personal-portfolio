@@ -1,17 +1,17 @@
-use std::env;
 extern crate dotenv;
+use std::{env, sync::mpsc::RecvError};
 use dotenv::dotenv;
-
+use crate::models::blog_model::BlogPost;
 use mongodb::{
-    bson::{extjson::de::Error, oid::ObjectId, doc}, //modify here
+    bson::{Document, extjson::de::Error, oid::ObjectId, doc}, //modify here
     results::InsertOneResult,
     sync::{Client, Collection},
 };
 
-use crate::models::blog_model::BlogPost;
 
 pub struct MongoRepo {
-    col: Collection<BlogPost>,
+    insert_col: Collection<BlogPost>,
+    get_col: Collection<BlogPost>
 }
 
 impl MongoRepo {
@@ -25,8 +25,9 @@ impl MongoRepo {
 
         let client = Client::with_uri_str(uri).unwrap();
         let db = client.database("rustDB");
-        let col: Collection<BlogPost> = db.collection("BlogPost");
-        MongoRepo { col }
+        let get_col: Collection<BlogPost> = db.collection("BlogPost");
+        let insert_col: Collection<BlogPost> = db.collection("BlogPost");
+        MongoRepo { insert_col, get_col }
     }
 
     pub fn create_blog(&self, new_blog: BlogPost) -> Result<InsertOneResult, Error> {
@@ -38,7 +39,7 @@ impl MongoRepo {
         };
 
         let blog_post = self
-            .col
+            .insert_col
             .insert_one(new_doc, None)
             .ok()
             .expect("Error creating blog post");
@@ -46,15 +47,36 @@ impl MongoRepo {
         Ok(blog_post)
     }
 
-    pub fn get_blog(&self, id: &String) -> Result<BlogPost, Error> {
-        let obj_id = ObjectId::parse_str(id).unwrap();
-        let filter = doc! {"_id": obj_id};
-        let user_detail = self
-            .col
-            .find_one(filter, None)
+    pub fn get_blogs(&self) -> Result<Vec<BlogPost>, Error> {
+        let filter = doc! {};
+
+        let mut results: Vec<BlogPost> = Vec::new();
+
+        let cursor = self
+            .get_col
+            .find(filter, None)
             .ok()
-            .expect("Error getting user's detail");
-        Ok(user_detail.unwrap())
+            .expect("Error getting blogs");
+
+        for result in cursor {
+            // Need to convert the document to a BlogPost before adding it to the results vector
+            match result {
+                Ok(document) => {
+                    let blog_post: BlogPost = BlogPost {
+                        id: document.id,
+                        heading: document.heading,
+                        body: document.body
+                    };
+
+                    results.push(blog_post);
+                }
+                Err(e) => {
+                    println!("Error getting blog post");
+                }
+            }
+        };
+
+        Ok(results)
     }
 }
 

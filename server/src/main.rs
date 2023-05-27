@@ -20,4 +20,5 @@ fn rocket() -> _ {
         .mount("/", routes![index])
         .mount("/", routes![api::blogs::get_blog_posts])
         .mount("/", routes![api::blogs::create_blog])
+        .mount("/", routes![api::blogs::get_blog])
 }
