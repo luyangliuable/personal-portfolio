@@ -19,7 +19,11 @@ class NavBar extends Component<{}, AbcState> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            links: [{ name: 'Home', to: '/' }, { name: 'Blog', to: '/blog' }, { name: 'Project', to: '/project' }],
+            links: [
+                { name: 'Home', to: '/' },
+                { name: 'Blog', to: '/blog' },
+                { name: 'Projects', to: '/project' }
+            ],
             name: "Luyang's Portfolio",
         };
     }
@@ -101,15 +105,6 @@ class NavBar extends Component<{}, AbcState> {
                                 );
                             })
                         }
-
-                        {/* <NavLink to="">
-                            <div className="navbar-item" id="home">Home</div>
-                            </NavLink>
-                            <div className="navbar-item" id="Experience">Experience</div>
-                            <div className="navbar-item" id="Projects">Projects</div>
-                            <NavLink to="blog">
-                            <div className="navbar-item" id="Blog">Blog</div>
-                            </NavLink> */}
 
                     </div>
                 </div>
