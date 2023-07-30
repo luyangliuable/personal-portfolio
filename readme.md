@@ -10,10 +10,12 @@
 
 ## Roadmap
   * [x] Landing page contain about me
-  * [ ] Make a blog
+  * [x] Make a blog
   * [ ] Make it compatible with phone screen
   * [ ] Make it compatible with old browsers
   * [ ] Deploy
+  * [ ] Add coding tools (hex to rgba, shell commands, online emacs?)
+  * [ ] Add my codepens for css tricks
 
 
 ## Development

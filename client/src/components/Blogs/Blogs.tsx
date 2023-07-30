@@ -1,5 +1,6 @@
 import React, { Component, useRef } from 'react';
 import './Blogs.css'
+import BlogRepository from '../../repositories/BlogRepository';
 
 const initialState = '';
 const blogManager = (state: string | undefined = initialState, action: blogManagerActionType) => {
@@ -24,6 +25,7 @@ type AbcState = {
 }
 
 type blogContent = {
+    body: string[],
     heading: string,
     url: string,
 }
@@ -40,24 +42,32 @@ class Blogs extends Component<{}, AbcState> {
     }
 
     componentDidMount() {
-        fetch("./Blogs.json")
-            .then(response => response.)
-            .then(data => {
-                console.log(JSON.stringify( data ));
-                return data;
-            });
+        BlogRepository.getBlogList().then((response) => {
+            console.log(response);
+            this.setState({
+                content: response
+            })
+        })
+    }
 
+    truncateTextBody(text: string) {
+        return text && text.length > 100
+            ? text.substring(0, 100) + "..."
+            : text;
     }
 
     render() {
         return (
             <div className="blog-container">
                 {
-                    this.state.content.map((content) => {
+                    this.state.content.map((content, idx) => {
                         return (
-                            <a className="blog-content" href={content.url}>
-                                {content.heading}
-                            </a>
+                            <div className="blog-content" key={idx}>
+                                <h3>{content.heading}</h3>
+                                <p>
+                                    {this.truncateTextBody(content.body[1])}
+                                </p>
+                            </div>
                         )
                     })
                 }
