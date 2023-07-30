@@ -1,0 +1,46 @@
+:root {
+    --bg: #1a1e2d;
+    --green: #a5ea9b;
+    --pink: #ff61d8;
+    --blue: #569cfa;
+    --orange: #ffcc81;
+    --cyan: #7ed1e2;
+}
+
+.coding-cat-container svg {
+    height: 100%;
+    width: 100%;
+    overflow: visible;
+}
+
+#coding-cat {
+    fill: var(--bg);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 4;
+}
+#coding-cat .laptop-cover, #coding-cat .headphone .band {
+    fill: none;
+}
+#coding-cat .paw, #coding-cat .head {
+    stroke: var(--orange);
+}
+#coding-cat .laptop-keyboard {
+    stroke-width: 2;
+}
+#coding-cat .terminal-code {
+    stroke-width: 5;
+}
+#coding-cat .music .note, #coding-cat .laptop-base, #coding-cat .laptop-cover, #coding-cat .paw .pads {
+    stroke: var(--pink);
+}
+#coding-cat .table line, #coding-cat .headphone .band, #coding-cat .headphone .speaker path:nth-child(3) {
+    stroke: var(--green);
+}
+#coding-cat .terminal-frame, #coding-cat .laptop-keyboard, #coding-cat .headphone .speaker path:nth-child(2) {
+    stroke: var(--blue);
+}
+#coding-cat .terminal-code, #coding-cat .headphone .speaker path:first-child {
+    stroke: var(--cyan);
+}
+
