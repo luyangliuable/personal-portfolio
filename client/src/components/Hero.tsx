@@ -1,12 +1,15 @@
-import React, {Component, useRef} from 'react';
+import React, { Component, useRef } from 'react';
+import CodingCat from "./CodingCat/CodingCat";
+import './Hero.css';
 
-type iProps = {
+type IHeroProps = {
     name?: string,
     current?: string,
     [category: string]: any
 }
 
-type iState = {
+type IHeroState = {
+    scrolling: boolean,
     mainContent: {
         heading: string,
         items: string[]
@@ -16,40 +19,57 @@ type iState = {
 /* interface AbcState {}; */
 
 
-class Hero extends Component<iProps, iState> {
+class Hero extends Component<IHeroProps, IHeroState> {
 
-    constructor(props: iProps) {
+    constructor(props: IHeroProps) {
         super(props);
         this.state = {
+            scrolling: false,
             mainContent: {
                 heading: "Hi There 👋",
                 items: [
                     "🔭 I’m currently working on a personal profile website.",
                     "🌱 I’m currently learning mlops and cybersecurity out of interest.",
                     "👯 I’m looking to collaborate on building a start up.",
-                    "🤔 I’m looking for people to talk to about programming."
+                    "🤔 I’m looking for people to talk to about programming.",
+                    "🤔 I'm born Christmas and I am a dog person."
                 ]
             }
         }
     }
 
-
-    componentDidMount() : void {
+    componentDidMount(): void {
         window.addEventListener("scroll", () => {
-            console.log("scrolled");
+            console.log('scroll')
+            this.setState({
+                ...this.state,
+                scrolling: true
+            });
         });
-}
+
+        setInterval(() => {
+            if (this.state.scrolling) {
+                console.log("Stop scroll");
+                this.setState({
+                    ...this.state,
+                    scrolling: false
+                });
+            }
+        }, 500);
+    }
+
 
     render(): any {
         return (
             <div className="home-container">
                 {/* <div className="hero-accordion-button hero-accordion-left" /> */}
-                <div style={{textAlign: "left"}}>
+                <div style={{ textAlign: "left" }}>
                     <ul>
                         <h1>
-                            {(this.state && this.state.mainContent ) ? this.state.mainContent.heading: ""}
+                            {(this.state && this.state.mainContent) ? this.state.mainContent.heading : ""}
                         </h1>
                     </ul>
+
 
                     {
                         this.state.mainContent.items.map((item: string, index: number) => {
@@ -61,6 +81,8 @@ class Hero extends Component<iProps, iState> {
                         })
                     }
                 </div>
+
+                <CodingCat showAnimtion={this.state.scrolling} />
                 {/* <div className="hero-accordion-button hero-accordion-right"  /> */}
             </div>
         );

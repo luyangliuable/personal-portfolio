@@ -156,22 +156,6 @@
 }
 
 
-.home-container {
-    display: flex;
-    padding: 3vw;
-    justify-content: space-between;
-    align-items: flex-start;
-    background: #F9F9F9;
-    border: 1px solid #EEE;
-    box-shadow: 1px 1px 1px #EEE;
-    width: 90vw;
-    margin-top: 3vw;
-    margin-bottom: 3vw;
-    /* height: 40vh; */
-    border-radius: 14px;
-    /* color: #FFF; */
-}
-
 .landing-page-content {
     font-family: 'Proxima Nova';
     display: flex;

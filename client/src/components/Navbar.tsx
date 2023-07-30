@@ -48,7 +48,6 @@ class NavBar extends Component<{}, AbcState> {
 
 
     updateScrolledProgress(progress: number): void {
-        /* const element = document.querySelector(".scroll-progress"); */
         const element = document.getElementById('scroll-progress');
         element.style.width = `${progress * 100}vw`;
     }
