@@ -1,5 +1,6 @@
 import React, { Component, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
+import "./Navbar.css";
 
 type Props = {
     name?: string,
@@ -24,7 +25,7 @@ class NavBar extends Component<{}, AbcState> {
                 { name: 'Blog', to: '/blog' },
                 { name: 'Projects', to: '/project' }
             ],
-            name: "Luyang's Portfolio",
+            name: "My Portfolio",
         };
     }
 
@@ -94,18 +95,20 @@ class NavBar extends Component<{}, AbcState> {
             <div className="navbar">
                 <div className="navbar-content">
                     <h1 className="logo" style={{ marginLeft: "10px" }}>{this.state.name}</h1>
-                    <div className="navbar-left">
+                    <nav className="navbar-left">
                         {
                             this.state.links.map((link) => {
                                 return (
-                                    <NavLink to={link.to} className={({ isActive }) => ["navbar-item", isActive ? "active-link" : null,].filter(Boolean).join(" ")} key={link.name}>
+                                    <NavLink
+                                        to={link.to}
+                                        className={({ isActive }) => ["navbar-item", isActive ? "navbar-item active-link" : null,].filter(Boolean).join(" ")} key={link.name}>
                                         {link.name}
                                     </NavLink>
                                 );
                             })
                         }
-
-                    </div>
+                        <div className="selected-navlink-window">a</div>
+                    </nav>
                 </div>
                 <div id="scroll-progress"></div>
             </div>

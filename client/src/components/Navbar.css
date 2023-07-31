@@ -1,0 +1,60 @@
+:root {
+    --selected-navlink-window-color: #888;
+    --navbar-item-border-radius: 4px;
+    --navbar-item-width: 120px;
+}
+
+.selected-navlink-window {
+    width: var(--navbar-item-width);
+    background: var(--selected-navlink-window-color);
+    padding: 10px 0 10px 0;
+    color: var(--selected-navlink-window-color);
+    border-radius: var(--navbar-item-border-radius);
+    opacity: 0;
+    z-index: 0;
+    transform: translateX(calc(-3*( 120px + .6vw )));
+}
+
+
+.navbar-left a:nth-child(1):hover ~ .selected-navlink-window {
+    transform: translateX(calc(-3*( 120px + .6vw )));
+    transition: all 0.2s ease-in-out;
+    opacity: 1;
+}
+
+.navbar-left a:nth-child(2):hover ~ .selected-navlink-window {
+    transform: translateX(calc(-2*( 120px + .6vw )));
+    transition: all 0.2s ease-in-out;
+    opacity: 1;
+}
+
+.navbar-left a:nth-child(3):hover ~ .selected-navlink-window {
+    transform: translateX(calc(-1*( 120px + .6vw )));
+    transition: all 0.2s ease-in-out;
+    opacity: 1;
+}
+
+.navbar-left {
+    padding: 10px;
+    display: flex;
+    width: 40vw;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.navbar-item {
+    text-decoration: none;
+    cursor: pointer;
+    color: #FFF;
+    padding: 10px 0 10px;
+    width: var(--navbar-item-width);
+    transition: background .3s ease-in;
+    border-radius: var(--navbar-item-border-radius);
+    margin: 0px !important;
+    z-index: 1;
+}
+
+
+.navbar-item:hover {
+    /* background: #888; */
+}
