@@ -1,9 +1,9 @@
 extern crate dotenv;
-use std::{env, sync::mpsc::RecvError};
+use std::{env};
 use dotenv::dotenv;
 use crate::models::blog_model::BlogPost;
 use mongodb::{
-    bson::{Document, extjson::de::Error, oid::ObjectId, doc}, //modify here
+    bson::{extjson::de::Error, doc},
     results::InsertOneResult,
     sync::{Client, Collection},
 };
@@ -20,8 +20,15 @@ impl MongoRepo {
         dotenv().ok();
         let uri = match env::var("MONGOURI") {
             Ok(v) => v.to_string(),
-            Err(_) => "mongodb://localhost:27017".to_string(),
+            Err(_) => "mongodb+srv://luyangliuable2:gccHwzBjbP2c2SwQ@serverlessinstance0.z8d7qnv.mongodb.net/?retryWrites=true&w=majority".to_string(),
+            // Err(_) => "mongodb://localhost:27017".to_string(),
         };
+
+        // let mut client_options = ClientOptions::parse("mongodb+srv://luyangliuable:<password>@serverlessinstance0.z8d7qnv.mongodb.net/?retryWrites=true&w=majority");
+
+        // // Set the server_api field of the client_options object to Stable API version 1
+        // let server_api = ServerApi::builder().version(ServerApiVersion::V1).build();
+        // client_options.server_api = Some(server_api);
 
         let client = Client::with_uri_str(uri).unwrap();
         let db = client.database("rustDB");
@@ -74,7 +81,7 @@ impl MongoRepo {
 
                     results.push(blog_post);
                 }
-                Err(e) => {
+                Err(_e) => {
                     println!("Error getting blog post");
                 }
             }

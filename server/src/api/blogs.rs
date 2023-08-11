@@ -3,7 +3,7 @@ use mongodb::bson::{oid::ObjectId};
 use rocket::{http::Status, State};
 use crate::{models::blog_model::BlogPost, repository::mongodb_repo::MongoRepo};
 use mongodb::results::InsertOneResult;
-use chrono::{DateTime, Utc};
+use chrono::{Utc};
 
 #[get("/blogs/test")]
 pub fn get_blog_posts() -> Json<BlogPost> {

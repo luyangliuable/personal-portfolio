@@ -1,6 +1,5 @@
 use mongodb::bson::oid::ObjectId;
 use rocket::serde::{Serialize, Deserialize};
-use chrono::{DateTime, Utc};
 
 /// A blog post.
 #[derive(Serialize, Deserialize, Debug)]

@@ -1,4 +1,4 @@
 #[get("/health")]
-fn index() -> &'static str {
+pub fn check_health() -> &'static str {
     "Hello, world!"
 }
