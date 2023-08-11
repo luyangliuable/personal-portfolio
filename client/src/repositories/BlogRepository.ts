@@ -1,9 +1,9 @@
 class BlogRepository {
     static BASE_URL: string = "http://127.0.0.1:8000/blogs";
 
-    constructor(locationData: any, enums: any) {
-        // this.BASE_URL = process.env.REACT_APP_WEATHER_API_BASE_URL || "http://127.0.0.1:8000/weather_api"
-    }
+    // constructor(locationData: any, enums: any) {
+    //     // this.BASE_URL = process.env.REACT_APP_WEATHER_API_BASE_URL || "http://127.0.0.1:8000/weather_api"
+    // }
 
     static options(method: 'GET' | 'DELETE' | 'POST' | 'PUT', body?: { [category: string]: any }): any {
         return {

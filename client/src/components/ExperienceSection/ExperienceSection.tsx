@@ -1,15 +1,11 @@
 import React from 'react';
 /* import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component'; */
-import { Component } from 'react';
+import { Component, JSXElementConstructor } from 'react';
 import { Chrono } from "react-chrono";
+import IExperienceSectionState from './Interface/IExperienceSectionState';
 
 
-interface AbcState {
-    render?: () => React.ReactElement<any, any>,
-    items: any
-}
-
-class Experiences extends Component<{}, AbcState> {
+class ExperienceSection extends Component<{}, IExperienceSectionState<any, JSXElementConstructor<any>>> {
     constructor(props: {}) {
         super(props);
 
@@ -111,4 +107,4 @@ class Experiences extends Component<{}, AbcState> {
     }
 }
 
-export default Experiences;
+export default ExperienceSection;

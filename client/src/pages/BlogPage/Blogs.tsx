@@ -1,23 +1,23 @@
-import React, { Component, useRef } from 'react';
+import React, { Component } from 'react';
 import './Blogs.css'
 import BlogRepository from '../../repositories/BlogRepository';
 
-const initialState = '';
-const blogManager = (state: string | undefined = initialState, action: blogManagerActionType) => {
-    switch (action.type) {
-        case 'get':
-            return action.payload;
-        case 'comment':
-            return action.payload;
-        default:
-            return '';
-    }
-};
+/* const initialState = '';
+* const blogManager = (state: string | undefined = initialState, action: blogManagerActionType) => {
+*     switch (action.type) {
+*         case 'get':
+*             return action.payload;
+*         case 'comment':
+*             return action.payload;
+*         default:
+*             return '';
+*     }
+* }; */
 
-type blogManagerActionType = {
-    type: string,
-    payload: string
-}
+/* type blogManagerActionType = {
+*     type: string,
+*     payload: string
+* } */
 
 type AbcState = {
     content: blogContent[],
@@ -36,8 +36,7 @@ class Blogs extends Component<{}, AbcState> {
         super(props);
 
         this.state = {
-            content: [
-            ]
+            content: []
         }
     }
 
@@ -59,8 +58,8 @@ class Blogs extends Component<{}, AbcState> {
     cardEffect(e: any) {
         console.log(e);
         const rect = e.target.getBoundingClientRect(),
-        x = e.clientX - rect.left,
-        y = e.clientY - rect.top;
+            x = e.clientX - rect.left,
+            y = e.clientY - rect.top;
 
         console.log(x, y);
         e.target.style.setProperty("--mouse-x", `${x}px`);
@@ -71,7 +70,7 @@ class Blogs extends Component<{}, AbcState> {
         return (
             <div className="blog-container">
                 {
-                    this.state.content.map((content, idx) => {
+                    this.state.content?.map((content, idx) => {
                         return (
                             <>
                                 <div onMouseMove={this.cardEffect} className="blog-content card" key={idx}>

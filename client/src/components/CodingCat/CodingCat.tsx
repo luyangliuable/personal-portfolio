@@ -138,7 +138,7 @@ class CodingCat extends Component<ICodingCatProps, ICodingCatState> {
         // Stops all the tweens in the timeline
         if (this.props.showAnimtion && this.state.animation) {
             this.state.animation.resume();
-        } else if (this.props != prevProps && !this.props.showAnimtion && this.state.animation) {
+        } else if (this.props !== prevProps && !this.props.showAnimtion && this.state.animation) {
             this.state.animation.pause();
         }
     }

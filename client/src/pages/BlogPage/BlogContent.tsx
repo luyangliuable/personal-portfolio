@@ -1,6 +1,4 @@
-import React, { Component, useRef } from 'react';
-import { NavLink } from 'react-router-dom';
-import { createStore } from 'redux';
+import React, { Component } from 'react';
 
 const initialState = '';
 

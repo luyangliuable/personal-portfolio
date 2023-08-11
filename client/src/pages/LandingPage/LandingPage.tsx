@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Hero from "./Hero";
-import AbcState from "../interface/AbcState";
-import Experiences from './Experiences';
+import HeroSection from "../../components/HeroSection/HeroSection";
+import ILandingPagestate from "./Interface/ILandingPageState";
+import Experiences from '../../components/ExperienceSection/ExperienceSection';
 
-class LandingPage extends Component implements AbcState {
-    constructor(props: any) {
+class LandingPage extends Component<{}, ILandingPagestate> {
+    constructor(props: {}) {
         super(props);
-        /* this.state = {}; */
+        this.state = {};
     }
 
 
@@ -20,7 +20,7 @@ class LandingPage extends Component implements AbcState {
         return (
             <>
                 <div className="landing-page-content">
-                    <Hero />
+                    <HeroSection />
 
                     <div className="home-container Experience">
                         <Experiences />

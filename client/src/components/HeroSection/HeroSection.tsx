@@ -1,25 +1,11 @@
-import React, { Component, useRef } from 'react';
-import CodingCat from "./CodingCat/CodingCat";
-import './Hero.css';
-
-type IHeroProps = {
-    name?: string,
-    current?: string,
-    [category: string]: any
-}
-
-type IHeroState = {
-    scrolling: boolean,
-    mainContent: {
-        heading: string,
-        items: string[]
-    }
-}
-
-/* interface AbcState {}; */
+import React, { Component } from 'react';
+import CodingCat from "../CodingCat/CodingCat";
+import './HeroSection.css';
+import IHeroState from "./Interface/IHeroState";
+import IHeroProps from "./Interface/IHeroProps";
 
 
-class Hero extends Component<IHeroProps, IHeroState> {
+class HeroSection extends Component<IHeroProps, IHeroState> {
 
     constructor(props: IHeroProps) {
         super(props);
@@ -89,4 +75,4 @@ class Hero extends Component<IHeroProps, IHeroState> {
     }
 }
 
-export default Hero;
+export default HeroSection;
