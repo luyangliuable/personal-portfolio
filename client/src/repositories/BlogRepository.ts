@@ -1,5 +1,5 @@
 class BlogRepository {
-    static BASE_URL: string = "http://127.0.0.1:8000/blogs";
+    static BASE_URL: string = "http://127.0.0.1:8000/api/blogs";
 
     // constructor(locationData: any, enums: any) {
     //     // this.BASE_URL = process.env.REACT_APP_WEATHER_API_BASE_URL || "http://127.0.0.1:8000/weather_api"

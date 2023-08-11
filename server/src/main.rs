@@ -40,10 +40,10 @@ fn rocket() -> _ {
 
     rocket::build()
         .manage(db)
-        .mount("/", routes![index])
-        .mount("/", routes![api::blogs::get_blog_posts])
-        .mount("/", routes![api::blogs::create_blog])
-        .mount("/", routes![api::blogs::get_blog])
-        .mount("/", routes![api::health::check_health])
+        .mount("/api/", routes![index])
+        .mount("/api/", routes![api::blogs::get_blog_posts])
+        .mount("/api/", routes![api::blogs::create_blog])
+        .mount("/api/http://170.64.250.107/api/health/", routes![api::blogs::get_blog])
+        .mount("/api/", routes![api::health::check_health])
         .attach(CORS)
 }
