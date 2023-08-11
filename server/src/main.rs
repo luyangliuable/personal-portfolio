@@ -43,7 +43,7 @@ fn rocket() -> _ {
         .mount("/api/", routes![index])
         .mount("/api/", routes![api::blogs::get_blog_posts])
         .mount("/api/", routes![api::blogs::create_blog])
-        .mount("/api/http://170.64.250.107/api/health/", routes![api::blogs::get_blog])
+        .mount("/api/", routes![api::blogs::get_blog])
         .mount("/api/", routes![api::health::check_health])
         .attach(CORS)
 }
