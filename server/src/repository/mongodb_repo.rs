@@ -20,7 +20,7 @@ impl MongoRepo {
         dotenv().ok();
         let uri = match env::var("MONGOURI") {
             Ok(v) => v.to_string(),
-            Err(_) => "mongodb+srv://luyangliuable2:gccHwzBjbP2c2SwQ@serverlessinstance0.z8d7qnv.mongodb.net/?retryWrites=true&w=majority".to_string(),
+            Err(_) => "mongodb://localhost:27017".to_string(),
             // Err(_) => "mongodb://localhost:27017".to_string(),
         };
 
