@@ -1,8 +1,8 @@
 /* import logo from './logo.svg'; */
 import './App.css';
 import NavBar from './components/Navbar';
-import Blog from './components/Blogs/Blogs';
-import LandingPage from './components/LandingPage';
+import Blog from './pages/BlogPage/Blogs';
+import LandingPage from './pages/LandingPage/LandingPage';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 

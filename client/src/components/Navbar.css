@@ -1,0 +1,93 @@
+:root {
+    --selected-navlink-window-color: #888;
+    --navbar-item-border-radius: 4px;
+    --navbar-item-width: 120px;
+}
+
+.selected-navlink-window {
+    width: var(--navbar-item-width);
+    background: var(--selected-navlink-window-color);
+    padding: 10px 0 10px 0;
+    color: var(--selected-navlink-window-color);
+    border-radius: var(--navbar-item-border-radius);
+    opacity: 1;
+    z-index: 0;
+    transform: translateX(calc(-3*( 120px )));
+}
+
+
+.navbar-left a:nth-child(1):hover ~ .selected-navlink-window {
+    transform: translateX(calc(-3*( 120px )));
+    transition: all 0.2s ease-in-out;
+    opacity: 1;
+}
+
+.navbar-left a:nth-child(2):hover ~ .selected-navlink-window {
+    transform: translateX(calc(-2*( 120px )));
+    transition: all 0.2s ease-in-out;
+    opacity: 1;
+}
+
+.navbar-left a:nth-child(3):hover ~ .selected-navlink-window {
+    transform: translateX(calc(-1*( 120px )));
+    transition: all 0.2s ease-in-out;
+    opacity: 1;
+}
+
+.navbar-left {
+    padding: 10px;
+    display: flex;
+    margin-left: 5vw;
+    width: 40vw;
+    justify-content: flex-start;
+    flex-direction: row;
+}
+
+.navbar-item {
+    text-decoration: none;
+    cursor: pointer;
+    color: #FFF;
+    padding: 10px 0 10px;
+    width: var(--navbar-item-width);
+    transition: background .3s ease-in;
+    border-radius: var(--navbar-item-border-radius);
+    z-index: 1;
+}
+
+
+.navbar-item:hover {
+    /* background: #888; */
+}
+
+.navbar {
+    font-family: 'Proxima Nova';
+    background: var(--slightly-black);
+    z-index: 10;
+    transition: background .1s ease-in-out, box-shadow .5s ease-in-out, transform .2s ease-in-out;
+    width: 100vw;
+    box-shadow: 1px 1px 10px #EAD2A8;
+}
+
+.navbar-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.hidden {
+    transform: translateY(-100px);
+}
+
+.detached {
+    position: fixed;
+    backdrop-filter: blur(18px);
+    /* background: rgba(50,50,50, .8); */
+    background: rgba(210,210,210,.5);
+    box-shadow: 1px 1px 3px #888;
+}
+
+
+.detached .navbar-content .navbar-left .navbar-item {
+    color: black;
+}
+

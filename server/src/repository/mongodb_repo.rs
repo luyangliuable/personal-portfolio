@@ -34,7 +34,9 @@ impl MongoRepo {
         //create_user code goes here
         let new_doc = BlogPost {
             id: None,
+            author: new_blog.author,
             heading: new_blog.heading,
+            date_created: new_blog.date_created,
             body: new_blog.body,
         };
 
@@ -64,6 +66,8 @@ impl MongoRepo {
                 Ok(document) => {
                     let blog_post: BlogPost = BlogPost {
                         id: document.id,
+                        author: document.author,
+                        date_created: document.date_created,
                         heading: document.heading,
                         body: document.body
                     };
