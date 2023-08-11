@@ -25,19 +25,19 @@ class NavBar extends Component<{}, AbcState> {
             links: [
                 { name: 'Home', to: '/' },
                 { name: 'Blog', to: '/blog' },
-                { name: 'Projects', to: '/project' }
+                { name: 'Projects', to: '/project' },
+                { name: 'Tools', to: '/tools' }
             ],
             lastScrollY: null,
-            hideNavBarScrollSensitivity: 20,
-            name: "My Portfolio",
+            hideNavBarScrollSensitivity: 10,
+            name: "Luyang's Coding Portfolio",
         };
 
         this.navbar = createRef();
     }
 
     attachNavBar(): void {
-        const element = document.querySelector('.navbar');
-        element.classList.remove("detached");
+        this.navbar.current.classList.remove("detached");
     }
 
 
@@ -46,13 +46,11 @@ class NavBar extends Component<{}, AbcState> {
     }
 
     hideNavBar(): void {
-        const element = document.querySelector('.navbar');
-        element.classList.add("hidden");
+        this.navbar.current.classList.add("hidden");
     }
 
     showNavBar(): void {
-        const element = document.querySelector('.navbar');
-        element.classList.remove("hidden");
+        this.navbar.current.classList.remove("hidden");
     }
 
 
@@ -97,9 +95,11 @@ class NavBar extends Component<{}, AbcState> {
             }
 
             const element = document.querySelector(".landing-page-content");
-            const pageHeight = element.getBoundingClientRect().height - window.innerHeight;
 
-            this.updateScrolledProgress(scrolled / pageHeight);
+            if (element) {
+                const pageHeight = element.getBoundingClientRect().height - window.innerHeight;
+                this.updateScrolledProgress(scrolled / pageHeight);
+            }
 
 
             this.setState({ lastScrollY: scrolled });
