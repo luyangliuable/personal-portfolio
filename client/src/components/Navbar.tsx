@@ -56,9 +56,10 @@ class NavBar extends Component<INavbarProps, INavbarState> {
         const { scrollStatus } = this.props;
         const { lastScrollY, hideNavBarScrollSensitivity } = this.state;
 
-        if (scrollStatus.scrolled! - lastScrollY >= hideNavBarScrollSensitivity) {
+        // max because safari is stupid and it sometimes goes to negative scroll positions
+        if (scrollStatus.scrolled - Math.max(0, lastScrollY) >= hideNavBarScrollSensitivity) {
             this.hideNavBar();
-        } else if (lastScrollY - scrollStatus.scrolled! >= hideNavBarScrollSensitivity) {
+        } else if (Math.max(0, lastScrollY - scrollStatus.scrolled) >= hideNavBarScrollSensitivity) {
             this.showNavBar();
         }
     };
@@ -66,8 +67,10 @@ class NavBar extends Component<INavbarProps, INavbarState> {
     listenContinuousScrolled = () => {
         const { scrollStatus } = this.props;
 
-        if (scrollStatus.scrolled! > this.navBarHeight) {
+        if (scrollStatus.scrolled >= this.navBarHeight) {
             this.detachNavBar();
+        } else if (scrollStatus.scrolled < this.navBarHeight) {
+            this.attachNavBar();
         } else {
             this.attachNavBar();
         }
@@ -150,6 +153,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                             {links.map(this.renderNavLink)}
                             <div className="selected-navlink-window">a</div>
                         </nav>
+                        <p style={{ color: "white" }}>{this.props.scrollStatus.scrolled - this.navBarHeight}</p>
                         <div ref={this.burgerButton} className="nav-burger" onClick={this.toggleBurgerMenu}></div>
                     </div>
                     <div id="scroll-progress" ref={this.scrollProgress} />
