@@ -79,25 +79,20 @@
 
 
 .navbar {
-    image-rendering: geometricPrecision;
-    -webkit-image-rendering: geometricPrecision;
-    -moz-image-rendering: geometricPrecision;
-    font-smoothing: antialiased;
-    -webkit-font-smoothing: antialiased;
-    -moz-font-smoothing: antialiased;
+    font-family: 'Proxima Nova';
     display: flex;
     flex-direction: column;
-    font-family: 'Proxima Nova';
     background: var(--slightly-black);
-    z-index: 10;
+    z-index: 3;
     transition: background .1s ease-in-out, box-shadow .5s ease-in-out, transform .2s ease-in-out;
     -webkit-transition: background .1s ease-in-out, box-shadow .5s ease-in-out, transform .2s ease-in-out;
     -moz-transition: background .1s ease-in-out, box-shadow .5s ease-in-out, transform .2s ease-in-out;
     width: var(--navbar-width);
     height: var(--navbar-height);
     display: flex;
+    flex-direction: column;
     position: absolute;
-    justify-content: space-between;
+    justify-content: space-around;
     box-shadow: 1px 1px 10px #EAD2A8;
     -webkit-box-shadow: 1px 1px 10px #EAD2A8;
     -moz-box-shadow: 1px 1px 10px #EAD2A8;

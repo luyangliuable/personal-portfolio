@@ -59,6 +59,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
     }
 
     detachNavBar(): void {
+      console.log("detaching");
         this.navbar.current.classList.add("detached");
         this.burgerPanel.current.classList.remove("nav-burger-panel-move-lower");
     }
@@ -86,7 +87,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
     }
 
     componentDidMount(): void {
-        this.listenScrollProgress();
+        this.listenContinuousScrolled();
 
         window.addEventListener('click', (e) => {
             if (this.burgerPanel.current && !this.burgerPanel.current.contains(e.target) && !this.burgerButton.current.contains(e.target)) {
@@ -97,8 +98,11 @@ class NavBar extends Component<INavbarProps, INavbarState> {
 
     componentDidUpdate(prevProps: INavbarProps, prevState: INavbarState): void {
         if (prevProps.scrollStatus.scrolling !== this.props.scrollStatus.scrolling) {
-            this.listenScrollProgressForNavbar();
-            this.listenScrollProgress();
+            this.listenDeltaScrolled();
+        }
+
+        if (prevProps.scrollStatus.scrolled !== this.props.scrollStatus.scrolled) {
+          this.listenContinuousScrolled();
         }
 
         if (this.state.showBurgerPanel != prevState.showBurgerPanel) {
@@ -107,27 +111,26 @@ class NavBar extends Component<INavbarProps, INavbarState> {
     }
 
 
-    listenScrollProgressForNavbar() {
+    listenDeltaScrolled() {
         const scrollStatus = this.props.scrollStatus;
 
-        if (scrollStatus.scrolled > this.navBarHeight) {
-            window.setTimeout(() => {
-                this.detachNavBar();
-            }, 1000);
+        if (scrollStatus.scrolled - this.state.lastScrollY >= this.state.hideNavBarScrollSensitivity) {
+            this.hideNavBar();
+        } else if (this.state.lastScrollY - scrollStatus.scrolled >= this.state.hideNavBarScrollSensitivity) {
+            this.showNavBar();
+        }
 
-            if (scrollStatus.scrolled - this.state.lastScrollY >= this.state.hideNavBarScrollSensitivity) {
-                this.hideNavBar();
-            } else if (this.state.lastScrollY - scrollStatus.scrolled >= this.state.hideNavBarScrollSensitivity) {
-                this.showNavBar();
-            }
+    }
+
+    listenContinuousScrolled() {
+        const scrollStatus = this.props.scrollStatus;
+        const element = document.querySelector(".landing-page-content");
+
+        if (scrollStatus.scrolled > this.navBarHeight) {
+            this.detachNavBar();
         } else {
             this.attachNavBar();
         }
-    }
-
-    listenScrollProgress() {
-        const scrollStatus = this.props.scrollStatus;
-        const element = document.querySelector(".landing-page-content");
 
         if (element) {
             const pageHeight = element.getBoundingClientRect().height - window.innerHeight;
@@ -171,9 +174,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                         <div ref={this.burgerButton} className="nav-burger" onClick={() => this.toggleBurgerMenu()}>
                         </div>
                     </div>
-                    <div id="scroll-progress" ref={this.scrollProgress}>
-                    </div>
-
+                    <div id="scroll-progress" ref={this.scrollProgress} />
                 </div>
                 <div ref={this.burgerPanel} className="nav-burger-panel nav-burger-panel-hide nav-burger-panel-move-lower">
                     {
