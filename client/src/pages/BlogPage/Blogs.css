@@ -63,16 +63,16 @@
 
 .card::before {
   background: radial-gradient(
-    800px circle at var(--mouse-x) var(--mouse-y), 
+    800px circle at var(--mouse-x) var(--mouse-y),
     rgba(200, 200, 200, 0.3),
     transparent 40%
   );
   z-index: 3;
 }
 
-.card::after {  
+.card::after {
   background: radial-gradient(
-    600px circle at var(--mouse-x) var(--mouse-y), 
+    600px circle at var(--mouse-x) var(--mouse-y),
     rgba(200, 200, 200, 0.4),
     transparent 40%
   );
@@ -104,7 +104,7 @@ body {
     /* background: black; */
 }
 
-i {  
+i {
   color: rgb(240, 240, 240);
 }
 
@@ -135,7 +135,7 @@ i {
   gap: 10px;
 }
 
-.card-info > i {  
+.card-info > i {
   font-size: 1em;
   height: 20px;
   line-height: 20px;
@@ -156,15 +156,15 @@ i {
 
 @media(max-width: 1000px) {
   body {
-    align-items: flex-start;  
+    align-items: flex-start;
     overflow: auto;
   }
-  
-  #cards {    
+
+  #cards {
     max-width: 1000px;
     padding: 10px 0px;
   }
-  
+
   .card {
     flex-shrink: 1;
     width: calc(50% - 4px);
@@ -175,23 +175,23 @@ i {
   .card {
     height: 180px;
   }
-  
+
   .card-image {
-    height: 80px;  
+    height: 80px;
   }
-  
+
   .card-image > i {
     font-size: 3em;
   }
-    
+
   .card-info-wrapper {
     padding: 0px 10px;
   }
-  
-  .card-info > i { 
-    font-size: 0.8em; 
+
+  .card-info > i {
+    font-size: 0.8em;
   }
-  
+
   .card-info-title > h3 {
     font-size: 0.9em;
   }
@@ -207,4 +207,3 @@ i {
     width: 100%;
   }
 }
-
