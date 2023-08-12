@@ -174,7 +174,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                     </div>
 
                 </div>
-                <div ref={this.burgerPanel} className="nav-burger-panel">
+                <div ref={this.burgerPanel} className="nav-burger-panel nav-burger-panel-hide">
                     {
                         this.state.links.map((link) => {
                             return (

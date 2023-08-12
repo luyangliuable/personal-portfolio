@@ -217,9 +217,7 @@
     background-clip: text;
     text-fill-color: transparent;
     background-size: 200% auto;
-    min-width: 190px;
-    width: 15vw;
-    max-width: 220px;
+    width: 220px;
     animation: animateBg 3s linear infinite;
     font-size: 24px;
     font-family: 'Proxima Nova Bold', monospace;
