@@ -30,4 +30,3 @@ class BlogRepository {
 }
 
 export default BlogRepository;
-
