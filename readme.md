@@ -13,7 +13,7 @@
   * [x] Make a blog
   * [ ] Make it compatible with phone screen
   * [ ] Make it compatible with old browsers
-  * [ ] Deploy
+  * [x] [Deploy](http://170.64.250.107/ )
   * [ ] Add coding tools (hex to rgba, shell commands, online emacs?)
   * [ ] Add my codepens for css tricks
 

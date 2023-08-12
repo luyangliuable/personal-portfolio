@@ -26,7 +26,6 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
 
     componentDidMount(): void {
         window.addEventListener("scroll", () => {
-            console.log('scroll')
             this.setState({
                 ...this.state,
                 scrolling: true
@@ -35,7 +34,6 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
 
         setInterval(() => {
             if (this.state.scrolling) {
-                console.log("Stop scroll");
                 this.setState({
                     ...this.state,
                     scrolling: false
@@ -69,7 +67,6 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
                 </div>
 
                 <CodingCat showAnimtion={this.state.scrolling} />
-                {/* <div className="hero-accordion-button hero-accordion-right"  /> */}
             </div>
         );
     }

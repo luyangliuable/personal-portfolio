@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import HeroSection from "../../components/HeroSection/HeroSection";
 import ILandingPagestate from "./Interface/ILandingPageState";
+import ILandingPageProps from "./Interface/ILandingPageProps";
 import Experiences from '../../components/ExperienceSection/ExperienceSection';
 
-class LandingPage extends Component<{}, ILandingPagestate> {
-    constructor(props: {}) {
+class LandingPage extends Component<ILandingPageProps, ILandingPagestate> {
+    constructor(props: ILandingPageProps) {
         super(props);
         this.state = {};
     }
@@ -27,7 +28,7 @@ class LandingPage extends Component<{}, ILandingPagestate> {
                     </div>
 
                     <div className="home-container blogs">
-                        <div style={{ textAlign: "left" }}>
+                        <div style={{ textAlign: "left", marginLeft: "2vw" }}>
                             <h1>Blogs</h1>
                         </div>
                     </div>

@@ -2,23 +2,6 @@ import React, { Component } from 'react';
 import './Blogs.css'
 import BlogRepository from '../../repositories/BlogRepository';
 
-/* const initialState = '';
-* const blogManager = (state: string | undefined = initialState, action: blogManagerActionType) => {
-*     switch (action.type) {
-*         case 'get':
-*             return action.payload;
-*         case 'comment':
-*             return action.payload;
-*         default:
-*             return '';
-*     }
-* }; */
-
-/* type blogManagerActionType = {
-*     type: string,
-*     payload: string
-* } */
-
 type AbcState = {
     content: blogContent[],
     render?: () => React.ReactElement<any, any>,
@@ -42,7 +25,6 @@ class Blogs extends Component<{}, AbcState> {
 
     componentDidMount() {
         BlogRepository.getBlogList().then((response) => {
-            console.log(response);
             this.setState({
                 content: response
             })
@@ -72,20 +54,12 @@ class Blogs extends Component<{}, AbcState> {
                 {
                     this.state.content?.map((content, idx) => {
                         return (
-                            <>
-                                <div onMouseMove={this.cardEffect} className="blog-content card" key={idx}>
-                                    <h3>{content.heading}</h3>
-                                    <p>
-                                        {this.truncateTextBody(content.body[1])}
-                                    </p>
-                                </div>
-                                <div onMouseMove={this.cardEffect} className="blog-content card" key={idx}>
-                                    <h3>{content.heading}</h3>
-                                    <p>
-                                        {this.truncateTextBody(content.body[1])}
-                                    </p>
-                                </div>
-                            </>
+                            <div onMouseMove={this.cardEffect} className="blog-content card" key={idx}>
+                                <h3>{content.heading}</h3>
+                                <p>
+                                    {this.truncateTextBody(content.body[1])}
+                                </p>
+                            </div>
                         )
                     })
                 }
