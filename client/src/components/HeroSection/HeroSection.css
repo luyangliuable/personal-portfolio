@@ -4,8 +4,8 @@
 
 .home-container {
     display: flex;
-    padding: 3vw;
-    justify-content: space-evenly;
+    padding: 3vw 0 3vw;
+    justify-content: space-between;
     align-items: center;
     background: #F9F9F9;
     border: 1px solid #EEE;

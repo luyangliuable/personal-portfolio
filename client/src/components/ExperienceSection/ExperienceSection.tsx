@@ -78,7 +78,7 @@ class ExperienceSection extends Component<{}, IExperienceSectionState<any, JSXEl
     render() {
         return (
             <>
-                <div style={{ textAlign: "left" }}>
+                <div style={{ textAlign: "left", marginLeft: "2vw" }}>
                     <h1>My Experiences</h1>
                     <div style={{ width: "80vw" }}>
                         <Chrono theme={{
