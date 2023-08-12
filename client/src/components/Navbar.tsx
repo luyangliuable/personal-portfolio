@@ -1,34 +1,29 @@
-import React, { Component, createRef, RefObject } from 'react';
+import React, { Component, createRef } from 'react';
 import { NavLink } from 'react-router-dom';
-
 import "./Navbar.css";
 
 interface INavbarProps {
-    name?: string,
-    current?: string,
-    scrollStatus: scrollStatus
+    name?: string;
+    current?: string;
+    scrollStatus: {
+        scrolled: number | null;
+        scrolling: boolean | null;
+    };
 }
 
 interface INavbarState {
-    name: string,
-    links: { name: string, to: string }[],
-    lastScrollY: number,
-    hideNavBarScrollSensitivity: number,
-    showBurgerPanel: boolean,
-    render?: () => React.ReactElement<any, any>,
+    name: string;
+    links: { name: string, to: string }[];
+    lastScrollY: number;
+    hideNavBarScrollSensitivity: number;
+    showBurgerPanel: boolean;
 }
-
-interface scrollStatus {
-    scrolled: number | null,
-    scrolling: boolean | null
-}
-
 
 class NavBar extends Component<INavbarProps, INavbarState> {
-    navbar: RefObject<any>;
-    burgerPanel: RefObject<any>;
-    burgerButton: RefObject<any>;
-    scrollProgress: RefObject<any>;
+    navbar = createRef<HTMLDivElement>();
+    burgerPanel = createRef<HTMLDivElement>();
+    burgerButton = createRef<HTMLDivElement>();
+    scrollProgress = createRef<HTMLDivElement>();
 
     constructor(props: INavbarProps) {
         super(props);
@@ -41,92 +36,39 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                 { name: 'Resume', to: 'https://docs.google.com/document/d/18WT-J7ZP5dcEJreXIvldSm1VySQhC0DQB0GzBXGyJEQ/edit?usp=sharing' },
                 { name: 'About', to: '/about' }
             ],
-            lastScrollY: null,
+            lastScrollY: 0,
             hideNavBarScrollSensitivity: 5,
             showBurgerPanel: false,
             name: "Luyang's Coding Portfolio"
         };
-
-        this.navbar = createRef();
-        this.scrollProgress = createRef();
-        this.burgerPanel = createRef();
-        this.burgerButton = createRef();
     }
-
-    attachNavBar(): void {
-        this.navbar.current.classList.remove("detached");
-        this.burgerPanel.current.classList.add("nav-burger-panel-move-lower");
-    }
-
-    detachNavBar(): void {
-      console.log("detaching");
-        this.navbar.current.classList.add("detached");
-        this.burgerPanel.current.classList.remove("nav-burger-panel-move-lower");
-    }
-
-    hideNavBar(): void {
-        this.navbar.current.classList.add("hidden");
-    }
-
-    showNavBar(): void {
-        this.navbar.current.classList.remove("hidden");
-        this.burgerPanel.current.classList.add("nav-burger-panel-move-lower");
-    }
-
 
     get navBarHeight(): number {
         const element = document.querySelector('.navbar');
-        const navBarHeight = element.getBoundingClientRect().height;
-        return navBarHeight;
+        return element?.getBoundingClientRect().height || 0;
     }
 
-
-    updateScrolledProgress(progress: number): void {
+    updateScrolledProgress = (progress: number) => {
         const element = document.getElementById('scroll-progress');
-        element.style.width = `${progress * 100}vw`;
-    }
+        if (element) element.style.width = `${progress * 100}vw`;
+    };
 
-    componentDidMount(): void {
-        this.listenContinuousScrolled();
+    listenDeltaScrolled = () => {
+        const { scrollStatus } = this.props;
+        const { lastScrollY, hideNavBarScrollSensitivity } = this.state;
 
-        window.addEventListener('click', (e) => {
-            if (this.burgerPanel.current && !this.burgerPanel.current.contains(e.target) && !this.burgerButton.current.contains(e.target)) {
-                this.hideBurgerMenu();
-            }
-        });
-    }
-
-    componentDidUpdate(prevProps: INavbarProps, prevState: INavbarState): void {
-        if (prevProps.scrollStatus.scrolling !== this.props.scrollStatus.scrolling) {
-            this.listenDeltaScrolled();
-        }
-
-        if (prevProps.scrollStatus.scrolled !== this.props.scrollStatus.scrolled) {
-          this.listenContinuousScrolled();
-        }
-
-        if (this.state.showBurgerPanel != prevState.showBurgerPanel) {
-            this.toggleBurgerMenu();
-        }
-    }
-
-
-    listenDeltaScrolled() {
-        const scrollStatus = this.props.scrollStatus;
-
-        if (scrollStatus.scrolled - this.state.lastScrollY >= this.state.hideNavBarScrollSensitivity) {
+        if (scrollStatus.scrolled! - lastScrollY >= hideNavBarScrollSensitivity) {
             this.hideNavBar();
-        } else if (this.state.lastScrollY - scrollStatus.scrolled >= this.state.hideNavBarScrollSensitivity) {
+        } else if (lastScrollY - scrollStatus.scrolled! >= hideNavBarScrollSensitivity) {
             this.showNavBar();
         }
+    };
 
-    }
-
-    listenContinuousScrolled() {
-        const scrollStatus = this.props.scrollStatus;
+    listenContinuousScrolled = () => {
+        const { scrollStatus } = this.props;
         const element = document.querySelector(".landing-page-content");
 
-        if (scrollStatus.scrolled > this.navBarHeight) {
+        if (scrollStatus.scrolled! > this.navBarHeight) {
             this.detachNavBar();
         } else {
             this.attachNavBar();
@@ -134,60 +76,99 @@ class NavBar extends Component<INavbarProps, INavbarState> {
 
         if (element) {
             const pageHeight = element.getBoundingClientRect().height - window.innerHeight;
-            this.updateScrolledProgress(scrollStatus.scrolled / pageHeight);
+            this.updateScrolledProgress(scrollStatus.scrolled! / pageHeight);
         }
 
-        this.setState({ lastScrollY: scrollStatus.scrolled });
+        this.setState({ lastScrollY: scrollStatus.scrolled! });
+    };
+
+    componentDidMount() {
+        this.listenContinuousScrolled();
+
+        window.addEventListener('click', (e) => {
+            if (this.burgerPanel.current && !this.burgerPanel.current.contains(e.target as Node) && !this.burgerButton.current.contains(e.target as Node)) {
+                this.hideBurgerMenu();
+            }
+        });
     }
 
-    toggleBurgerMenu(): void {
-        this.burgerPanel.current.classList.toggle("nav-burger-panel-hide");
+    componentDidUpdate(prevProps: INavbarProps) {
+        const { scrollStatus } = this.props;
+
+        if (prevProps.scrollStatus.scrolling !== scrollStatus.scrolling) {
+            this.listenDeltaScrolled();
+        }
+
+        if (prevProps.scrollStatus.scrolled !== scrollStatus.scrolled) {
+            this.listenContinuousScrolled();
+        }
     }
 
+    attachNavBar = () => {
+        this.navbar.current?.classList.remove("detached");
+        this.burgerPanel.current?.classList.add("nav-burger-panel-move-lower");
+    };
 
-    hideBurgerMenu(): void {
-        this.burgerPanel.current.classList.add("nav-burger-panel-hide");
-    }
+    detachNavBar = () => {
+        this.navbar.current?.classList.add("detached");
+        this.burgerPanel.current?.classList.remove("nav-burger-panel-move-lower");
+    };
 
-    render(): React.ReactElement<any, any> {
+    hideNavBar = () => {
+        this.navbar.current?.classList.add("hidden");
+    };
+
+    showNavBar = () => {
+        this.navbar.current?.classList.remove("hidden");
+        this.burgerPanel.current?.classList.add("nav-burger-panel-move-lower");
+    };
+
+    toggleBurgerMenu = () => {
+        this.burgerPanel.current?.classList.toggle("nav-burger-panel-hide");
+    };
+
+    hideBurgerMenu = () => {
+        this.burgerPanel.current?.classList.add("nav-burger-panel-hide");
+    };
+
+    renderNavLink = (link: { name: string, to: string }) => (
+        <NavLink
+            to={link.to}
+            className={({ isActive }) => ["navbar-item", isActive ? "navbar-item active-link" : null].filter(Boolean).join(" ")}
+            key={link.name}
+        >
+            {link.name}
+        </NavLink>
+    );
+
+    render() {
+        const { name, links } = this.state;
+
         return (
             <>
                 <div className="navbar" ref={this.navbar}>
                     <div className="navbar-content">
                         <NavLink to="/" style={{ textDecoration: "none" }}>
-                            <h1 className="logo">{this.state.name}</h1>
+                            <h1 className="logo">{name}</h1>
                         </NavLink>
                         <nav className="navbar-left">
-                            {
-                                this.state.links.map((link) => {
-                                    return (
-                                        <NavLink
-                                            to={link.to}
-                                            className={({ isActive }) => ["navbar-item", isActive ? "navbar-item active-link" : null,].filter(Boolean).join(" ")} key={link.name}>
-                                            {link.name}
-                                        </NavLink>
-                                    );
-                                })
-                            }
+                            {links.map(this.renderNavLink)}
                             <div className="selected-navlink-window">a</div>
                         </nav>
-                        <div ref={this.burgerButton} className="nav-burger" onClick={() => this.toggleBurgerMenu()}>
-                        </div>
+                        <div ref={this.burgerButton} className="nav-burger" onClick={this.toggleBurgerMenu}></div>
                     </div>
                     <div id="scroll-progress" ref={this.scrollProgress} />
                 </div>
                 <div ref={this.burgerPanel} className="nav-burger-panel nav-burger-panel-hide nav-burger-panel-move-lower">
-                    {
-                        this.state.links.map((link) => {
-                            return (
-                                <NavLink
-                                    to={link.to}
-                                    className={({ isActive }) => ["burger-item", isActive ? "burger-item active-link" : null,].filter(Boolean).join(" ")} key={link.name}>
-                                    {link.name}
-                                </NavLink>
-                            );
-                        })
-                    }
+                    {links.map(link => (
+                        <NavLink
+                            to={link.to}
+                            className={({ isActive }) => ["burger-item", isActive ? "burger-item active-link" : null].filter(Boolean).join(" ")}
+                            key={link.name}
+                        >
+                            {link.name}
+                        </NavLink>
+                    ))}
                 </div>
             </>
         );

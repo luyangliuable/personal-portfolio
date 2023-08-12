@@ -66,17 +66,19 @@ function App() {
                     scrolling: appState.scrolling
                 }
                 } />
-                <Routes>
-                    <Route path="/" element={
-                        <LandingPage
-                            scrolled={appState.scrolled}
-                            scrolling={appState.scrolling}
-                        />
-                    }></Route>
-                    <Route path="/blog" element={
-                        <Blog />
-                    }></Route>
-                </Routes>
+                <div className="page-body">
+                    <Routes>
+                        <Route path="/" element={
+                            <LandingPage
+                                scrolled={appState.scrolled}
+                                scrolling={appState.scrolling}
+                            />
+                        }></Route>
+                        <Route path="/blog" element={
+                            <Blog />
+                        }></Route>
+                    </Routes>
+                </div>
             </BrowserRouter>
         </div>
     );

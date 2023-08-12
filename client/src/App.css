@@ -14,6 +14,7 @@
 }
 
 :root {
+    --page-top-margin: 120px;
     --slightly-black: #1e1e1e
 }
 
@@ -101,4 +102,8 @@
 
 body {
     /* background: #000; */
+}
+
+.page-body {
+    margin-top: var(--page-top-margin);
 }

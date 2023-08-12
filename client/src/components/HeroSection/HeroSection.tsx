@@ -45,7 +45,7 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
 
     render(): any {
         return (
-            <div className="home-container" style={{marginTop: "130px"}}>
+            <div className="home-container">
                 {/* <div className="hero-accordion-button hero-accordion-left" /> */}
                 <div style={{ textAlign: "left" }}>
                     <ul>
