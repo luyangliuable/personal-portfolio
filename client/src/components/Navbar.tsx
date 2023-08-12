@@ -49,8 +49,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
     }
 
     updateScrolledProgress = (progress: number) => {
-        const element = document.getElementById('scroll-progress');
-        if (element) element.style.width = `${progress * 100}vw`;
+        if (this.scrollProgress) this.scrollProgress.current.style.width = `${progress * 100}vw`;
     };
 
     listenDeltaScrolled = () => {
@@ -66,7 +65,6 @@ class NavBar extends Component<INavbarProps, INavbarState> {
 
     listenContinuousScrolled = () => {
         const { scrollStatus } = this.props;
-        const element = document.querySelector(".landing-page-content");
 
         if (scrollStatus.scrolled! > this.navBarHeight) {
             this.detachNavBar();
@@ -74,11 +72,8 @@ class NavBar extends Component<INavbarProps, INavbarState> {
             this.attachNavBar();
         }
 
-        if (element) {
-            const pageHeight = element.getBoundingClientRect().height - window.innerHeight;
-            this.updateScrolledProgress(scrollStatus.scrolled! / pageHeight);
-        }
-
+        const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
+        this.updateScrolledProgress(scrollStatus.scrolled! / pageHeight);
         this.setState({ lastScrollY: scrollStatus.scrolled! });
     };
 
