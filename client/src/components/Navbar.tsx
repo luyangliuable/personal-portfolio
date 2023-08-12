@@ -55,9 +55,8 @@ class NavBar extends Component<INavbarProps, INavbarState> {
 
     attachNavBar(): void {
         this.navbar.current.classList.remove("detached");
-        this.burgerPanel.current.classList.remove("nav-burger-panel-move-lower");
+        this.burgerPanel.current.classList.add("nav-burger-panel-move-lower");
     }
-
 
     detachNavBar(): void {
         this.navbar.current.classList.add("detached");
@@ -112,7 +111,9 @@ class NavBar extends Component<INavbarProps, INavbarState> {
         const scrollStatus = this.props.scrollStatus;
 
         if (scrollStatus.scrolled > this.navBarHeight) {
-            this.detachNavBar();
+            window.setTimeout(() => {
+                this.detachNavBar();
+            }, 1000);
 
             if (scrollStatus.scrolled - this.state.lastScrollY >= this.state.hideNavBarScrollSensitivity) {
                 this.hideNavBar();
@@ -174,7 +175,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                     </div>
 
                 </div>
-                <div ref={this.burgerPanel} className="nav-burger-panel nav-burger-panel-hide">
+                <div ref={this.burgerPanel} className="nav-burger-panel nav-burger-panel-hide nav-burger-panel-move-lower">
                     {
                         this.state.links.map((link) => {
                             return (

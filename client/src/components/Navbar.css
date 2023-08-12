@@ -3,7 +3,7 @@
     --navbar-width: 100vw;
     --navbar-height: 93px;
     --navbar-max-height: 93px;
-    --progress-height: .5vh;
+    --progress-height: 5px;
     --navbar-item-border-radius: 4px;
     --navbar-item-width: 10vw;
     --navbar-item-margin: .5vw;
@@ -95,8 +95,8 @@
     -moz-transition: background .1s ease-in-out, box-shadow .5s ease-in-out, transform .2s ease-in-out;
     width: var(--navbar-width);
     height: var(--navbar-height);
-    max-height: var(--navbar-max-height);
     display: flex;
+    position: absolute;
     justify-content: space-between;
     box-shadow: 1px 1px 10px #EAD2A8;
     -webkit-box-shadow: 1px 1px 10px #EAD2A8;
@@ -176,15 +176,16 @@
         border-radius: 5px;
         text-decoration: none;
     }
+
+    .nav-burger-panel-hide {
+        transform: translateX(100%) !important;
+    }
 }
 
 
-.nav-burger-panel-hide {
-    transform: translateX(100%);
-}
 
 .hidden {
-    transform: translateY(min( var(--navbar-height), calc(-93px + var(--progress-height)) + .1vh ));
+    transform: translateY(min( var(--navbar-height), calc(-93px + var(--progress-height))));
 
 }
 
