@@ -16,6 +16,7 @@ interface INavbarState {
     links: { name: string, to: string }[];
     lastScrollY: number;
     hideNavBarScrollSensitivity: number;
+    navBarDetached: boolean;
     showBurgerPanel: boolean;
 }
 
@@ -33,10 +34,11 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                 { name: 'MyReflections', to: '/blog' },
                 { name: 'MyProjects', to: '/project' },
                 { name: 'Tools', to: '/tools' },
-                { name: 'Resume', to: 'https://docs.google.com/document/d/18WT-J7ZP5dcEJreXIvldSm1VySQhC0DQB0GzBXGyJEQ/edit?usp=sharing' },
+                { name: 'Resume', to: '/resume' },
                 { name: 'About', to: '/about' }
             ],
             lastScrollY: 0,
+            navBarDetached: false,
             hideNavBarScrollSensitivity: 5,
             showBurgerPanel: false,
             name: "Luyang's Coding Portfolio"
@@ -67,11 +69,9 @@ class NavBar extends Component<INavbarProps, INavbarState> {
     listenContinuousScrolled = () => {
         const { scrollStatus } = this.props;
 
-        if (scrollStatus.scrolled >= this.navBarHeight) {
+        if (!this.state.navBarDetached && scrollStatus.scrolled >= this.navBarHeight) {
             this.detachNavBar();
         } else if (scrollStatus.scrolled < this.navBarHeight) {
-            this.attachNavBar();
-        } else {
             this.attachNavBar();
         }
 
@@ -105,11 +105,19 @@ class NavBar extends Component<INavbarProps, INavbarState> {
     attachNavBar = () => {
         this.navbar.current?.classList.remove("detached");
         this.burgerPanel.current?.classList.add("nav-burger-panel-move-lower");
+        this.setState({
+            ...this.state,
+            navBarDetached: false
+        });
     };
 
     detachNavBar = () => {
         this.navbar.current?.classList.add("detached");
         this.burgerPanel.current?.classList.remove("nav-burger-panel-move-lower");
+        this.setState({
+            ...this.state,
+            navBarDetached: true
+        });
     };
 
     hideNavBar = () => {
@@ -151,10 +159,24 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                         </NavLink>
                         <nav className="navbar-left">
                             {links.map(this.renderNavLink)}
-                            <div className="selected-navlink-window">a</div>
+                            <div className="selected-navlink-window"></div>
                         </nav>
-                        <p style={{ color: "white" }}>{this.props.scrollStatus.scrolled - this.navBarHeight}</p>
-                        <div ref={this.burgerButton} className="nav-burger" onClick={this.toggleBurgerMenu}></div>
+                        <div ref={this.burgerButton} className="nav-burger" onClick={this.toggleBurgerMenu}>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="#f2f2f2"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="navbar-burger-icon" >
+                                <path d="M3 12h18M3 6h18M3 18h18">
+                                </path>
+                            </svg>
+                        </div>
                     </div>
                     <div id="scroll-progress" ref={this.scrollProgress} />
                 </div>
