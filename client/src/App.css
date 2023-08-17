@@ -130,13 +130,14 @@ body {
     margin-bottom: var(--home-container-margin);
     border-radius: 14px;
     transform: translate(0, 0);
+    left: 0;
     -webkit-transform: translate(0, 0);
 }
 
 .fixed {
     position: fixed;
     top: 50%;
-    left: 50%;
+    left: 50% !important;
     transform: translate(-50%, -50%) !important;
     -webkit-transform: translate(-50%, -50%) !important;
 }
