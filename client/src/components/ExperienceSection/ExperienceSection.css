@@ -44,6 +44,7 @@
 
 
 .experience {
+    position: relative;
     transform: translate(0, 0);
     -webkit-transform: translate(0, 0);
     left: 0;

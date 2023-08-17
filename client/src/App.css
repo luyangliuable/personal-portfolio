@@ -117,6 +117,7 @@ body {
 }
 
 .landing-page-card {
+    position: relative;
     display: flex;
     padding: 3vw 0 3vw;
     justify-content: space-between;
