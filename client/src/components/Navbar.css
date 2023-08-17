@@ -19,7 +19,7 @@
     border-radius: var(--navbar-item-border-radius);
     transform: var( --default-select-navlink-width-transform );
     background: var(--selected-navlink-window-color);
-    opacity: 1;
+    opacity: 0;
     z-index: 0;
 }
 
