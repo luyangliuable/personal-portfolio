@@ -25,7 +25,7 @@ class LandingPage extends Component<ILandingPageProps, ILandingPagestate> {
                 </div>
 
                 <div style={{height: "180vh"}}>
-                    <div className="landing-page-card Experience">
+                    <div className="landing-page-card experience">
                         <Experiences scrolled={this.props.scrolled} />
                     </div>
                 </div>

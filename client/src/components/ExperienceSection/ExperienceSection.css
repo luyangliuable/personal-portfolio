@@ -40,3 +40,10 @@
 .experience-section-card.below {
     margin-top: 200px; /* Adjust as needed */
 }
+
+
+
+.experience {
+    transform: translate(0, 0);
+    -webkit-transform: translate(0, 0);
+}
