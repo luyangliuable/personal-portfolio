@@ -94,7 +94,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
 
 
     updateTimeLineLength(): void {
-        const offset = 100;
+        const offset = 250;
 
         this.setState({
             ...this.state,
