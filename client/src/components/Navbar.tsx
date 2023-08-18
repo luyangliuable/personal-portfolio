@@ -13,7 +13,14 @@ interface INavbarProps {
 
 interface INavbarState {
     name: string;
-    links: { name: string, to: string }[];
+    links: {
+        name: string,
+        to: string,
+        sublinks?: {
+            name: string,
+            to: string
+        }[]
+    }[];
     lastScrollY: number;
     hideNavBarScrollSensitivity: number;
     navBarDetached: boolean;
@@ -25,13 +32,28 @@ class NavBar extends Component<INavbarProps, INavbarState> {
     burgerPanel = createRef<HTMLDivElement>();
     burgerButton = createRef<HTMLDivElement>();
     scrollProgress = createRef<HTMLDivElement>();
+    navbarSubmenu = createRef<HTMLDivElement>();
 
     constructor(props: INavbarProps) {
         super(props);
         this.state = {
             links: [
                 { name: 'Home', to: '/' },
-                { name: 'MyReflections', to: '/blog' },
+                {
+                    name: 'MyReflections',
+                    to: '/blog',
+                    sublinks: [{
+                        name: 'Mood Tracker',
+                        to: '/mood_tracker',
+                    }, {
+                        name: 'Posts',
+                        to: '/blogs',
+                    }, {
+                        name: 'Daily Reflections',
+                        to: '/daily_refletions',
+                    }
+                    ]
+                },
                 { name: 'MyProjects', to: '/project' },
                 { name: 'Tools', to: '/tools' },
                 { name: 'Resume', to: '/resume' },
@@ -137,11 +159,22 @@ class NavBar extends Component<INavbarProps, INavbarState> {
         this.burgerPanel.current?.classList.add("nav-burger-panel-hide");
     };
 
+    renderSubmenu = (ancesterLinkName: string) => {
+        if (this.state.links.filter(item => item.name === ancesterLinkName)[0].sublinks)
+            this.navbarSubmenu.current?.classList.add("show-navbar-submenu");
+
+    }
+
+    resetSubmenu = () => {
+        this.navbarSubmenu.current?.classList.remove("show-navbar-submenu");
+    }
+
     renderNavLink = (link: { name: string, to: string }) => (
         <NavLink
             to={link.to}
             className={({ isActive }) => ["navbar-item", isActive ? "navbar-item active-link" : null].filter(Boolean).join(" ")}
             key={link.name}
+            onMouseOver={() => this.renderSubmenu(link.name)}
         >
             {link.name}
         </NavLink>
@@ -152,7 +185,10 @@ class NavBar extends Component<INavbarProps, INavbarState> {
 
         return (
             <>
-                <div className="navbar" ref={this.navbar}>
+                <div
+                    className="navbar"
+                    onMouseLeave={() => this.resetSubmenu() }
+                    ref={this.navbar}>
                     <div className="navbar-content">
                         <NavLink to="/" style={{ textDecoration: "none" }}>
                             <h1 className="logo">{name}</h1>
@@ -178,18 +214,24 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                             </svg>
                         </div>
                     </div>
-                    <div id="scroll-progress" ref={this.scrollProgress} />
+                    <div className="navbar-submenu" ref={this.navbarSubmenu}>
+                        <div id="scroll-progress" ref={this.scrollProgress} />
+                    </div>
                 </div>
+
+
                 <div ref={this.burgerPanel} className="nav-burger-panel nav-burger-panel-hide nav-burger-panel-move-lower">
-                    {links.map(link => (
-                        <NavLink
-                            to={link.to}
-                            className={({ isActive }) => ["burger-item", isActive ? "burger-item active-link" : null].filter(Boolean).join(" ")}
-                            key={link.name}
-                        >
-                            {link.name}
-                        </NavLink>
-                    ))}
+                    {
+                        links.map(link => (
+                            <NavLink
+                                to={link.to}
+                                className={({ isActive }) => ["burger-item", isActive ? "burger-item active-link" : null].filter(Boolean).join(" ")}
+                                key={link.name}
+                            >
+                                {link.name}
+                            </NavLink>
+                        ))
+                    }
                 </div>
             </>
         );

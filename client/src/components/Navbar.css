@@ -76,21 +76,16 @@
 }
 
 .navbar {
+    position: absolute;
+    background: var(--dark-mode-navbar-color);
     font-family: 'Proxima Nova';
-    display: flex;
-    flex-direction: column;
     z-index: 10;
     transition: background 1s ease-in-out, box-shadow .1s ease-in-out, transform .1s ease-in-out;
     -webkit-transition: background .1s ease-in-out, box-shadow .5s ease-in-out, transform .2s ease-in-out;
     -moz-transition: background .1s ease-in-out, box-shadow .5s ease-in-out, transform .2s ease-in-out;
     width: var(--navbar-width);
     height: var(--navbar-height);
-    display: flex;
-    flex-direction: column;
-    position: absolute;
     top: 0;
-    justify-content: space-around;
-    background: var(--dark-mode-navbar-color);
 }
 
 .navbar-content {
@@ -263,3 +258,32 @@
 .active-link {
     background: var(--dark-mode-purple-2);
 }
+
+/*****************************************************************************/
+/*                                  Submenu                                  */
+/*****************************************************************************/
+
+.navbar-submenu {
+    display: flex;
+    flex-direction: column;
+    transition: background 1s ease-in-out, box-shadow .1s ease-in-out, transform .1s ease-in-out;
+    -webkit-transition: background .1s ease-in-out, box-shadow .5s ease-in-out, transform .2s ease-in-out;
+    -moz-transition: background .1s ease-in-out, box-shadow .5s ease-in-out, transform .2s ease-in-out;
+    width: var(--navbar-width);
+    height: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background: orange;
+    display: none;
+    opacity: 0;
+    transition: opacity 100s ease-in, height 1s ease-in;
+}
+
+.show-navbar-submenu {
+    opacity: 1;
+    display: block;
+    height: 60px;
+
+}
+
