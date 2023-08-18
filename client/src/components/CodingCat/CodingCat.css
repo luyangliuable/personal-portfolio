@@ -44,3 +44,6 @@
     stroke: var(--cyan);
 }
 
+.stop-music-note-animation, .stop-music-note-animation *, .stop-music-note-animation * * {
+    animation-play-state: paused;
+}

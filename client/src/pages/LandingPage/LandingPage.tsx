@@ -19,21 +19,19 @@ class LandingPage extends Component<ILandingPageProps, ILandingPagestate> {
 
     render(): React.ReactElement<any, any> {
         return (
-            <>
-                <div className="landing-page-content">
-                    <HeroSection />
+            <div className="landing-page-content">
+                <HeroSection />
 
-                    <div className="home-container Experience">
-                        <Experiences />
-                    </div>
+                <div className="home-container Experience">
+                    <Experiences />
+                </div>
 
-                    <div className="home-container blogs">
-                        <div style={{ textAlign: "left", marginLeft: "2vw" }}>
-                            <h1>Blogs</h1>
-                        </div>
+                <div className="home-container blogs">
+                    <div style={{ textAlign: "left", marginLeft: "2vw" }}>
+                        <h1>Blogs</h1>
                     </div>
                 </div>
-            </>
+            </div>
         )
     }
 }

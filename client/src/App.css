@@ -14,7 +14,21 @@
 }
 
 :root {
-    --slightly-black: #1e1e1e
+    --page-top-margin: 120px;
+    --dark-mode-black: #1e1e1e;
+    --dark-mode-purple: #491ed3;
+    --dark-mode-purple-2: #897ed3;
+    --dark-mode-pink: #AA6DA3;
+    --dark-mode-blue: #1e90ff
+    --dark-mode-blue-2: #1c7497;
+    --dark-mode-background-color: #0d0d0d;
+    --dark-mode-navbar-color: #333;
+    --dark-mode-font-color: #f2f2f2;
+}
+
+
+body {
+    background: #EEE;
 }
 
 .App {
@@ -95,10 +109,6 @@
     color: #333;
 }
 
-.active-link {
-    background: #897ed3;
-}
-
-body {
-    /* background: #000; */
+.page-body {
+    margin-top: var(--page-top-margin);
 }

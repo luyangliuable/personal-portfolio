@@ -3,6 +3,7 @@ import './App.css';
 import NavBar from './components/Navbar';
 import Blog from './pages/BlogPage/Blogs';
 import LandingPage from './pages/LandingPage/LandingPage';
+import ResumePage from './pages/ResumePage/ResumePage';
 
 import { useState, useEffect } from 'react';
 
@@ -66,17 +67,22 @@ function App() {
                     scrolling: appState.scrolling
                 }
                 } />
-                <Routes>
-                    <Route path="/" element={
-                        <LandingPage
-                            scrolled={appState.scrolled}
-                            scrolling={appState.scrolling}
-                        />
-                    }></Route>
-                    <Route path="/blog" element={
-                        <Blog />
-                    }></Route>
-                </Routes>
+                <div className="page-body">
+                    <Routes>
+                        <Route path="/" element={
+                            <LandingPage
+                                scrolled={appState.scrolled}
+                                scrolling={appState.scrolling}
+                            />
+                        }/>
+                        <Route path="/blog" element={
+                            <Blog />
+                        }/>
+                        <Route path="/resume" element={
+                            <ResumePage />
+                        }/>
+                    </Routes>
+                </div>
             </BrowserRouter>
         </div>
     );

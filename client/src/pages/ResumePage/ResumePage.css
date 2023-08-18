@@ -1,0 +1,8 @@
+.browser {
+    border: none;
+    width: 100vw;
+    height: 85vh;
+    position: fixed;
+    left:0;
+    top: 100px;
+}

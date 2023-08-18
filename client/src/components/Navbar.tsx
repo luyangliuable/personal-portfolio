@@ -1,190 +1,236 @@
-import React, { Component, createRef, RefObject } from 'react';
+import React, { Component, createRef } from 'react';
 import { NavLink } from 'react-router-dom';
-
 import "./Navbar.css";
 
 interface INavbarProps {
-    name?: string,
-    current?: string,
-    scrollStatus: scrollStatus
+    name?: string;
+    current?: string;
+    scrollStatus: {
+        scrolled: number | null;
+        scrolling: boolean | null;
+    };
 }
 
 interface INavbarState {
-    name: string,
-    links: { name: string, to: string }[],
-    lastScrollY: number,
-    hideNavBarScrollSensitivity: number,
-    showBurgerPanel: boolean,
-    render?: () => React.ReactElement<any, any>,
+    name: string;
+    links: {
+        name: string,
+        to: string,
+        sublinks?: {
+            name: string,
+            to: string
+        }[]
+    }[];
+    lastScrollY: number;
+    hideNavBarScrollSensitivity: number;
+    navBarDetached: boolean;
+    showBurgerPanel: boolean;
 }
-
-interface scrollStatus {
-    scrolled: number | null,
-    scrolling: boolean | null
-}
-
 
 class NavBar extends Component<INavbarProps, INavbarState> {
-    navbar: RefObject<any>;
-    burgerPanel: RefObject<any>;
-    burgerButton: RefObject<any>;
-    scrollProgress: RefObject<any>;
+    navbar = createRef<HTMLDivElement>();
+    burgerPanel = createRef<HTMLDivElement>();
+    burgerButton = createRef<HTMLDivElement>();
+    scrollProgress = createRef<HTMLDivElement>();
+    navbarSubmenu = createRef<HTMLDivElement>();
 
     constructor(props: INavbarProps) {
         super(props);
         this.state = {
             links: [
                 { name: 'Home', to: '/' },
-                { name: 'MyReflections', to: '/blog' },
+                {
+                    name: 'MyReflections',
+                    to: '/blog',
+                    sublinks: [{
+                        name: 'Mood Tracker',
+                        to: '/mood_tracker',
+                    }, {
+                        name: 'Posts',
+                        to: '/blogs',
+                    }, {
+                        name: 'Daily Reflections',
+                        to: '/daily_refletions',
+                    }
+                    ]
+                },
                 { name: 'MyProjects', to: '/project' },
                 { name: 'Tools', to: '/tools' },
-                { name: 'Resume', to: 'https://docs.google.com/document/d/18WT-J7ZP5dcEJreXIvldSm1VySQhC0DQB0GzBXGyJEQ/edit?usp=sharing' },
+                { name: 'Resume', to: '/resume' },
                 { name: 'About', to: '/about' }
             ],
-            lastScrollY: null,
+            lastScrollY: 0,
+            navBarDetached: false,
             hideNavBarScrollSensitivity: 5,
             showBurgerPanel: false,
             name: "Luyang's Coding Portfolio"
         };
-
-        this.navbar = createRef();
-        this.scrollProgress = createRef();
-        this.burgerPanel = createRef();
-        this.burgerButton = createRef();
     }
-
-    attachNavBar(): void {
-        this.navbar.current.classList.remove("detached");
-        this.burgerPanel.current.classList.remove("nav-burger-panel-move-lower");
-    }
-
-
-    detachNavBar(): void {
-        this.navbar.current.classList.add("detached");
-        this.burgerPanel.current.classList.remove("nav-burger-panel-move-lower");
-    }
-
-    hideNavBar(): void {
-        this.navbar.current.classList.add("hidden");
-    }
-
-    showNavBar(): void {
-        this.navbar.current.classList.remove("hidden");
-        this.burgerPanel.current.classList.add("nav-burger-panel-move-lower");
-    }
-
 
     get navBarHeight(): number {
         const element = document.querySelector('.navbar');
-        const navBarHeight = element.getBoundingClientRect().height;
-        return navBarHeight;
+        return element?.getBoundingClientRect().height || 0;
     }
 
+    updateScrolledProgress = (progress: number) => {
+        if (this.scrollProgress) this.scrollProgress.current.style.width = `${progress * 100}vw`;
+    };
 
-    updateScrolledProgress(progress: number): void {
-        const element = document.getElementById('scroll-progress');
-        element.style.width = `${progress * 100}vw`;
-    }
+    listenDeltaScrolled = () => {
+        const { scrollStatus } = this.props;
+        const { lastScrollY, hideNavBarScrollSensitivity } = this.state;
 
-    componentDidMount(): void {
-        this.listenScrollProgress();
+        // max because safari is stupid and it sometimes goes to negative scroll positions
+        if (scrollStatus.scrolled - Math.max(0, lastScrollY) >= hideNavBarScrollSensitivity) {
+            this.hideNavBar();
+        } else if (Math.max(0, lastScrollY - scrollStatus.scrolled) >= hideNavBarScrollSensitivity) {
+            this.showNavBar();
+        }
+    };
+
+    listenContinuousScrolled = () => {
+        const { scrollStatus } = this.props;
+
+        if (!this.state.navBarDetached && scrollStatus.scrolled >= this.navBarHeight) {
+            this.detachNavBar();
+        } else if (scrollStatus.scrolled < this.navBarHeight) {
+            this.attachNavBar();
+        }
+
+        const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
+        this.updateScrolledProgress(scrollStatus.scrolled! / pageHeight);
+        this.setState({ lastScrollY: scrollStatus.scrolled! });
+    };
+
+    componentDidMount() {
+        this.listenContinuousScrolled();
 
         window.addEventListener('click', (e) => {
-            if (this.burgerPanel.current && !this.burgerPanel.current.contains(e.target) && !this.burgerButton.current.contains(e.target)) {
+            if (this.burgerPanel.current && !this.burgerPanel.current.contains(e.target as Node) && !this.burgerButton.current.contains(e.target as Node)) {
                 this.hideBurgerMenu();
             }
         });
     }
 
-    componentDidUpdate(prevProps: INavbarProps, prevState: INavbarState): void {
-        if (prevProps.scrollStatus.scrolling !== this.props.scrollStatus.scrolling) {
-            this.listenScrollProgressForNavbar();
-            this.listenScrollProgress();
+    componentDidUpdate(prevProps: INavbarProps) {
+        const { scrollStatus } = this.props;
+
+        if (prevProps.scrollStatus.scrolling !== scrollStatus.scrolling) {
+            this.listenDeltaScrolled();
         }
 
-        if (this.state.showBurgerPanel != prevState.showBurgerPanel) {
-            this.toggleBurgerMenu();
-        }
-    }
-
-
-    listenScrollProgressForNavbar() {
-        const scrollStatus = this.props.scrollStatus;
-
-        if (scrollStatus.scrolled > this.navBarHeight) {
-            this.detachNavBar();
-
-            if (scrollStatus.scrolled - this.state.lastScrollY >= this.state.hideNavBarScrollSensitivity) {
-                this.hideNavBar();
-            } else if (this.state.lastScrollY - scrollStatus.scrolled >= this.state.hideNavBarScrollSensitivity) {
-                this.showNavBar();
-            }
-        } else {
-            this.attachNavBar();
+        if (prevProps.scrollStatus.scrolled !== scrollStatus.scrolled) {
+            this.listenContinuousScrolled();
         }
     }
 
-    listenScrollProgress() {
-        const scrollStatus = this.props.scrollStatus;
-        const element = document.querySelector(".landing-page-content");
+    attachNavBar = () => {
+        this.navbar.current?.classList.remove("detached");
+        this.burgerPanel.current?.classList.add("nav-burger-panel-move-lower");
+        this.setState({
+            ...this.state,
+            navBarDetached: false
+        });
+    };
 
-        if (element) {
-            const pageHeight = element.getBoundingClientRect().height - window.innerHeight;
-            this.updateScrolledProgress(scrollStatus.scrolled / pageHeight);
-        }
+    detachNavBar = () => {
+        this.navbar.current?.classList.add("detached");
+        this.burgerPanel.current?.classList.remove("nav-burger-panel-move-lower");
+        this.setState({
+            ...this.state,
+            navBarDetached: true
+        });
+    };
 
-        this.setState({ lastScrollY: scrollStatus.scrolled });
+    hideNavBar = () => {
+        this.navbar.current?.classList.add("hidden");
+    };
+
+    showNavBar = () => {
+        this.navbar.current?.classList.remove("hidden");
+        this.burgerPanel.current?.classList.add("nav-burger-panel-move-lower");
+    };
+
+    toggleBurgerMenu = () => {
+        this.burgerPanel.current?.classList.toggle("nav-burger-panel-hide");
+    };
+
+    hideBurgerMenu = () => {
+        this.burgerPanel.current?.classList.add("nav-burger-panel-hide");
+    };
+
+    renderSubmenu = (ancesterLinkName: string) => {
+        if (this.state.links.filter(item => item.name === ancesterLinkName)[0].sublinks)
+            this.navbarSubmenu.current?.classList.add("show-navbar-submenu");
+
     }
 
-    toggleBurgerMenu(): void {
-        this.burgerPanel.current.classList.toggle("nav-burger-panel-hide");
+    resetSubmenu = () => {
+        this.navbarSubmenu.current?.classList.remove("show-navbar-submenu");
     }
 
+    renderNavLink = (link: { name: string, to: string }) => (
+        <NavLink
+            to={link.to}
+            className={({ isActive }) => ["navbar-item", isActive ? "navbar-item active-link" : null].filter(Boolean).join(" ")}
+            key={link.name}
+            onMouseOver={() => this.renderSubmenu(link.name)}
+        >
+            {link.name}
+        </NavLink>
+    );
 
-    hideBurgerMenu(): void {
-        this.burgerPanel.current.classList.add("nav-burger-panel-hide");
-    }
+    render() {
+        const { name, links } = this.state;
 
-    render(): React.ReactElement<any, any> {
         return (
             <>
-                <div className="navbar" ref={this.navbar}>
+                <div
+                    className="navbar"
+                    onMouseLeave={() => this.resetSubmenu() }
+                    ref={this.navbar}>
                     <div className="navbar-content">
                         <NavLink to="/" style={{ textDecoration: "none" }}>
-                            <h1 className="logo">{this.state.name}</h1>
+                            <h1 className="logo">{name}</h1>
                         </NavLink>
                         <nav className="navbar-left">
-                            {
-                                this.state.links.map((link) => {
-                                    return (
-                                        <NavLink
-                                            to={link.to}
-                                            className={({ isActive }) => ["navbar-item", isActive ? "navbar-item active-link" : null,].filter(Boolean).join(" ")} key={link.name}>
-                                            {link.name}
-                                        </NavLink>
-                                    );
-                                })
-                            }
-                            <div className="selected-navlink-window">a</div>
+                            {links.map(this.renderNavLink)}
+                            <div className="selected-navlink-window"></div>
                         </nav>
-                        <div ref={this.burgerButton} className="nav-burger" onClick={() => this.toggleBurgerMenu()}>
+                        <div ref={this.burgerButton} className="nav-burger" onClick={this.toggleBurgerMenu}>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="#f2f2f2"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="navbar-burger-icon" >
+                                <path d="M3 12h18M3 6h18M3 18h18">
+                                </path>
+                            </svg>
                         </div>
                     </div>
-                    <div id="scroll-progress" ref={this.scrollProgress}>
+                    <div className="navbar-submenu" ref={this.navbarSubmenu}>
+                        <div id="scroll-progress" ref={this.scrollProgress} />
                     </div>
-
                 </div>
-                <div ref={this.burgerPanel} className="nav-burger-panel">
+
+
+                <div ref={this.burgerPanel} className="nav-burger-panel nav-burger-panel-hide nav-burger-panel-move-lower">
                     {
-                        this.state.links.map((link) => {
-                            return (
-                                <NavLink
-                                    to={link.to}
-                                    className={({ isActive }) => ["burger-item", isActive ? "burger-item active-link" : null,].filter(Boolean).join(" ")} key={link.name}>
-                                    {link.name}
-                                </NavLink>
-                            );
-                        })
+                        links.map(link => (
+                            <NavLink
+                                to={link.to}
+                                className={({ isActive }) => ["burger-item", isActive ? "burger-item active-link" : null].filter(Boolean).join(" ")}
+                                key={link.name}
+                            >
+                                {link.name}
+                            </NavLink>
+                        ))
                     }
                 </div>
             </>
