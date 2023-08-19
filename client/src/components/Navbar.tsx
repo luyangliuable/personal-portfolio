@@ -21,6 +21,7 @@ interface INavbarState {
             to: string
         }[]
     }[];
+    currentlyHoveredNavbarLinkName: string | null;
     lastScrollY: number;
     hideNavBarScrollSensitivity: number;
     navBarDetached: boolean;
@@ -47,20 +48,48 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                         to: '/mood_tracker',
                     }, {
                         name: 'Posts',
-                        to: '/blogs',
+                        to: '/blog',
                     }, {
                         name: 'Daily Reflections',
                         to: '/daily_refletions',
+                    }, {
+                        name: 'Gym Log',
+                        to: '/gym_log',
+                    }
+
+                    ]
+                },
+                {
+                    name: 'HobbiesAndProjects',
+                    to: '/project',
+                    sublinks: [{
+                        name: 'Coding Projects',
+                        to: '/project',
+                    }, {
+                        name: '3D prints',
+                        to: '/3d_print',
                     }
                     ]
                 },
-                { name: 'MyProjects', to: '/project' },
                 { name: 'Tools', to: '/tools' },
                 { name: 'Resume', to: '/resume' },
-                { name: 'About', to: '/about' }
+                {
+                  name: 'About',
+                  to: '/about',
+                  sublinks: [
+                    {
+                      name: "Teddie the Dog",
+                      to: "/teddie"
+                    }, {
+                      name: "About Me",
+                      to: '/about'
+                    }
+                  ]
+                }
             ],
             lastScrollY: 0,
             navBarDetached: false,
+            currentlyHoveredNavbarLinkName: null,
             hideNavBarScrollSensitivity: 5,
             showBurgerPanel: false,
             name: "Luyang's Coding Portfolio"
@@ -160,9 +189,15 @@ class NavBar extends Component<INavbarProps, INavbarState> {
     };
 
     renderSubmenu = (ancesterLinkName: string) => {
-        if (this.state.links.filter(item => item.name === ancesterLinkName)[0].sublinks)
+        if (this.state.links.filter(item => item.name === ancesterLinkName)[0].sublinks) {
             this.navbarSubmenu.current?.classList.add("show-navbar-submenu");
+            this.setState({
+                ...this.state,
+                currentlyHoveredNavbarLinkName: ancesterLinkName
+            });
+        }
 
+        console.log(this.state.currentlyHoveredNavbarLinkName);
     }
 
     resetSubmenu = () => {
@@ -182,12 +217,13 @@ class NavBar extends Component<INavbarProps, INavbarState> {
 
     render() {
         const { name, links } = this.state;
+        const currentlyHoveredNavbarLinkName = this.state.currentlyHoveredNavbarLinkName;
 
         return (
             <>
                 <div
                     className="navbar"
-                    onMouseLeave={() => this.resetSubmenu() }
+                    onMouseLeave={() => this.resetSubmenu()}
                     ref={this.navbar}>
                     <div className="navbar-content">
                         <NavLink to="/" style={{ textDecoration: "none" }}>
@@ -214,8 +250,12 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                             </svg>
                         </div>
                     </div>
+                    <div id="scroll-progress" ref={this.scrollProgress} />
                     <div className="navbar-submenu" ref={this.navbarSubmenu}>
-                        <div id="scroll-progress" ref={this.scrollProgress} />
+                        {
+                            this.state.currentlyHoveredNavbarLinkName
+                            && links.filter(item => item.name === currentlyHoveredNavbarLinkName)[0].sublinks?.map(this.renderNavLink)
+                        }
                     </div>
                 </div>
 

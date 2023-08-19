@@ -4,6 +4,7 @@ import NavBar from './components/Navbar';
 import Blog from './pages/BlogPage/Blogs';
 import LandingPage from './pages/LandingPage/LandingPage';
 import ResumePage from './pages/ResumePage/ResumePage';
+import UnderConstruction from './pages/UnderConstructionPage/UnderConstruction';
 
 import { useState, useEffect } from 'react';
 
@@ -81,8 +82,10 @@ function App() {
                         <Route path="/resume" element={
                             <ResumePage />
                         }/>
+                        <Route path="*" element={<UnderConstruction />} /> {/* Catch-all route */}
                     </Routes>
                 </div>
+
             </BrowserRouter>
         </div>
     );

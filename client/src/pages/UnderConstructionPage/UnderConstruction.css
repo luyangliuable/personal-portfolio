@@ -1,0 +1,11 @@
+.under-contruction-card {
+    padding: 100px;
+}
+
+.under-construction-container {
+    with: 100vw;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
