@@ -133,12 +133,13 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
 
     unlockCurrentElementPosition(): void {
         this.experienceSectionParentRef.current!.parentElement.classList.remove("fixed");
-
         this.scrollTimeLine(0);
     }
 
     scrollTimeLine(scrollXAmount: number): void {
-        this.experienceSectionContentRef.current!.style.transform = `translate(${scrollXAmount}px, 0)`;
+        const transformValue = `translate(${ scrollXAmount }px, 0)`;
+        this.experienceSectionContentRef.current!.style.transform = transformValue;
+        this.experienceSectionContentRef.current!.style.webkitTransform = transformValue;
     }
 
     checkCurrentElementLocked(): boolean {

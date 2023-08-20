@@ -37,10 +37,6 @@
     width: calc(var(--home-container-width) - 3vw);
 }
 
-.experience-section-card.above {
-    /* margin-top: 20px; /\* Adjust as needed *\/ */
-}
-
 .experience-section-card.below {
     margin-top: 200px; /* Adjust as needed */
 }
