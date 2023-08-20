@@ -152,7 +152,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
 
             /* console.log(this.props.scrolled - this.state.lockPosition <= this.state.timeLineLength) */
 
-            if (this.isCenterOfDivAtCenterOfScreen(this.experienceSectionParentRef.current!) < -50) {
+            if (this.isCenterOfDivAtCenterOfScreen(this.experienceSectionParentRef.current!) < 0) {
                 this.lockCurrentElementPosition();
             } else if (this.props.scrolled <= this.state.lockPosition) {
                 // goes up unlock
