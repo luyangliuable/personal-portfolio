@@ -148,10 +148,11 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
     componentDidUpdate(prevProps: Readonly<IExperienceSectionProps>, prevState: Readonly<IExperienceSectionState<any, React.JSXElementConstructor<any>>>, snapshot?: any): void {
 
         if (this.props.scrolled !== prevProps.scrolled) {
-            console.log(this.state.lockPosition, this.props.scrolled);
             // lockedPosition gets reused
 
-            if (this.isCenterOfDivAtCenterOfScreen(this.experienceSectionParentRef.current!) < -50 && this.props.scrolled - this.state.lockPosition <= this.state.timeLineLength) {
+            /* console.log(this.props.scrolled - this.state.lockPosition <= this.state.timeLineLength) */
+
+            if (this.isCenterOfDivAtCenterOfScreen(this.experienceSectionParentRef.current!) < -50) {
                 this.lockCurrentElementPosition();
             } else if (this.props.scrolled <= this.state.lockPosition) {
                 // goes up unlock
