@@ -1,9 +1,10 @@
 .under-contruction-card {
-    padding: 100px;
+    width: 40vw !important;
+    height: 20vw !important;
 }
 
 .under-construction-container {
-    with: 100vw;
+    width: 100vw;
     height: 80vh;
     display: flex;
     justify-content: center;

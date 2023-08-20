@@ -6,7 +6,7 @@
     --progress-height: 8px;
     --navbar-item-border-radius: 4px;
     --navbar-item-width: 10vw;
-    --navbar-item-margin: .5vw;
+    --navbar-item-margin: 0.1vw;
     --default-select-navlink-width-transform: translateX(calc(-6*( var(--navbar-item-width) + var(--navbar-item-margin)) + var(--navbar-item-margin) ));
     --navbar-item-padding: 10px 0 10px;
     --burger-panel-y-position: translateY(0)
@@ -69,6 +69,7 @@
     border-radius: var(--navbar-item-border-radius);
     z-index: 1;
     margin-left: var(--navbar-item-margin);
+    /* border-left: var(--navbar-item-margin); */
 }
 
 .navbar-submenu-item:hover {

@@ -1,32 +1,9 @@
 import React, { Component, createRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import "./Navbar.css";
-
-interface INavbarProps {
-    name?: string;
-    current?: string;
-    scrollStatus: {
-        scrolled: number | null;
-        scrolling: boolean | null;
-    };
-}
-
-interface INavbarState {
-    name: string;
-    links: {
-        name: string,
-        to: string,
-        sublinks?: {
-            name: string,
-            to: string
-        }[]
-    }[];
-    currentlyHoveredNavbarLinkName: string | null;
-    lastScrollY: number;
-    hideNavBarScrollSensitivity: number;
-    navBarDetached: boolean;
-    showBurgerPanel: boolean;
-}
+import INavbarState from "./Interface/INavbarState";
+import INavbarProps from "./Interface/INavbarProps";
+import NavbarBurger from "./NavbarBurger/NavbarBurger";
 
 class NavBar extends Component<INavbarProps, INavbarState> {
     navbar = createRef<HTMLDivElement>();
@@ -66,25 +43,31 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                         name: 'Coding Projects',
                         to: '/project',
                     }, {
-                        name: '3D prints',
+                        name: '3D Prints',
                         to: '/3d_print',
                     }
                     ]
                 },
-                { name: 'Tools', to: '/tools' },
-                { name: 'Resume', to: '/resume' },
                 {
-                  name: 'About',
-                  to: '/about',
-                  sublinks: [
-                    {
-                      name: "Teddie the Dog",
-                      to: "/teddie"
-                    }, {
-                      name: "About Me",
-                      to: '/about'
-                    }
-                  ]
+                  name: 'Tools',
+                  to: '/tools'
+                },
+                {
+                  name: 'Resume',
+                  to: '/resume'
+                },
+                {
+                    name: 'About',
+                    to: '/about',
+                    sublinks: [
+                        {
+                            name: "Teddie the Dog",
+                            to: "/teddie"
+                        }, {
+                            name: "About Me",
+                            to: '/about'
+                        }
+                    ]
                 }
             ],
             lastScrollY: 0,
@@ -195,9 +178,9 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                 ...this.state,
                 currentlyHoveredNavbarLinkName: ancesterLinkName
             });
+        } else {
+            this.navbarSubmenu.current?.classList.remove("show-navbar-submenu");
         }
-
-        console.log(this.state.currentlyHoveredNavbarLinkName);
     }
 
     resetSubmenu = () => {

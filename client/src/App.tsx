@@ -1,6 +1,6 @@
 /* import logo from './logo.svg'; */
 import './App.css';
-import NavBar from './components/Navbar';
+import NavBar from './components/Navbar/Navbar';
 import Blog from './pages/BlogPage/Blogs';
 import LandingPage from './pages/LandingPage/LandingPage';
 import ResumePage from './pages/ResumePage/ResumePage';
