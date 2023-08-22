@@ -1,3 +1,5 @@
+use std::str::FromStr;
+
 use rocket::serde::json::Json;
 use mongodb::bson::{oid::ObjectId};
 use rocket::{http::Status, State};
@@ -17,6 +19,25 @@ pub fn get_blog_posts() -> Json<BlogPost> {
 
     Json(blog_post)
 }
+
+#[get("/blog/<id>")]
+pub async fn get_blog_post(db: &State<MongoRepo>, id: String) -> Result<Json<BlogPost>, Status> {
+
+    match ObjectId::from_str(&id) {
+        Ok(object_id) => {
+            let blog_post = db.get_blog_post(object_id);
+            println!("{:?}", blog_post);
+
+            match blog_post {
+                Ok(blog_post) => Ok(Json(blog_post)),
+                Err(_) => Err(Status::InternalServerError),
+            }
+        },
+
+        Err(_) => Err(Status::BadRequest), // Respond with a bad request status if the hex string is invalid
+    }
+}
+
 
 #[post("/blogs", data = "<new_blog>")]
 pub fn create_blog(
