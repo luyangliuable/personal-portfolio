@@ -17,13 +17,15 @@
 .blog-content {
     cursor: pointer;
     text-align: center;
-    margin-top: 1vh;
+    border-bottom: 1px #CCC solid;
     padding: 2vh 2vw 2vh 2vw;
     border-radius: .5vh;
     width: 70%;
-    background: #F1F1F1;
     text-decoration: none;
     color: #000;
     transition: background .3s ease-in;
 }
 
+.blog-post-link:hover {
+    background: #1e90ff !important
+}

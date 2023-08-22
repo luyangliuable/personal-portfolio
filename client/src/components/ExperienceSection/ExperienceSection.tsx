@@ -45,10 +45,22 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                 url: "http://www.cisco.com",
                 cardSubtitle: "Kitchen Hand",
                 cardDetailedText: "",
-                media: {
+                media: ({
                     type: "IMAGE",
                     source: {
                         url: "https://madpatties.com/wp-content/uploads/2021/05/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20210511102354-150x150.png"
+                    }
+                })
+            }, {
+                title: "2022",
+                cardTitle: "Monash University Humanwise Lab",
+                url: "https://www.mymi.org.au/",
+                cardSubtitle: "Research Assistant",
+                cardDetailedText: "",
+                media: {
+                    type: "IMAGE",
+                    source: {
+                        url: "https://amsi.org.au/wp-content/uploads/2014/05/logo-monash.png"
                     }
                 }
             }, {
