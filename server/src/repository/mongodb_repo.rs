@@ -1,9 +1,11 @@
 extern crate dotenv;
+use mongodb::bson::oid::ObjectId;
 use std::{env};
 use dotenv::dotenv;
 use crate::models::blog_model::BlogPost;
+use std::io::Error;
 use mongodb::{
-    bson::{extjson::de::Error, doc},
+    bson::doc,
     results::InsertOneResult,
     sync::{Client, Collection},
 };
@@ -55,6 +57,31 @@ impl MongoRepo {
 
         Ok(blog_post)
     }
+
+
+    pub fn get_blog_post(&self, id: ObjectId) -> Result<BlogPost, Error> {
+        let filter = doc! { "_id": id };
+        let result = self.get_col.find_one(filter, None).ok().expect("Error getting blog post");
+
+        match result {
+            Some(document) => {
+                let blog_post: BlogPost = BlogPost {
+                    id: document.id,
+                    author: document.author,
+                    date_created: document.date_created,
+                    heading: document.heading,
+                    body: document.body
+                };
+
+                Ok(blog_post)
+            }
+
+            None => {
+                Err(Error::new(std::io::ErrorKind::Other, "Error getting blog post"))
+            }
+        }
+    }
+
 
     pub fn get_blogs(&self) -> Result<Vec<BlogPost>, Error> {
         let filter = doc! {};

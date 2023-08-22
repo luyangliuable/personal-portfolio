@@ -1,0 +1,12 @@
+.under-contruction-card {
+    width: 40vw !important;
+    height: 20vw !important;
+}
+
+.under-construction-container {
+    width: 100vw;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

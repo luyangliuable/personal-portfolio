@@ -45,8 +45,7 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
 
     render(): any {
         return (
-            <div className="home-container">
-                {/* <div className="hero-accordion-button hero-accordion-left" /> */}
+            <>
                 <div style={{ textAlign: "left" }}>
                     <ul>
                         <h1>
@@ -67,7 +66,7 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
                 </div>
 
                 <CodingCat showAnimtion={this.state.scrolling} />
-            </div>
+            </>
         );
     }
 }

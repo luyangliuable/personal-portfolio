@@ -1,9 +1,11 @@
 /* import logo from './logo.svg'; */
 import './App.css';
-import NavBar from './components/Navbar';
-import Blog from './pages/BlogPage/Blogs';
+import NavBar from './components/Navbar/Navbar';
+import BlogPage from './pages/BlogPage/BlogPage';
 import LandingPage from './pages/LandingPage/LandingPage';
 import ResumePage from './pages/ResumePage/ResumePage';
+import UnderConstruction from './pages/UnderConstructionPage/UnderConstruction';
+import BlogContent from "./pages/BlogPage/BlogContent";
 
 import { useState, useEffect } from 'react';
 
@@ -76,13 +78,21 @@ function App() {
                             />
                         }/>
                         <Route path="/blog" element={
-                            <Blog />
+                            <BlogPage />
                         }/>
                         <Route path="/resume" element={
                             <ResumePage />
                         }/>
+                        <Route path="/resume" element={
+                            <ResumePage />
+                        } />
+                        <Route path="/blog/:id" element={
+                            <BlogContent />
+                        } />
+                        <Route path="*" element={<UnderConstruction />} /> {/* Catch-all route */}
                     </Routes>
                 </div>
+
             </BrowserRouter>
         </div>
     );

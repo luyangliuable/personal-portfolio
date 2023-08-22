@@ -41,7 +41,7 @@ fn rocket() -> _ {
     rocket::build()
         .manage(db)
         .mount("/api/", routes![index])
-        .mount("/api/", routes![api::blogs::get_blog_posts])
+        .mount("/api/", routes![api::blogs::get_blog_post])
         .mount("/api/", routes![api::blogs::create_blog])
         .mount("/api/", routes![api::blogs::get_blog])
         .mount("/api/", routes![api::health::check_health])
