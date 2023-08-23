@@ -16,7 +16,7 @@ class UnderConstruction extends Component<{}, {}> {
 
     render() {
         return (
-            <div className="under-construction-container ">
+            <div className="page-container">
                 <div onMouseMove={this.cardEffect} className="card under-contruction-card">
                     <h1>Under Construction</h1>
                     <p>Sorry, this page is under construction. I have to work and study so need a bit more time for this kinds of fun.</p>

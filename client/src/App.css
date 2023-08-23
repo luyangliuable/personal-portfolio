@@ -34,6 +34,7 @@
 
 body {
     background: #EEE;
+    font-family: 'Proxima Nova';
 }
 
 .App {
@@ -125,6 +126,8 @@ body {
     background: #F9F9F9;
     border: 1px solid #EEE;
     box-shadow: .2px .2px 1px #999;
+    -webkit-box-shadow: .2px .2px 1px #999;
+    -moz-box-shadow: .2px .2px 1px #999;
     max-width: var(--home-container-max-width);
     width: var(--home-container-width);
     margin-top: var(--home-container-margin);
@@ -193,6 +196,18 @@ body {
     );
     z-index: 1;
 }
+
+.page-container {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
 
 .card > .card-content {
     background-color: var(--card-color);

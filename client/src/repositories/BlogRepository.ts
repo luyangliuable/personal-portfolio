@@ -27,6 +27,16 @@ class BlogRepository {
       .catch(error => console.error('Error:', error));
   }
 
+  static async getBlog(id: string): Promise<any> {
+    const url = `${BlogRepository.BASE_URL}/${id}`;
+
+    const options = BlogRepository.options("GET");
+
+    return fetch(url, options)
+      .then(response => response.json())
+      .catch(error => console.error('Error:', error));
+  }
+
 }
 
 export default BlogRepository;

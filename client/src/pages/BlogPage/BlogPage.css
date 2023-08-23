@@ -15,8 +15,8 @@
 }
 
 .blog-content {
-    cursor: pointer;
-    text-align: center;
+    /* cursor: pointer; */
+    text-align: left;
     border-bottom: 1px #CCC solid;
     padding: 2vh 2vw 2vh 2vw;
     border-radius: .5vh;

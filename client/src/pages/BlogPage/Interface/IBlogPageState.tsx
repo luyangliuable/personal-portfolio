@@ -4,9 +4,12 @@ interface IBlogPageState {
 }
 
 type blogContent = {
+    _id: {
+        $oid: string
+    }
     body: string[],
     heading: string,
     url: string,
 }
- 
+
 export default IBlogPageState;

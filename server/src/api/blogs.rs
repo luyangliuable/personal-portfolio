@@ -20,7 +20,7 @@ pub fn get_blog_posts() -> Json<BlogPost> {
     Json(blog_post)
 }
 
-#[get("/blog/<id>")]
+#[get("/blogs/<id>")]
 pub async fn get_blog_post(db: &State<MongoRepo>, id: String) -> Result<Json<BlogPost>, Status> {
 
     match ObjectId::from_str(&id) {
