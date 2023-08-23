@@ -5,7 +5,7 @@ import BlogPage from './pages/BlogPage/BlogPage';
 import LandingPage from './pages/LandingPage/LandingPage';
 import ResumePage from './pages/ResumePage/ResumePage';
 import UnderConstruction from './pages/UnderConstructionPage/UnderConstruction';
-import BlogContent from "./pages/BlogPage/BlogContent";
+import BlogContent from "./pages/BlogPage/BlogContent/BlogContent";
 
 import { useState, useEffect } from 'react';
 
@@ -77,7 +77,7 @@ function App() {
                                 scrolling={appState.scrolling}
                             />
                         }/>
-                        <Route path="/blog" element={
+                        <Route path="/blogs" element={
                             <BlogPage />
                         }/>
                         <Route path="/resume" element={
@@ -86,7 +86,7 @@ function App() {
                         <Route path="/resume" element={
                             <ResumePage />
                         } />
-                        <Route path="/blog/:id" element={
+                        <Route path="/blog" element={
                             <BlogContent />
                         } />
                         <Route path="*" element={<UnderConstruction />} /> {/* Catch-all route */}

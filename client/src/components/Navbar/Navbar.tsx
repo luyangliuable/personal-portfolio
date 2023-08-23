@@ -1,5 +1,5 @@
-import React, { Component, createRef } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { Component, createRef } from "react";
+import { NavLink } from "react-router-dom";
 import "./Navbar.css";
 import INavbarState from "./Interface/INavbarState";
 import INavbarProps from "./Interface/INavbarProps";
@@ -16,56 +16,69 @@ class NavBar extends Component<INavbarProps, INavbarState> {
         super(props);
         this.state = {
             links: [
-                { name: 'Home', to: '/' },
+                { name: "Home", to: "/" },
                 {
-                    name: 'MyReflections',
-                    to: '/blog',
+                    name: "MyReflections",
+                    to: "/blogs",
                     sublinks: [{
-                        name: 'Mood Tracker',
-                        to: '/mood_tracker',
+                        name: "Mood Tracker",
+                        to: "/mood_tracker",
                     }, {
-                        name: 'Posts',
-                        to: '/blog',
+                        name: "Posts",
+                        to: "/blogs",
                     }, {
-                        name: 'Daily Reflections',
-                        to: '/daily_refletions',
+                        name: "Daily Reflections",
+                        to: "/daily_refletions",
                     }, {
-                        name: 'Gym Log',
-                        to: '/gym_log',
+                        name: "Gym Log",
+                        to: "/gym_log",
                     }
 
                     ]
                 },
                 {
-                    name: 'HobbiesAndProjects',
-                    to: '/project',
+                    name: "HobbiesAndProjects",
+                    to: "/project",
                     sublinks: [{
-                        name: 'Coding Projects',
-                        to: '/project',
+                        name: "Coding Projects",
+                        to: "/project",
                     }, {
-                        name: '3D Prints',
-                        to: '/3d_print',
+                        name: "3D Prints",
+                        to: "/3d_print",
                     }
                     ]
                 },
                 {
-                  name: 'Tools',
-                  to: '/tools'
+                  name: "Tools",
+                  to: "/tools",
+                  sublinks: [{
+                      name: "HexaBridger",
+                      to: "/hex_to_rgb",
+                  }, {
+                      name: "TimeCapsule Letters",
+                      to: "/time_capsule_letters"
+                  }, {
+                      name: "CSSCrossBrowser",
+                      to: "/css_cross_browser"
+                  }, {
+                      name: "AnonyLetters",
+                      to: "/anony_letters"
+                  }]
                 },
                 {
-                  name: 'Resume',
-                  to: '/resume'
+                  name: "Resume",
+                  to: "/resume"
                 },
                 {
-                    name: 'About',
-                    to: '/about',
+                    name: "About",
+                    to: "/about",
                     sublinks: [
                         {
                             name: "Teddie the Dog",
                             to: "/teddie"
                         }, {
                             name: "About Me",
-                            to: '/about'
+                            to: "/about"
                         }
                     ]
                 }
@@ -73,14 +86,14 @@ class NavBar extends Component<INavbarProps, INavbarState> {
             lastScrollY: 0,
             navBarDetached: false,
             currentlyHoveredNavbarLinkName: null,
-            hideNavBarScrollSensitivity: 5,
+            hideNavBarScrollSensitivity: 1,
             showBurgerPanel: false,
             name: "Luyang's Coding Portfolio"
         };
     }
 
     get navBarHeight(): number {
-        const element = document.querySelector('.navbar');
+        const element = document.querySelector(".navbar");
         return element?.getBoundingClientRect().height || 0;
     }
 
@@ -117,7 +130,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
     componentDidMount() {
         this.listenContinuousScrolled();
 
-        window.addEventListener('click', (e) => {
+        window.addEventListener("click", (e) => {
             if (this.burgerPanel.current && !this.burgerPanel.current.contains(e.target as Node) && !this.burgerButton.current.contains(e.target as Node)) {
                 this.hideBurgerMenu();
             }
@@ -237,7 +250,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                     <div className="navbar-submenu" ref={this.navbarSubmenu}>
                         {
                             this.state.currentlyHoveredNavbarLinkName
-                            && links.filter(item => item.name === currentlyHoveredNavbarLinkName)[0].sublinks?.map(this.renderNavLink)
+                            && links.filter(item => item.name === currentlyHoveredNavbarLinkName)[0].sublinks!.map(this.renderNavLink)
                         }
                     </div>
                 </div>
