@@ -36,7 +36,7 @@ impl BlogRepo {
         let new_doc = BlogPost {
             id: None,
             author: new_blog.author,
-            hading: new_blog.heading,
+            heading: new_blog.heading,
             date_created: new_blog.date_created,
             body: new_blog.body,
         };
