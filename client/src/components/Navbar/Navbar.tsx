@@ -127,14 +127,20 @@ class NavBar extends Component<INavbarProps, INavbarState> {
         this.setState({ lastScrollY: scrollStatus.scrolled! });
     };
 
-    componentDidMount() {
-        this.listenContinuousScrolled();
-
+    addBurgerClickOutEventLister() {
         window.addEventListener("click", (e) => {
             if (this.burgerPanel.current && !this.burgerPanel.current.contains(e.target as Node) && !this.burgerButton.current.contains(e.target as Node)) {
                 this.hideBurgerMenu();
             }
         });
+    }
+
+    componentDidMount() {
+        this.listenContinuousScrolled();
+
+        this.updateScrolledProgress(0);
+
+        this.addBurgerClickOutEventLister();
     }
 
     componentDidUpdate(prevProps: INavbarProps) {

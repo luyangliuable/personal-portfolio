@@ -6,7 +6,10 @@
 }
 
 .experience-section-content-container {
+    width: auto;
+    width: min-content;
     display: flex;
+    display: inline-flex;
     flex-direction: row;
     justify-content: flex-start;
 }
@@ -14,7 +17,6 @@
 .experience-section-parent-container {
     overflow-x: hidden;
     text-align: left;
-
 }
 
 .experience-section-content-container > * {
@@ -43,8 +45,8 @@
 
 
 .experience {
-    transform: translate(0, 0);
-    -webkit-transform: translate(0, 0);
-    left: 0;
-    margin-left: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
+
