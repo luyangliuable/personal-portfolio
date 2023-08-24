@@ -62,7 +62,6 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
 
         BlogRepository.getBlog(queryObj.id).then((response: any) => {
             const content = this.jsonToMarkdown.convert(response);
-            console.log(content);
             this.updateContentToDisplay(content);
         })
     }

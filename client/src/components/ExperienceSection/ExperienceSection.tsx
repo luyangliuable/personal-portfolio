@@ -1,11 +1,9 @@
-import React from 'react';
-/* import { Chrono } from "react-chrono"; */
-import { Component, JSXElementConstructor, createRef } from 'react';
+import React, { Component, createRef } from 'react';
+import IExperienceSectionProps from "./Interface/IExperienceSectionProps";
 import { IExperienceSectionState, ExperienceSectionItem } from './Interface/IExperienceSectionState';
 import "./ExperienceSection.css";
-import IExperienceSectionProps from "./Interface/IExperienceSectionProps";
 
-class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSectionState<any, JSXElementConstructor<any>>> {
+class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSectionState> {
     experienceSectionParentRef = createRef<HTMLDivElement>();
     experienceSectionRef = createRef<HTMLDivElement>();
     experienceSectionContentRef = createRef<HTMLDivElement>();
@@ -93,97 +91,77 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
     }
 
     componentDidMount(): void {
-      this.updateCurrentPosition();
-        this.updateTimeLineLength();
+        this.updateCurrentPosition();
+        this.updateTimelineLength();
     }
 
     updateCurrentPosition(): void {
-        this.setState({
-            ...this.state,
-            currentElementPositionY: this.experienceSectionRef.current!.getBoundingClientRect().top + window.scrollY,
-        });
+        const positionY = this.experienceSectionRef.current!.getBoundingClientRect().top + window.scrollY;
+        this.setState({ currentElementPositionY: positionY });
     }
 
+    updateTimelineLength(): void {
+        const offset = 0;
+        const length = this.experienceSectionContentRef.current!.getBoundingClientRect().width + offset;
 
-    updateTimeLineLength(): void {
-        const offset = 250;
-
-        this.setState({
-            ...this.state,
-            timeLineLength: this.experienceSectionContentRef.current!.getBoundingClientRect().width + offset,
-        });
+        // Adjust the height of the parent div to the length of the timeline so next section can be placed correctly
+        this.experienceSectionParentRef.current!.parentElement.parentElement.style.height = `${length + length/3}px`;
+        this.setState({ timeLineLength: length });
     }
 
-    isCenterOfDivAtCenterOfScreen(div: HTMLDivElement): number {
-        // Get the bounding rectangle of the div
+    isCenterAlignedWithViewport(div: HTMLDivElement): number {
         const rect = div.getBoundingClientRect();
-
-        // Calculate the vertical center of the div
         const divCenterY = rect.top + rect.height / 2;
-
-        // Calculate the center of the viewport
         const viewportCenterY = window.innerHeight / 2;
 
-        // Check if the center of the div is within the tolerance of the viewport center
-        const isCenteredVertically = divCenterY - viewportCenterY;
-
-        return isCenteredVertically;
+        return divCenterY - viewportCenterY;
     }
 
-
-    lockCurrentElementPosition(): void {
+    lockPosition(): void {
         this.experienceSectionParentRef.current!.parentElement.classList.add("fixed");
-
         if (this.state.lockPosition === null) {
-            this.setState({
-                ...this.state,
-                lockPosition: this.props.scrolled,
-            });
+            this.setState({ lockPosition: this.props.scrolled });
         }
     }
 
-
-    unlockCurrentElementPosition(): void {
+    unlockPosition(): void {
         this.experienceSectionParentRef.current!.parentElement.classList.remove("fixed");
-        this.scrollTimeLine(0);
+
+        this.scrollTimeline(0);
     }
 
-    scrollTimeLine(scrollXAmount: number): void {
-        const transformValue = `translate(${ scrollXAmount }px, 0)`;
+    scrollTimeline(scrollXAmount: number): void {
+        const transformValue = `translate(${scrollXAmount}px, 0)`;
         this.experienceSectionContentRef.current!.style.transform = transformValue;
         this.experienceSectionContentRef.current!.style.webkitTransform = transformValue;
     }
 
-    checkCurrentElementLocked(): boolean {
+    isLocked(): boolean {
         return this.experienceSectionParentRef.current!.parentElement.classList.contains("fixed");
     }
 
-    componentDidUpdate(prevProps: Readonly<IExperienceSectionProps>, prevState: Readonly<IExperienceSectionState<any, React.JSXElementConstructor<any>>>, snapshot?: any): void {
+    componentDidUpdate(prevProps: IExperienceSectionProps): void {
+        const { scrolled } = this.props;
+        const { lockPosition, timeLineLength } = this.state;
 
-        if (this.props.scrolled !== prevProps.scrolled) {
-            // lockedPosition gets reused
-
-            /* console.log(this.props.scrolled - this.state.lockPosition <= this.state.timeLineLength) */
-
-            if (this.isCenterOfDivAtCenterOfScreen(this.experienceSectionParentRef.current!) < 0) {
-                this.lockCurrentElementPosition();
-            } else if (this.props.scrolled <= this.state.lockPosition) {
-                // goes up unlock
-                this.unlockCurrentElementPosition();
+        if (scrolled !== prevProps.scrolled) {
+            if (this.isCenterAlignedWithViewport(this.experienceSectionParentRef.current!) < 0) {
+                this.lockPosition();
+            } else if (scrolled < lockPosition) {
+                this.unlockPosition();
             }
 
-            if (this.checkCurrentElementLocked()) {
-                this.scrollTimeLine(this.state.lockPosition - this.props.scrolled);
+            if (this.isLocked()) {
+                this.scrollTimeline(lockPosition - scrolled);
             }
 
-            if (this.checkCurrentElementLocked() && this.props.scrolled - this.state.lockPosition > this.state.timeLineLength) {
-                // goes down unlock
-                this.unlockCurrentElementPosition();
+            if (this.isLocked() && scrolled - lockPosition > timeLineLength) {
+                this.unlockPosition();
             }
         }
     }
 
-    cardEffect(e: any) {
+    cardEffect(e: any): void {
         const rect = e.target.getBoundingClientRect(),
             x = e.clientX - rect.left,
             y = e.clientY - rect.top;
@@ -203,7 +181,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                         marginLeft: "2vw"
                     }}>My Experiences</h1>
                     <div ref={this.experienceSectionRef} className="experience-section-container">
-                        <div ref={this.experienceSectionContentRef} className="experience-section-content-container">
+                        <div ref={this.experienceSectionContentRef} className="experience-section-content-container" style={{ transform: "translate(0px, 0px)" }}>
                             {
                                 items.map((item: ExperienceSectionItem, idx: number) => (
                                     <div onMouseMove={this.cardEffect}
