@@ -10,12 +10,26 @@ use mongodb::{
     sync::{Client, Collection},
 };
 
+/// A repository for `BlogPost` model handling its database operations.
+///
+/// # Deprecated
+/// This repo is deprecated. Consider using other methods or repositories.
+///
+/// # Examples
+///
+/// Basic usage:
+///
+/// ```rust
+/// // Example code for how to use this repo.
+/// ```
+#[deprecated(note = "This repo is deprecated. Consider using other methods or repositories.")]
 pub struct BlogRepo {
     insert_col: Collection<BlogPost>,
     get_col: Collection<BlogPost>
 }
 
 impl BlogRepo {
+    /// Initializes a new `BlogRepo` instance with appropriate database collections.
     pub fn init() -> Self {
         //init code goes here
         dotenv().ok();
@@ -31,6 +45,11 @@ impl BlogRepo {
         BlogRepo { insert_col, get_col }
     }
 
+    /// Creates a new blog post in the database.
+    ///
+    /// # Arguments
+    ///
+    /// * `new_blog` - The `BlogPost` instance to be stored.
     pub fn create_blog(&self, new_blog: BlogPost) -> Result<InsertOneResult, Error> {
         //create_user code goes here
         let new_doc = BlogPost {
@@ -50,7 +69,11 @@ impl BlogRepo {
         Ok(blog_post)
     }
 
-
+    /// Retrieves a specific blog post using its `ObjectId`.
+    ///
+    /// # Arguments
+    ///
+    /// * `id` - The ObjectId of the `BlogPost` to retrieve.
     pub fn get_blog_post(&self, id: ObjectId) -> Result<BlogPost, Error> {
         let filter = doc! { "_id": id };
         let cursor = self.get_col.find_one(filter, None).ok().expect("Error getting blog post");
@@ -74,7 +97,7 @@ impl BlogRepo {
         }
     }
 
-
+    /// Retrieves all blog posts stored in the database.
     pub fn get_blogs(&self) -> Result<Vec<BlogPost>, Error> {
         let filter = doc! {};
 
@@ -109,4 +132,3 @@ impl BlogRepo {
         Ok(results)
     }
 }
-
