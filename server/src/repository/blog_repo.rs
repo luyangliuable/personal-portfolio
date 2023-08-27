@@ -1,8 +1,8 @@
 extern crate dotenv;
 use mongodb::bson::oid::ObjectId;
-use std::{env};
+use std::env;
 use dotenv::dotenv;
-use crate::models::blog_model::BlogPost;
+use crate::models::{ blog_model::BlogPost, post_model::Post };
 use std::io::Error;
 use mongodb::{
     bson::doc,
@@ -10,33 +10,25 @@ use mongodb::{
     sync::{Client, Collection},
 };
 
-
-pub struct MongoRepo {
+pub struct BlogRepo {
     insert_col: Collection<BlogPost>,
     get_col: Collection<BlogPost>
 }
 
-impl MongoRepo {
+impl BlogRepo {
     pub fn init() -> Self {
         //init code goes here
         dotenv().ok();
         let uri = match env::var("MONGOURI") {
             Ok(v) => v.to_string(),
             Err(_) => "mongodb://localhost:27017".to_string(),
-            // Err(_) => "mongodb://localhost:27017".to_string(),
         };
-
-        // let mut client_options = ClientOptions::parse("mongodb+srv://luyangliuable:<password>@serverlessinstance0.z8d7qnv.mongodb.net/?retryWrites=true&w=majority");
-
-        // // Set the server_api field of the client_options object to Stable API version 1
-        // let server_api = ServerApi::builder().version(ServerApiVersion::V1).build();
-        // client_options.server_api = Some(server_api);
 
         let client = Client::with_uri_str(uri).unwrap();
         let db = client.database("rustDB");
         let get_col: Collection<BlogPost> = db.collection("BlogPost");
         let insert_col: Collection<BlogPost> = db.collection("BlogPost");
-        MongoRepo { insert_col, get_col }
+        BlogRepo { insert_col, get_col }
     }
 
     pub fn create_blog(&self, new_blog: BlogPost) -> Result<InsertOneResult, Error> {
@@ -44,7 +36,7 @@ impl MongoRepo {
         let new_doc = BlogPost {
             id: None,
             author: new_blog.author,
-            heading: new_blog.heading,
+            hading: new_blog.heading,
             date_created: new_blog.date_created,
             body: new_blog.body,
         };
@@ -61,9 +53,9 @@ impl MongoRepo {
 
     pub fn get_blog_post(&self, id: ObjectId) -> Result<BlogPost, Error> {
         let filter = doc! { "_id": id };
-        let result = self.get_col.find_one(filter, None).ok().expect("Error getting blog post");
+        let cursor = self.get_col.find_one(filter, None).ok().expect("Error getting blog post");
 
-        match result {
+        match cursor {
             Some(document) => {
                 let blog_post: BlogPost = BlogPost {
                     id: document.id,
