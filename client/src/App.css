@@ -127,9 +127,9 @@ body {
     border: 1px solid #EEE;
     box-shadow: .2px .2px 1px #999;
     -webkit-box-shadow: .2px .2px 1px #999;
+    width: var(--home-container-width);
     -moz-box-shadow: .2px .2px 1px #999;
     max-width: var(--home-container-max-width);
-    width: var(--home-container-width);
     margin-top: var(--home-container-margin);
     margin-bottom: var(--home-container-margin);
     border-radius: 14px;
