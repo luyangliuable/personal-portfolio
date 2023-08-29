@@ -9,29 +9,7 @@ import BlogContent from "./pages/BlogPage/BlogContent/BlogContent";
 
 import { useState, useEffect } from 'react';
 
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
-interface IAppStateInterface {
-    scrolled: number | null,
-    scrolling: boolean | null
-}
-
-
-function App() {
-    // Put any type for now because idk what the future will bring
-    const [appState, setAppState] = useState<IAppStateInterface>({
-        scrolled: null,
-        scrolling: null
-    });
-
-
-    useEffect(() => {
-
-        const handleScroll = () => {
-            const scrolled = window.scrollY;
-            setAppState(({
-                ...appState,
-                scrolled: scrolled,
+import { BrowserRouter, Route, Routes ,
                 scrolling: true
             }));
         };
