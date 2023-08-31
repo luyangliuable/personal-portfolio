@@ -8,7 +8,7 @@
     align-items: center;
     width: var(--home-container-width);
     max-width: var(--home-container-max-width);
-    height: var(--featured-section-height); 
+    height: var(--featured-section-height);
 }
 
 .twin-candle-container {
