@@ -1,20 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import HeroSection from "../../components/HeroSection/HeroSection";
 import ILandingPagestate from "./Interface/ILandingPageState";
 import ILandingPageProps from "./Interface/ILandingPageProps";
-import Experiences from '../../components/ExperienceSection/ExperienceSection';
+import Experiences from "../../components/ExperienceSection/ExperienceSection";
+import FeaturedContentSection from "../../components/FeaturedContentSection/FeaturedContentSection";
 
 class LandingPage extends Component<ILandingPageProps, ILandingPagestate> {
     constructor(props: ILandingPageProps) {
         super(props);
         this.state = {};
-    }
-
-
-    componentDidUpdate(): void {
-    }
-
-    componentDidMount(): void {
     }
 
     render(): React.ReactElement<any, any> {
@@ -24,7 +18,11 @@ class LandingPage extends Component<ILandingPageProps, ILandingPagestate> {
                     <HeroSection />
                 </div>
 
-                <div style={{height: "210vh"}}>
+                <div className="landing-page-card featured-content">
+                    <FeaturedContentSection scrolled={this.props.scrolled} />
+                </div>
+
+                <div>
                     <div className="landing-page-card experience">
                         <Experiences scrolled={this.props.scrolled} />
                     </div>

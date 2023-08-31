@@ -16,6 +16,8 @@
 :root {
     --home-container-width: 90vw;
     --home-container-margin: 3vh;
+    --home-container-border-radius: 14px;
+
     --page-top-margin: 120px;
     --dark-mode-black: #1e1e1e;
     --dark-mode-purple: #491ed3;
@@ -127,12 +129,12 @@ body {
     border: 1px solid #EEE;
     box-shadow: .2px .2px 1px #999;
     -webkit-box-shadow: .2px .2px 1px #999;
+    width: var(--home-container-width);
     -moz-box-shadow: .2px .2px 1px #999;
     max-width: var(--home-container-max-width);
-    width: var(--home-container-width);
     margin-top: var(--home-container-margin);
     margin-bottom: var(--home-container-margin);
-    border-radius: 14px;
+    border-radius: var(--home-container-border-radius);
     transform: translate(0, 0);
     -webkit-transform: translate(0, 0);
     left: 0;
