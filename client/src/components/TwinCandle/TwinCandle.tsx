@@ -256,6 +256,7 @@ class TwinCandles extends Component<ITwinCandleProps, ITwinCandleState> {
                 this.changeRefClassName(value.reference, value.className);
             });
 
+
             window.setTimeout(() => {
                 this.turnCandleLightOff();
             }, this.state.animatedTimeIntervalMiliseconds);
@@ -263,6 +264,7 @@ class TwinCandles extends Component<ITwinCandleProps, ITwinCandleState> {
     }
 
     public turnCandleLightOn = () => {
+
         Object.entries(this.state.fireOnState).forEach(([key, value]) => {
             this.changeRefClassName(value.reference, value.className);
         });
@@ -278,6 +280,15 @@ class TwinCandles extends Component<ITwinCandleProps, ITwinCandleState> {
                 this.changeRefClassName(value.reference, value.className);
             });
 
+            // TODO temporary solution because I am tired start
+            var element: HTMLElement = document.querySelector(".dark-room-filter");
+
+            // Check if the element exists and set its display to "none"
+            if (element) {
+                element.style.display = "none";
+            }
+            // temporary solution because I am tired end
+
             window.setTimeout(() => {
                 this.turnCandleLightOn();
             }, this.state.animatedTimeIntervalMiliseconds);
@@ -285,6 +296,15 @@ class TwinCandles extends Component<ITwinCandleProps, ITwinCandleState> {
     }
 
     public turnCandleLightOff = () => {
+        // TODO temporary solution because I am tired start
+        var element: HTMLElement = document.querySelector(".dark-room-filter");
+
+        // Check if the element exists and set its display to "none"
+        if (element) {
+            element.style.display = "block";
+        }
+
+        // temporary solution because I am tired end
         Object.entries(this.state.fireOffState).forEach(([_, value]) => {
             this.changeRefClassName(value.reference, value.className);
         });

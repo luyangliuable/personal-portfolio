@@ -18,7 +18,7 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
         if (prevProps.scrolled !== this.props.scrolled) {
             if (Math.abs(isCenterAlignedWithViewport(this.currentComponentRef?.current)) <= 100) {
                 this.twinCandleComponentRef?.current?.transitionCandleFireToOn();
-            } else {
+            } else if (Math.abs(isCenterAlignedWithViewport(this.currentComponentRef?.current)) > 200) {
                 this.twinCandleComponentRef?.current?.transitionCandleFireToOff();
             }
         }
@@ -27,6 +27,7 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
     render() {
         return (
             <div ref={this.currentComponentRef} className="featured-content-section">
+                <div className="dark-room-filter"></div>
                 <h1 style={{ textAlign: "left", marginLeft: "2vw" }}>
                     Featured Content
                 </h1>
