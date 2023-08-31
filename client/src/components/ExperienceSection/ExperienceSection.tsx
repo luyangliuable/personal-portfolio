@@ -2,6 +2,7 @@ import React, { Component, createRef } from 'react';
 import IExperienceSectionProps from "./Interface/IExperienceSectionProps";
 import { IExperienceSectionState, ExperienceSectionItem } from './Interface/IExperienceSectionState';
 import "./ExperienceSection.css";
+import { isCenterAlignedWithViewport } from "../Utility/ScrollUtility";
 
 class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSectionState> {
     experienceSectionParentRef = createRef<HTMLDivElement>();
@@ -105,16 +106,8 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
         const length = this.experienceSectionContentRef.current!.getBoundingClientRect().width + offset;
 
         // Adjust the height of the parent div to the length of the timeline so next section can be placed correctly
-        this.experienceSectionParentRef.current!.parentElement.parentElement.style.height = `${length + length/3}px`;
+        this.experienceSectionParentRef.current!.parentElement.parentElement.style.height = `${length + length / 3}px`;
         this.setState({ timeLineLength: length });
-    }
-
-    isCenterAlignedWithViewport(div: HTMLDivElement): number {
-        const rect = div.getBoundingClientRect();
-        const divCenterY = rect.top + rect.height / 2;
-        const viewportCenterY = window.innerHeight / 2;
-
-        return divCenterY - viewportCenterY;
     }
 
     lockPosition(): void {
@@ -145,7 +138,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
         const { lockPosition, timeLineLength } = this.state;
 
         if (scrolled !== prevProps.scrolled) {
-            if (this.isCenterAlignedWithViewport(this.experienceSectionParentRef.current!) < 0) {
+            if (isCenterAlignedWithViewport(this.experienceSectionParentRef.current!) < 0) {
                 this.lockPosition();
             } else if (scrolled < lockPosition) {
                 this.unlockPosition();

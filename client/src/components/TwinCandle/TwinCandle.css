@@ -43,7 +43,7 @@
 }
 
 .candle1-animated {
-  animation: expand-body 3s infinite linear;
+  animation: expand-body 1s infinite linear;
 }
 
 .candle1__stick, .candle2__stick {
@@ -61,7 +61,7 @@
 /* .candle2__stick { */
 /*   height: 12px; */
 /*   transform-origin: bottom center; */
-/*   animation: stick-animation 3s infinite linear; */
+/*   animation: stick-animation 1s infinite linear; */
 /* } */
 
 .candle1__eyes, .candle2__eyes {
@@ -86,7 +86,7 @@
 
 
 .candle1__eyes-one-animated {
-    animation: blink-eyes 3s infinite linear;
+    animation: blink-eyes 1s infinite linear;
 }
 
 .candle1__eyes-two {
@@ -101,7 +101,7 @@
 }
 
 .candle1__eyes-two-animated {
-    animation: blink-eyes 3s infinite linear;
+    animation: blink-eyes 1s infinite linear;
 }
 
 .candle1__mouth {
@@ -116,31 +116,31 @@
 }
 
 .candle1__mouth-animated {
-    animation: uff 3s infinite linear;
+    animation: uff 1s infinite linear;
 }
 
-/* .candle__smoke-one { */
-/*   position: absolute; */
-/*   left: 30%; */
-/*   top: 50%; */
-/*   width: 30px; */
-/*   height: 3px; */
-/*   background: grey; */
-/*   transform: translate(-50%, -50%); */
-/*   animation: move-left 3s infinite linear; */
-/* } */
+.candle__smoke-one {
+  position: absolute;
+  left: 30%;
+  top: 50%;
+  width: 30px;
+  height: 3px;
+  background: grey;
+  transform: translate(-50%, -50%);
+  animation: move-left 1s infinite linear;
+}
 
-/* .candle__smoke-two { */
-/*   position: absolute; */
-/*   left: 30%; */
-/*   top: 40%; */
-/*   width: 10px; */
-/*   height: 10px; */
-/*   border-radius: 10px; */
-/*   background: grey; */
-/*   transform: translate(-50%, -50%); */
-/*   animation: move-top 3s infinite linear; */
-/* } */
+.candle__smoke-two {
+  position: absolute;
+  left: 30%;
+  top: 40%;
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  background: grey;
+  transform: translate(-50%, -50%);
+  animation: move-top 1s infinite linear;
+}
 
 .candle2 {
     position: absolute;
@@ -157,8 +157,13 @@
     box-shadow: -2px 0px 0px #95c6f2 inset;
 }
 
-.candle2-animated {
-    animation: shake-left 3s infinite linear;
+.candle2-transition__off {
+    animation: shake-left 1s infinite linear;
+}
+
+
+.candle2-transition__on {
+    animation: candle-vent-expand 1s infinite linear;
 }
 
 .candle2__eyes-one {
@@ -176,7 +181,7 @@
 }
 
 .candle2__eyes-one-animated {
-    animation: changeto-lower 3s infinite linear;
+    animation: changeto-lower 1s infinite linear;
 }
 
 .candle2__eyes-two {
@@ -194,7 +199,7 @@
 }
 
 .candle2__eyes-two-animated {
-    animation: changeto-greater 3s infinite linear;
+    animation: changeto-greater 1s infinite linear;
 }
 
 .light__wave {
@@ -206,8 +211,10 @@
     border-radius: 100%;
     z-index: 0;
     transform: translate(-25%, -50%) scale(2.5, 2.5);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    animation: expand-light 3s infinite linear;
+    background: rgba();
+    border: 2px solid #FF9800 !important;
+    opacity: .1;
+    animation: expand-light 10s infinite linear;
 }
 
 .candle2__fire {
@@ -215,8 +222,6 @@
     top: 50%;
     left: 40%;
     display: block;
-    width: 16px;
-    height: 20px;
     background-color: red;
     border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
     background: #FF9800;
@@ -226,5 +231,27 @@
 }
 
 .candle2__fire-animated {
-    animation: move-fire 3s infinite linear;
+    animation: dance-fire-on 2s infinite linear;
+    -moz-animation: dance-fire-on 2s infinite linear;
+    -webkit-animation: dance-fire-on 2s infinite linear;
+    width: 16px;
+    height: 20px;
+}
+
+
+.candle2__fire-transition__off {
+    animation: dance-fire-transform-off 1s infinite linear;
+    -moz-animation: dance-fire-transform-off 1s infinite linear;
+    -webkit-animation: dance-fire-transform-off 1s infinite linear;
+    width: 16px;
+    height: 20px;
+}
+
+
+.candle2__fire-transition__on {
+    animation: dance-fire-transform-on 1s infinite linear;
+    -moz-animation: dance-fire-transform-on 1s infinite linear;
+    -webkit-animation: dance-fire-transform-on 1s infinite linear;
+    width: 16px;
+    height: 20px;
 }

@@ -19,7 +19,7 @@ class LandingPage extends Component<ILandingPageProps, ILandingPagestate> {
                 </div>
 
                 <div className="landing-page-card featured-content">
-                    <FeaturedContentSection />
+                    <FeaturedContentSection scrolled={this.props.scrolled} />
                 </div>
 
                 <div>
