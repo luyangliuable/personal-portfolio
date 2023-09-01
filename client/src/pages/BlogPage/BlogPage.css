@@ -20,7 +20,8 @@
     border-bottom: 1px #CCC solid;
     padding: 2vh 2vw 2vh 2vw;
     border-radius: .5vh;
-    width: 70%;
+    width: 90%;
+    max-width: 900px;
     text-decoration: none;
     color: #000;
     transition: background .3s ease-in;
