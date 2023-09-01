@@ -17,6 +17,9 @@
 .experience-section-parent-container {
     overflow-x: hidden;
     text-align: left;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .experience-section-content-container > * {
@@ -43,10 +46,4 @@
     margin-top: 200px; /* Adjust as needed */
 }
 
-
-.experience {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
 

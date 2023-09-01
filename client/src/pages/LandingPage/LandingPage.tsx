@@ -23,9 +23,7 @@ class LandingPage extends Component<ILandingPageProps, ILandingPagestate> {
                 </div>
 
                 <div>
-                    <div className="landing-page-card experience">
-                        <Experiences scrolled={this.props.scrolled} />
-                    </div>
+                    <Experiences scrolled={this.props.scrolled} />
                 </div>
 
                 <div className="landing-page-card blogs">

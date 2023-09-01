@@ -5,6 +5,7 @@
 .featured-section-content {
     display: flex;
     justify-content: space-between;
+    position: relative;
     align-items: center;
     width: var(--home-container-width);
     max-width: var(--home-container-max-width);

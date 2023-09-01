@@ -23,6 +23,7 @@ interface IExperienceSectionState<
     currentElementPositionY?: number,
     timeLineLength?: number,
     lockPosition: number | null
+    fallBackLockPosition: number | null
 }
 
 

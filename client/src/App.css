@@ -79,14 +79,10 @@ body {
 }
 
 .landing-page-content {
-    font-family: 'Proxima Nova';
     display: flex;
     justify-content: space-around;
     align-items: center;
-    position: absolute;
-    width: 100%;
     flex-direction: column;
-    font-family: "Proxima Nova";
 }
 
 .hero-accordion-button {
