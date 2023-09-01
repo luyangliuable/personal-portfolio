@@ -25,6 +25,9 @@
 - [ ] **Browser Compatibility:** Ensure website compatibility with older browsers.
 - [ ] **Coding Tools:** Integrate tools for coding-related tasks like hex to RGBA conversion, shell commands, and maybe an online version of emacs.
 - [ ] **CSS Showcases:** Display my CodePen projects that showcase CSS tricks.
+- [ ] Convert all [Coding Notes](https://github.com/luyangliuable/coding-notes ) into a section on personal website and rendered.
+
+  
 
 ## Development
 

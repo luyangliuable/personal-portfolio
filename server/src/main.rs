@@ -63,5 +63,6 @@ fn rocket() -> _ {
         .mount("/api/", routes![api::posts::index_post])
         .mount("/api/", routes![api::posts::get_post])
         .mount("/api/", routes![api::posts::get_test_post])
+        .mount("/api/", routes![api::posts::get_post_list])
         .attach(CORS)
 }

@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import ReactMarkdown from "react-markdown"
 import BlogRepository from "../../../repositories/BlogRepository";
+import PostRepository from "../../../repositories/PostRepository";
 import IBlogContentState from "./Interface/IBlogContentState";
 import IBlogContentProps from "./Interface/IBlogContentProps";
 import remarkGfm from "remark-gfm";
@@ -60,9 +61,9 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
             queryObj[key] = value;
         }
 
-        BlogRepository.getBlog(queryObj.id).then((response: any) => {
-            const content = this.jsonToMarkdown.convert(response);
-            this.updateContentToDisplay(content);
+        PostRepository.getPost(queryObj.id).then((response: any) => {
+            /* const content = this.jsonToMarkdown.convert(response); */
+            this.updateContentToDisplay(response.body);
         })
     }
 

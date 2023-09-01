@@ -78,4 +78,22 @@ impl<T: MongoModel> MongoRepo<T> {
             None => Err(Error::new(std::io::ErrorKind::Other, "Document not found")),
         }
     }
+
+    pub fn get_all(&self) -> Result<Vec<T>, Error> {
+        let mut results: Vec<T> = Vec::new();
+
+        let cursor = self.get_col.find(None, None).ok().expect("Error getting blog post");
+
+        for result in cursor {
+            match result {
+                Ok(document) => {
+                    results.push(document);
+                },
+                Err(e) => {
+                    println!("Error: {:?}", e);
+                }
+            }
+        }
+        Ok(results)
+    }
 }
