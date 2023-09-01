@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./BlogPage.css"
-import BlogRepository from "../../repositories/BlogRepository";
+import PostRepository from "../../repositories/PostRepository";
 import IBlogPageState from "./Interface/IBlogPageState";
 import IBlogPageProps from "./Interface/IBlogPageProps";
 import { useNavigate, NavigateFunction } from 'react-router-dom';
@@ -20,7 +20,7 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
     }
 
     componentDidMount() {
-        BlogRepository.getBlogList().then((response) => {
+        PostRepository.getPostList().then((response) => {
             this.setState({
                 content: response
             })
@@ -31,6 +31,19 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
         return text && text.length > 400
             ? text.substring(0, 400) + "..."
             : text;
+    }
+
+    stripAwayHashSymbols(text: string) {
+        return text.replace(/#/g, "");
+    }
+
+    isoDateFormatToString(date: Date): string {
+        const padWithZero = (number: number) => {
+            return number < 10 ? '0' + number : number;
+        }
+
+        const formattedDate = padWithZero(date.getDate()) + "-" + padWithZero(date.getMonth() + 1) + "-" + date.getFullYear();
+        return formattedDate;
     }
 
     cardEffect(e: any) {
@@ -57,8 +70,9 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
                                 onMouseMove={this.cardEffect}
                                 className="blog-content card">
                                 <h3>{content.heading}</h3>
+                                <p>{content.author} | {this.isoDateFormatToString(new Date(content.date_created))}</p>
                                 <p>
-                                    {this.truncateTextBody(content.body[1])}
+                                    {this.stripAwayHashSymbols(this.truncateTextBody(content.body))}
                                 </p>
                             </div>
                         )

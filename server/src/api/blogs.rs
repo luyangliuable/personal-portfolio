@@ -1,9 +1,8 @@
 use std::str::FromStr;
-
 use rocket::serde::json::Json;
 use mongodb::bson::{oid::ObjectId};
 use rocket::{http::Status, State};
-use crate::{models::blog_model::BlogPost, repository::mongodb_repo::MongoRepo};
+use crate::{models::blog_model::BlogPost, repository::blog_repo::BlogRepo};
 use mongodb::results::InsertOneResult;
 use chrono::{Utc};
 
@@ -21,7 +20,7 @@ pub fn get_blog_posts() -> Json<BlogPost> {
 }
 
 #[get("/blogs/<id>")]
-pub async fn get_blog_post(db: &State<MongoRepo>, id: String) -> Result<Json<BlogPost>, Status> {
+pub async fn get_blog_post(db: &State<BlogRepo>, id: String) -> Result<Json<BlogPost>, Status> {
 
     match ObjectId::from_str(&id) {
         Ok(object_id) => {
@@ -41,7 +40,7 @@ pub async fn get_blog_post(db: &State<MongoRepo>, id: String) -> Result<Json<Blo
 
 #[post("/blogs", data = "<new_blog>")]
 pub fn create_blog(
-    db: &State<MongoRepo>,
+    db: &State<BlogRepo>,
     new_blog: Json<BlogPost>
 ) -> Result<Json<InsertOneResult>, Status> {
     let data = BlogPost {
@@ -51,6 +50,7 @@ pub fn create_blog(
         author: new_blog.author.to_owned(),
         body: new_blog.body.to_owned(),
     };
+
     let user_detail = db.create_blog(data);
 
     match user_detail {
@@ -60,7 +60,7 @@ pub fn create_blog(
 }
 
 #[get("/blogs")]
-pub fn get_blog(db: &State<MongoRepo>) -> Result<Json<Vec<BlogPost>>, Status> {
+pub fn get_blog(db: &State<BlogRepo>) -> Result<Json<Vec<BlogPost>>, Status> {
     let blog = db.get_blogs();
 
     match blog {
