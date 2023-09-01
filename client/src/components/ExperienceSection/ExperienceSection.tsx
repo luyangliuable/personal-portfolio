@@ -1,7 +1,7 @@
 import { Component, createRef } from 'react';
 import IExperienceSectionProps from "./Interface/IExperienceSectionProps";
 import { IExperienceSectionState, ExperienceSectionItem } from './Interface/IExperienceSectionState';
-import { isCenterAlignedWithViewport, getHTMLElementCenterYPosition } from "../Utility/ScrollUtility";
+import { isCloseToAnotherElement, isCenterAlignedWithViewport, getHTMLElementCenterYPosition } from "../Utility/ScrollUtility";
 import { cardGradientEffect } from "../Utility/MouseUtility";
 import "./ExperienceSection.css";
 
@@ -187,9 +187,14 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
         const { timeLineLength } = this.state;
 
         if (scrolled !== prevProps.scrolled) {
-            if (isCenterAlignedWithViewport(this.experienceSectionParentRef.current!) < 0) {
+
+            if (Math.abs(isCenterAlignedWithViewport(this.experienceSectionParentRef.current!)) < 200) {
+                console.log("centered");
                 this.lockPosition();
-            } else if (scrolled < this.getLockPosition()) {
+            }
+
+            if (isCloseToAnotherElement(this.experienceSectionParentRef.current!.parentElement, ["landing-page-card"]).length > 0) {
+                console.log("close to another element");
                 this.unlockPosition();
             }
 

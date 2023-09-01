@@ -22,7 +22,7 @@ class LandingPage extends Component<ILandingPageProps, ILandingPagestate> {
                     <FeaturedContentSection scrolled={this.props.scrolled} />
                 </div>
 
-                <div>
+                <div className="experience-section-wrapper">
                     <Experiences scrolled={this.props.scrolled} />
                 </div>
 

@@ -15,7 +15,7 @@
 
 :root {
     --home-container-width: 90vw;
-    --home-container-margin: 3vh;
+    --home-container-margin: 30px;
     --home-container-border-radius: 14px;
 
     --page-top-margin: 120px;
