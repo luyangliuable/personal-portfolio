@@ -16,16 +16,23 @@
 - [x] **Blog Integration:** Successfully integrated a blogging feature.
 - [x] **Mobile Responsiveness:** Optimized for phone screens.
 - [x] **Deployment:** Website live at [this link](http://170.64.250.107/).
+- [x] **Backend Storage:** Store posts as markdown and manage them inside a volume backend.
+- [x] Featured Content section with cool candle + dark room animation effect
 
 ### Upcoming Features:
-- [ ] **Backend Storage:** Store posts as markdown and manage them inside a volume backend.
+* [ ] Mood tracker: track what made user happy or sad and give statiscs on what things most likely going to make user sad/happy
+* [ ] Set up email functionality: Email guest mood tracker and gym log data
+* [ ] Blog Reading page show [snake](https://lab.hakim.se/progress-nav/#dev ) like table of contents animation effect as user reads hard to explain but we'll see.
+* [ ] When components mount have cool fade in or ease in effect.
+* [ ] Time Capsule Letters: Let user specify a letter to write to future self and website send to them on a specified date.
+* [ ] Man of the day: bash command of the day
+- [ ] Convert all [Coding Notes](https://github.com/luyangliuable/coding-notes ) into a section on personal website and rendered.
 - [ ] **User Profiles:** 'About website' page to display user information such as location, browser, IP address, and name (only if provided voluntarily).
 - [ ] **Website Mascot:** Introduce a mascot (e.g. dog, cat, clippy) that appears on the site. This mascot should be able to read visible content and interact using the OpenAI API.
   * Mascot can detect html elements and climb on top determined by randomness
 - [ ] **Browser Compatibility:** Ensure website compatibility with older browsers.
 - [ ] **Coding Tools:** Integrate tools for coding-related tasks like hex to RGBA conversion, shell commands, and maybe an online version of emacs.
 - [ ] **CSS Showcases:** Display my CodePen projects that showcase CSS tricks.
-- [ ] Convert all [Coding Notes](https://github.com/luyangliuable/coding-notes ) into a section on personal website and rendered.
 
   
 
