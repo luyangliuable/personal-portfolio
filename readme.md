@@ -38,6 +38,7 @@
   * Mascot can detect html elements and climb on top determined by randomness
 - [ ] **Browser Compatibility:** Ensure website compatibility with older browsers.
 - [ ] **Coding Tools:** Integrate tools for coding-related tasks like hex to RGBA conversion, shell commands, and maybe an online version of emacs.
+- [ ] Turn stuff on this website into packages for others to use.
 - [ ] **CSS Showcases:** Display my CodePen projects that showcase CSS tricks.
   
 
