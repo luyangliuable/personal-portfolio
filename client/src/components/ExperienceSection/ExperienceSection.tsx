@@ -1,7 +1,7 @@
 import { Component, createRef } from 'react';
 import IExperienceSectionProps from "./Interface/IExperienceSectionProps";
 import { IExperienceSectionState, ExperienceSectionItem } from './Interface/IExperienceSectionState';
-import { isCloseToAnotherElement, isCenterAlignedWithViewport, getHTMLElementCenterYPosition } from "../Utility/ScrollUtility";
+import { resetElementPosition, isCloseToAnotherElement, isCenterAlignedWithViewport, getHTMLElementCenterYPosition } from "../Utility/ScrollUtility";
 import { cardGradientEffect } from "../Utility/MouseUtility";
 import "./ExperienceSection.css";
 
@@ -16,6 +16,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
         this.state = {
             lockPosition: null,
             fallBackLockPosition: null,
+            isLocked: false,
             items: [{
                 title: "2018",
                 cardTitle: "MW Sheetmetal",
@@ -130,6 +131,8 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
      * Locks the position of the component.
      */
     lockPosition(): void {
+        this.setState({ isLocked: true });
+        resetElementPosition(this.experienceSectionParentRef.current!.parentElement);
         this.experienceSectionParentRef.current!.parentElement.classList.add("fixed");
         this.updateLockPosition();
     }
@@ -147,8 +150,14 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
      * Unlocks the position of the component and resets the timeline scroll.
      */
     unlockPosition(): void {
-        this.experienceSectionParentRef.current!.parentElement.classList.remove("fixed");
-        this.scrollTimeline(0);
+        if (this.isLocked()) {
+            this.setState({ isLocked: false });
+            // TODO set start and end position manually for every card or something because I tried everything and it is impossible
+            /* makeFixedElementAbsoluteWhileRetainingPosition(this.experienceSectionParentRef.current!.parentElement, 0); */
+            this.experienceSectionParentRef.current!.parentElement.classList.remove("fixed");
+            /* centerElementInParent(this.experienceSectionParentRef.current!.parentElement); */
+            this.scrollTimeline(0);
+        }
     }
 
     /**
@@ -184,29 +193,44 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
      */
     componentDidUpdate(prevProps: IExperienceSectionProps): void {
         const { scrolled } = this.props;
-        const { timeLineLength } = this.state;
 
         if (scrolled !== prevProps.scrolled) {
+            const proximityYToLockPosition = 0;
 
-            if (Math.abs(isCenterAlignedWithViewport(this.experienceSectionParentRef.current!)) < 200) {
-                console.log("centered");
+            if (isCenterAlignedWithViewport(this.experienceSectionParentRef.current!) < proximityYToLockPosition) {
                 this.lockPosition();
-            }
-
-            if (isCloseToAnotherElement(this.experienceSectionParentRef.current!.parentElement, ["landing-page-card"]).length > 0) {
-                console.log("close to another element");
-                this.unlockPosition();
             }
 
             if (this.isLocked()) {
                 this.scrollTimeline(this.getLockPosition() - scrolled);
             }
 
-            if (this.isLocked() && scrolled - this.getLockPosition() > timeLineLength) {
+            // Check for conditions to unlock position
+            if (this.shouldUnlockPosition(proximityYToLockPosition)) {
                 this.unlockPosition();
             }
         }
     }
+
+    /**
+     * Checks if the component should unlock its position based on multiple criteria.
+     * @returns {boolean} - Returns true if the position should be unlocked.
+     */
+    private shouldUnlockPosition(proximityYToLockUnlockPosition: number): boolean {
+        const classNamesToCheckProxityFor = ["landing-page-card"]
+        const experienceSectionParentElement = this.experienceSectionParentRef.current!.parentElement;
+
+        const isNearExcludedElement = isCloseToAnotherElement(experienceSectionParentElement, proximityYToLockUnlockPosition + 10, classNamesToCheckProxityFor).length > 0;
+
+        // fallback condition to unlock position
+        const isBeforeLockPosition = this.props.scrolled < this.getLockPosition();
+
+        // fallback condition to unlock position
+        const isPastTimelineLength = this.isLocked() && this.props.scrolled - this.getLockPosition() > this.state.timeLineLength;
+
+        return isNearExcludedElement;
+    }
+
 
     render() {
         const items = this.state.items.sort((a: ExperienceSectionItem, b: ExperienceSectionItem) => {

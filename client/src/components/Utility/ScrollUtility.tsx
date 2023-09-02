@@ -6,18 +6,6 @@ const isCenterAlignedWithViewport = (div: HTMLDivElement): number => {
     return divCenterY - viewportCenterY;
 }
 
-const getOffset = (element: any) => {
-    var _x = 0;
-    var _y = 0;
-    while (element && !isNaN(element.offsetLeft) && !isNaN(element.offsetTop)) {
-        _x += element.offsetLeft - element.scrollLeft;
-        _y += element.offsetTop - element.scrollTop;
-        element = element.offsetParent;
-    }
-
-    return { top: _y, left: _x };
-}
-
 const getHTMLElementCenterYPosition = (element: any, offset: number = 0): number => {
     const rect = element.getBoundingClientRect();
 
@@ -26,12 +14,11 @@ const getHTMLElementCenterYPosition = (element: any, offset: number = 0): number
     return divCenterY;
 }
 
-function isCloseToAnotherElement(element: Element, includeClasses: string[] = []): Element[] {
+function isCloseToAnotherElement(element: Element, proxmityToSenseAt: number = 100, includeClasses: string[] = []): Element[] {
     const rect = element.getBoundingClientRect();
 
     // Points to check just above and below the element by 10px
     // Conascence of value proxmityToSenseAt depends on the margin between cards unfortunately
-    const proxmityToSenseAt = 100;
     const yAbove = rect.top - proxmityToSenseAt;
     const yBelow = rect.bottom + proxmityToSenseAt;
     const xPos = rect.left + (rect.width / 2);  // Roughly the horizontal center of the element
@@ -84,4 +71,24 @@ function isCloseToAnotherElement(element: Element, includeClasses: string[] = []
     return filteredElements;
 }
 
-export { isCenterAlignedWithViewport, getHTMLElementCenterYPosition, isCloseToAnotherElement }
+const adjustElementPositionAbsoluteY = (element: HTMLElement, y: number = 0): void => {
+    // Set the element's position to 'absolute'
+    element.style.position = 'absolute';
+
+    // Center the element in the viewport taking the scroll position into account
+    /* element.style.top = `calc(50% + ${scrollTop}px)`; */
+    if (y != 0)
+        element.style.top = `calc(${y}px)`;
+    element.style.transform = 'translate(-50%, -50%)';
+}
+
+const resetElementPosition = (element: HTMLElement): void => {
+    element.style.position = '';
+    element.style.top = '';
+    element.style.left = '';
+    element.style.transform = '';
+}
+
+
+
+export { resetElementPosition, adjustElementPositionAbsoluteY as centerElementInParent, isCenterAlignedWithViewport, getHTMLElementCenterYPosition, isCloseToAnotherElement }

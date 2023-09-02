@@ -8,7 +8,6 @@ import UnderConstruction from './pages/UnderConstructionPage/UnderConstruction';
 import BlogContent from "./pages/BlogPage/BlogContent/BlogContent";
 
 import { useState, useEffect } from 'react';
-
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 interface IAppStateInterface {

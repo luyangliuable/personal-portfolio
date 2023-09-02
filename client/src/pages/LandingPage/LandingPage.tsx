@@ -5,6 +5,8 @@ import ILandingPageProps from "./Interface/ILandingPageProps";
 import Experiences from "../../components/ExperienceSection/ExperienceSection";
 import FeaturedContentSection from "../../components/FeaturedContentSection/FeaturedContentSection";
 
+import BlogPage from "../BlogPage/BlogPage";
+
 class LandingPage extends Component<ILandingPageProps, ILandingPagestate> {
     constructor(props: ILandingPageProps) {
         super(props);
@@ -18,7 +20,7 @@ class LandingPage extends Component<ILandingPageProps, ILandingPagestate> {
                     <HeroSection />
                 </div>
 
-                <div className="landing-page-card featured-content">
+                <div className="landing-page-card">
                     <FeaturedContentSection scrolled={this.props.scrolled} />
                 </div>
 
@@ -27,8 +29,9 @@ class LandingPage extends Component<ILandingPageProps, ILandingPagestate> {
                 </div>
 
                 <div className="landing-page-card blogs">
-                    <div style={{ textAlign: "left", marginLeft: "2vw" }}>
+                    <div style={{ width: "92%", textAlign: "left", marginLeft: "2vw" }}>
                         <h1>Blogs</h1>
+                        <BlogPage />
                     </div>
                 </div>
             </div>

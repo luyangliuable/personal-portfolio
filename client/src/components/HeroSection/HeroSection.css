@@ -1,3 +1,41 @@
 :root {
     --home-container-max-width: 1000px
 }
+
+.hero-section-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.hero-section-content {
+    text-align: left;
+    margin-bottom: 10vh;
+}
+
+@media screen and (max-width: 1000px) {
+    .hero-section-badge-container {
+        display: none !important;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .hero-section-badge-container {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+
+.hero-section-badge-link {
+    margin: 10vh 1rem 0 0;
+    transition: all 0.2s ease-in-out;
+}
+
+.hero-section-badge-link:hover {
+    opacity: 0.6;
+    box-shadow: 1px 1px 20px 0px #f5f5dc;
+}
