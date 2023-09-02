@@ -35,7 +35,7 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
                             heading={content.heading}
                             author={content.author}
                             date_created={content.date_created}
-                            body={content.body} 
+                            body={content.body}
                             link = {`/blog?id=${content._id.$oid}`}
                             />
                         )
