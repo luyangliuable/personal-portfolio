@@ -19,7 +19,7 @@
     -moz-filter: blur(5px);
     -o-filter: blur(5px);
     -ms-filter: blur(5px);
-    background: #333; 
+    background: #333;
 }
 
 @media screen and (min-height: 700px) {
@@ -29,7 +29,7 @@
         background-color: rgba(0, 0, 0, 0.7);
         backdrop-filter: blur(10px);
         width: 100%;
-        height: calc(var(--featured-section-height) + 100px); 
+        height: calc(var(--featured-section-height) + 100px);
         z-index: 4;
         border-radius: var(--home-container-border-radius)
     }
@@ -42,7 +42,7 @@
         background-color: rgba(0, 0, 0, 0.7);
         backdrop-filter: blur(10px);
         width: 100%;
-        height: calc(var(--featured-section-height) + 20vh); 
+        height: calc(var(--featured-section-height) + 20vh);
         z-index: 4;
         border-radius: var(--home-container-border-radius)
     }
