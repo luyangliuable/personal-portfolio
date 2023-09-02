@@ -56,14 +56,14 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
     render() {
         return (
             <div ref={this.currentComponentRef} className="featured-content-section">
-                <div className="dark-room-filter"></div>
+                {/* <div className="dark-room-filter"></div> */}
                 <h1 style={{ textAlign: "left", marginLeft: "2vw" }}>
                     Featured Content
                 </h1>
-                <div className="featured-section-content">
+                <div className="featured-section-content featured-section-content-in-dark-room">
                     <Card
                         heading={this.getFeaturedPostHeading()}
-                        body={truncateTextBody(this.state.featuredPost.body)}
+                        body={truncateTextBody(this.state.featuredPost.body, 50)}
                         author={this.state.featuredPost.author}
                         date_created={this.state.featuredPost.date_created}
                         link={`/blog?id=${this.state.featuredPost._id.$oid}`}
