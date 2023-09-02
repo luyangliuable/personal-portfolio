@@ -5,7 +5,6 @@
 
 
 .blog-container {
-    padding: 8vh 14vw 8vh 14vw;
     font-family: "Proxima Nova";
     text-align: left;
     display: flex;
@@ -20,7 +19,7 @@
     border-bottom: 1px #CCC solid;
     padding: 2vh 2vw 2vh 2vw;
     border-radius: .5vh;
-    width: 92vw;
+    width: 80%;
     max-width: 1000px;
     text-decoration: none;
     color: #000;
@@ -28,5 +27,5 @@
 }
 
 .blog-post-link:hover {
-    background: #1e90ff !important
+    background: #1e90ff !important;
 }

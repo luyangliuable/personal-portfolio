@@ -1,3 +1,4 @@
+
 interface IBlogPageState {
     content: blogContent[],
     render?: () => React.ReactElement<any, any>,
@@ -14,4 +15,4 @@ type blogContent = {
     url: string,
 }
 
-export default IBlogPageState;
+export { IBlogPageState, blogContent }

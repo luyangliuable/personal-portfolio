@@ -1,0 +1,12 @@
+.card-item {
+    cursor: pointer;
+    text-align: left;
+    border-bottom: 1px #CCC solid;
+    padding: 2vh 2vw 2vh 2vw;
+    border-radius: .5vh;
+    width: 80%;
+    max-width: 1000px;
+    text-decoration: none;
+    color: #000;
+    transition: background .3s ease-in;
+}

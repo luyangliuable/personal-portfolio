@@ -4,27 +4,45 @@
 
 .featured-section-content {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    position: relative;
+    flex-direction: column;
     align-items: center;
     width: var(--home-container-width);
     max-width: var(--home-container-max-width);
-    height: var(--featured-section-height); 
+    overflow-y: scroll;
+    margin-bottom: 10vh; /* Leave room for the candles */
 }
 
-.twin-candle-container {
-    background: blue;
-    width: 10vw;
-    height: 50vh;
+@media screen and (min-height: 700px) {
+    .dark-room-filter {
+        position: absolute;
+        top: 20%;
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(10px);
+        width: 100%;
+        height: calc(var(--featured-section-height) + 100px); 
+        z-index: 4;
+        border-radius: var(--home-container-border-radius)
+    }
 }
 
-.dark-room-filter {
-    /* display: none; */
-    position: absolute;
-    top: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(10px);
-    width: 100%;
-    height: 70vh;
-    z-index: 4;
-    border-radius: var(--home-container-border-radius)
+@media screen and (max-height: 700px) {
+    .dark-room-filter {
+        position: absolute;
+        top: 20%;
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(10px);
+        width: 100%;
+        height: calc(var(--featured-section-height) + 20vh); 
+        z-index: 4;
+        border-radius: var(--home-container-border-radius)
+    }
+}
+
+.featured-section-item-card {
+    width: 80%;
+    max-width: 1000px;
+    text-align: left;
+    padding: 20px;
 }

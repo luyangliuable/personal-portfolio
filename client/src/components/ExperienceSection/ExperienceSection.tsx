@@ -1,8 +1,9 @@
-import React, { Component, createRef } from 'react';
+import { Component, createRef } from 'react';
 import IExperienceSectionProps from "./Interface/IExperienceSectionProps";
 import { IExperienceSectionState, ExperienceSectionItem } from './Interface/IExperienceSectionState';
+import { resetElementPosition, isCloseToAnotherElement, isCenterAlignedWithViewport, getHTMLElementCenterYPosition } from "../Utility/ScrollUtility";
+import { cardGradientEffect } from "../Utility/MouseUtility";
 import "./ExperienceSection.css";
-import { isCenterAlignedWithViewport } from "../Utility/ScrollUtility";
 
 class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSectionState> {
     experienceSectionParentRef = createRef<HTMLDivElement>();
@@ -14,6 +15,8 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
 
         this.state = {
             lockPosition: null,
+            fallBackLockPosition: null,
+            isLocked: false,
             items: [{
                 title: "2018",
                 cardTitle: "MW Sheetmetal",
@@ -91,93 +94,159 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
         };
     }
 
+    /**
+     * Lifecycle method invoked after the component is mounted.
+     * Calls methods to update the timeline length and the fallback position where the component will lock.
+     */
     componentDidMount(): void {
-        this.updateCurrentPosition();
         this.updateTimelineLength();
+        this.updateFallBackComponentWillLockPosition();
     }
 
-    updateCurrentPosition(): void {
-        const positionY = this.experienceSectionRef.current!.getBoundingClientRect().top + window.scrollY;
-        this.setState({ currentElementPositionY: positionY });
+    /**
+     * Updates the fallback lock position.
+     * This position is set if the user scrolls past the timeline.
+     */
+    updateFallBackComponentWillLockPosition(): void {
+        if (this.experienceSectionRef.current) {
+            const navbarHeight = document.querySelector(".navbar")?.getBoundingClientRect().height || 0;
+            this.setState({
+                fallBackLockPosition: getHTMLElementCenterYPosition(this.experienceSectionRef.current!, navbarHeight)
+            });
+        }
     }
 
+    /**
+     * Adjusts the timeline length.
+     * Sets the height of the parent div to the length of the timeline to position the next section correctly.
+     */
     updateTimelineLength(): void {
         const offset = 0;
         const length = this.experienceSectionContentRef.current!.getBoundingClientRect().width + offset;
-
-        // Adjust the height of the parent div to the length of the timeline so next section can be placed correctly
         this.experienceSectionParentRef.current!.parentElement.parentElement.style.height = `${length + length / 3}px`;
         this.setState({ timeLineLength: length });
     }
 
+    /**
+     * Locks the position of the component.
+     */
     lockPosition(): void {
+        this.setState({ isLocked: true });
+        resetElementPosition(this.experienceSectionParentRef.current!.parentElement);
         this.experienceSectionParentRef.current!.parentElement.classList.add("fixed");
-        if (this.state.lockPosition === null) {
+        this.updateLockPosition();
+    }
+
+    /**
+     * Updates the component's lock position state.
+     */
+    updateLockPosition(): void {
+        if (this.state.lockPosition === null && this.state.fallBackLockPosition > this.props.scrolled) {
             this.setState({ lockPosition: this.props.scrolled });
         }
     }
 
+    /**
+     * Unlocks the position of the component and resets the timeline scroll.
+     */
     unlockPosition(): void {
-        this.experienceSectionParentRef.current!.parentElement.classList.remove("fixed");
-
-        this.scrollTimeline(0);
+        if (this.isLocked()) {
+            this.setState({ isLocked: false });
+            // TODO set start and end position manually for every card or something because I tried everything and it is impossible
+            /* makeFixedElementAbsoluteWhileRetainingPosition(this.experienceSectionParentRef.current!.parentElement, 0); */
+            this.experienceSectionParentRef.current!.parentElement.classList.remove("fixed");
+            /* centerElementInParent(this.experienceSectionParentRef.current!.parentElement); */
+            this.scrollTimeline(0);
+        }
     }
 
+    /**
+     * Scrolls the timeline by the given amount.
+     * @param {number} scrollXAmount - Amount to scroll in the x-direction.
+     */
     scrollTimeline(scrollXAmount: number): void {
         const transformValue = `translate(${scrollXAmount}px, 0)`;
         this.experienceSectionContentRef.current!.style.transform = transformValue;
         this.experienceSectionContentRef.current!.style.webkitTransform = transformValue;
     }
 
+    /**
+     * Determines if the component's position is locked.
+     * @return {boolean} True if locked, false otherwise.
+     */
     isLocked(): boolean {
         return this.experienceSectionParentRef.current!.parentElement.classList.contains("fixed");
     }
 
+    /**
+     * Gets the component's lock position or defaults to the fallback lock position.
+     * @return {number} The lock position.
+     */
+    getLockPosition(): number {
+        return this.state.lockPosition ?? this.state.fallBackLockPosition;
+    }
+
+    /**
+     * Lifecycle method invoked after the component updates.
+     * Locks or unlocks the position based on the scroll position.
+     * @param {IExperienceSectionProps} prevProps - The previous props.
+     */
     componentDidUpdate(prevProps: IExperienceSectionProps): void {
         const { scrolled } = this.props;
-        const { lockPosition, timeLineLength } = this.state;
 
         if (scrolled !== prevProps.scrolled) {
-            if (isCenterAlignedWithViewport(this.experienceSectionParentRef.current!) < 0) {
+            const proximityYToLockPosition = 0;
+
+            if (isCenterAlignedWithViewport(this.experienceSectionParentRef.current!) < proximityYToLockPosition) {
                 this.lockPosition();
-            } else if (scrolled < lockPosition) {
-                this.unlockPosition();
             }
 
             if (this.isLocked()) {
-                this.scrollTimeline(lockPosition - scrolled);
+                this.scrollTimeline(this.getLockPosition() - scrolled);
             }
 
-            if (this.isLocked() && scrolled - lockPosition > timeLineLength) {
+            // Check for conditions to unlock position
+            if (this.shouldUnlockPosition(proximityYToLockPosition)) {
                 this.unlockPosition();
             }
         }
     }
 
-    cardEffect(e: any): void {
-        const rect = e.target.getBoundingClientRect(),
-            x = e.clientX - rect.left,
-            y = e.clientY - rect.top;
+    /**
+     * Checks if the component should unlock its position based on multiple criteria.
+     * @returns {boolean} - Returns true if the position should be unlocked.
+     */
+    private shouldUnlockPosition(proximityYToLockUnlockPosition: number): boolean {
+        const classNamesToCheckProxityFor = ["landing-page-card"]
+        const experienceSectionParentElement = this.experienceSectionParentRef.current!.parentElement;
 
-        e.target.style.setProperty("--mouse-x", `${x}px`);
-        e.target.style.setProperty("--mouse-y", `${y}px`);
+        const isNearExcludedElement = isCloseToAnotherElement(experienceSectionParentElement, proximityYToLockUnlockPosition + 10, classNamesToCheckProxityFor).length > 0;
+
+        // fallback condition to unlock position
+        const isBeforeLockPosition = this.props.scrolled < this.getLockPosition();
+
+        // fallback condition to unlock position
+        const isPastTimelineLength = this.isLocked() && this.props.scrolled - this.getLockPosition() > this.state.timeLineLength;
+
+        return isNearExcludedElement;
     }
+
 
     render() {
         const items = this.state.items.sort((a: ExperienceSectionItem, b: ExperienceSectionItem) => {
             return parseInt(b.title) - parseInt(a.title)
         });
         return (
-            <>
-                <div ref={this.experienceSectionParentRef} className="experience-section-parent-container">
+            <div className="landing-page-card experience-section-parent-container">
+                <div ref={this.experienceSectionParentRef}>
                     <h1 style={{
                         marginLeft: "2vw"
                     }}>My Experiences</h1>
-                    <div ref={this.experienceSectionRef} className="experience-section-container">
+                    <div ref={this.experienceSectionRef} className="experience-section-container" >
                         <div ref={this.experienceSectionContentRef} className="experience-section-content-container" style={{ transform: "translate(0px, 0px)" }}>
                             {
                                 items.map((item: ExperienceSectionItem, idx: number) => (
-                                    <div onMouseMove={this.cardEffect}
+                                    <div onMouseMove={cardGradientEffect}
                                         className={`card experience-section-card ${idx % 2 === 0 ? 'above' : 'below'}`}
                                         key={idx}>
                                         <h2>{item.cardTitle}</h2>
@@ -198,7 +267,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                         <div className="experience-section-timeline-line" />
                     </div>
                 </div>
-            </>
+            </div>
         );
     }
 }

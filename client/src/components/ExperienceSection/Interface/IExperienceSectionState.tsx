@@ -20,9 +20,11 @@ interface IExperienceSectionState<
 > {
     render?: () => React.ReactElement<P, W>,
     items: ExperienceSectionItem[],
+    isLocked: boolean,
     currentElementPositionY?: number,
     timeLineLength?: number,
     lockPosition: number | null
+    fallBackLockPosition: number | null
 }
 
 
