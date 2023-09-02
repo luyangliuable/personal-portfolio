@@ -21,7 +21,7 @@
         background-color: rgba(0, 0, 0, 0.7);
         backdrop-filter: blur(10px);
         width: 100%;
-        height: calc(var(--featured-section-height) + 100px); 
+        height: calc(var(--featured-section-height) + 100px);
         z-index: 4;
         border-radius: var(--home-container-border-radius)
     }
@@ -34,7 +34,7 @@
         background-color: rgba(0, 0, 0, 0.7);
         backdrop-filter: blur(10px);
         width: 100%;
-        height: calc(var(--featured-section-height) + 20vh); 
+        height: calc(var(--featured-section-height) + 20vh);
         z-index: 4;
         border-radius: var(--home-container-border-radius)
     }

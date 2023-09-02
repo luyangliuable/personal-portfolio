@@ -180,16 +180,16 @@ body {
 
 .card::before {
     background: radial-gradient(
-        800px circle at var(--mouse-x) var(--mouse-y), 
+        800px circle at var(--mouse-x) var(--mouse-y),
         rgba(200, 200, 200, 0.3),
         transparent 40%
     );
     z-index: 3;
 }
 
-.card::after {  
+.card::after {
     background: radial-gradient(
-        600px circle at var(--mouse-x) var(--mouse-y), 
+        600px circle at var(--mouse-x) var(--mouse-y),
         rgba(200, 200, 200, 0.4),
         transparent 40%
     );
@@ -249,7 +249,7 @@ body {
     gap: 10px;
 }
 
-.card-info > i {  
+.card-info > i {
     font-size: 1em;
     height: 20px;
     line-height: 20px;
