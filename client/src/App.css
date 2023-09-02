@@ -153,7 +153,6 @@ body {
     background-color: rgba(200, 200, 200, 0.1);
     border-radius: 10px;
     border: 1px solid #EEE;
-    cursor: pointer;
     display: flex;
     flex-direction: column;
     position: relative;

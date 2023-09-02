@@ -281,11 +281,11 @@ class TwinCandles extends Component<ITwinCandleProps, ITwinCandleState> {
             });
 
             // TODO temporary solution because I am tired start
-            var element: HTMLElement = document.querySelector(".dark-room-filter");
+            var element: HTMLElement = document.querySelector(".featured-section-content");
 
-            // Check if the element exists and set its display to "none"
+            // Check if the element exists and set its "darkness"
             if (element) {
-                element.style.display = "none";
+                element.classList.remove('featured-section-content-in-dark-room');
             }
             // temporary solution because I am tired end
 
@@ -297,11 +297,11 @@ class TwinCandles extends Component<ITwinCandleProps, ITwinCandleState> {
 
     public turnCandleLightOff = () => {
         // TODO temporary solution because I am tired start
-        var element: HTMLElement = document.querySelector(".dark-room-filter");
+        var element: HTMLElement = document.querySelector(".featured-section-content");
 
         // Check if the element exists and set its display to "none"
         if (element) {
-            element.style.display = "block";
+            element.classList.add('featured-section-content-in-dark-room');
         }
 
         // temporary solution because I am tired end

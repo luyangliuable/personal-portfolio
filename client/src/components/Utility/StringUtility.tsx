@@ -1,6 +1,6 @@
-const truncateTextBody = (text: string): string => {
-    return text && text.length > 400
-        ? text.substring(0, 400) + "..."
+const truncateTextBody = (text: string, size: number = 200): string => {
+    return text && text.length > size
+        ? text.substring(0, size) + "..."
         : text;
 }
 
