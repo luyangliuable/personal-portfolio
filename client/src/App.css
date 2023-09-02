@@ -165,6 +165,7 @@ body {
 }
 
 .card::before,
+
 .card::after {
     border-radius: inherit;
     content: "";
