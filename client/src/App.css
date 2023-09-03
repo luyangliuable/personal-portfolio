@@ -19,6 +19,8 @@
     --home-container-border-radius: 14px;
 
     --page-top-margin: 120px;
+    --page-bottom-margin: 120px;
+
     --dark-mode-black: #1e1e1e;
     --dark-mode-purple: #491ed3;
     --dark-mode-purple-2: #897ed3;
@@ -78,6 +80,12 @@ body {
     }
 }
 
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 1.5rem !important;
+    }
+}
+
 .landing-page-content {
     display: flex;
     justify-content: space-around;
@@ -113,6 +121,7 @@ body {
 
 .page-body {
     margin-top: var(--page-top-margin);
+    margin-bottom: var(--page-bottom-margin);
 }
 
 .landing-page-card {
@@ -220,19 +229,6 @@ body {
 }
 
 /* -- ↓ ↓ ↓ extra card content styles ↓ ↓ ↓ -- */
-
-.card-image {
-    align-items: center;
-    width: 150px;
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.card-image > i {
-    font-size: 6em;
-    opacity: 0.25;
-}
 
 .card-info-wrapper {
     align-items: center;

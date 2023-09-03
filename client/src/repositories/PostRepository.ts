@@ -20,9 +20,6 @@ class PostRepository {
 
     const options = PostRepository.options("GET");
 
-    console.log(url);
-    console.log(url);
-    console.log(url);
     return fetch(url, options)
       .then(response => response.json())
       .catch(error => console.error('Error:', error));

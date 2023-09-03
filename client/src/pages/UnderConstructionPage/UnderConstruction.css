@@ -1,5 +1,10 @@
 .under-contruction-card {
     width: 40vw !important;
+    min-width: 300px;
+    min-height: 200px;
     height: 20vw !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 

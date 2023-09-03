@@ -1,4 +1,4 @@
-import { Component, createRef } from 'react';
+import { Component, createRef } from "react";
 import IFeaturedContentSectionState from "./Interface/IFeaturedContentSectionState";
 import IFeaturedContentSectionProps from "./Interface/IFeaturedContentSectionProps";
 import "./FeaturedContentSection.css";
@@ -19,13 +19,13 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
         this.state = {
             featuredPost: {
                 _id: {
-                    $oid: ''
+                    $oid: "64f2f5d0481c4558176ca3b2"
                 },
-                body: "Pellentesque dapibus suscipit ligula.  Donec posuere augue in quam.  Etiam vel tortor sodales tellus ultricies commodo.  Suspendisse potenti.  Aenean in sem ac leo mollis blandit.  Donec neque quam, dignissim in, mollis nec, sagittis eu, wisi.  Phasellus lacus.  Etiam laoreet quam sed arcu.  Phasellus at dui in ligula mollis ultricies.  Integer placerat tristique nisl.  Praesent augue.  Fusce commodo.  Vestibulum convallis, lorem a tempus semper, dui dui euismod elit, vitae placerat urna tortor vitae lacus.  Nullam libero mauris, consequat quis, varius et, dictum id, arcu.  Mauris mollis tincidunt felis.  Aliquam feugiat tellus ut neque.  Nulla facilisis, risus a rhoncus fermentum, tellus tellus lacinia purus, et dictum nunc justo sit amet elit. ",
-                heading: "Coming Soon",
+                body: "",
+                heading: "Why I Will Treat Ikigai as My Soulful Quest for Purpose and Passion",
                 author: "Luyang Liu",
                 date_created: "2023-07-30T12:34:56Z",
-                url: "hello",
+                url: "",
             },
             featuredTool: {
                 name: "Coming Soon",
@@ -66,7 +66,8 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
                         body={truncateTextBody(this.state.featuredPost.body, 50)}
                         author={this.state.featuredPost.author}
                         date_created={this.state.featuredPost.date_created}
-                        link={`/blog?id=${this.state.featuredPost._id.$oid}`}
+                        link={`/digital_chronicles/blog?id=${this.state.featuredPost._id.$oid}`}
+                        image="https://barbarabray.net/wp-content/uploads/2017/11/ikigai-1024x968.jpg"
                     />
 
                     <Card

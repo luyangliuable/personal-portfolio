@@ -1,6 +1,5 @@
 import { Component } from "react";
 import ReactMarkdown from "react-markdown"
-import BlogRepository from "../../../repositories/BlogRepository";
 import PostRepository from "../../../repositories/PostRepository";
 import IBlogContentState from "./Interface/IBlogContentState";
 import IBlogContentProps from "./Interface/IBlogContentProps";

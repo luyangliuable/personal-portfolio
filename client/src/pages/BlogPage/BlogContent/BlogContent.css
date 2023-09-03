@@ -1,0 +1,42 @@
+@media screen and (max-width: 768px) {
+    .blog-content {
+        /* cursor: pointer; */
+        text-align: left;
+        border-bottom: 1px #CCC solid;
+        padding: 2vh 2vw 2vh 2vw;
+        border-radius: .5vh;
+        width: 40%;
+        min-width: 300px;
+        max-width: 1000px;
+        text-decoration: none;
+        color: #000;
+        transition: background .3s ease-in;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .blog-content {
+        /* cursor: pointer; */
+        text-align: left;
+        border-bottom: 1px #CCC solid;
+        padding: 2vh 2vw 2vh 2vw;
+        border-radius: .5vh;
+        width: 40%;
+        min-width: 300px;
+        max-width: 1000px;
+        text-decoration: none;
+        color: #000;
+        margin-right: 12vw;
+        transition: background .3s ease-in;
+    }
+}
+
+
+.blog-content img {
+    width: 30vw;
+    max-width: 300px;
+    height: auto;
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+}
