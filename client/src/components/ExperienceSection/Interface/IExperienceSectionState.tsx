@@ -1,11 +1,13 @@
 import { JSXElementConstructor } from 'react';
 
 interface ExperienceSectionItem {
-    title: string,
+    dateTime: string,
     cardTitle: string,
     url: string,
     cardSubtitle: string,
     cardDetailedText: string,
+    importance?: number, // from 0 - 1
+    display?: "IMAGE" | "NORMAL"
     media: {
         type: "IMAGE" | "VIDEO" | "AUDIO",
         source: {
@@ -24,6 +26,7 @@ interface IExperienceSectionState<
     currentElementPositionY?: number,
     timeLineLength?: number,
     lockPosition: number | null
+    unlockPosition: number | null
     fallBackLockPosition: number | null
 }
 

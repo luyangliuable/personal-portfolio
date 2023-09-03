@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, createRef } from 'react';
 import "./Card.css";
 import { cardGradientEffect } from "../../components/Utility/MouseUtility";
 import { truncateTextBody, stripAwayHashSymbols, isoDateFormatToString } from "../../components/Utility/StringUtility";
@@ -7,6 +7,8 @@ import ICardProps from './Interface/ICardProps';
 import ICardState from './Interface/ICardState';
 
 class Card extends Component<ICardProps, ICardState> {
+    iframePreviewRef = createRef<HTMLIFrameElement>();
+
     constructor(props: ICardProps) {
         super(props);
     }
@@ -32,6 +34,8 @@ class Card extends Component<ICardProps, ICardState> {
                 <p>
                     {stripAwayHashSymbols(truncateTextBody(this.props.body))}
                 </p>
+
+                <img className="card-image-preview" src={this.props.image} />
             </div>
         );
     }

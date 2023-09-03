@@ -1,31 +1,7 @@
-:root {
-    --bg-color: rgb(20, 20, 20);
-    --card-color: rgb(0, 0, 0);
-}
-
-
 .blog-container {
-    font-family: "Proxima Nova";
     text-align: left;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-}
-
-.blog-content {
-    /* cursor: pointer; */
-    text-align: left;
-    border-bottom: 1px #CCC solid;
-    padding: 2vh 2vw 2vh 2vw;
-    border-radius: .5vh;
-    width: 80%;
-    max-width: 1000px;
-    text-decoration: none;
-    color: #000;
-    transition: background .3s ease-in;
-}
-
-.blog-post-link:hover {
-    background: #1e90ff !important;
 }

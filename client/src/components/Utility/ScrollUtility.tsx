@@ -14,7 +14,7 @@ const getHTMLElementCenterYPosition = (element: any, offset: number = 0): number
     return divCenterY;
 }
 
-function isCloseToAnotherElement(element: Element, proxmityToSenseAt: number = 100, includeClasses: string[] = []): Element[] {
+function isCloseToAnotherElement(element: Element, detectStrategy: "top" | "bottom" | "both", proxmityToSenseAt: number = 100, includeClasses: string[] = []): Element[]{
     const rect = element.getBoundingClientRect();
 
     // Points to check just above and below the element by 10px
@@ -49,8 +49,13 @@ function isCloseToAnotherElement(element: Element, proxmityToSenseAt: number = 1
         }
     }
 
-    findElements(xPos, yAbove);
-    findElements(xPos, yBelow);
+    if (detectStrategy === "top" || detectStrategy === "both") {
+        findElements(xPos, yAbove);
+    }
+
+    if (detectStrategy === "bottom" || detectStrategy === "both") {
+        findElements(xPos, yBelow);
+    }
 
     // Filter the elements based on the include classes and their descendants
     const filteredElements = foundElements.filter(el => {

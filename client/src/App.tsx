@@ -7,14 +7,21 @@ import ResumePage from './pages/ResumePage/ResumePage';
 import UnderConstruction from './pages/UnderConstructionPage/UnderConstruction';
 import BlogContent from "./pages/BlogPage/BlogContent/BlogContent";
 
-import { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, BrowserRouter, Route, Routes } from 'react-router-dom';
 
 interface IAppStateInterface {
     scrolled: number | null,
     scrolling: boolean | null
 }
 
+const RedirectToRoot = (props: { link: string }): React.ReactElement<{ link: string }> => {
+    let navigate = useNavigate();
+    React.useEffect(() => {
+        navigate(props.link);
+    }, [navigate]);
+    return null;
+}
 
 function App() {
     // Put any type for now because idk what the future will bring
@@ -75,20 +82,28 @@ function App() {
                                 scrolled={appState.scrolled}
                                 scrolling={appState.scrolling}
                             />
-                        }/>
-                        <Route path="/blogs" element={
+                        } />
+                        <Route path="/digital_chronicles/blogs" element={
                             <BlogPage />
-                        }/>
-                        <Route path="/resume" element={
-                            <ResumePage />
-                        }/>
+                        } />
                         <Route path="/resume" element={
                             <ResumePage />
                         } />
-                        <Route path="/blog" element={
+                        <Route path="/resume" element={
+                            <ResumePage />
+                        } />
+                        <Route path="/digital_chronicles/blog" element={
                             <BlogContent />
                         } />
-                        <Route path="*" element={<UnderConstruction />} /> {/* Catch-all route */}
+                        {/* Catch-all route */}
+                        <Route path="*" element={
+                            <UnderConstruction />
+                        } />
+
+                        {/* Redirections */}
+                        <Route path="/digital_chronicles" element={<RedirectToRoot link="/digital_chronicles/blogs" />} />
+                        <Route path="/tools" element={<RedirectToRoot link="/tools/mood_tracker" />} />
+                        <Route path="/about" element={<RedirectToRoot link="/about/teddie"/>} />
                     </Routes>
                 </div>
 

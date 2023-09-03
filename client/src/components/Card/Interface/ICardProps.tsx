@@ -3,5 +3,6 @@ export default interface ICardProps {
     author?: string;
     date_created?: string;
     link?: string;
+    image?: string;
     body: string;
 }

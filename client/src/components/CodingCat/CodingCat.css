@@ -13,6 +13,12 @@
     overflow: visible;
 }
 
+@media screen and (max-width: 768px) {
+    .coding-cat-container {
+        transform: scale(0.5);
+    }
+}
+
 #coding-cat {
     fill: var(--bg);
     stroke-linecap: round;

@@ -1,7 +1,9 @@
-import { Component } from 'react';
+import { Component, createRef } from 'react';
 import "./UnderConstruction.css";
 
 class UnderConstruction extends Component<{}, {}> {
+    gearsRef = createRef<HTMLDivElement>();
+
     cardEffect(e: any) {
         console.log(e);
         const rect = e.target.getBoundingClientRect(),
@@ -18,8 +20,7 @@ class UnderConstruction extends Component<{}, {}> {
         return (
             <div className="page-container">
                 <div onMouseMove={this.cardEffect} className="card under-contruction-card">
-                    <h1>Under Construction</h1>
-                    <p>Sorry, this page is under construction. I have to work and study so need a bit more time for this kinds of fun.</p>
+                    <h1>Coming Soon</h1>
                 </div>
             </div>
         );

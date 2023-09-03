@@ -18,67 +18,76 @@ class NavBar extends Component<INavbarProps, INavbarState> {
             links: [
                 { name: "Home", to: "/" },
                 {
-                    name: "MyReflections",
-                    to: "/blogs",
+                    name: "Digital Chronicles",
+                    to: "/digital_chronicles",
                     sublinks: [{
-                        name: "Mood Tracker",
-                        to: "/mood_tracker",
+                        name: "💻 Posts",
+                        to: "/digital_chronicles/blogs",
                     }, {
-                        name: "Posts",
-                        to: "/blogs",
+                        name: "📝 Daily Reflections",
+                        to: "/digital_chronicles/daily_refletions",
                     }, {
-                        name: "Daily Reflections",
-                        to: "/daily_refletions",
+                        name: "🧑‍💻 Coding Notes",
+                        to: "/digital_chronicles/daily_refletions",
                     }, {
-                        name: "Gym Log",
-                        to: "/gym_log",
-                    }
+                        name: "🏞 Scenic Memories",
+                        to: "/digital_chronicles/scenic_memories",
+                    },
 
                     ]
                 },
                 {
-                    name: "HobbiesAndProjects",
-                    to: "/project",
+                    name: "Projects",
+                    to: "/projects",
                     sublinks: [{
-                        name: "Coding Projects",
-                        to: "/project",
+                        name: "🏗︎ Coding Projects",
+                        to: "/projects/code",
                     }, {
-                        name: "3D Prints",
-                        to: "/3d_print",
+                        name: "🖨️ 3D Printing",
+                        to: "/projects/3d_printing",
+                    }, {
+                        name: "🤖 Hardware",
+                        to: "/projects/3d_printing",
                     }
                     ]
                 },
                 {
-                  name: "Tools",
-                  to: "/tools",
-                  sublinks: [{
-                      name: "HexaBridger",
-                      to: "/hex_to_rgb",
-                  }, {
-                      name: "TimeCapsule Letters",
-                      to: "/time_capsule_letters"
-                  }, {
-                      name: "CSSCrossBrowser",
-                      to: "/css_cross_browser"
-                  }, {
-                      name: "AnonyLetters",
-                      to: "/anony_letters"
-                  }]
+                    name: "Tools",
+                    to: "/tools",
+                    sublinks: [{
+                        name: "🌉 HexaBridger",
+                        to: "/tools/hex_to_rgb",
+                    }, {
+                        name: "⌛ TimeCapsule Letters",
+                        to: "/tools/time_capsule_letters"
+                    }, {
+                        name: "🗔 CSSCrossBrowser",
+                        to: "/tools/css_cross_browser"
+                    }, {
+                        name: "✉️ AnonyLetters",
+                        to: "/tools/anony_letters"
+                    }, {
+                        name: "😯 Mood Tracker",
+                        to: "/tools/mood_tracker",
+                    }, {
+                        name: "🏋️‍♂️ Gym Log",
+                        to: "/tools/gym_log",
+                    }]
                 },
                 {
-                  name: "Resume",
-                  to: "/resume"
+                    name: "Resume",
+                    to: "/resume"
                 },
                 {
                     name: "About",
                     to: "/about",
                     sublinks: [
                         {
-                            name: "Teddie the Dog",
-                            to: "/teddie"
+                            name: "🐩 Teddie the Dog",
+                            to: "/about/teddie"
                         }, {
-                            name: "About Me",
-                            to: "/about"
+                            name: "😃 About Me",
+                            to: "/about/me"
                         }
                     ]
                 }
@@ -88,7 +97,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
             currentlyHoveredNavbarLinkName: null,
             hideNavBarScrollSensitivity: 1,
             showBurgerPanel: false,
-            name: "Luyang's Coding Portfolio"
+            name: "~/llcode.tech"
         };
     }
 
@@ -206,16 +215,20 @@ class NavBar extends Component<INavbarProps, INavbarState> {
         this.navbarSubmenu.current?.classList.remove("show-navbar-submenu");
     }
 
-    renderNavLink = (link: { name: string, to: string }) => (
-        <NavLink
-            to={link.to}
-            className={({ isActive }) => ["navbar-item", isActive ? "navbar-item active-link" : null].filter(Boolean).join(" ")}
-            key={link.name}
-            onMouseOver={() => this.renderSubmenu(link.name)}
-        >
-            {link.name}
-        </NavLink>
-    );
+    renderNavLink = (link: { name: string, to: string }) => {
+        const name = link.name;
+
+        return (
+            <NavLink
+                to={link.to}
+                className={({ isActive }) => ["navbar-item", isActive ? "navbar-item active-link" : null].filter(Boolean).join(" ")}
+                key={link.name}
+                onMouseOver={() => this.renderSubmenu(link.name)}
+            >
+                {link.name}
+            </NavLink>
+        );
+    }
 
     render() {
         const { name, links } = this.state;

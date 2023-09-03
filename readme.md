@@ -37,6 +37,7 @@
 - [ ] **Website Mascot:** Introduce a mascot (e.g. dog, cat, clippy) that appears on the site. This mascot should be able to read visible content and interact using the OpenAI API.
   * Mascot can detect html elements and climb on top determined by randomness
 - [ ] **Browser Compatibility:** Ensure website compatibility with older browsers.
+- [ ] Nyan cat website scroll progress
 - [ ] **Coding Tools:** Integrate tools for coding-related tasks like hex to RGBA conversion, shell commands, and maybe an online version of emacs.
 - [ ] Turn stuff on this website into packages for others to use.
 - [ ] **CSS Showcases:** Display my CodePen projects that showcase CSS tricks.
