@@ -49,5 +49,3 @@ const ExperienceSectionEvent: React.FC<{ item: ExperienceSectionItem, index: num
 }
 
 export default ExperienceSectionEvent;
-
-
