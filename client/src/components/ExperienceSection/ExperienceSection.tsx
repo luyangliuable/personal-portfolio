@@ -312,7 +312,6 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
         const { scrolled } = this.props;
 
         if (scrolled !== prevProps.scrolled) {
-            console.log(this.getLockPosition() - scrolled)
             const proximityYToLockPosition = 0;
 
             if (isCenterAlignedWithViewport(this.experienceSectionParentRef.current!) < proximityYToLockPosition) {
@@ -338,15 +337,22 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
         const classNamesToCheckProxityFor = ["landing-page-card"]
         const experienceSectionParentElement = this.experienceSectionParentRef.current!.parentElement;
 
-        const isNearExcludedElementBottom = isCloseToAnotherElement(experienceSectionParentElement, "bottom", proximityYToLockUnlockPosition + 10, classNamesToCheckProxityFor).length > 0;
-        const isNearExcludedElementTop = isCloseToAnotherElement(experienceSectionParentElement, "top", proximityYToLockUnlockPosition + 10, classNamesToCheckProxityFor).length > 0;
+        const isNearExcludedElementBottom = isCloseToAnotherElement(experienceSectionParentElement, "bottom", proximityYToLockUnlockPosition, classNamesToCheckProxityFor).length > 0;
+        const isNearExcludedElementTop = isCloseToAnotherElement(experienceSectionParentElement, "top", proximityYToLockUnlockPosition, classNamesToCheckProxityFor).length > 0;
 
         if (isNearExcludedElementBottom) {
             this.setState({
                 unlockPosition: this.props.scrolled
             });
         }
-        return isNearExcludedElementBottom || isNearExcludedElementTop;
+
+        // fallback condition to unlock position
+        const isBeforeLockPosition = this.props.scrolled < this.getLockPosition();
+
+        // fallback condition to unlock position
+        const isPastTimelineLength = this.isLocked() && this.props.scrolled - this.getLockPosition() > this.state.timeLineLength;
+
+        return isNearExcludedElementBottom || isNearExcludedElementTop || isBeforeLockPosition;
     }
 
 
