@@ -6,7 +6,7 @@ import IBlogPageProps from "./Interface/IBlogPageProps";
 import Card from "../../components/Card/Card";
 
 class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
-    
+
     constructor(props: IBlogPageProps) {
         super(props);
         this.state = {

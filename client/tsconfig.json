@@ -8,8 +8,5 @@
     "target": "es6",
     "jsx": "react-jsx"
   },
-  "include": [
-    "src/**/*",
-    "assets/photos/**/*"
-  ]
+  "include": ["src/**/*", "assets/photos/**/*"]
 }
