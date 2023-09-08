@@ -5,10 +5,23 @@ mod api;
 mod models;
 mod utils;
 mod repository;
+mod database;
 
 use repository::blog_repo::BlogRepo;
 use repository::post_repo::PostRepo;
 use repository::mongo_repo::MongoRepo;
+
+use database::db_singleton::DB;
+
+use std::env;
+use mongodb::{
+    bson::{ doc, oid::ObjectId },
+    results::InsertOneResult,
+    sync::{Client, Collection, Database},
+};
+
+// use rocket::tokio;
+
 use models::post_model::Post;
 use rocket::http::Header;
 use rocket::{Request, Response};
@@ -42,27 +55,42 @@ fn index() -> &'static str {
     "Live!"
 }
 
+fn init_db() -> Database {
+    let uri = match env::var("MONGOURI") {
+        Ok(v) => v.to_string(),
+        Err(_) => "mongodb://localhost:27017".to_string(),
+    };
+
+    let client = Client::with_uri_str(&uri).unwrap();
+
+    client.database("rustDB")
+}
+
 /// Launches the Rocket server and sets up routes and middlewares.
 #[launch]
-fn rocket() -> _ {
+async fn rocket() -> _ {
     println!("Starting server...");
 
     // Initialize database repositories.
-    let db = BlogRepo::init();
-    let db2 = PostRepo(MongoRepo::<Post>::init("Post"));
+    let mongo_repo = MongoRepo::<Post>::init("Post", &*DB).await;
+    let blog_repo = BlogRepo::init();
+    let post_repo = PostRepo(mongo_repo);
 
     rocket::build()
-        .manage(db)
-        .manage(db2)
+        .manage(blog_repo)
+        .manage(post_repo)
+        .manage(DB.clone()) // IDK how in the F*** rust rocket knows this is db from &rocket::State<T> also &*DB does not work for some reason.
         .mount("/api/", routes![index])
         .mount("/api/", routes![api::blogs::get_blog_post])
         .mount("/api/", routes![api::blogs::create_blog])
         .mount("/api/", routes![api::blogs::get_blog])
         .mount("/api/", routes![api::health::check_health])
         .mount("/api/", routes![api::health::check_env_variable])
+        .mount("/api/", routes![api::health::check_mongodb_uri])
         .mount("/api/", routes![api::posts::index_post])
         .mount("/api/", routes![api::posts::get_post])
         .mount("/api/", routes![api::posts::get_test_post])
         .mount("/api/", routes![api::posts::get_post_list])
+        .mount("/api/", routes![api::user::register])
         .attach(CORS)
 }

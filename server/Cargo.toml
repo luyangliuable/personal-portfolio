@@ -18,6 +18,8 @@ rocket_cors = "0.5.2" # Use the latest version available
 time = "0.3.17"
 chrono = "0.4"
 lazy_static = "1.4.0"
+bcrypt = "0.15.0"
+once_cell = "1.8.0"
 
 [dependencies.mongodb]
 version = "2.2.0"

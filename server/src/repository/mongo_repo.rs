@@ -1,13 +1,9 @@
-extern crate dotenv;
 
-use mongodb::bson::oid::ObjectId;
-use std::env;
-use dotenv::dotenv;
 use std::io::Error;
 use mongodb::{
-    bson::doc,
+    bson::{ doc, oid::ObjectId },
     results::InsertOneResult,
-    sync::{Client, Collection},
+    sync::{Client, Collection, Database},
 };
 
 use crate::models::mongo_model::MongoModel;
@@ -15,7 +11,7 @@ use crate::models::mongo_model::MongoModel;
 /// Represents a generic MongoDB repository for type `T` which implements the `MongoModel` trait.
 pub struct MongoRepo<T: MongoModel> {
     insert_col: Collection<T>,
-    get_col: Collection<T>,
+    get_col: Collection<T>
 }
 
 impl<T: MongoModel> MongoRepo<T> {
@@ -26,16 +22,7 @@ impl<T: MongoModel> MongoRepo<T> {
     ///
     /// # Returns
     /// A new instance of `MongoRepo` for the specified collection.
-    pub fn init(collection_name: &str) -> Self {
-        dotenv().ok();
-        
-        let uri = match env::var("MONGOURI") {
-            Ok(v) => v.to_string(),
-            Err(_) => "mongodb://localhost:27017".to_string(),
-        };
-
-        let client = Client::with_uri_str(&uri).unwrap();
-        let db = client.database("rustDB");
+    pub async fn init(collection_name: &str, db: &Database) -> Self {
         let get_col: Collection<T> = db.collection(collection_name);
         let insert_col: Collection<T> = db.collection(collection_name);
 
