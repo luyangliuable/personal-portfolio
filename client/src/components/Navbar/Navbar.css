@@ -4,7 +4,7 @@
     --navbar-height: 61px;
     --navbar-submenu-height: 120px;
     --navbar-max-height: 93px;
-    --progress-height: 4px;
+    --progress-height: 3.5px;
     --navbar-item-border-radius: 4px;
     --navbar-item-width: 10vw;
     --navbar-item-margin: 0.1vw;
@@ -70,7 +70,6 @@
     border-radius: var(--navbar-item-border-radius);
     z-index: 1;
     margin-left: var(--navbar-item-margin);
-    /* border-left: var(--navbar-item-margin); */
 }
 
 .navbar-submenu-item:hover {
@@ -151,7 +150,6 @@
         background: var(--dark-mode-black);
         transition: transform .2s ease-in-out;
         transform: translateY(var(--burger-panel-y-position));
-        /* transform: translatey(var(--navbar-height)); */
     }
 
     .nav-burger-panel-move-lower {
@@ -160,7 +158,6 @@
 
     .burger-item {
         color: #FFF;
-        /* background: red; */
         padding: 2px;
         margin: 2px;
         width: 27vw;
@@ -175,7 +172,8 @@
 
 
 .hidden {
-    transform: translateY(min( var(--navbar-height), calc(-93px + .5vh)));
+    transform: translateY(calc(-var(--navbar-height)));
+    transform: translateY(-61px); /* For some reason the above doesn't work so I put this here for now */
 }
 
 .detached {
@@ -256,6 +254,7 @@
 #scroll-progress {
     position: absolute;
     background: #00bfff;
+    box-shadow: 0px 0px min( 5px, .5vh ) #00bfff;
     height: var(--progress-height);
     z-index: 11;
     width: 100vw;
