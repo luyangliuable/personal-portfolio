@@ -9,6 +9,7 @@ mod database;
 
 use repository::blog_repo::BlogRepo;
 use repository::post_repo::PostRepo;
+use repository::user_repo::UserRepo;
 use repository::mongo_repo::MongoRepo;
 
 use database::db_singleton::DB;
@@ -23,6 +24,8 @@ use mongodb::{
 // use rocket::tokio;
 
 use models::post_model::Post;
+use models::user_model::User;
+
 use rocket::http::Header;
 use rocket::{Request, Response};
 use rocket::fairing::{Fairing, Info, Kind};
@@ -72,13 +75,14 @@ async fn rocket() -> _ {
     println!("Starting server...");
 
     // Initialize database repositories.
-    let mongo_repo = MongoRepo::<Post>::init("Post", &*DB).await;
     let blog_repo = BlogRepo::init();
-    let post_repo = PostRepo(mongo_repo);
+    let post_repo = PostRepo(MongoRepo::<Post>::init("Post", &*DB).await);
+    let user_repo = UserRepo(MongoRepo::<User>::init("User", &*DB).await);
 
     rocket::build()
         .manage(blog_repo)
         .manage(post_repo)
+        .manage(user_repo)
         .manage(DB.clone()) // IDK how in the F*** rust rocket knows this is db from &rocket::State<T> also &*DB does not work for some reason.
         .mount("/api/", routes![index])
         .mount("/api/", routes![api::blogs::get_blog_post])
@@ -92,5 +96,6 @@ async fn rocket() -> _ {
         .mount("/api/", routes![api::posts::get_test_post])
         .mount("/api/", routes![api::posts::get_post_list])
         .mount("/api/", routes![api::user::register])
+        .mount("/api/", routes![api::user::check_session_token])
         .attach(CORS)
 }
