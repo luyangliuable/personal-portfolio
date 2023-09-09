@@ -95,7 +95,8 @@ async fn rocket() -> _ {
         .mount("/api/", routes![api::posts::get_post])
         .mount("/api/", routes![api::posts::get_test_post])
         .mount("/api/", routes![api::posts::get_post_list])
-        .mount("/api/", routes![api::user::register])
-        .mount("/api/", routes![api::user::check_session_token])
+        .mount("/api/", routes![api::user::user::register])
+        .mount("/api/", routes![api::user::user::login])
+        .mount("/api/", routes![api::user::user::check_session_token])
         .attach(CORS)
 }

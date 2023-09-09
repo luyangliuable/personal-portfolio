@@ -2,7 +2,6 @@ use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 use chrono::{ DateTime, Utc };
 
-
 #[derive(Serialize, Deserialize)]
 pub struct User {
     pub username: String,
@@ -13,4 +12,11 @@ pub struct User {
     pub last_name: String,
     pub session_token: Option<Uuid>,
     pub session_token_created_date: Option<DateTime<Utc>>,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct UserLogin {
+    pub username: Option<String>,
+    pub password: String,
+    pub email: Option<String>,
 }

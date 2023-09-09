@@ -1,17 +1,16 @@
-use std::str::FromStr;
+use std::{ str::FromStr, io::Error };
 
 use chrono::Utc;
 use uuid::Uuid;
 use rocket::{State, http::Status, serde::json::Json};
 use mongodb::{
-    bson,
     bson::oid::ObjectId,
     results::InsertOneResult,
     sync::Database,
 };
 
 use crate::{
-    models::{user_model::User, user_session_token_model::UserSessionToken},
+    models::{user_model::{ User, UserLogin }, user_session_token_model::UserSessionToken},
     repository::user_repo::UserRepo,
 };
 
@@ -51,7 +50,7 @@ fn handle_successful_creation(valid_response: InsertOneResult, user_token: Uuid)
         userid: valid_response.inserted_id.as_object_id().map(|oid| oid.to_string()).unwrap_or_default(),
         session_token: user_session_token_string,
     };
-
+    
     Ok(Json(user_session_token))
 }
 
@@ -79,18 +78,39 @@ pub fn check_session_token(
         })
 }
 
-// #[post("/login", data = "<user>")]
-// pub async fn login(user: Json<User>, db: mongodb::Database) -> Status {
-//     let users_collection = db.collection("users");
-//     let user_info = user.into_inner();
+#[post("/login", data = "<user_login_details>")]
+pub async fn login(user_login_details: Json<UserLogin>, user_repo: &State<UserRepo>) -> Result<Json<String>, Status> {
+    let user_login_details = user_login_details.into_inner();
 
-//     let result = users_collection.find_one(doc! {"username": user_info.username}, None).await.unwrap();
+    if let Some(email) = user_login_details.email {
+        get_user_login_details_with_email(email, user_login_details.password, user_repo)
+    } else if let Some(username) = user_login_details.username {
+        get_user_login_details_with_username(username, user_login_details.password, user_repo)
+    } else {
+        Err(Status::BadRequest)
+    }
+}
 
-//     if let Some(db_user) = result {
-//         if bcrypt::verify(&user_info.password, &db_user.password).unwrap() {
-//             return Status::Ok;
-//         }
-//     }
 
-//     Status::Unauthorized
-// }
+fn verify_user(user: Result<User, Error>, password: &str) -> Result<Json<String>, Status> {
+    match user {
+        Ok(user) => {
+            match bcrypt::verify(password, &user.password) {
+                Ok(true) => Ok(Json("Login successful".to_string())),
+                Ok(false) => Err(Status::Unauthorized),
+                Err(_) => Err(Status::InternalServerError),
+            }
+        },
+        Err(_) => Err(Status::Unauthorized),
+    }
+}
+
+fn get_user_login_details_with_email(email: String, password: String, user_repo: &State<UserRepo>) -> Result<Json<String>, Status> {
+    let user = user_repo.get_user_by_email(&email);
+    verify_user(user, &password)
+}
+
+fn get_user_login_details_with_username(username: String, password: String, user_repo: &State<UserRepo>) -> Result<Json<String>, Status> {
+    let user = user_repo.get_user_by_email(&username);
+    verify_user(user, &password)
+}

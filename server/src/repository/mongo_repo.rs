@@ -1,4 +1,3 @@
-
 use std::io::Error;
 use mongodb::{
     bson::{ doc, oid::ObjectId },
@@ -10,8 +9,8 @@ use crate::models::mongo_model::MongoModel;
 
 /// Represents a generic MongoDB repository for type `T` which implements the `MongoModel` trait.
 pub struct MongoRepo<T: MongoModel> {
-    insert_col: Collection<T>,
-    get_col: Collection<T>
+    pub insert_col: Collection<T>,
+    pub get_col: Collection<T>
 }
 
 impl<T: MongoModel> MongoRepo<T> {
@@ -56,7 +55,11 @@ impl<T: MongoModel> MongoRepo<T> {
     pub fn get(&self, id: ObjectId) -> Result<T, Error> {
         let filter = doc! { "_id": id };
 
-        let result = self.get_col.find_one(filter, None).ok().expect("Error getting blog post");
+        let result = self
+            .get_col
+            .find_one(filter, None)
+            .ok()
+            .expect("Error getting blog post");
 
         match result {
             Some(document) => {
