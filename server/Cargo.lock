@@ -2665,6 +2665,7 @@ dependencies = [
  "chrono",
  "dotenv",
  "lazy_static",
+ "log 0.4.17",
  "mongodb",
  "once_cell",
  "rocket 0.5.0-rc.2",

@@ -10,7 +10,7 @@ use mongodb::{
 use crate::{
     models::{user_model::{ User, UserLogin }, user_session_token_model::UserSessionToken},
     repository::user_repo::UserRepo,
-    api::user::utils::user_util
+    utils::user_util
 };
 
 #[post("/register", data = "<user>")]
