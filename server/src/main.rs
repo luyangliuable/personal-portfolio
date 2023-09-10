@@ -12,6 +12,7 @@ use repository::blog_repo::BlogRepo;
 use repository::post_repo::PostRepo;
 use repository::user_repo::UserRepo;
 use repository::mongo_repo::MongoRepo;
+use repository::local_image_repo::LocalImageRepo;
 
 use database::db_singleton::DB;
 
@@ -26,6 +27,7 @@ use mongodb::{
 
 use models::post_model::Post;
 use models::user_model::User;
+use models::local_image_model::LocalImage;
 
 use rocket::http::Header;
 use rocket::{Request, Response};
@@ -79,11 +81,14 @@ async fn rocket() -> _ {
     let blog_repo = BlogRepo::init();
     let post_repo = PostRepo(MongoRepo::<Post>::init("Post", &*DB).await);
     let user_repo = UserRepo(MongoRepo::<User>::init("User", &*DB).await);
+    let local_image_repo = LocalImageRepo(MongoRepo::<LocalImage>::init("LocalImage", &*DB).await);
 
+    // TODO: Convert this into a toml file and load it
     rocket::build()
         .manage(blog_repo)
         .manage(post_repo)
         .manage(user_repo)
+        .manage(local_image_repo)
         .manage(DB.clone()) // IDK how in the F*** rust rocket knows this is db from &rocket::State<T> also &*DB does not work for some reason.
         .mount("/api/", routes![index])
         .mount("/api/", routes![api::blogs::get_blog_post])
@@ -98,5 +103,7 @@ async fn rocket() -> _ {
         .mount("/api/", routes![api::user::register])
         .mount("/api/", routes![api::user::login])
         .mount("/api/", routes![api::user::check_session_token])
+        .mount("/api/", routes![api::local_image::index_image])
+        .mount("/api/", routes![api::local_image::get_image])
         .attach(CORS)
 }
