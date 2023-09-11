@@ -67,3 +67,12 @@ rustup override set nightly
 cargo build
 cargo run
 ```
+
+* Only version that will work on linux due to bug with rust compiler and proc-macro2
+nightly-2023-03-01-x86_64-unknown-linux-gnu
+
+* Version confirmed to will work on mac os. So far it is pretty smooth it is shocking since it is an arm architecture and nightly.
+stable-aarch64-apple-darwin (default)
+rustc 1.65.0 (897e37553 2022-11-02)
+
+* No version of rust can run this on windows currently
