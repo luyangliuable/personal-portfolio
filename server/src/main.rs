@@ -105,5 +105,6 @@ async fn rocket() -> _ {
         .mount("/api/", routes![api::user::check_session_token])
         .mount("/api/", routes![api::local_image::index_image])
         .mount("/api/", routes![api::local_image::get_image])
+        .mount("/api/", routes![api::local_image::update_image_index])
         .attach(CORS)
 }

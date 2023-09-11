@@ -1,15 +1,18 @@
-use log::{error, info};
-use crate::models::mongo_model::MongoModel;
-use crate::repository::mongo_repo::MongoRepo;
 use uuid::Uuid;
-use mongodb::options::UpdateOptions;
-use crate::models::{user_model::User, user_session_token_model::UserSessionToken};
-use std::{io::Error, str::FromStr};
-use mongodb::{
-    bson::{doc, oid::ObjectId},
-    results::InsertOneResult,
-    sync::{Client, Collection, Database},
+
+use std::io::Error;
+
+use crate::{
+    models::{
+        mongo_model::MongoModel,
+        user_model::User, 
+        user_session_token_model::UserSessionToken,
+    },
+    repository::mongo_repo::MongoRepo,
 };
+
+use mongodb::bson::doc;
+
 /// Represents a user repository that wraps the generic MongoRepo 
 /// to provide specific functionality for the User model.
 pub struct UserRepo(pub MongoRepo<User>);
@@ -34,26 +37,13 @@ impl UserRepo {
 
     /// Updates the session token for a user identified by their ID.
     pub fn update_user_session_token(&self, userid: String) -> Result<UserSessionToken, Error> {
-        let filter = ObjectId::from_str(&userid)
-            .map(|object_id| doc! {"_id": object_id})
-            .map_err(|_| Error::new(std::io::ErrorKind::Other, "Invalid user ID"))?;
-
         let new_token = Uuid::new_v4();
-        let update = doc! { "$set": { "session_token": new_token.to_string() } };
-        let options = UpdateOptions::builder().upsert(true).build();
 
-        match self.0.insert_col.update_one(filter, update, options) {
-            Ok(result) if result.modified_count > 0 => {
-                Ok(UserSessionToken { userid, session_token: new_token.to_string() })
-            }
-            Ok(result) => {
-                error!("No document was upserted. Matched count: {:?}, Modified count: {:?}, {:?}", result.matched_count, result.modified_count, result.upserted_id);
-                Err(Error::new(std::io::ErrorKind::Other, "No document was upserted."))
-            }
-            Err(e) => {
-                error!("Token Update failed: {}", e);
-                Err(Error::new(std::io::ErrorKind::Other, "Token Update failed."))
-            }
+        let update = doc! { "$set": { "session_token": new_token.to_string() } };
+
+        match self.0.update_one(userid.clone(), update, None) {
+            Ok(_) => Ok(UserSessionToken { session_token: new_token.to_string(), userid: userid.clone() }),
+            Err(error) => Err(error),
         }
     }
 

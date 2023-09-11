@@ -1,63 +1,22 @@
-use rocket::{http::Status, State};
+use rocket::{
+    http::{ContentType, Status},
+    serde::json::Json,
+    State,
+};
+
+use mongodb::{
+    bson::{doc, to_bson, oid::ObjectId},
+    results::{InsertOneResult, UpdateResult}
+};
+
 use std::str::FromStr;
-use crate::{utils::markdown_util, models::local_image_model::LocalImage, repository::local_image_repo::LocalImageRepo};
-use mongodb::bson::oid::ObjectId;
-use rocket::serde::json::Json;
-use mongodb::results::InsertOneResult;
 
-use rocket::response::Responder;
-use rocket::http::ContentType;
-use rocket::response::Response;
-use std::fs::File;
-use std::io::Read;
-use std::path::Path;
+use crate::{
+    models::local_image_model::LocalImage,
+    repository::local_image_repo::LocalImageRepo,
+    utils::{local_image_util, util},
+};
 
-
-// /// Fetches a post based on its ObjectId.
-// /// Returns the post content as a `Post` object wrapped in JSON.
-// #[get("/posts/<id>")]
-// pub async fn get_post(db: &State<PostRepo>, id: String) -> Result<Json<Post>, Status> {
-//     match ObjectId::from_str(&id) {
-//         Ok(object_id) => {
-
-//             let blog_post = db.0.get(object_id);
-
-//             match blog_post {
-//                 Ok(blog_post) => {
-//                     match markdown_util::get_post_content_for_post(blog_post) {
-//                         Ok(updated_post) => Ok(Json( updated_post )),
-//                         Err(_) => Err(Status::NotFound),
-//                     }
-//                 },
-//                 Err(_) => Err(Status::InternalServerError),
-//             }
-//         },
-//         Err(_) => Err(Status::BadRequest), // Respond with a bad request status if the hex string is invalid
-//     }
-// }
-
-
-// #[get("/posts")]
-// pub fn get_post_list(db: &State<PostRepo>) -> Result<Json<Vec<Post>>, Status> {
-//     // The `0` here is accessing the inner `MongoRepo<Post>` of `PostRepo`.
-//     let post_list_result = db.0.get_all(); 
-
-//     let mut result = Vec::new();
-
-//     let post_list = match post_list_result {
-//         Ok(posts) => posts,
-//         Err(_) => return Err(Status::InternalServerError),
-//     };
-
-//     for post in post_list {
-//         match markdown_util::get_post_content_for_post(post) {
-//             Ok(updated_post) => result.push(updated_post),
-//             Err(_) => return Err(Status::NotFound),
-//         }
-//     }
-
-//     Ok(Json(result))
-// }
 
 /// Adds a new post to the database.
 /// Accepts a JSON body with the post details and returns the result of the insertion.
@@ -72,12 +31,48 @@ pub async fn index_image(local_image_repo: &State<LocalImageRepo>, new_image: Js
 }
 
 #[get("/image/<id>")]
-pub fn get_image(id: String) -> Result<(ContentType, Vec<u8>), Status> {
-    // let file = File::open("path/to/your/image.jpg").map_err(rocket::response::Debug)?;
-    let image_bytes = std::fs::read("/Users/blackfish/coding_profile_pic.png").map_err(|e| {
+pub fn get_image(id: String, local_image_repo:&State<LocalImageRepo>) -> Result<(ContentType, Vec<u8>), Status> {
+    let object_id = ObjectId::from_str(&id).expect("Failed to convert id to ObjectId");
+
+    // Get the LocalImage
+    let local_image_result = match local_image_repo.0.get(object_id) {
+        Ok(local_image) => local_image,
+        Err(_) => return Err(Status::NotFound),
+    };
+
+    let local_image_path = match local_image_util::image_store_location() {
+        Ok(local_image_location) => util::path_combiner(local_image_location, local_image_result.file_name, Some( local_image_result.image_type )),
+        Err(_) => return Err(Status::NotFound)
+    };
+
+    // Read the file
+    let image_bytes = std::fs::read(local_image_path).map_err(|e| {
         println!("Failed to read the file: {:?}", e);
         Status::InternalServerError
     })?;
 
     Ok(( ContentType::PNG, image_bytes))
+}
+
+
+
+#[put("/image/<id>", data = "<new_image>")]
+pub fn update_image_index(id: String, new_image: Json<LocalImage>, local_image_repo: &State<LocalImageRepo>) -> Result<Json<UpdateResult>, Status> {
+    let new_image_data = new_image.into_inner();
+    
+    let update_doc = match to_bson(&new_image_data) {
+        Ok(mongodb::bson::Bson::Document(doc)) => doc,
+        Ok(_other) => return Err(Status::InternalServerError),
+        Err(_) => return Err(Status::BadRequest),
+    };
+    
+    let update = doc! { "$set": update_doc };
+    
+    match local_image_repo.0.update_one(id, update, None) {
+        Ok(update_result) => {
+            // Here, assuming user is of a type that has these methods; adjust as necessary
+            Ok(Json( update_result ))
+        },
+        Err(_) => Err(Status::BadRequest),
+    }
 }

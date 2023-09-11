@@ -1,7 +1,6 @@
 use std::env;
-use std::io::{ Error, ErrorKind };
+use std::io::Error;
 use std::path::Path;
-
 use crate::models::post_model::Post;
 
 pub fn image_store_location() -> Result<String, Error> {

@@ -1,18 +1,13 @@
-use std::env;
 use std::fs::File;
 use std::io::prelude::*;
-use std::io::{ Error, ErrorKind };
+use std::io::Error;
 
-use crate::models::post_model::Post;
+use crate::{ models::post_model::Post, utils::util };
 
 pub fn markdown_store_location() -> Result<String, Error> {
-    for (key, value) in env::vars() {
-        if key == "MARKDOWN_POSTS_STORE_LOCATION" {
-            return Ok(value);
-        }
-    }
+    let env_variable_key = "MARKDOWN_POSTS_STORE_LOCATION".to_string();
 
-    Err(Error::new(std::io::ErrorKind::Other, "No markdown store location found"))
+    util::get_env_variable(env_variable_key)
 }
 
 pub fn get_path_of_stored_markdown(mut previous_post: &Post) -> Result<String, Error> {

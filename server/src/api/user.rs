@@ -52,10 +52,9 @@ pub fn check_session_token(
 #[post("/login", data = "<user_login_details>")]
 pub async fn login(user_login_details: Json<UserLogin>, user_repo: &State<UserRepo>) -> Result<Json<UserSessionToken>, Status> {
     let user_login_details = user_login_details.into_inner();
-
     let verification_method = user_util::determine_verification_method(&user_login_details);
-
     let verification_result = match verification_method {
+
         user_util::VerificationMethod::Email => {
             user_util::verify_user_with_email(
                 user_login_details.email.expect("Email is required"),
