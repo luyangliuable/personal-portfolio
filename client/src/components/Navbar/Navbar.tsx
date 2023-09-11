@@ -28,7 +28,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                         to: "/digital_chronicles/daily_refletions",
                     }, {
                         name: "🧑‍💻 Coding Notes",
-                        to: "/digital_chronicles/daily_refletions",
+                        to: "/digital_chronicles/coding_notes",
                     }, {
                         name: "🏞 Scenic Memories",
                         to: "/digital_chronicles/scenic_memories",
@@ -47,7 +47,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                         to: "/projects/3d_printing",
                     }, {
                         name: "🤖 Hardware",
-                        to: "/projects/3d_printing",
+                        to: "/projects/hardware",
                     }
                     ]
                 },
@@ -72,6 +72,9 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                     }, {
                         name: "🏋️‍♂️ Gym Log",
                         to: "/tools/gym_log",
+                    }, {
+                        name: "🤝 MeetSleek",
+                        to: "/tools/meet_sleek",
                     }]
                 },
                 {

@@ -18,11 +18,19 @@
 - [x] **Deployment:** Website live at [this link](http://170.64.250.107/).
 - [x] **Backend Storage:** Store posts as markdown and manage them inside a volume backend.
 - [x] Featured Content section with cool candle + dark room animation effect
+* [x] Store images and assets on the rust backend for enhanced speed and performance.
 
 ### Upcoming Features:
+* [ ] Login system: users can login or continue as guests when using some tooks
 * [ ] Mood tracker: track what made user happy or sad and give statiscs on what things most likely going to make user sad/happy
-- [ ] Convert all [Coding Notes](https://github.com/luyangliuable/coding-notes ) into a section on personal website and rendered.
-* [ ] Set up email functionality: Email guest mood tracker and gym log data
+* [ ] Fitness Tracker: Monitor your gym advancements and create personalized workout routines. Additionally, earn scores based on a unique formula I developed.
+* [ ] Meet sleek: Essentially when2meet, but offering a superior UI/UX experience.
+* [ ] Set up email functionality: Implement the feature to email guests with mood tracker and gym log data.
+* [ ] Time Capsule Letters: Create a platform where users can write letters to their future selves and have them sent via SMTP at a predetermined date and time.
+* [ ] HexaBridger: A tool that assists in converting various color formats including RGBA to HEX.
+* [ ] CSSCrossbrowser: Develop a tool to transform CSS code for seamless compatibility across all browsers.
+* [ ] Anoyletters: Introduce a feature for posting anonymous letters, released on a daily or weekly basis.
+* [ ] Convert all [Coding Notes](https://github.com/luyangliuable/coding-notes ) into a section on personal website and rendered.
 * [ ] Blog Reading page show [snake](https://lab.hakim.se/progress-nav/#dev ) like table of contents animation effect as user reads hard to explain but we'll see.
 * [ ] Set up TLS certificate and encryption
 * [ ] When components mount have cool fade in or ease in effect.
@@ -59,3 +67,9 @@ rustup override set nightly
 cargo build
 cargo run
 ```
+
+| Platform | Nightly Toolchain                           | Notes                                                                                                                |
+|:--------:|:-------------------------------------------:|----------------------------------------------------------------------------------------------------------------------|
+| Linux    | nightly-2023-03-01-x86_64-unknown-linux-gnu | Only version that will work on linux due to bug with rust compiler and proc-macro2                                   |
+| Mac Os   | stable-aarch64-apple-darwin                 | Version confirmed to will work on mac os. So far it is pretty smooth it is shocking since it is an arm architecture. |
+| Windows  |                                             | No version of rust can run this on windows currently                                                                 |
