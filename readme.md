@@ -8,6 +8,101 @@
   - [Roadmap](#roadmap)
 
 <!-- markdown-toc end -->
+  
+
+## Development
+
+### Frontend
+
+#### HTML Element Conventions
+When naming CSS classes, it's generally a good idea to follow naming conventions that are descriptive and consistent to maintain readability and scalability in your code. Here is an example of CSS naming conventions following the BEM (Block, Element, Modifier) methodology which can be useful for structuring your CSS in a more maintainable way:
+
+Each element should have a **main component** (i.e. .component), a wrapper (i.e. .component__wrapper) and a content segment (.component__content).
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│ .component__wrapper                                          │
+├──────────────────────────────────────────────────────────────┤
+│                                                              │
+│ ┌──────────────────────────────────────────────────────────┐ │
+│ │.component                                                │ │
+│ ├──────────────────────────────────────────────────────────┤ │
+│ │                                                          │ │
+│ │ ┌──────────────────────────────────────────────────────┐ │ │
+│ │ │Heading                                               │ │ │
+│ │ └──────────────────────────────────────────────────────┘ │ │
+│ │                                                          │ │
+│ │                                                          │ │
+│ │                                                          │ │
+│ │ ┌──────────────────────────────────────────────────────┐ │ │
+│ │ │.component__content                                   │ │ │
+│ │ ├──────────────────────────────────────────────────────┤ │ │
+│ │ │                                                      │ │ │
+│ │ │    xx xx xx xxxxxxx x xx x x xx x xxxxxxxxxxxxx      │ │ │
+│ │ │    xxxxxxxx                                  xxxxx   │ │ │
+│ │ │    x     xxx xxxx x   x  x xxxxxx x  x xx xx x   x   │ │ │
+│ │ │    x xxx xxxxxx xxxxx      xxx       x x  x xxxx x   │ │ │
+│ │ │    xx       xxxxxxxxx xxx xx        xx x      xxxx   │ │ │
+│ │ │    x      xxxx   x  x      x x x  x  x xx  x xxx x   │ │ │
+│ │ │    x   xxxx x               x           x   x    x   │ │ │
+│ │ │    x          x x xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx   │ │ │
+│ │ │    x  xxxx  x x  xxxxxxxxxx xxxxxxxxxxxxxxx          │ │ │
+│ │ │        xxxxxxxxxx                                    │ │ │
+│ │ └──────────────────────────────────────────────────────┘ │ │
+│ │                                                          │ │
+│ └──────────────────────────────────────────────────────────┘ │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+```
+
+```css
+/* Block component */
+.component {
+  /* styles */
+}
+
+/* Element: wrapper around the component */
+.component__wrapper {
+  /* styles */
+}
+
+/* Element: content inside the component */
+.component__content {
+  /* styles */
+}
+
+/* Element: heading inside the content */
+.component__content__heading {
+  /* styles for h1 */
+}
+
+/* Element: text below the heading inside the content */
+.component__content__text {
+  /* styles for the text below h1 */
+}
+
+```
+
+
+```sh
+npm i
+npm start
+```
+
+### Backend
+
+```sh
+rustup override set nightly
+cargo build
+cargo run
+```
+
+| Platform | Nightly Toolchain                           | Notes                                                                                                                |
+|:--------:|:-------------------------------------------:|----------------------------------------------------------------------------------------------------------------------|
+| Linux    | nightly-2023-03-01-x86_64-unknown-linux-gnu | Only version that will work on linux due to bug with rust compiler and proc-macro2                                   |
+| Mac Os   | stable-aarch64-apple-darwin                 | Version confirmed to will work on mac os. So far it is pretty smooth it is shocking since it is an arm architecture. |
+| Windows  |                                             | No version of rust can run this on windows currently                                                                 |
+
 
 ## Website Roadmap
 
@@ -49,27 +144,3 @@
 - [ ] **Coding Tools:** Integrate tools for coding-related tasks like hex to RGBA conversion, shell commands, and maybe an online version of emacs.
 - [ ] Turn stuff on this website into packages for others to use.
 - [ ] **CSS Showcases:** Display my CodePen projects that showcase CSS tricks.
-  
-
-## Development
-
-### Frontend
-
-```sh
-npm i
-npm start
-```
-
-### Backend
-
-```sh
-rustup override set nightly
-cargo build
-cargo run
-```
-
-| Platform | Nightly Toolchain                           | Notes                                                                                                                |
-|:--------:|:-------------------------------------------:|----------------------------------------------------------------------------------------------------------------------|
-| Linux    | nightly-2023-03-01-x86_64-unknown-linux-gnu | Only version that will work on linux due to bug with rust compiler and proc-macro2                                   |
-| Mac Os   | stable-aarch64-apple-darwin                 | Version confirmed to will work on mac os. So far it is pretty smooth it is shocking since it is an arm architecture. |
-| Windows  |                                             | No version of rust can run this on windows currently                                                                 |
