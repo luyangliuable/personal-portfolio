@@ -28,3 +28,7 @@
 
 .hero-section__wrapper {
 }
+
+.hero-section__content {
+    margin-bottom: 8vh;
+}

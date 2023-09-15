@@ -47,7 +47,7 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
         return (
             <div className="hero-section__wrapper">
                 <LandingPageCard className="hero-section" heading={this.state.mainContent.heading} landingPageCardType="fitUnderNavbar">
-                    <div className="hero-section-content">
+                    <div className="hero-section__content">
                         <div style={{ padding: "0 5vw 0 5vw" }}>
                             {
                                 this.state.mainContent.items.map((item: string, index: number) => {
