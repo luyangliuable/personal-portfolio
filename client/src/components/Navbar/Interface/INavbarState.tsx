@@ -1,18 +1,20 @@
 interface INavbarState {
-    name: string;
-    links: {
-        name: string,
-        to: string,
-        sublinks?: {
-            name: string,
-            to: string
-        }[]
-    }[];
-    currentlyHoveredNavbarLinkName: string | null;
-    lastScrollY: number;
-    hideNavBarScrollSensitivity: number;
-    navBarDetached: boolean;
-    showBurgerPanel: boolean;
+  name: string;
+  links: Link[];
+  currentlyHoveredNavbarLinkName: string | null;
+  lastScrollY: number;
+  hideNavBarScrollSensitivity: number;
+  navBarDetached: boolean;
+  showBurgerPanel: boolean;
 }
 
-export default INavbarState;
+interface Link {
+  name: string,
+  to: string,
+  sublinks?: {
+    name: string,
+    to: string
+  }[]
+}
+
+export { INavbarState, Link };

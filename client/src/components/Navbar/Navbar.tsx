@@ -1,7 +1,7 @@
 import React, { Component, createRef } from "react";
 import { NavLink } from "react-router-dom";
 import "./Navbar.css";
-import INavbarState from "./Interface/INavbarState";
+import { INavbarState, Link } from "./Interface/INavbarState";
 import INavbarProps from "./Interface/INavbarProps";
 import NavbarBurger from "./NavbarBurger/NavbarBurger";
 
@@ -218,7 +218,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
         this.navbarSubmenu.current?.classList.remove("show-navbar-submenu");
     }
 
-    renderNavLink = (link: { name: string, to: string }) => {
+    renderNavLink = (link: Link) => {
         const name = link.name;
 
         return (
@@ -228,7 +228,9 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                 key={link.name}
                 onMouseOver={() => this.renderSubmenu(link.name)}
             >
-                {link.name}
+                {link.name}{link.sublinks && (
+                    <img style={{marginLeft: "8px", width: "10px"}} src="http://llcode.tech/api/image/650059a0f9b642fb30be5995" />
+                  )}
             </NavLink>
         );
     }

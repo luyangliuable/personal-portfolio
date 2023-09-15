@@ -7,7 +7,7 @@
     margin: 0 !important;
 }
 
-.timeline-line{
+.timeline-line {
     width: 100%;
     background: transparent;
     position: absolute;
@@ -19,14 +19,23 @@
 .experience-section-parent-container {
     overflow-x: hidden;
     text-align: left;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%);
+    /* position: absolute; */
+    position: -webkit-sticky;
+    position: sticky;
+    top: 1%;
+    /* transform: translateX(-50%); */
+}
+
+.experience-section-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: left;
+    margin-bottom: var(--home-container-margin);
 }
 
 .experience-section-content-container > * {
     flex-shrink: 0; /* Prevents children from shrinking if space is tight */
-    /* Other styles for children, as needed */
 }
 
 .experience-section-timeline-line {
