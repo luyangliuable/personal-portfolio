@@ -8,8 +8,8 @@
     position: relative;
     flex-direction: column;
     align-items: center;
-    width: var(--home-container-width);
-    max-width: var(--home-container-max-width);
+    width: var(--home-container-small--width);
+    max-width: var(--home-container-small--max-width);
     overflow-y: scroll;
     margin-bottom: 10vh; /* Leave room for the candles */
 }
@@ -49,8 +49,7 @@
 }
 
 .featured-section-item-card {
-    width: 80%;
-    max-width: 1000px;
+    width: 100% !important;
     text-align: left;
     padding: 20px;
 }

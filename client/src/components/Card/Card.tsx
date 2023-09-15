@@ -25,13 +25,15 @@ class Card extends Component<ICardProps, ICardState> {
                 }}
                 onMouseMove={cardGradientEffect}
                 className="card-item card">
-                <h3 className="card-heading">{this.props.heading}</h3>
+                <h3 className="card-item__heading">{this.props.heading}</h3>
+                <p className="card-item__label">
                 {
                     this.checkAuthorAndDateIsValid() && (
                         <p>{this.props.author ?? ''} | {this.props.date_created && isoDateFormatToString(new Date(this.props.date_created))}</p>
                     )
                 }
-                <p>
+                </p>
+                <p className="card-item__description">
                     {stripAwayHashSymbols(truncateTextBody(this.props.body))}
                 </p>
 

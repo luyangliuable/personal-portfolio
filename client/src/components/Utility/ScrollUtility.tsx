@@ -9,7 +9,7 @@ const isCenterAlignedWithViewport = (div: HTMLDivElement): number => {
 const getHTMLElementCenterYPosition = (element: any, offset: number = 0): number => {
     const rect = element.getBoundingClientRect();
 
-    const divCenterY = rect.top + rect.height / 2 + window.scrollY - offset;
+    const divCenterY = rect.top;
 
     return divCenterY;
 }

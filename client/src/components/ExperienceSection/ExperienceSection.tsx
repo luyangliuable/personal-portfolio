@@ -26,7 +26,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
         this.state = {
             lockPosition: null,
             unlockPosition: null,
-            fallBackLockPosition: null,
+            fallBackLockPosition: 1.5*window.innerHeight + 200,
             isLocked: false,
             items: [
                 {
@@ -64,7 +64,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                     cardTitle: "",
                     url: "",
                     cardSubtitle: "",
-                    cardDetailedText: "Driving my sister home along the Monash freeway from school, I once witnessed a sunset that made me cherish life anew. ",
+                    cardDetailedText: "This photo was captured on 2020 on a route I often take when I drive.",
                     importance: 1,
                     display: "IMAGE",
                     media: {
@@ -164,7 +164,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                     dateTime: "2021",
                     cardTitle: "Monash University Humanwise Lab",
                     url: "https://www.mymi.org.au/",
-                    cardSubtitle: "Research Assistant",
+                    cardSubtitle: "Started role as Summer Research Assistant",
                     cardDetailedText: "",
                     importance: .85,
                     media: {
@@ -178,7 +178,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                     dateTime: "2022",
                     cardTitle: "Monash Young Medtech Innovators",
                     url: "https://www.mymi.org.au/",
-                    cardSubtitle: "Software Engineer",
+                    cardSubtitle: "Started role as Software Engineer",
                     cardDetailedText: "",
                     importance: .85,
                     media: {
@@ -192,7 +192,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                     dateTime: "2023",
                     cardTitle: "WEX",
                     url: "http://www.wex.com",
-                    cardSubtitle: "Software Development Intern",
+                    cardSubtitle: "Started role as Software Development Intern",
                     cardDetailedText: "",
                     importance: 1,
                     media: {
@@ -213,7 +213,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
      */
     componentDidMount(): void {
         this.updateTimelineLength();
-        this.updateFallBackComponentWillLockPosition();
+        /* this.updateFallBackComponentWillLockPosition(); */
     }
 
     /**
@@ -245,11 +245,8 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
      */
     lockPosition(): void {
         const isNotPastUnlockPosition = this.props.scrolled < this.state.unlockPosition || this.state.unlockPosition === null
-
         if (isNotPastUnlockPosition) {
             this.setState({ isLocked: true });
-            resetElementPosition(this.experienceSectionParentRef.current!.parentElement);
-            this.experienceSectionParentRef.current!.parentElement.classList.add("fixed");
             this.updateLockPosition();
         }
     }
@@ -269,10 +266,6 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
     unlockPosition(): void {
         if (this.isLocked()) {
             this.setState({ isLocked: false });
-            // TODO set start and end position manually for every card or something because I tried everything and it is impossible
-            /* makeFixedElementAbsoluteWhileRetainingPosition(this.experienceSectionParentRef.current!.parentElement, 0); */
-            this.experienceSectionParentRef.current!.parentElement.classList.remove("fixed");
-            /* centerElementInParent(this.experienceSectionParentRef.current!.parentElement); */
             this.scrollTimeline(0);
         }
     }
@@ -292,7 +285,8 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
      * @return {boolean} True if locked, false otherwise.
      */
     isLocked(): boolean {
-        return this.experienceSectionParentRef.current!.parentElement.classList.contains("fixed");
+        /* return this.experienceSectionParentRef.current!.parentElement.classList.contains("fixed"); */
+        return this.state.isLocked;
     }
 
     /**
@@ -312,7 +306,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
         const { scrolled } = this.props;
 
         if (scrolled !== prevProps.scrolled) {
-            const proximityYToLockPosition = 0;
+            const proximityYToLockPosition = 110;
 
             if (isCenterAlignedWithViewport(this.experienceSectionParentRef.current!) < proximityYToLockPosition) {
                 this.lockPosition();
@@ -334,9 +328,13 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
      * @returns {boolean} - Returns true if the position should be unlocked.
      */
     private shouldUnlockPosition(proximityYToLockUnlockPosition: number): boolean {
-        const classNamesToCheckProxityFor = ["landing-page-card"]
-        const experienceSectionParentElement = this.experienceSectionParentRef.current!.parentElement;
+        const classNamesToCheckProxityFor = [
+            "landing-page-card--fit-content",
+            "landing-page-card",
+            "landing-page-card--fit-under-navbar"
+        ]
 
+        const experienceSectionParentElement = this.experienceSectionParentRef.current!.parentElement;
         const isNearExcludedElementBottom = isCloseToAnotherElement(experienceSectionParentElement, "bottom", proximityYToLockUnlockPosition, classNamesToCheckProxityFor).length > 0;
         const isNearExcludedElementTop = isCloseToAnotherElement(experienceSectionParentElement, "top", proximityYToLockUnlockPosition, classNamesToCheckProxityFor).length > 0;
 
@@ -352,7 +350,8 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
         // fallback condition to unlock position
         const isPastTimelineLength = this.isLocked() && this.props.scrolled - this.getLockPosition() > this.state.timeLineLength;
 
-        return isNearExcludedElementBottom || isNearExcludedElementTop || isBeforeLockPosition;
+        /* return isBeforeLockPosition || isPastTimelineLength || isNearExcludedElementBottom || isNearExcludedElementTop */
+        return isBeforeLockPosition || isNearExcludedElementTop;
     }
 
 
@@ -364,7 +363,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
         return (
             <div className="landing-page-card experience-section-parent-container">
                 <div ref={this.experienceSectionParentRef}>
-                    <h1 style={{ marginLeft: "2vw" }}>Experience</h1>
+                    <h1 style={{ marginLeft: "2vw" }}>Retrospective</h1>
                     <div ref={this.experienceSectionRef} className="experience-section-container" >
                         <div ref={this.experienceSectionContentRef} className="experience-section-content-container" style={{ transform: "translate(0px, 0px)" }}>
                             <div className="timeline-line" />

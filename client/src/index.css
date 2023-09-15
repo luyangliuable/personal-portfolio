@@ -1,3 +1,18 @@
+@font-face {
+    font-family: 'Fira Code';
+    src: url('fonts/FiraCode/FiraCode-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Proxima Nova';
+    src: url('fonts/ProximaNova/ProximaNova-Regular.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'Proxima Nova Bold';
+    src: url('fonts/ProximaNova/ProximaNova-Bold.otf') format('opentype');
+}
+
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

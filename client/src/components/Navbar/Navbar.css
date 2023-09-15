@@ -80,7 +80,7 @@
     top: 0;
     z-index: 10;
     position: absolute;
-    background: var(--dark-mode-navbar-color);
+    background: var(--zenburn-mode-navbar-color);
     transition: background 1s ease-in-out, box-shadow .1s ease-in-out, transform .1s ease-in-out;
     -webkit-transition: background .1s ease-in-out, box-shadow .5s ease-in-out, transform .2s ease-in-out;
     -moz-transition: background .1s ease-in-out, box-shadow .5s ease-in-out, transform .2s ease-in-out;
@@ -173,7 +173,7 @@
 
 .hidden {
     transform: translateY(calc(-var(--navbar-height)));
-    transform: translateY(-61px); /* For some reason the above doesn't work so I put this here for now */
+    transform: translateY(-59px); /* For some reason the above doesn't work so I put this here for now */
 }
 
 .detached {
@@ -186,34 +186,52 @@
 
 .detached .navbar-content .navbar-left .navbar-item {
     color: #000;
+    font-weight: 700;
+}
+
+.detached .navbar-submenu {
+    background: rgba(250,250,250,0.2);
+    backdrop-filter: blur(8px);
+}
+
+.detached .navbar-submenu .navbar-item {
+    color: black;
+}
+
+:root {
+    --primary-font: 'Proxima Nova Bold', monospace;
+    --font-weight-bold: 900;
+    --font-size-large: 20px;
 }
 
 .logo {
+    display: inline-block;
+    font-family: var(--primary-font);
+    font-size: var(--font-size-large);
+    font-weight: var(--font-weight-bold);
+    background: linear-gradient(
+        90deg,
+        #00bfff 0%,
+        #4f87f7 35%, 
+        #897ed3 50%, 
+        #4f87f7 65%, 
+        #00bfff 100%
+    );
+    background-size: 200% 200%;
+    width: 220px;
+    background-clip: text;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: animateBg 10s linear infinite;
     image-rendering: geometricPrecision;
     -webkit-image-rendering: geometricPrecision;
     -moz-image-rendering: geometricPrecision;
     font-smoothing: antialiased;
     -webkit-font-smoothing: antialiased;
     -moz-font-smoothing: antialiased;
-    font-weight: 800;
-    background: linear-gradient(
-        90deg,
-        #00bfff 0%,
-        #897ed3 50%,
-        #00bfff 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-text-stroke-width: .1px;
+    -webkit-text-stroke-width: 0.2px;
     -webkit-text-stroke-color: #1E1E1E;
-    background-clip: text;
-    text-fill-color: transparent;
-    background-size: 200% auto;
-    width: 220px;
-    animation: animateBg 3s linear infinite;
-    font-size: 24px;
-    font-family: 'Proxima Nova Bold', monospace;
-    margin-left: var(--navbar-item-margin);
 }
 
 .detached .navbar-content .nav-burger {

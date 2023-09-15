@@ -4,6 +4,7 @@ import ILandingPagestate from "./Interface/ILandingPageState";
 import ILandingPageProps from "./Interface/ILandingPageProps";
 import Experiences from "../../components/ExperienceSection/ExperienceSection";
 import FeaturedContentSection from "../../components/FeaturedContentSection/FeaturedContentSection";
+import LandingPageCard from "../../components/LandingPageCard/LandingPageCard";
 
 import BlogPage from "../BlogPage/BlogPage";
 
@@ -16,24 +17,17 @@ class LandingPage extends Component<ILandingPageProps, ILandingPagestate> {
     render(): React.ReactElement<any, any> {
         return (
             <div className="landing-page-content">
-                <div className="landing-page-card">
-                    <HeroSection />
-                </div>
+                <HeroSection />
 
-                <div className="landing-page-card">
-                    <FeaturedContentSection scrolled={this.props.scrolled} />
-                </div>
+                <FeaturedContentSection scrolled={this.props.scrolled} />
 
                 <div className="experience-section-wrapper">
                     <Experiences scrolled={this.props.scrolled} />
                 </div>
 
-                <div className="landing-page-card blogs">
-                    <div style={{ width: "92%", textAlign: "left", marginLeft: "2vw" }}>
-                        <h1>Blogs</h1>
-                        <BlogPage />
-                    </div>
-                </div>
+                <LandingPageCard landingPageCardType="fitContent" heading="Digital Chronicles of the Real World">
+                    <BlogPage />
+                </LandingPageCard>
             </div>
         )
     }

@@ -11,8 +11,17 @@
     transition: background .3s ease-in;
 }
 
-.card-heading {
+.card-item__heading {
     margin-bottom: 0px !important;
+}
+
+.card-item__label {
+    color: #333;
+    margin: 0
+}
+
+.card-item__description {
+    color: #888;
 }
 
 .card-image-preview {

@@ -3,8 +3,8 @@ import IFeaturedContentSectionState from "./Interface/IFeaturedContentSectionSta
 import IFeaturedContentSectionProps from "./Interface/IFeaturedContentSectionProps";
 import "./FeaturedContentSection.css";
 import { isCenterAlignedWithViewport } from "../Utility/ScrollUtility";
-import { cardGradientEffect } from "../Utility/MouseUtility";
 import Card from "../../components/Card/Card";
+import LandingPageCard from "../LandingPageCard/LandingPageCard";
 
 import { truncateTextBody, isoDateFormatToString } from "../Utility/StringUtility";
 
@@ -46,7 +46,7 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
     }
 
     getFeaturedPostHeading() {
-      return "Featured Post: " + this.state.featuredPost.heading;
+        return "Featured Post: " + this.state.featuredPost.heading;
     }
 
     getFeaturedToolHeading() {
@@ -55,29 +55,27 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
 
     render() {
         return (
-            <div ref={this.currentComponentRef} className="featured-content-section">
-                {/* <div className="dark-room-filter"></div> */}
-                <h1 style={{ textAlign: "left", marginLeft: "2vw" }}>
-                    Featured Content
-                </h1>
-                <div className="featured-section-content featured-section-content-in-dark-room">
-                    <Card
-                        heading={this.getFeaturedPostHeading()}
-                        body={truncateTextBody(this.state.featuredPost.body, 50)}
-                        author={this.state.featuredPost.author}
-                        date_created={this.state.featuredPost.date_created}
-                        link={`/digital_chronicles/blog?id=${this.state.featuredPost._id.$oid}`}
-                        image="https://barbarabray.net/wp-content/uploads/2017/11/ikigai-1024x968.jpg"
-                    />
+            <LandingPageCard heading="Featured Content" landingPageCardType="fitContent">
+                <div ref={this.currentComponentRef} className="featured-content-section">
+                    <div className="featured-section-content featured-section-content-in-dark-room">
+                        <Card
+                            heading={this.getFeaturedPostHeading()}
+                            body={truncateTextBody(this.state.featuredPost.body, 50)}
+                            author={this.state.featuredPost.author}
+                            date_created={this.state.featuredPost.date_created}
+                            link={`/digital_chronicles/blog?id=${this.state.featuredPost._id.$oid}`}
+                            image="https://barbarabray.net/wp-content/uploads/2017/11/ikigai-1024x968.jpg"
+                        />
 
-                    <Card
-                        heading={this.getFeaturedToolHeading()}
-                        body={truncateTextBody(this.state.featuredTool.description)}
-                        link={this.state.featuredTool.link}
-                    />
+                        <Card
+                            heading={this.getFeaturedToolHeading()}
+                            body={truncateTextBody(this.state.featuredTool.description)}
+                            link={this.state.featuredTool.link}
+                        />
+                    </div>
+                    <TwinCandle ref={this.twinCandleComponentRef} />
                 </div>
-                <TwinCandle ref={this.twinCandleComponentRef} />
-            </div>
+            </LandingPageCard>
         );
     }
 }

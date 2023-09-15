@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import CodingCat from "../CodingCat/CodingCat";
 import './HeroSection.css';
 import IHeroState from "./Interface/IHeroState";
 import IHeroProps from "./Interface/IHeroProps";
+import LandingPageCard from "../LandingPageCard/LandingPageCard";
 
 
 class HeroSection extends Component<IHeroProps, IHeroState> {
@@ -44,43 +45,41 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
 
     render(): any {
         return (
-            <div className="hero-section-container">
-                <div className="hero-section-content">
-                    <div style={{ padding: "0 5vw 0 5vw" }}>
-                        <h1>
-                            {(this.state && this.state.mainContent) ? this.state.mainContent.heading : ""}
-                        </h1>
-
-                        {
-                            this.state.mainContent.items.map((item: string, index: number) => {
-                                return (
-                                    <p key={index} className="light-black-text">{item}</p>
-                                )
-                            })
-                        }
+            <div className="hero-section__wrapper">
+                <LandingPageCard className="hero-section" heading={this.state.mainContent.heading} landingPageCardType="fitUnderNavbar">
+                    <div className="hero-section__content">
+                        <div style={{ padding: "0 5vw 0 5vw" }}>
+                            {
+                                this.state.mainContent.items.map((item: string, index: number) => {
+                                    return (
+                                        <p key={index} className="light-black-text">{item}</p>
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
-                </div>
 
-                <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
-                    <CodingCat showAnimtion={this.state.scrolling} />
-                </div>
+                    <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+                        <CodingCat showAnimtion={this.state.scrolling} />
+                    </div>
 
-                <div className="hero-section-badge-container">
-                    <a href="mailto:luyang.l@protonmail.me" className="hero-section-badge-link" target="_blank">
-                        <img src="https://img.shields.io/badge/email-%2312100E.svg?&style=for-the-badge&logo=protonmail&logoColor=white&color=black" alt="GitHub Badge" />
-                    </a>
-                    <a href="https://github.com/luyangliuable" className="hero-section-badge-link" target="_blank">
-                        <img src="https://img.shields.io/badge/github-%2312100E.svg?&style=for-the-badge&logo=github&logoColor=white&color=black" alt="GitHub Badge" />
-                    </a>
+                    <div className="hero-section-badge__container">
+                        <a href="mailto:luyang.l@protonmail.me" className="hero-section-badge__link" target="_blank">
+                            <img src="https://img.shields.io/badge/email-%2312100E.svg?&style=for-the-badge&logo=protonmail&logoColor=white&color=black" alt="GitHub Badge" />
+                        </a>
+                        <a href="https://github.com/luyangliuable" className="hero-section-badge__link" target="_blank">
+                            <img src="https://img.shields.io/badge/github-%2312100E.svg?&style=for-the-badge&logo=github&logoColor=white&color=black" alt="GitHub Badge" />
+                        </a>
 
-                    <a href="https://www.linkedin.com/in/luyang-l" className="hero-section-badge-link" target="_blank">
-                        <img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge" />
-                    </a>
+                        <a href="https://www.linkedin.com/in/luyang-l" className="hero-section-badge__link" target="_blank">
+                            <img src="https://img.shields.io/badge/linkedin-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge" />
+                        </a>
 
-                    <a href="https://www.codecademy.com/profiles/luyangliuable" className="hero-section-badge-link" target="_blank">
-                        <img src="https://img.shields.io/badge/codecademy-%2312100E.svg?&style=for-the-badge&logo=codecademy&logoColor=white&color=black" alt="Codecademy Badge" />
-                    </a>
-                </div>
+                        <a href="https://www.codecademy.com/profiles/luyangliuable" className="hero-section-badge__link" target="_blank">
+                            <img src="https://img.shields.io/badge/codecademy-%2312100E.svg?&style=for-the-badge&logo=codecademy&logoColor=white&color=black" alt="Codecademy Badge" />
+                        </a>
+                    </div>
+                </LandingPageCard>
             </div>
         );
     }

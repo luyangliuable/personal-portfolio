@@ -9,12 +9,23 @@ const stripAwayHashSymbols = (text: string): string => {
 }
 
 const isoDateFormatToString = (date: Date): string => {
-    const padWithZero = (number: number) => {
-        return number < 10 ? '0' + number : number;
+    const day = date.getDate();
+    const month = date.toLocaleString('default', { month: 'long' });
+    const year = date.getFullYear();
+
+    const getOrdinalSuffix = (day: number): string => {
+        if (day % 10 === 1 && day !== 11) {
+            return day + 'st';
+        } else if (day % 10 === 2 && day !== 12) {
+            return day + 'nd';
+        } else if (day % 10 === 3 && day !== 13) {
+            return day + 'rd';
+        } else {
+            return day + 'th';
+        }
     }
 
-    const formattedDate = padWithZero(date.getDate()) + "-" + padWithZero(date.getMonth() + 1) + "-" + date.getFullYear();
-    return formattedDate;
+    return getOrdinalSuffix(day) + ' ' + month + ' ' + year;
 }
 
 export { truncateTextBody, stripAwayHashSymbols, isoDateFormatToString };
