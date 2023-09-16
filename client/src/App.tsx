@@ -1,4 +1,3 @@
-/* import logo from './logo.svg'; */
 import './App.css';
 import NavBar from './components/Navbar/Navbar';
 import BlogPage from './pages/BlogPage/BlogPage';
@@ -6,6 +5,9 @@ import LandingPage from './pages/LandingPage/LandingPage';
 import ResumePage from './pages/ResumePage/ResumePage';
 import UnderConstruction from './pages/UnderConstructionPage/UnderConstruction';
 import BlogContent from "./pages/BlogPage/BlogContent/BlogContent";
+import ThreeDPrintingGallery from "./pages/threeDPrintingGalleryPage/ThreeDPrintingGallery";
+import HardwareProjectsPage from "./pages/HardwareProjectsPage/HardwareProjectsPage";
+import CodingProjectsPage from "./pages/CodingProjectsPage/CodingProjectsPage";
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate, BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -89,12 +91,23 @@ function App() {
                         <Route path="/resume" element={
                             <ResumePage />
                         } />
-                        <Route path="/resume" element={
-                            <ResumePage />
+
+                        <Route path="/projects/3d_printing" element={
+                            <ThreeDPrintingGallery />
                         } />
+
+                        <Route path="/projects/hardware" element={
+                            <HardwareProjectsPage />
+                        } />
+
+                        <Route path="/projects/code" element={
+                            <CodingProjectsPage />
+                        } />
+
                         <Route path="/digital_chronicles/blog" element={
                             <BlogContent />
                         } />
+
                         {/* Catch-all route */}
                         <Route path="*" element={
                             <UnderConstruction />
@@ -103,7 +116,7 @@ function App() {
                         {/* Redirections */}
                         <Route path="/digital_chronicles" element={<RedirectToRoot link="/digital_chronicles/blogs" />} />
                         <Route path="/tools" element={<RedirectToRoot link="/tools/mood_tracker" />} />
-                        <Route path="/about" element={<RedirectToRoot link="/about/teddie"/>} />
+                        <Route path="/about" element={<RedirectToRoot link="/about/teddie" />} />
                     </Routes>
                 </div>
 

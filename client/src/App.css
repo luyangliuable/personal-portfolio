@@ -120,6 +120,11 @@ body {
 .page-body {
     margin-top: var(--page-top-margin);
     margin-bottom: var(--page-bottom-margin);
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .landing-page-card {
@@ -198,9 +203,7 @@ body {
     background-color: rgba(200, 200, 200, 0.1);
     border-radius: 10px;
     border: 1px solid #EEE;
-    display: flex;
-    flex-direction: column;
-    position: relative;
+    position: relative; /* Need this here for cursor effect somehow */
     overflow: hidden;
 }
 
@@ -209,7 +212,6 @@ body {
 }
 
 .card::before,
-
 .card::after {
     border-radius: inherit;
     content: "";
