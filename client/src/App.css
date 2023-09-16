@@ -22,8 +22,8 @@
     --dark-mode-purple: #491ed3;
     --dark-mode-purple-2: #897ed3;
     --dark-mode-pink: #AA6DA3;
-    --dark-mode-blue: #1e90ff
-                      --dark-mode-blue-2: #1c7497;
+    --dark-mode-blue: #1e90ff;
+    --dark-mode-blue-2: #1c7497;
     --light-mode-navbar-color: #EEE;
     --dark-mode-font-color: #f2f2f2;
 
@@ -297,4 +297,39 @@ body {
     color: rgba(255, 255, 255, 0.5);
     font-size: 0.85em;
     margin-top: 8px;
+}
+
+/*****************************************************************************/
+/*                                  Buttons                                  */
+/*****************************************************************************/
+
+
+.button {
+    position: relative;
+    background: var( --dark-mode-purple-2 );
+    padding: 25px;
+    border-radius: 12px;
+    cursor: pointer;
+    width: fit-content;
+    color: white;
+    transition: background .5s ease-in-out;
+    -webkit-transition: background .5s ease-in-out;
+    -moz-transition: background .5s ease-in-out;
+    margin: 5px;
+    z-index: 10 !important;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+
+.button:hover {
+    background: var(--dark-mode-blue);
 }

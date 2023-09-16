@@ -5,7 +5,7 @@
     padding: 10px;
 }
 
-.card-image {
+.card__image {
     align-items: center;
     max-height: 100px;
     display: flex;
@@ -13,7 +13,7 @@
     overflow: hidden;
 }
 
-.card-image > i {
+.card__image > i {
     font-size: 6em;
     opacity: 0.25;
 }

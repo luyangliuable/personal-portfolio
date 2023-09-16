@@ -46,9 +46,13 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
     render(): any {
         return (
             <div className="hero-section__wrapper">
-                <LandingPageCard className="hero-section" heading={this.state.mainContent.heading} landingPageCardType="fitUnderNavbar">
+                <LandingPageCard
+                    className="hero-section"
+                    heading={this.state.mainContent.heading}
+                    landingPageCardType="fitUnderNavbar">
+
                     <div className="hero-section__content">
-                        <div style={{ padding: "0 5vw 0 5vw" }}>
+                        <div className="hero-section__content__left">
                             {
                                 this.state.mainContent.items.map((item: string, index: number) => {
                                     return (
@@ -56,12 +60,28 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
                                     )
                                 })
                             }
+                            <div className="button noselect" onClick={() => window.location.href = "/digital_chronicles/blogs"}>
+                                See my Blogs
+                            </div>
+                            <div className="button noselect" onClick={() => window.location.href = "/projects/code"}>
+                                See my Projects
+                            </div>
+                        </div>
+
+                        <div className="hero-section__background__wrapper">
+                            <div className="hero-section__background-one" />
+                            <div className="hero-section__background-two" />
+                            <div className="hero-section__background-three" />
+                            <div className="hero-section__background-four" />
+                            <div className="hero-section__background-five" />
+                            <div className="hero-section__background-six" />
+                        </div>
+
+                        <div className="hero-section__content__right">
+                            <CodingCat showAnimtion={this.state.scrolling} />
                         </div>
                     </div>
 
-                    <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
-                        <CodingCat showAnimtion={this.state.scrolling} />
-                    </div>
 
                     <div className="hero-section-badge__container">
                         <a href="mailto:luyang.l@protonmail.me" className="hero-section-badge__link" target="_blank">

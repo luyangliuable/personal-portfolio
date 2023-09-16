@@ -26,7 +26,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
         this.state = {
             lockPosition: null,
             unlockPosition: null,
-            fallBackLockPosition: 1.5*window.innerHeight + 200,
+            fallBackLockPosition: 1.5 * window.innerHeight + 200,
             isLocked: false,
             items: [
                 {
@@ -64,7 +64,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                     cardTitle: "",
                     url: "",
                     cardSubtitle: "",
-                    cardDetailedText: "This photo was captured on 2020 on a route I often take when I drive.",
+                    cardDetailedText: "This photo was captured on 2020.",
                     importance: 1,
                     display: "IMAGE",
                     media: {

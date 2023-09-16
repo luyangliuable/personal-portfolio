@@ -31,16 +31,16 @@ const ExperienceSectionEvent: React.FC<{ item: ExperienceSectionItem, index: num
 
             <div style={displayIsImage ? {
                 display: "flex",
-                height: "100%",
+                height: "80%",
                 justifyContent: "center",
                 alignItems: "flex-end",
             } : {
                 display: "flex",
-                height: "150px",
+                height: "50%",
                 justifyContent: "center",
                 alignItems: "center",
             }}>
-                <img className="card-image"
+                <img className="card__image"
                     style={displayIsImage ? { transform: "scale(2)" } : {}}
                     src={item.media.source.url} />
             </div>
