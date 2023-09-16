@@ -307,7 +307,7 @@ body {
 .button {
     position: relative;
     background: var( --dark-mode-purple-2 );
-    padding: 25px;
+    padding: max(10px, 1vw);
     border-radius: 12px;
     cursor: pointer;
     width: fit-content;

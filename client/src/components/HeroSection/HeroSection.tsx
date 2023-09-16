@@ -63,7 +63,7 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
                             <div className="button noselect" onClick={() => window.location.href = "/digital_chronicles/blogs"}>
                                 See my Blogs
                             </div>
-                            <div className="button noselect" onClick={() => window.location.href = "/projects/code"}>
+                            <div className="button noselect hero-section__project-button" onClick={() => window.location.href = "/projects/code"}>
                                 See my Projects
                             </div>
                         </div>
@@ -74,7 +74,6 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
                             <div className="hero-section__background-three" />
                             <div className="hero-section__background-four" />
                             <div className="hero-section__background-five" />
-                            <div className="hero-section__background-six" />
                         </div>
 
                         <div className="hero-section__content__right">
