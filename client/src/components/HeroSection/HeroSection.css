@@ -34,6 +34,8 @@
         display: flex;
         width: 100%;
         justify-content: center;
+        align-items: center;
+        z-index: 1;
     }
 
 
@@ -72,7 +74,8 @@
         border-radius: 100%;
         background: red;
         transition: all .5s ease-in-out;
-        opacity: .05
+        opacity: .05;
+        animation: animate-background-blur-bubbles--translate-left 50s infinite;
     }
 
 
@@ -86,7 +89,8 @@
         border-radius: 100%;
         background: blue;
         transition: all .5s ease-in-out;
-        opacity: .1
+        opacity: .1;
+        animation: animate-background-blur-bubbles--rotate-and-translate-up 20s infinite;
     }
 
 
@@ -114,6 +118,7 @@
         background: blue;
         opacity: .07;
         transition: all .5s ease-in-out;
+        animation: animate-background-blur-bubbles--translate-left 50s infinite;
     }
 
     .hero-section__background-five {
@@ -127,6 +132,7 @@
         background: red;
         opacity: .15;
         transition: all .5s ease-in-out;
+        animation: animate-background-blur-bubbles--rotate-and-translate-up 20s infinite;
     }
 
     .hero-section__background-six {
@@ -141,6 +147,7 @@
         opacity: .15;
         transform: rotate(30deg);
         transition: all .5s ease-in-out;
+        animation: animate-background-blur-bubbles--rotate-and-translate-up 17s infinite;
     }
 
     .hero-section__background__wrapper * {
@@ -156,7 +163,8 @@
 }
 
 .hero-section-badge__link {
-    margin: 10vh 1rem 0 0;
+    padding: 1vw; /* A large hit box to click on */
+    z-index: 1;
     transition: all 0.2s ease-in-out;
 }
 
@@ -172,3 +180,58 @@
 .hero-section__wrapper {
 }
 
+/* TODO use javascript to make this random */
+@keyframes animate-background-blur-bubbles--translate-left {
+    0% {
+        background: blue;
+        transform: translate(0px, 0px);
+    }
+    20% {
+        background: red;
+        transform: translate(-30px, 20px);
+    }
+    40% {
+        background: purple;
+        transform: translate(50px, -10px);
+    }
+    60% {
+        background: blue;
+        transform: translate(-60px, 30px);
+    }
+    80% {
+        background: red;
+        transform: translate(45px, -20px);
+    }
+    100% {
+        background: purple;
+        transform: translate(0px, 0px);
+    }
+}
+
+
+@keyframes animate-background-blur-bubbles--rotate-and-translate-up {
+    0% {
+        background: blue;
+        transform: translate(0px, 0px);
+    }
+    20% {
+        background: purple;
+        transform: translate(-10px, 20px) rotate(15deg);
+    }
+    40% {
+        background: red;
+        transform: translate(20px, -30px) rotate(-20deg);
+    }
+    60% {
+        background: blue;
+        transform: translate(-30px, 40px) rotate(25deg);
+    }
+    80% {
+        background: purple;
+        transform: translate(40px, -50px) rotate(-30deg);
+    }
+    100% {
+        background: blue;
+        transform: translate(0px, 0px) rotate(0deg);
+    }
+}

@@ -74,6 +74,7 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
                             <div className="hero-section__background-three" />
                             <div className="hero-section__background-four" />
                             <div className="hero-section__background-five" />
+                            <div className="hero-section__background-six" />
                         </div>
 
                         <div className="hero-section__content__right">
