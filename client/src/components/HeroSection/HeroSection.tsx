@@ -44,6 +44,36 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
 
 
     render(): any {
+        const createRandomBackgrounds = () => {
+            const backgrounds = [];
+            const colors = ['blue', 'red', 'purple'];
+            const animations = ['hero-section__background--animate-one', 'hero-section__background--animate-two'];
+
+            for (let i = 0; i < 35; i++) {
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const width = Math.floor(Math.random() * (300 - 100 + 1)) + 100 + 'px';
+                const height = Math.floor(Math.random() * (300 - 100 + 1)) + 100 + 'px';
+                const left = Math.floor(Math.random() * (20)) + '%';
+                const top = Math.floor(Math.random() * (30) - 10) + '%';
+                const animationClass = animations[Math.floor(Math.random() * animations.length)];
+
+                backgrounds.push(
+                    <div
+                        key={i}
+                        style={{
+                            backgroundColor: color,
+                            width: width,
+                            height: height,
+                            left: left,
+                            top: top,
+                        }}
+                        className={`hero-section__background ${animationClass} hero-section__background-${i}`}
+                    />
+                );
+            }
+            return backgrounds;
+        }
+
         return (
             <div className="hero-section__wrapper">
                 <LandingPageCard
@@ -69,12 +99,9 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
                         </div>
 
                         <div className="hero-section__background__wrapper">
-                            <div className="hero-section__background-one" />
-                            <div className="hero-section__background-two" />
-                            <div className="hero-section__background-three" />
-                            <div className="hero-section__background-four" />
-                            <div className="hero-section__background-five" />
-                            <div className="hero-section__background-six" />
+                            {
+                                createRandomBackgrounds()
+                            }
                         </div>
 
                         <div className="hero-section__content__right">
