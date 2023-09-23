@@ -1,9 +1,9 @@
-import React, { Component, createRef } from "react";
+import { Component, createRef } from "react";
 import { NavLink } from "react-router-dom";
-import "./Navbar.css";
 import { INavbarState, Link } from "./Interface/INavbarState";
 import INavbarProps from "./Interface/INavbarProps";
-import NavbarBurger from "./NavbarBurger/NavbarBurger";
+import BurgerMenuIcon from "./BurgerMenuIcon/BurgerMenuIcon";
+import "./Navbar.css";
 
 class NavBar extends Component<INavbarProps, INavbarState> {
     navbar = createRef<HTMLDivElement>();
@@ -149,9 +149,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
 
     componentDidMount() {
         this.listenContinuousScrolled();
-
         this.updateScrolledProgress(0);
-
         this.addBurgerClickOutEventLister();
     }
 
@@ -229,8 +227,8 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                 onMouseOver={() => this.renderSubmenu(link.name)}
             >
                 {link.name}{link.sublinks && (
-                    <img style={{marginLeft: "8px", width: "10px"}} src="http://llcode.tech/api/image/650059a0f9b642fb30be5995" />
-                  )}
+                    <img style={{ marginLeft: "8px", width: "10px" }} src="http://llcode.tech/api/image/650059a0f9b642fb30be5995" />
+                )}
             </NavLink>
         );
     }
@@ -253,21 +251,11 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                             {links.map(this.renderNavLink)}
                             <div className="selected-navlink-window"></div>
                         </nav>
+                        <NavLink to="/user/login" className={({ isActive }) => ["navbar-item", isActive ? "navbar-item active-link" : null].filter(Boolean).join(" ")} >
+                            Login
+                        </NavLink >
                         <div ref={this.burgerButton} className="nav-burger" onClick={this.toggleBurgerMenu}>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="#f2f2f2"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="navbar-burger-icon" >
-                                <path d="M3 12h18M3 6h18M3 18h18">
-                                </path>
-                            </svg>
+                            <BurgerMenuIcon />
                         </div>
                     </div>
                     <div id="scroll-progress" ref={this.scrollProgress} />
@@ -277,9 +265,8 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                             && links.filter(item => item.name === currentlyHoveredNavbarLinkName)[0].sublinks!.map(this.renderNavLink)
                         }
                     </div>
+
                 </div>
-
-
                 <div ref={this.burgerPanel} className="nav-burger-panel nav-burger-panel-hide nav-burger-panel-move-lower">
                     {
                         links.map(link => (

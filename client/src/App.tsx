@@ -8,6 +8,7 @@ import BlogContent from "./pages/BlogPage/BlogContent/BlogContent";
 import ThreeDPrintingGallery from "./pages/threeDPrintingGalleryPage/ThreeDPrintingGallery";
 import HardwareProjectsPage from "./pages/HardwareProjectsPage/HardwareProjectsPage";
 import CodingProjectsPage from "./pages/CodingProjectsPage/CodingProjectsPage";
+import LogInPage from "./pages/LogInPage/LogInPage";
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate, BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -32,9 +33,7 @@ function App() {
         scrolling: null
     });
 
-
     useEffect(() => {
-
         const handleScroll = () => {
             const scrolled = window.scrollY;
             setAppState(({
@@ -72,46 +71,20 @@ function App() {
     return (
         <div className="App">
             <BrowserRouter>
-                <NavBar scrollStatus={{
-                    scrolled: appState.scrolled,
-                    scrolling: appState.scrolling
-                }
-                } />
+                <NavBar scrollStatus={{ scrolled: appState.scrolled, scrolling: appState.scrolling }} />
                 <div className="page-body">
                     <Routes>
-                        <Route path="/" element={
-                            <LandingPage
-                                scrolled={appState.scrolled}
-                                scrolling={appState.scrolling}
-                            />
-                        } />
-                        <Route path="/digital_chronicles/blogs" element={
-                            <BlogPage />
-                        } />
-                        <Route path="/resume" element={
-                            <ResumePage />
-                        } />
-
-                        <Route path="/projects/3d_printing" element={
-                            <ThreeDPrintingGallery />
-                        } />
-
-                        <Route path="/projects/hardware" element={
-                            <HardwareProjectsPage />
-                        } />
-
-                        <Route path="/projects/code" element={
-                            <CodingProjectsPage />
-                        } />
-
-                        <Route path="/digital_chronicles/blog" element={
-                            <BlogContent />
-                        } />
+                        <Route path="/" element={<LandingPage scrolled={appState.scrolled} scrolling={appState.scrolling} />} />
+                        <Route path="/digital_chronicles/blogs" element={<BlogPage />} />
+                        <Route path="/resume" element={<ResumePage />} />
+                        <Route path="/projects/3d_printing" element={<ThreeDPrintingGallery />} />
+                        <Route path="/projects/hardware" element={<HardwareProjectsPage />} />
+                        <Route path="/projects/code" element={<CodingProjectsPage />} />
+                        <Route path="/digital_chronicles/blog" element={<BlogContent />} />
+                        <Route path="/user/login" element={<LogInPage />} />
 
                         {/* Catch-all route */}
-                        <Route path="*" element={
-                            <UnderConstruction />
-                        } />
+                        <Route path="*" element={<UnderConstruction />} />
 
                         {/* Redirections */}
                         <Route path="/digital_chronicles" element={<RedirectToRoot link="/digital_chronicles/blogs" />} />

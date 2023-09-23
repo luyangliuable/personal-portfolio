@@ -24,8 +24,9 @@
     --dark-mode-pink: #AA6DA3;
     --dark-mode-blue: #1e90ff;
     --dark-mode-blue-2: #1c7497;
-    --light-mode-navbar-color: #EEE;
     --dark-mode-font-color: #f2f2f2;
+
+    --light-mode-navbar-color: #EEE;
 
     --zenburn-mode-navbar-color: #333;
     --dark-mode-background-color: #0d0d0d;
@@ -184,6 +185,7 @@ body {
     -webkit-border-radius: var(--home-container-border-radius);
     -moz-border-radius: var(--home-container-border-radius);
     padding: 2vh 0;
+    overflow: hidden;
 }
 
 .fixed {

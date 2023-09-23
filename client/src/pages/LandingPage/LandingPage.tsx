@@ -17,7 +17,7 @@ class LandingPage extends Component<ILandingPageProps, ILandingPagestate> {
     render(): React.ReactElement<any, any> {
         return (
             <div className="landing-page-content">
-                <HeroSection />
+                <HeroSection scrolling={this.props.scrolling} />
 
                 <FeaturedContentSection scrolled={this.props.scrolled} />
 

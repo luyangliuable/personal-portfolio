@@ -1,0 +1,64 @@
+.login-form__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: calc(100vh - 30px);
+    top: 30px;
+    position: absolute;
+}
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background: #F9F9F9;
+    border: 1px solid #EEE;
+    box-shadow: .2px .2px 1px #999;
+    -webkit-box-shadow: .2px .2px 1px #999;
+    -moz-box-shadow: .2px .2px 1px #999;
+    width: 50vw;
+    max-width: 400px;
+    height: fit-content;
+    -webkit-border-radius: var(--home-container-border-radius);
+    -moz-border-radius: var(--home-container-border-radius);
+    padding: 2vh 0;
+    overflow: hidden;
+}
+
+.login-form input[type=text],input[type=password]  {
+    border: 1px solid black;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -khtml-border-radius: 4px;
+    padding: 14px;
+    margin: 12px;
+    width: 80%;
+}
+
+.login-form p {
+    width: 80%;
+    text-align: right;
+    color: #1e90ff;
+    cursor: pointer;
+    margin: 0;
+    font-size: 15px
+}
+
+.login-form .button {
+    width: 80%;
+}
+
+.login-form input[type=text]:active {}
+
+.login-form .flash-red {
+    color: #F00;
+}
+
+
+.login-form .flash-green {
+    color: #006400;
+}
