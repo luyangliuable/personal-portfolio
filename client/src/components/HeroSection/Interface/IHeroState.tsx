@@ -4,6 +4,7 @@ type IHeroState = {
     backgrounds: React.ReactNode[],
     mainContent: {
         heading: string,
+        itemsToShow: string[],
         items: string[]
     },
     linkToMyOtherSocialMedia:

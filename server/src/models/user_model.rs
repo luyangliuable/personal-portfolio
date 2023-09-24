@@ -13,6 +13,7 @@ pub struct User {
     pub first_name: String,
     pub middle_name: Option<String>,
     pub last_name: String,
+    pub role: Option<String>,
     pub session_token: Option<String>,
     pub session_token_created_date: Option<DateTime<Utc>>,
 }

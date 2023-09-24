@@ -52,7 +52,9 @@ class LogInPage extends Component<any, any> {
         this.updateLoginFlash("Failed", "Invalid User name or password.");
     }
 
-    private login(): void {
+    private login(e: any): void {
+        e.preventDefault();
+
         const loginDetails = {
             "email": this.userNameRef.current!.value,
             "password": this.passwordRef.current!.value
@@ -65,7 +67,7 @@ class LogInPage extends Component<any, any> {
 
     render(): React.ReactElement<any, any> {
         return (
-            <div className="login-form__wrapper" >
+            <form className="login-form__wrapper" >
                 <h1>Sign in to ~/llcode.tech</h1>
                 <div className="login-form">
                     {
@@ -76,9 +78,9 @@ class LogInPage extends Component<any, any> {
                     <input ref={this.userNameRef} type="text" placeholder="🙋‍♂️🙋‍♀️ username" />
                     <p>Forgot Password?</p>
                     <input ref={this.passwordRef} type="password" placeholder="🔒🔑️ password" />
-                    <div className="button" onClick={() => this.login()}>Login</div>
+                    <input type="submit" className="button" onClick={(e) => this.login(e)} />
                 </div>
-            </div>
+            </form>
         )
     }
 }

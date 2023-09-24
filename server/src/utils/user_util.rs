@@ -24,6 +24,24 @@ pub enum LoginVerificationResult {
     Invalid,
 }
 
+pub enum UserRole {
+    Admin,
+    User
+}
+
+impl UserRole {
+    fn as_str(&self) -> &'static str {
+        match self {
+            UserRole::Admin => "Admin",
+            UserRole::User => "User"
+        }
+    }
+}
+
+pub fn assign_user_role(role_name: UserRole, user: &mut User) -> () {
+    user.role = Some(role_name.as_str().to_string());
+}
+
 /// Determines the verification method based on the input user data.
 ///
 /// # Arguments
@@ -86,7 +104,7 @@ pub fn hash_user_password(user: &mut User) {
     user.password = bcrypt::hash(&user.password, bcrypt::DEFAULT_COST).unwrap();
 }
 
-pub fn create_session_token(user: &mut User) -> Uuid {
+pub fn inject_session_token(user: &mut User) -> Uuid {
     let user_session_token = Uuid::new_v4();
     user.session_token = Some(user_session_token.clone().to_string());
     user.session_token_created_date = Some(Utc::now());
@@ -98,7 +116,7 @@ pub fn create_user(user_repo: &UserRepo, user: User) -> Result<InsertOneResult, 
     user_repo.0.create(user)
 }
 
-pub fn handle_successful_creation(valid_response: InsertOneResult, user_token: Uuid) -> Result<Json<UserSessionToken>, Status> {
+pub fn handle_successful_creation(valid_response: InsertOneResult, user_token: Uuid) -> Json<UserSessionToken> {
     let user_session_token_string = user_token.to_string();
 
     let user_session_token = UserSessionToken {
@@ -106,7 +124,7 @@ pub fn handle_successful_creation(valid_response: InsertOneResult, user_token: U
         session_token: user_session_token_string,
     };
 
-    Ok(Json(user_session_token))
+    Json(user_session_token)
 }
 
 pub fn get_id_out_of_bson(bson: mongodb::bson::Bson) -> String {

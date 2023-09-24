@@ -7,13 +7,15 @@ import LandingPageCard from "../LandingPageCard/LandingPageCard";
 
 
 class HeroSection extends Component<IHeroProps, IHeroState> {
+    contentInterval: any;
 
     constructor(props: IHeroProps) {
         super(props);
         this.state = {
-            backgrounds: this.createRandomBackgrounds(window.innerWidth),
+            backgrounds: [],
             mainContent: {
                 heading: "Hi There 👋",
+                itemsToShow: [],
                 items: [
                     "🔭 I’m currently working on a personal profile website.",
                     "🌱 I’m currently learning mlops and cybersecurity out of interest.",
@@ -22,11 +24,11 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
                 ]
             },
             linkToMyOtherSocialMedia: [
-                // {
-                //     "name": "Notion",
-                //     "link": "https://www.notion.so/luyangl/71be1ff365c44fd2b4f6f8dce14b7536?v=f1e55d08878e4bfda1b744e76b9480c7&pvs=4",
-                //     "imageSrc": "https://img.shields.io/badge/notion-%2312100E.svg?&style=for-the-badge&logo=notion&logoColor=#333&color=#9e9e9e"
-                // },
+                {
+                    "name": "Notion",
+                    "link": "https://www.notion.so/luyangl/71be1ff365c44fd2b4f6f8dce14b7536?v=f1e55d08878e4bfda1b744e76b9480c7&pvs=4",
+                    "imageSrc": "https://img.shields.io/badge/notion-%2312100E.svg?&style=for-the-badge&logo=notion&logoColor=%23333&color=%239e9e9e"
+                },
                 {
                     "name": "Email",
                     "link": "mailto:luyang.l@protonmail.me",
@@ -51,48 +53,33 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
         }
     }
 
-    createRandomBackgrounds = (screenWidth: number) => {
-        if (screenWidth <= 1100) {
-            return null;
-        }
+    componentDidMount() {
+        let contentIndex = 0;
 
-        const backgrounds = [];
-        const colors = ['blue', 'red', 'purple'];
-        const animations = [
-            'animate-background-blur-bubbles--translate-left',
-            'animate-background-blur-bubbles--rotate-and-translate-up'
-        ];
+        this.contentInterval = setInterval(() => {
+            if (contentIndex < this.state.mainContent.items.length) {
+                this.setState((prevState) => ({
+                    mainContent: {
+                        ...prevState.mainContent,
+                        itemsToShow: [
+                            ...prevState.mainContent.itemsToShow,
+                            this.state.mainContent.items[contentIndex]
+                        ]
+                    }
+                }));
+                contentIndex++;
+            } else {
+                clearInterval(this.contentInterval);
+            }
+        }, 100);
 
-        for (let i = 0; i < 25; i++) {
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            const animationClass = animations[Math.floor(Math.random() * animations.length)];
-            const width = Math.floor(Math.random() * 50) + '%';
-            const height = Math.floor(Math.random() * 70) + '%';
-            const left = Math.floor(Math.random() * 20) + '%';
-            const top = Math.floor(Math.random() * 15 - 20) + '%';
-            const animationDuration = Math.floor(Math.random() * 25) + 10 + 's'; // Random time between 5s and 20s
+    }
 
-            backgrounds.push(
-                <div
-                    key={i}
-                    style={{
-                        backgroundColor: color,
-                        width: width,
-                        height: height,
-                        left: left,
-                        top: top,
-                        animationName: animationClass,
-                        animationDuration: animationDuration
-                    }}
-                    className={`hero-section__background hero-section__background-${i}`}
-                />
-            );
-        }
-        return backgrounds;
+    componentWillUnmount() {
+        clearInterval(this.contentInterval);
     }
 
     render(): any {
-
         return (
             <div className="hero-section__wrapper">
                 <LandingPageCard
@@ -103,7 +90,7 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
                         <div className="hero-section__content__left">
                             {
                                 this.state.mainContent.items.map((item: string, index: number) => (
-                                    <p key={index} className="light-black-text">{item}</p>
+                                    <p key={index} className="hero-section__content__left__text">{item}</p>
                                 ))
                             }
                             <div className="button noselect" onClick={() => window.location.href = "/digital_chronicles/blogs"}>See my Blogs</div>

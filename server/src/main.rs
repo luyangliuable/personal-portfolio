@@ -5,6 +5,7 @@ extern crate log;
 mod api; 
 mod models;
 mod utils;
+mod errors;
 mod repository;
 mod database;
 
