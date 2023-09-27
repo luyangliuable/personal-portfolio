@@ -10,6 +10,7 @@
 }
 
 .login-form{
+    --login-form-border-radius: 14px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -19,11 +20,12 @@
     box-shadow: .2px .2px 1px #999;
     -webkit-box-shadow: .2px .2px 1px #999;
     -moz-box-shadow: .2px .2px 1px #999;
-    width: 50vw;
-    max-width: 400px;
+    width: 80vw;
+    max-width: 300px;
     height: fit-content;
-    -webkit-border-radius: var(--home-container-border-radius);
-    -moz-border-radius: var(--home-container-border-radius);
+    border-radius: var(--login-form-border-radius);
+    -webkit-border-radius: var(--login-form-border-radius);
+    -moz-border-radius: var(--login-form-border-radius);
     padding: 2vh 0;
     overflow: hidden;
 }

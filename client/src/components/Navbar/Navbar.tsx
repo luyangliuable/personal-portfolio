@@ -2,7 +2,9 @@ import { Component, createRef } from "react";
 import { NavLink } from "react-router-dom";
 import { INavbarState, Link } from "./Interface/INavbarState";
 import INavbarProps from "./Interface/INavbarProps";
+import NavBurgerPanel from "./NavBurgerPanel/NavBurgerPanel";
 import BurgerMenuIcon from "./BurgerMenuIcon/BurgerMenuIcon";
+import NavBarSubMenu from "./NavBarSubMenu/NavBarSubMenu";
 import "./Navbar.css";
 
 class NavBar extends Component<INavbarProps, INavbarState> {
@@ -53,7 +55,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                 },
                 {
                     name: "Tools",
-                    to: "/tools",
+                    to: "",
                     sublinks: [{
                         name: "🌉 HexaBridger",
                         to: "/tools/hex_to_rgb",
@@ -110,7 +112,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
     }
 
     updateScrolledProgress = (progress: number) => {
-        if (this.scrollProgress) this.scrollProgress.current.style.width = `${progress * 100}vw`;
+        if (this.scrollProgress) this.scrollProgress.current!.style.width = `${progress * 100}vw`;
     };
 
     listenDeltaScrolled = () => {
@@ -118,9 +120,9 @@ class NavBar extends Component<INavbarProps, INavbarState> {
         const { lastScrollY, hideNavBarScrollSensitivity } = this.state;
 
         // max because safari is stupid and it sometimes goes to negative scroll positions
-        if (scrollStatus.scrolled - Math.max(0, lastScrollY) >= hideNavBarScrollSensitivity) {
+        if (scrollStatus.scrolled! - Math.max(0, lastScrollY) >= hideNavBarScrollSensitivity) {
             this.hideNavBar();
-        } else if (Math.max(0, lastScrollY - scrollStatus.scrolled) >= hideNavBarScrollSensitivity) {
+        } else if (Math.max(0, lastScrollY - scrollStatus.scrolled!) >= hideNavBarScrollSensitivity) {
             this.showNavBar();
         }
     };
@@ -128,9 +130,9 @@ class NavBar extends Component<INavbarProps, INavbarState> {
     listenContinuousScrolled = () => {
         const { scrollStatus } = this.props;
 
-        if (!this.state.navBarDetached && scrollStatus.scrolled >= this.navBarHeight) {
+        if (!this.state.navBarDetached && scrollStatus.scrolled! >= this.navBarHeight) {
             this.detachNavBar();
-        } else if (scrollStatus.scrolled < this.navBarHeight) {
+        } else if (scrollStatus.scrolled! < this.navBarHeight) {
             this.attachNavBar();
         }
 
@@ -141,7 +143,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
 
     addBurgerClickOutEventLister() {
         window.addEventListener("click", (e) => {
-            if (this.burgerPanel.current && !this.burgerPanel.current.contains(e.target as Node) && !this.burgerButton.current.contains(e.target as Node)) {
+            if (this.burgerPanel.current && !this.burgerPanel.current.contains(e.target as Node) && !this.burgerButton.current!.contains(e.target as Node)) {
                 this.hideBurgerMenu();
             }
         });
@@ -226,6 +228,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                 key={link.name}
                 onMouseOver={() => this.renderSubmenu(link.name)}
             >
+                <div className="navbar-item__dropdown"></div>
                 {link.name}{link.sublinks && (
                     <img style={{ marginLeft: "8px", width: "10px" }} src="http://llcode.tech/api/image/650059a0f9b642fb30be5995" />
                 )}
@@ -259,27 +262,16 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                         </div>
                     </div>
                     <div id="scroll-progress" ref={this.scrollProgress} />
-                    <div className="navbar-submenu" ref={this.navbarSubmenu}>
-                        {
-                            this.state.currentlyHoveredNavbarLinkName
-                            && links.filter(item => item.name === currentlyHoveredNavbarLinkName)[0].sublinks!.map(this.renderNavLink)
-                        }
-                    </div>
 
-                </div>
-                <div ref={this.burgerPanel} className="nav-burger-panel nav-burger-panel-hide nav-burger-panel-move-lower">
-                    {
-                        links.map(link => (
-                            <NavLink
-                                to={link.to}
-                                className={({ isActive }) => ["burger-item", isActive ? "burger-item active-link" : null].filter(Boolean).join(" ")}
-                                key={link.name}
-                            >
-                                {link.name}
-                            </NavLink>
-                        ))
+                    <NavBarSubMenu currentlyHoveredNavbarSublinkItem={
+                        this.state.currentlyHoveredNavbarLinkName
+                        && links.filter(item => item.name === currentlyHoveredNavbarLinkName)[0].sublinks!.map(this.renderNavLink)
                     }
+                        navbarSubmenu={this.navbarSubmenu}
+                    />
                 </div>
+
+                <NavBurgerPanel links={links} burgerPanel={this.burgerPanel} />
             </>
         );
     }
