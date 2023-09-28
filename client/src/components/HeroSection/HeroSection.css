@@ -112,6 +112,10 @@
     box-shadow: 1px 1px 20px 0px #f5f5dc;
 }
 
+.hero-section__content__left__text {
+    color: #888;
+}
+
 .hero-section {
 }
 

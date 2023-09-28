@@ -10,7 +10,7 @@ interface INavbarState {
 
 interface Link {
   name: string,
-  to: string,
+  to: string | null,
   sublinks?: {
     name: string,
     to: string

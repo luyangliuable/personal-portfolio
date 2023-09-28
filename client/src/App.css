@@ -1,6 +1,7 @@
 :root {
     --page-top-margin: 68px;
     --page-bottom-margin: 120px;
+    --common-card-margin: 100px;
 
     --dark-mode-black: #1e1e1e;
     --dark-mode-purple: #491ed3;
@@ -24,6 +25,7 @@
 body {
     background: #EEE;
     font-family: 'Proxima Nova';
+    overflow-x: hidden
 }
 
 .App {

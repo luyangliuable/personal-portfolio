@@ -42,7 +42,7 @@ class LogInPage extends Component<any, any> {
     }
 
     private handleLoginSuccess(data: any): void {
-        document.cookie = `user_id=${data.user_id}; path=/`;
+        document.cookie = `user_id=${data.userid}; path=/`;
         document.cookie = `session_token=${data.session_token}; path=/`;
 
         this.updateLoginFlash("Success", "Login Successful!");

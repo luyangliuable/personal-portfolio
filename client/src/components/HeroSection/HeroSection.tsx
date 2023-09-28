@@ -88,6 +88,8 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
                     landingPageCardType="fitUnderNavbar">
                     <div className="hero-section__content">
                         <div className="hero-section__content__left">
+                            <p>I am a motivated software engineering student with a diverse array of skills and experiences, ranging from web and mobile app development to machine learning research.</p>
+                            <p>I pride myself on my efficient time and effort management abilities and my aptitude for continuous learning paired with my high learning agility</p>
                             {
                                 this.state.mainContent.items.map((item: string, index: number) => (
                                     <p key={index} className="hero-section__content__left__text">{item}</p>
