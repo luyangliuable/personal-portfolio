@@ -4,7 +4,7 @@ interface INavbarProps {
     scrollStatus: {
         scrolled: number | null;
         scrolling: boolean | null;
-    };
+    }
 }
 
 export default INavbarProps;

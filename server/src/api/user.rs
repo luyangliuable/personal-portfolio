@@ -2,7 +2,7 @@ use rocket::{State, http::Status, serde::json::Json};
 use rocket::http::{ CookieJar, Cookie };
 use std::str::FromStr;
 extern crate log;
-use serde_json::json;  // Import the json! macro
+use serde_json::json;
 
 use crate::{
     models::{user_model::{ User, UserLogin }, user_session_token_model::UserSessionToken},
@@ -66,9 +66,35 @@ pub fn check_session_token(
 }
 
 #[post("/login", data = "<user_login_details>")]
-pub async fn login(user_login_details: Json<UserLogin>, user_repo: &State<UserRepo>) -> Result<Json<UserSessionToken>, Status> {
+pub async fn login(
+    user_login_details: Json<UserLogin>,
+    cookies: &CookieJar<'_>,
+    user_repo: &State<UserRepo>
+) -> Result<Json<UserSessionToken>, Status> {
     match user_repo.perform_user_login(user_login_details.into_inner()) {
-        Ok(valid_response) => Ok(valid_response),
+        Ok(valid_response) => {
+            add_cookie(cookies, "session_token".to_string(), valid_response.session_token.clone());
+            add_cookie(cookies, "user_id".to_string(), valid_response.userid.clone());
+            Ok(valid_response)
+        },
         Err(error) => Err(error.as_status())
     }
+}
+
+#[post("/logout")]
+pub fn logout(cookies: &CookieJar<'_>) -> Status {
+    // Remove server-side session data if needed. This part depends on your implementation.
+
+    // Remove client-side cookies
+    cookies.remove(Cookie::named("user_id"));
+    cookies.remove(Cookie::named("session_token"));
+
+    // Return status to indicate success
+    Status::Ok
+}
+
+fn add_cookie(cookies: &CookieJar<'_>, name: String, value: String) {
+    let name_str: &'static str = Box::leak(name.into_boxed_str());
+    let cookie = Cookie::new(name_str, value);
+    cookies.add(cookie);
 }

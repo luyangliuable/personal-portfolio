@@ -20,8 +20,9 @@ class Gallery extends Component<IGalleryProps, IGalleryState> {
                 </div>
                 <div className="gallery-item__container">
                     {
-                        this.props.content.map((item: any) => (
+                        this.props.content.map((item: any, index: number) => (
                             <div
+                                key={index}
                                 onClick={(e) => {
                                     window.location.href = item.link
                                 }}

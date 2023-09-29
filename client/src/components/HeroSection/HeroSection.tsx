@@ -88,8 +88,8 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
                     landingPageCardType="fitUnderNavbar">
                     <div className="hero-section__content">
                         <div className="hero-section__content__left">
-                            <p>I am a motivated software engineering student with a diverse array of skills and experiences, ranging from web and mobile app development to machine learning research.</p>
-                            <p>I pride myself on my efficient time and effort management abilities and my aptitude for continuous learning paired with my high learning agility</p>
+                            <p className="hero-section__content__left__text" style={{ width: "65%" }}> I am a motivated software engineering student with a diverse array of skills and experiences, ranging from web and mobile app development to machine learning research. I pride myself on my efficient time and effort management abilities and my aptitude for continuous learning.</p>
+
                             {
                                 this.state.mainContent.items.map((item: string, index: number) => (
                                     <p key={index} className="hero-section__content__left__text">{item}</p>
@@ -107,15 +107,15 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
                     </div>
                     <div className="hero-section-badge__container">
                         {
-                            this.state.linkToMyOtherSocialMedia.map((item: any) => (
-                                <a href={item.link} className="hero-section-badge__link" target="_blank">
+                            this.state.linkToMyOtherSocialMedia.map((item: any, index: number) => (
+                                <a key={index} href={item.link} className="hero-section-badge__link" target="_blank">
                                     <img src={item.imageSrc} alt={item.name} />
                                 </a>
                             ))
                         }
                     </div>
-                </LandingPageCard>
-            </div>
+                </LandingPageCard >
+            </div >
         );
     }
 }

@@ -5,12 +5,10 @@ class UnderConstruction extends Component<{}, {}> {
     gearsRef = createRef<HTMLDivElement>();
 
     cardEffect(e: any) {
-        console.log(e);
         const rect = e.target.getBoundingClientRect(),
             x = e.clientX - rect.left,
             y = e.clientY - rect.top;
 
-        console.log(x, y);
         e.target.style.setProperty("--mouse-x", `${x}px`);
         e.target.style.setProperty("--mouse-y", `${y}px`);
     }

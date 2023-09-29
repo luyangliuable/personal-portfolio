@@ -28,6 +28,13 @@ class PostRepository {
             .catch(error => { throw Error(error) });
     }
 
+
+    static async logout(): Promise<any> {
+        const url = `${PostRepository.BASE_URL}/logout`;
+        const options = PostRepository.options("POST");
+        return fetch(url, options)
+    }
+
 }
 
 export default PostRepository;

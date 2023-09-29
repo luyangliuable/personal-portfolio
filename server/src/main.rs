@@ -117,6 +117,7 @@ async fn rocket() -> _ {
         .mount("/api/", routes![api::posts::get_post_list])
         .mount("/api/", routes![api::user::register])
         .mount("/api/", routes![api::user::login])
+        .mount("/api/", routes![api::user::logout])
         .mount("/api/", routes![api::user::get_user])
         .mount("/api/", routes![api::user::check_session_token])
         .mount("/api/", routes![api::local_image::index_image])

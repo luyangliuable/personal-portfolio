@@ -14,7 +14,8 @@
     --landing-page-card-margin: 100px;
     --landing-page-card-large--width: 98vw;
     --landing-page-card-large--max-width: 1500px;
-    --landing-page-card-large--height: 98vh;
+    --landing-page-card-large--padding: 2vh;
+    --landing-page-card-large--height: calc(98vh - var(--landing-page-card-large--padding)*2);
     --landing-page-card-fit-under-navbar--width: 98vw;
     --landing-page-card-fit-under-navbar--max-width: 1500px;
     --landing-page-card-fit-under-navbar--height: calc(97vh - 100px);
@@ -43,7 +44,7 @@
     -webkit-animation: var(--landing-page-card-intro-animation);
     -o-animation: var(--landing-page-card-intro-animation);
     -ms-animation: var(--landing-page-card-intro-animation);
-    padding: 2vh 0;
+    padding: var(--landing-page-card-large--padding) 0;
 }
 
 /* Specialized Classes */

@@ -1,14 +1,17 @@
-import { Component, createRef } from "react";
+import { Context, Component, createRef, ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 import { INavbarState, Link } from "./Interface/INavbarState";
 import INavbarProps from "./Interface/INavbarProps";
 import NavBurgerPanel from "./NavBurgerPanel/NavBurgerPanel";
 import BurgerMenuIcon from "./BurgerMenuIcon/BurgerMenuIcon";
-import { AiFillCaretDown } from 'react-icons/ai';
+import { AiFillCaretDown } from "react-icons/ai";
 import LoginButton from "./LoginButton/LoginButton";
+import { AppContext, IAppContextProvider } from "../../stores/AppContext";
 import "./Navbar.css";
 
 class NavBar extends Component<INavbarProps, INavbarState> {
+    static contextType: Context<IAppContextProvider> = AppContext;
+
     navbar = createRef<HTMLDivElement>();
     navbarLeft = createRef<HTMLDivElement>();
     selectedNavlinkWindow = createRef<HTMLDivElement>();
@@ -34,8 +37,10 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                     }, {
                         name: "🏞 Scenic Memories",
                         to: "/digital_chronicles/scenic_memories",
+                    }, {
+                        name: "🧩 My Daily Leetcode",
+                        to: "/digital_chronicles/daily_leetcode",
                     },
-
                     ]
                 },
                 {
@@ -63,7 +68,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                         name: "⌛ TimeCapsule Letters",
                         to: "/tools/time_capsule_letters"
                     }, {
-                        name: "🗔 CSSCrossBrowser",
+                        name: "🌐 CssCrossBrowser",
                         to: "/tools/css_cross_browser"
                     }, {
                         name: "✉️ AnonyLetters",
@@ -102,7 +107,8 @@ class NavBar extends Component<INavbarProps, INavbarState> {
             currentlyHoveredNavbarLinkName: null,
             hideNavBarScrollSensitivity: 1,
             showBurgerPanel: false,
-            name: "~/llcode.tech"
+            name: "~/llcode.tech",
+            dropdownMenuLinkDisplay: []
         };
     }
 
@@ -110,8 +116,8 @@ class NavBar extends Component<INavbarProps, INavbarState> {
         const selectedNavlinkWindow = this.selectedNavlinkWindow.current!;
 
         const element = this.navbar.current!;
-        const height =  element?.getBoundingClientRect().height || 0;
-        selectedNavlinkWindow.style.setProperty('--navbar-height', `${height}px`);
+        const height = element?.getBoundingClientRect().height || 0;
+        selectedNavlinkWindow.style.setProperty("--navbar-height", `${height}px`);
 
         return height;
     }
@@ -162,13 +168,13 @@ class NavBar extends Component<INavbarProps, INavbarState> {
         const navbarLeft = this.navbarLeft.current!;
         const selectedNavlinkWindow = this.selectedNavlinkWindow.current!;
 
-        if (navbarLeft && selectedNavlinkWindow ) {
+        if (navbarLeft && selectedNavlinkWindow) {
             Array.from(navbarLeft.children).forEach((child, index) => {
                 if (child !== selectedNavlinkWindow) {
-                    child.addEventListener('mouseover', () => {
+                    child.addEventListener("mouseover", () => {
                         const factor = navbarLeft.children.length - index - 1;
                         const translateXValue = `calc(-${factor}*( var(--navbar-item-width) + var(--navbar-item-margin)) + var(--navbar-item-margin) )`;
-                        selectedNavlinkWindow.style.setProperty('--dynamic-translate', `${translateXValue}`);
+                        selectedNavlinkWindow.style.setProperty("--dynamic-translate", `${translateXValue}`);
                     });
                 }
             });
@@ -216,6 +222,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
 
     hideNavBar = () => {
         this.navbar.current?.classList.add("hidden");
+        this.burgerPanel.current?.classList.remove("nav-burger-panel-move-lower");
     };
 
     showNavBar = () => {
@@ -241,30 +248,24 @@ class NavBar extends Component<INavbarProps, INavbarState> {
         this.selectedNavlinkWindow.current?.classList.add("show-navbar-dropdown");
     }
 
-    renderDropdownMenu = (ancesterLinkName: string) => {
-        if (this.state.links.filter(item => item.name === ancesterLinkName)[0].sublinks) {
+    renderDropdownMenu = (links: Link[]): ReactNode | void => {
+        if (links !== undefined) {
             this.showDropdownMenu();
-            this.setState({
-                ...this.state,
-                currentlyHoveredNavbarLinkName: ancesterLinkName
-            });
+            this.setState({ dropdownMenuLinkDisplay: links.map(this.renderNavLink) });
         } else {
             this.hideDropdownMenu();
         }
     }
 
     renderNavLink = (link: Link) => {
-        const name = link.name;
-
         return (
             <NavLink
                 to={link.to}
+                onClick={() => link.onClick()}
                 className={({ isActive }) => ["navbar-item", (isActive && link.to !== null) ? "navbar-item active-link" : null].filter(Boolean).join(" ")}
                 key={link.name}
-                onMouseOver={() => this.renderDropdownMenu(link.name)}>
-                {link.name}{link.sublinks && (
-                    <AiFillCaretDown />
-                )}
+                onMouseOver={() => this.renderDropdownMenu(this.state.links.filter(item => item.name === link.name)[0].sublinks)}>
+                {link.name}{link.icon}{link.sublinks && (<AiFillCaretDown />)}
             </NavLink>
         );
     }
@@ -285,11 +286,12 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                         </NavLink>
                         <nav ref={this.navbarLeft} className="navbar-left">
                             {links.map(this.renderNavLink)}
-                            <LoginButton />
+                            <LoginButton
+                                onMouseOver={this.renderDropdownMenu}
+                            />
                             <div ref={this.selectedNavlinkWindow} className="selected-navlink-window">
                                 <div ref={this.navbarSubmenu} className="navbar-item__dropdown">
-                                    {this.state.currentlyHoveredNavbarLinkName
-                                        && links.filter(item => item.name === currentlyHoveredNavbarLinkName)[0].sublinks!.map(this.renderNavLink)}
+                                    {this.state.dropdownMenuLinkDisplay}
                                 </div>
                             </div>
                         </nav>
