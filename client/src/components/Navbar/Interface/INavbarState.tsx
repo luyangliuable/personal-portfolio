@@ -12,13 +12,14 @@ interface INavbarState {
 }
 
 interface Link {
-    name: string,
-    to: string | null,
+    name: string;
+    to: string | null;
     icon?: ReactNode;
     onClick?: () => void;
     sublinks?: {
-        name: string,
-        to: string
+        name: string;
+        to: string;
+        onClick?: () => void
     }[]
 }
 

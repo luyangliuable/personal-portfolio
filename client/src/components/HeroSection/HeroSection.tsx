@@ -4,6 +4,7 @@ import './HeroSection.css';
 import IHeroState from "./Interface/IHeroState";
 import IHeroProps from "./Interface/IHeroProps";
 import LandingPageCard from "../LandingPageCard/LandingPageCard";
+import { AiOutlineArrowRight } from "react-icons/ai";
 
 
 class HeroSection extends Component<IHeroProps, IHeroState> {
@@ -13,6 +14,9 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
         super(props);
         this.state = {
             backgrounds: [],
+            introduction: "I am a motivated software engineering student with a diverse array of skills and experiences, \
+ranging from web and mobile app development to machine learning research. \
+I pride myself on my efficient time and effort management abilities and my aptitude for continuous learning.",
             mainContent: {
                 heading: "Hi There 👋",
                 itemsToShow: [],
@@ -80,26 +84,25 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
     }
 
     render(): any {
+        const heroSectionState = this.state;
+
         return (
             <div className="hero-section__wrapper">
                 <LandingPageCard
                     className="hero-section"
-                    heading={this.state.mainContent.heading}
+                    heading={heroSectionState.mainContent.heading}
                     landingPageCardType="fitUnderNavbar">
                     <div className="hero-section__content">
                         <div className="hero-section__content__left">
-                            <p className="hero-section__content__left__text" style={{ width: "65%" }}> I am a motivated software engineering student with a diverse array of skills and experiences, ranging from web and mobile app development to machine learning research. I pride myself on my efficient time and effort management abilities and my aptitude for continuous learning.</p>
-
-                            {
-                                this.state.mainContent.items.map((item: string, index: number) => (
-                                    <p key={index} className="hero-section__content__left__text">{item}</p>
-                                ))
-                            }
-                            <div className="button noselect" onClick={() => window.location.href = "/digital_chronicles/blogs"}>See my Blogs</div>
-                            <div className="button noselect hero-section__project-button" onClick={() => window.location.href = "/projects/code"}>See my Projects</div>
+                            <p className="hero-section__content__left__text">{heroSectionState.introduction}</p>
+                            <p className="hero-section__content__left__text">
+                                {heroSectionState.mainContent.items.map((item: string, index: number) => (<p key={index} style={{ margin: "2px" }}>{item}</p>))}
+                            </p>
+                            <div className="button noselect" onClick={() => window.location.href = "/digital_chronicles/blogs"}>See my Blogs <AiOutlineArrowRight /></div>
+                            <div className="button noselect hero-section__project-button" onClick={() => window.location.href = "/projects/code"}>See my Projects <AiOutlineArrowRight /></div>
                         </div>
                         <div className="hero-section__background__wrapper">
-                            {this.state.backgrounds}
+                            {heroSectionState.backgrounds}
                         </div>
                         <div className="hero-section__content__right">
                             <CodingCat showAnimtion={this.props.scrolling} />
@@ -107,17 +110,18 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
                     </div>
                     <div className="hero-section-badge__container">
                         {
-                            this.state.linkToMyOtherSocialMedia.map((item: any, index: number) => (
+                            heroSectionState.linkToMyOtherSocialMedia.map((item: any, index: number) => (
                                 <a key={index} href={item.link} className="hero-section-badge__link" target="_blank">
                                     <img src={item.imageSrc} alt={item.name} />
                                 </a>
                             ))
                         }
                     </div>
-                </LandingPageCard >
-            </div >
+                </LandingPageCard>
+            </div>
         );
     }
 }
+
 
 export default HeroSection;

@@ -3,19 +3,32 @@ import { NavLink } from "react-router-dom";
 import { CiLogin } from 'react-icons/ci';
 import { AiFillCaretDown } from 'react-icons/ai';
 import UserRepository from "../../../repositories/UserRepository";
+import { AppContext, IAppContextProvider } from "../../../stores/AppContext";
 
-class LoginButton extends Component<any, any> {
-    constructor(props: any) {
+import ILoginButtonState from "./Interface/ILoginButtonState";
+import ILoginButtonProps from "./Interface/ILoginButtonProps";
+
+class LoginButton extends Component<ILoginButtonProps, ILoginButtonState> {
+    static contextType = AppContext;
+
+    constructor(props: ILoginButtonProps, context: IAppContextProvider) {
         super(props);
 
         this.state = {
-            loginButtonDetails: {
-                name: "Login",
+            loginButtonLoggedInState: {
+                name: `Hello`,
                 to: "/user/login",
+                icon: (<AiFillCaretDown />),
                 sublinks: [{
                     name: "Logout",
+                    to: null,
                     onClick: () => this.logoff()
                 }]
+            },
+            loginButtonLoggedOffState: {
+                name: "Login",
+                icon: (<CiLogin />),
+                to: "/user/login"
             },
         }
     }
@@ -26,48 +39,42 @@ class LoginButton extends Component<any, any> {
         });
     }
 
-    getCookie(name: string) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-    }
+    get loginButtonInnerHTML(): ReactNode {
+        const appCtx = this.context as IAppContextProvider;
+        const { userName, loginStatus } = appCtx;
 
-    getLoginButtonInnerHTML(): ReactNode {
-        if (this.state.username === undefined) {
+        if (loginStatus) {
             return (
                 <>
-                    {this.state.loginButtonDetails.name} <CiLogin />
+                    Hello {userName} {this.state.loginButtonLoggedInState.icon}
                 </>
             );
         } else {
+            const { name, icon } = this.state.loginButtonLoggedOffState;
             return (
                 <>
-                    Hello {this.state.username} <AiFillCaretDown />
+                    {name} {icon}
                 </>
-            )
+            );
         }
     }
 
-    loginButtonTo(): string | null {
-        if (this.state.username === undefined) {
-            return this.state.loginRoute;
-        } else {
-            return null;
-        }
+    get loginButtonTo(): string | null {
+        const appCtx = this.context as IAppContextProvider;
+        return appCtx.loginStatus ? null : this.state.loginButtonLoggedInState.to;
     }
 
-    componentDidMount(): void {
-        UserRepository.getUserName().then((response: any) => {
-            this.setState({ username: response.username });
-        });
+    get sublinks(): unknown {
+        const appCtx = this.context as IAppContextProvider;
+        return appCtx.loginStatus ? this.state.loginButtonLoggedInState.sublinks : undefined;
     }
 
     render(): ReactNode {
-        const loginButtonInnerHTML = this.getLoginButtonInnerHTML();
+        const loginButtonInnerHTML = this.loginButtonInnerHTML;
         return (
             <NavLink
-                to={this.loginButtonTo()}
-                onMouseOver={() => this.props.onMouseOver(this.state.loginButtonDetails.sublinks)}
+                to={this.loginButtonTo}
+                onMouseOver={() => this.props.onMouseOver(this.sublinks)}
                 className={({ isActive }) => ["navbar-item", isActive ? "navbar-item active-link" : null].filter(Boolean).join(" ")}>
                 {loginButtonInnerHTML}
                 <div className="navbar-item__dropdown"></div>

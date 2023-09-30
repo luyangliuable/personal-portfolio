@@ -2,6 +2,7 @@ import React from "react";
 
 type IHeroState = {
     backgrounds: React.ReactNode[],
+    introduction: string,
     mainContent: {
         heading: string,
         itemsToShow: string[],
