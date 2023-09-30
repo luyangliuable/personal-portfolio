@@ -9,6 +9,7 @@ import HardwareProjectsPage from "./pages/HardwareProjectsPage/HardwareProjectsP
 import { AppContextProvider } from "./stores/AppContext";
 import CodingProjectsPage from "./pages/CodingProjectsPage/CodingProjectsPage";
 import LogInPage from "./pages/LogInPage/LogInPage";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import React, { useState, useEffect } from 'react';
 import { useNavigate, BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
@@ -83,6 +84,7 @@ function App() {
                             <Route path="/projects/code" element={<CodingProjectsPage />} />
                             <Route path="/digital_chronicles/blog" element={<BlogContent />} />
                             <Route path="/user/login" element={<LogInPage />} />
+                            <Route path="/user/register" element={<RegisterPage />} />
 
                             {/* Catch-all route */}
                             <Route path="*" element={<UnderConstruction />} />

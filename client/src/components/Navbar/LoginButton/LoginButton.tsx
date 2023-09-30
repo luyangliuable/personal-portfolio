@@ -28,7 +28,11 @@ class LoginButton extends Component<ILoginButtonProps, ILoginButtonState> {
             loginButtonLoggedOffState: {
                 name: "Login",
                 icon: (<CiLogin />),
-                to: "/user/login"
+                to: "/user/login",
+                sublinks: [{
+                    name: "Sign Up",
+                    to: "/user/register"
+                }]
             },
         }
     }
@@ -66,7 +70,7 @@ class LoginButton extends Component<ILoginButtonProps, ILoginButtonState> {
 
     get sublinks(): unknown {
         const appCtx = this.context as IAppContextProvider;
-        return appCtx.loginStatus ? this.state.loginButtonLoggedInState.sublinks : undefined;
+        return appCtx.loginStatus ? this.state.loginButtonLoggedInState.sublinks : this.state.loginButtonLoggedOffState.sublinks;
     }
 
     render(): ReactNode {

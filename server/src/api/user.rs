@@ -46,10 +46,15 @@ pub fn get_user(
 #[post("/register", data = "<user>")]
 pub fn register(
     user: Json<User>,
+    cookies: &CookieJar<'_>,
     user_repo: &State<UserRepo>
 ) -> Result<Json<UserSessionToken>, Status> {
     match user_repo.create_user(user.into_inner()) {
-        Ok(valid_response) => Ok(valid_response),
+        Ok(valid_response) => {
+            add_cookie(cookies, "session_token".to_string(), valid_response.session_token.clone());
+            add_cookie(cookies, "user_id".to_string(), valid_response.userid.clone());
+            Ok(valid_response)
+        },
         Err(error) => Err(error.as_status())
     }
 }
