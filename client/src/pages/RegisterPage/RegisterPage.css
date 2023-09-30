@@ -1,0 +1,66 @@
+.register-form__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: calc(100vh - 30px);
+    top: 30px;
+    position: absolute;
+}
+
+.register-form{
+    --register-form-border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background: #F9F9F9;
+    border: 1px solid #EEE;
+    box-shadow: .2px .2px 1px #999;
+    -webkit-box-shadow: .2px .2px 1px #999;
+    -moz-box-shadow: .2px .2px 1px #999;
+    width: 80vw;
+    max-width: 300px;
+    height: fit-content;
+    border-radius: var(--register-form-border-radius);
+    -webkit-border-radius: var(--register-form-border-radius);
+    -moz-border-radius: var(--register-form-border-radius);
+    padding: 2vh 0;
+    overflow: hidden;
+}
+
+.register-form input[type=text],input[type=password]  {
+    border: 1px solid black;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -khtml-border-radius: 4px;
+    padding: 14px;
+    margin: 12px;
+    width: 80%;
+}
+
+.register-form p {
+    width: 80%;
+    text-align: right;
+    color: #1e90ff;
+    cursor: pointer;
+    margin: 0;
+    font-size: 15px
+}
+
+.register-form .button {
+    width: 80%;
+}
+
+.register-form input[type=text]:active {}
+
+.register-form .flash-red {
+    color: #F00;
+}
+
+
+.register-form .flash-green {
+    color: #006400;
+}

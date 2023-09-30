@@ -5,6 +5,7 @@ extern crate log;
 mod api; 
 mod models;
 mod utils;
+mod errors;
 mod repository;
 mod database;
 
@@ -48,7 +49,21 @@ impl Fairing for CORS {
 
     /// Sets appropriate CORS headers to the response.
     async fn on_response<'r>(&self, _request: &'r Request<'_>, response: &mut Response<'r>) {
-        response.set_header(Header::new("Access-Control-Allow-Origin", "*"));
+
+        let allowed_origins = [
+            "http://localhost:3000",
+            "https://localhost:3000",
+            "http://llcode.tech",
+            "https://llcode.tech",
+            "http://170.64.250.107",
+            "https://170.64.250.107",
+        ];
+
+        if let Some(origin) = _request.headers().get_one("Origin") {
+            if allowed_origins.contains(&origin) {
+                response.set_header(Header::new("Access-Control-Allow-Origin", origin));
+            }
+        }
         response.set_header(Header::new("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE"));
         response.set_header(Header::new("Access-Control-Allow-Headers", "*"));
         response.set_header(Header::new("Access-Control-Allow-Credentials", "true"));
@@ -102,6 +117,8 @@ async fn rocket() -> _ {
         .mount("/api/", routes![api::posts::get_post_list])
         .mount("/api/", routes![api::user::register])
         .mount("/api/", routes![api::user::login])
+        .mount("/api/", routes![api::user::logout])
+        .mount("/api/", routes![api::user::get_user])
         .mount("/api/", routes![api::user::check_session_token])
         .mount("/api/", routes![api::local_image::index_image])
         .mount("/api/", routes![api::local_image::get_image])

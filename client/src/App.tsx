@@ -1,4 +1,3 @@
-import './App.css';
 import NavBar from './components/Navbar/Navbar';
 import BlogPage from './pages/BlogPage/BlogPage';
 import LandingPage from './pages/LandingPage/LandingPage';
@@ -7,10 +6,13 @@ import UnderConstruction from './pages/UnderConstructionPage/UnderConstruction';
 import BlogContent from "./pages/BlogPage/BlogContent/BlogContent";
 import ThreeDPrintingGallery from "./pages/threeDPrintingGalleryPage/ThreeDPrintingGallery";
 import HardwareProjectsPage from "./pages/HardwareProjectsPage/HardwareProjectsPage";
+import { AppContextProvider } from "./stores/AppContext";
 import CodingProjectsPage from "./pages/CodingProjectsPage/CodingProjectsPage";
-
+import LogInPage from "./pages/LogInPage/LogInPage";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import React, { useState, useEffect } from 'react';
 import { useNavigate, BrowserRouter, Route, Routes } from 'react-router-dom';
+import './App.css';
 
 interface IAppStateInterface {
     scrolled: number | null,
@@ -32,9 +34,7 @@ function App() {
         scrolling: null
     });
 
-
     useEffect(() => {
-
         const handleScroll = () => {
             const scrolled = window.scrollY;
             setAppState(({
@@ -71,56 +71,32 @@ function App() {
 
     return (
         <div className="App">
-            <BrowserRouter>
-                <NavBar scrollStatus={{
-                    scrolled: appState.scrolled,
-                    scrolling: appState.scrolling
-                }
-                } />
-                <div className="page-body">
-                    <Routes>
-                        <Route path="/" element={
-                            <LandingPage
-                                scrolled={appState.scrolled}
-                                scrolling={appState.scrolling}
-                            />
-                        } />
-                        <Route path="/digital_chronicles/blogs" element={
-                            <BlogPage />
-                        } />
-                        <Route path="/resume" element={
-                            <ResumePage />
-                        } />
+            <AppContextProvider>
+                <BrowserRouter>
+                    <NavBar scrollStatus={{ scrolled: appState.scrolled, scrolling: appState.scrolling }} />
+                    <div className="page-body">
+                        <Routes>
+                            <Route path="/" element={<LandingPage scrolled={appState.scrolled} scrolling={appState.scrolling} />} />
+                            <Route path="/digital_chronicles/blogs" element={<BlogPage />} />
+                            <Route path="/resume" element={<ResumePage />} />
+                            <Route path="/projects/3d_printing" element={<ThreeDPrintingGallery />} />
+                            <Route path="/projects/hardware" element={<HardwareProjectsPage />} />
+                            <Route path="/projects/code" element={<CodingProjectsPage />} />
+                            <Route path="/digital_chronicles/blog" element={<BlogContent />} />
+                            <Route path="/user/login" element={<LogInPage />} />
+                            <Route path="/user/register" element={<RegisterPage />} />
 
-                        <Route path="/projects/3d_printing" element={
-                            <ThreeDPrintingGallery />
-                        } />
+                            {/* Catch-all route */}
+                            <Route path="*" element={<UnderConstruction />} />
 
-                        <Route path="/projects/hardware" element={
-                            <HardwareProjectsPage />
-                        } />
-
-                        <Route path="/projects/code" element={
-                            <CodingProjectsPage />
-                        } />
-
-                        <Route path="/digital_chronicles/blog" element={
-                            <BlogContent />
-                        } />
-
-                        {/* Catch-all route */}
-                        <Route path="*" element={
-                            <UnderConstruction />
-                        } />
-
-                        {/* Redirections */}
-                        <Route path="/digital_chronicles" element={<RedirectToRoot link="/digital_chronicles/blogs" />} />
-                        <Route path="/tools" element={<RedirectToRoot link="/tools/mood_tracker" />} />
-                        <Route path="/about" element={<RedirectToRoot link="/about/teddie" />} />
-                    </Routes>
-                </div>
-
-            </BrowserRouter>
+                            {/* Redirections */}
+                            <Route path="/digital_chronicles" element={<RedirectToRoot link="/digital_chronicles/blogs" />} />
+                            <Route path="/tools" element={<RedirectToRoot link="/tools/mood_tracker" />} />
+                            <Route path="/about" element={<RedirectToRoot link="/about/teddie" />} />
+                        </Routes>
+                    </div>
+                </BrowserRouter>
+            </AppContextProvider>
         </div>
     );
 }

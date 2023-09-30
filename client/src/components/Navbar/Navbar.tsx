@@ -1,12 +1,20 @@
-import React, { Component, createRef } from "react";
+import { Context, Component, createRef, ReactNode } from "react";
 import { NavLink } from "react-router-dom";
-import "./Navbar.css";
 import { INavbarState, Link } from "./Interface/INavbarState";
 import INavbarProps from "./Interface/INavbarProps";
-import NavbarBurger from "./NavbarBurger/NavbarBurger";
+import NavBurgerPanel from "./NavBurgerPanel/NavBurgerPanel";
+import BurgerMenuIcon from "./BurgerMenuIcon/BurgerMenuIcon";
+import { AiFillCaretDown } from "react-icons/ai";
+import LoginButton from "./LoginButton/LoginButton";
+import { AppContext, IAppContextProvider } from "../../stores/AppContext";
+import "./Navbar.css";
 
 class NavBar extends Component<INavbarProps, INavbarState> {
+    static contextType: Context<IAppContextProvider> = AppContext;
+
     navbar = createRef<HTMLDivElement>();
+    navbarLeft = createRef<HTMLDivElement>();
+    selectedNavlinkWindow = createRef<HTMLDivElement>();
     burgerPanel = createRef<HTMLDivElement>();
     burgerButton = createRef<HTMLDivElement>();
     scrollProgress = createRef<HTMLDivElement>();
@@ -18,27 +26,26 @@ class NavBar extends Component<INavbarProps, INavbarState> {
             links: [
                 { name: "Home", to: "/" },
                 {
-                    name: "Digital Chronicles",
+                    name: "Blogs",
                     to: "/digital_chronicles",
                     sublinks: [{
                         name: "💻 Posts",
                         to: "/digital_chronicles/blogs",
-                    }, {
-                        name: "📝 Daily Reflections",
-                        to: "/digital_chronicles/daily_refletions",
                     }, {
                         name: "🧑‍💻 Coding Notes",
                         to: "/digital_chronicles/coding_notes",
                     }, {
                         name: "🏞 Scenic Memories",
                         to: "/digital_chronicles/scenic_memories",
+                    }, {
+                        name: "🧩 My Daily Leetcode",
+                        to: "/digital_chronicles/daily_leetcode",
                     },
-
                     ]
                 },
                 {
                     name: "Projects",
-                    to: "/projects",
+                    to: "/projects/code",
                     sublinks: [{
                         name: "🏗︎ Coding Projects",
                         to: "/projects/code",
@@ -53,7 +60,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                 },
                 {
                     name: "Tools",
-                    to: "/tools",
+                    to: null,
                     sublinks: [{
                         name: "🌉 HexaBridger",
                         to: "/tools/hex_to_rgb",
@@ -61,7 +68,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                         name: "⌛ TimeCapsule Letters",
                         to: "/tools/time_capsule_letters"
                     }, {
-                        name: "🗔 CSSCrossBrowser",
+                        name: "🌐 CssCrossBrowser",
                         to: "/tools/css_cross_browser"
                     }, {
                         name: "✉️ AnonyLetters",
@@ -83,7 +90,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                 },
                 {
                     name: "About",
-                    to: "/about",
+                    to: null,
                     sublinks: [
                         {
                             name: "🐩 Teddie the Dog",
@@ -100,27 +107,32 @@ class NavBar extends Component<INavbarProps, INavbarState> {
             currentlyHoveredNavbarLinkName: null,
             hideNavBarScrollSensitivity: 1,
             showBurgerPanel: false,
-            name: "~/llcode.tech"
+            name: "~/llcode.tech",
+            dropdownMenuLinkDisplay: []
         };
     }
 
     get navBarHeight(): number {
-        const element = document.querySelector(".navbar");
-        return element?.getBoundingClientRect().height || 0;
+        const selectedNavlinkWindow = this.selectedNavlinkWindow.current!;
+
+        const element = this.navbar.current!;
+        const height = element?.getBoundingClientRect().height || 0;
+        selectedNavlinkWindow.style.setProperty("--navbar-height", `${height}px`);
+
+        return height;
     }
 
     updateScrolledProgress = (progress: number) => {
-        if (this.scrollProgress) this.scrollProgress.current.style.width = `${progress * 100}vw`;
+        if (this.scrollProgress) this.scrollProgress.current!.style.width = `${progress * 100}vw`;
     };
 
     listenDeltaScrolled = () => {
         const { scrollStatus } = this.props;
         const { lastScrollY, hideNavBarScrollSensitivity } = this.state;
 
-        // max because safari is stupid and it sometimes goes to negative scroll positions
-        if (scrollStatus.scrolled - Math.max(0, lastScrollY) >= hideNavBarScrollSensitivity) {
+        if (scrollStatus.scrolled! - Math.max(0, lastScrollY) >= hideNavBarScrollSensitivity) {
             this.hideNavBar();
-        } else if (Math.max(0, lastScrollY - scrollStatus.scrolled) >= hideNavBarScrollSensitivity) {
+        } else if (Math.max(0, lastScrollY - scrollStatus.scrolled!) >= hideNavBarScrollSensitivity) {
             this.showNavBar();
         }
     };
@@ -128,9 +140,9 @@ class NavBar extends Component<INavbarProps, INavbarState> {
     listenContinuousScrolled = () => {
         const { scrollStatus } = this.props;
 
-        if (!this.state.navBarDetached && scrollStatus.scrolled >= this.navBarHeight) {
+        if (!this.state.navBarDetached && scrollStatus.scrolled! >= this.navBarHeight) {
             this.detachNavBar();
-        } else if (scrollStatus.scrolled < this.navBarHeight) {
+        } else if (scrollStatus.scrolled! < this.navBarHeight) {
             this.attachNavBar();
         }
 
@@ -141,28 +153,51 @@ class NavBar extends Component<INavbarProps, INavbarState> {
 
     addBurgerClickOutEventLister() {
         window.addEventListener("click", (e) => {
-            if (this.burgerPanel.current && !this.burgerPanel.current.contains(e.target as Node) && !this.burgerButton.current.contains(e.target as Node)) {
+            if (this.burgerPanel.current && !this.burgerPanel.current.contains(e.target as Node) && !this.burgerButton.current!.contains(e.target as Node)) {
                 this.hideBurgerMenu();
             }
         });
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
+        this.initializeNavBar();
+        this.setupNavHoverEffect();
+    }
+
+    private setupNavHoverEffect() {
+        const navbarLeft = this.navbarLeft.current!;
+        const selectedNavlinkWindow = this.selectedNavlinkWindow.current!;
+
+        if (navbarLeft && selectedNavlinkWindow) {
+            Array.from(navbarLeft.children).forEach((child, index) => {
+                if (child !== selectedNavlinkWindow) {
+                    child.addEventListener("mouseover", () => {
+                        const factor = navbarLeft.children.length - index - 1;
+                        const translateXValue = `calc(-${factor}*( var(--navbar-item-width) + var(--navbar-item-margin)) + var(--navbar-item-margin) )`;
+                        selectedNavlinkWindow.style.setProperty("--dynamic-translate", `${translateXValue}`);
+                    });
+                }
+            });
+        }
+    }
+
+    private initializeNavBar() {
         this.listenContinuousScrolled();
-
         this.updateScrolledProgress(0);
-
         this.addBurgerClickOutEventLister();
     }
 
     componentDidUpdate(prevProps: INavbarProps) {
-        const { scrollStatus } = this.props;
+        this.updateScrollingBehavior(prevProps);
+    }
 
-        if (prevProps.scrollStatus.scrolling !== scrollStatus.scrolling) {
+    private updateScrollingBehavior(prevProps: INavbarProps) {
+        const { scrollStatus } = this.props;
+        if (scrollStatus.scrolling !== prevProps.scrollStatus.scrolling) {
             this.listenDeltaScrolled();
         }
 
-        if (prevProps.scrollStatus.scrolled !== scrollStatus.scrolled) {
+        if (scrollStatus.scrolled !== prevProps.scrollStatus.scrolled) {
             this.listenContinuousScrolled();
         }
     }
@@ -187,6 +222,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
 
     hideNavBar = () => {
         this.navbar.current?.classList.add("hidden");
+        this.burgerPanel.current?.classList.remove("nav-burger-panel-move-lower");
     };
 
     showNavBar = () => {
@@ -202,35 +238,34 @@ class NavBar extends Component<INavbarProps, INavbarState> {
         this.burgerPanel.current?.classList.add("nav-burger-panel-hide");
     };
 
-    renderSubmenu = (ancesterLinkName: string) => {
-        if (this.state.links.filter(item => item.name === ancesterLinkName)[0].sublinks) {
-            this.navbarSubmenu.current?.classList.add("show-navbar-submenu");
-            this.setState({
-                ...this.state,
-                currentlyHoveredNavbarLinkName: ancesterLinkName
-            });
+    hideDropdownMenu = () => {
+        this.navbarSubmenu.current?.classList.remove("show-navbar-dropdown");
+        this.selectedNavlinkWindow.current?.classList.remove("show-navbar-dropdown");
+    }
+
+    showDropdownMenu = () => {
+        this.navbarSubmenu.current?.classList.add("show-navbar-dropdown");
+        this.selectedNavlinkWindow.current?.classList.add("show-navbar-dropdown");
+    }
+
+    renderDropdownMenu = (links: Link[]): ReactNode | void => {
+        if (links !== undefined) {
+            this.showDropdownMenu();
+            this.setState({ dropdownMenuLinkDisplay: links.map(this.renderNavLink) });
         } else {
-            this.navbarSubmenu.current?.classList.remove("show-navbar-submenu");
+            this.hideDropdownMenu();
         }
     }
 
-    resetSubmenu = () => {
-        this.navbarSubmenu.current?.classList.remove("show-navbar-submenu");
-    }
-
     renderNavLink = (link: Link) => {
-        const name = link.name;
-
         return (
             <NavLink
                 to={link.to}
-                className={({ isActive }) => ["navbar-item", isActive ? "navbar-item active-link" : null].filter(Boolean).join(" ")}
+                onClick={() => link.onClick()}
+                className={({ isActive }) => ["navbar-item", (isActive && link.to !== null) ? "navbar-item active-link" : null].filter(Boolean).join(" ")}
                 key={link.name}
-                onMouseOver={() => this.renderSubmenu(link.name)}
-            >
-                {link.name}{link.sublinks && (
-                    <img style={{marginLeft: "8px", width: "10px"}} src="http://llcode.tech/api/image/650059a0f9b642fb30be5995" />
-                  )}
+                onMouseOver={() => this.renderDropdownMenu(this.state.links.filter(item => item.name === link.name)[0].sublinks)}>
+                {link.name}{link.icon}{link.sublinks && (<AiFillCaretDown />)}
             </NavLink>
         );
     }
@@ -243,56 +278,31 @@ class NavBar extends Component<INavbarProps, INavbarState> {
             <>
                 <div
                     className="navbar"
-                    onMouseLeave={() => this.resetSubmenu()}
+                    onMouseLeave={() => this.hideDropdownMenu()}
                     ref={this.navbar}>
                     <div className="navbar-content">
                         <NavLink to="/" style={{ textDecoration: "none" }}>
                             <h1 className="logo">{name}</h1>
                         </NavLink>
-                        <nav className="navbar-left">
+                        <nav ref={this.navbarLeft} className="navbar-left">
                             {links.map(this.renderNavLink)}
-                            <div className="selected-navlink-window"></div>
+                            <LoginButton
+                                onMouseOver={this.renderDropdownMenu}
+                            />
+                            <div ref={this.selectedNavlinkWindow} className="selected-navlink-window">
+                                <div ref={this.navbarSubmenu} className="navbar-item__dropdown">
+                                    {this.state.dropdownMenuLinkDisplay}
+                                </div>
+                            </div>
                         </nav>
                         <div ref={this.burgerButton} className="nav-burger" onClick={this.toggleBurgerMenu}>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="#f2f2f2"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="navbar-burger-icon" >
-                                <path d="M3 12h18M3 6h18M3 18h18">
-                                </path>
-                            </svg>
+                            <BurgerMenuIcon />
                         </div>
                     </div>
                     <div id="scroll-progress" ref={this.scrollProgress} />
-                    <div className="navbar-submenu" ref={this.navbarSubmenu}>
-                        {
-                            this.state.currentlyHoveredNavbarLinkName
-                            && links.filter(item => item.name === currentlyHoveredNavbarLinkName)[0].sublinks!.map(this.renderNavLink)
-                        }
-                    </div>
                 </div>
 
-
-                <div ref={this.burgerPanel} className="nav-burger-panel nav-burger-panel-hide nav-burger-panel-move-lower">
-                    {
-                        links.map(link => (
-                            <NavLink
-                                to={link.to}
-                                className={({ isActive }) => ["burger-item", isActive ? "burger-item active-link" : null].filter(Boolean).join(" ")}
-                                key={link.name}
-                            >
-                                {link.name}
-                            </NavLink>
-                        ))
-                    }
-                </div>
+                <NavBurgerPanel links={links} burgerPanel={this.burgerPanel} />
             </>
         );
     }

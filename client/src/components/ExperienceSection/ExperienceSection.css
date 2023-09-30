@@ -31,7 +31,7 @@
     display: flex;
     justify-content: center;
     text-align: left;
-    margin-bottom: var(--home-container-margin);
+    margin-bottom: var(--common-card-margin);
 }
 
 .experience-section-content-container > * {

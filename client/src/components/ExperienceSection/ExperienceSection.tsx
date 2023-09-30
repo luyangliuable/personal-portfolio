@@ -328,30 +328,11 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
      * @returns {boolean} - Returns true if the position should be unlocked.
      */
     private shouldUnlockPosition(proximityYToLockUnlockPosition: number): boolean {
-        const classNamesToCheckProxityFor = [
-            "landing-page-card--fit-content",
-            "landing-page-card",
-            "landing-page-card--fit-under-navbar"
-        ]
-
-        const experienceSectionParentElement = this.experienceSectionParentRef.current!.parentElement;
-        const isNearExcludedElementBottom = isCloseToAnotherElement(experienceSectionParentElement, "bottom", proximityYToLockUnlockPosition, classNamesToCheckProxityFor).length > 0;
-        const isNearExcludedElementTop = isCloseToAnotherElement(experienceSectionParentElement, "top", proximityYToLockUnlockPosition, classNamesToCheckProxityFor).length > 0;
-
-        if (isNearExcludedElementBottom) {
-            this.setState({
-                unlockPosition: this.props.scrolled
-            });
-        }
-
-        // fallback condition to unlock position
         const isBeforeLockPosition = this.props.scrolled < this.getLockPosition();
 
-        // fallback condition to unlock position
+        // TODO check if it is past timelime and show a default overlay when locked
         const isPastTimelineLength = this.isLocked() && this.props.scrolled - this.getLockPosition() > this.state.timeLineLength;
-
-        /* return isBeforeLockPosition || isPastTimelineLength || isNearExcludedElementBottom || isNearExcludedElementTop */
-        return isBeforeLockPosition || isNearExcludedElementTop;
+        return isBeforeLockPosition;
     }
 
 
