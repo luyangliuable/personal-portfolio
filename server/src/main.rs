@@ -24,8 +24,6 @@ use mongodb::{
     sync::{Client, Collection, Database},
 };
 
-// use rocket::tokio;
-
 use models::post_model::Post;
 use models::user_model::User;
 use models::local_image_model::LocalImage;

@@ -88,18 +88,23 @@ pub async fn login(
 
 #[post("/logout")]
 pub fn logout(cookies: &CookieJar<'_>) -> Status {
-    // Remove server-side session data if needed. This part depends on your implementation.
-
-    // Remove client-side cookies
-    cookies.remove(Cookie::named("user_id"));
-    cookies.remove(Cookie::named("session_token"));
-
-    // Return status to indicate success
+    remove_cookie(cookies, "user_id".to_string());
+    remove_cookie(cookies, "session_token".to_string());
     Status::Ok
 }
 
 fn add_cookie(cookies: &CookieJar<'_>, name: String, value: String) {
-    let name_str: &'static str = Box::leak(name.into_boxed_str());
-    let cookie = Cookie::new(name_str, value);
+    let cookie_string = format!("{}={}; Path={}", name, value, "/api");
+
+    let cookie = Cookie::parse_encoded(cookie_string)
+        .expect("Failed to parse cookie")
+        .into_owned();
+
     cookies.add(cookie);
+}
+
+fn remove_cookie(cookies: &CookieJar<'_>, name: String) {
+    let mut cookie = Cookie::new(name, "");
+    cookie.set_path("/api"); 
+    cookies.remove(cookie);
 }
