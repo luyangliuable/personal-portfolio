@@ -4,6 +4,9 @@ import IFeaturedContentSectionProps from "./Interface/IFeaturedContentSectionPro
 import "./FeaturedContentSection.css";
 import { isCenterAlignedWithViewport } from "../Utility/ScrollUtility";
 import Card from "../../components/Card/Card";
+import Gallery from "../Gallery/Gallery";
+import GalleryItem from "../Gallery/GalleryItem/GalleryItem";
+
 import LandingPageCard from "../LandingPageCard/LandingPageCard";
 
 import { truncateTextBody, isoDateFormatToString } from "../Utility/StringUtility";
@@ -55,23 +58,34 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
 
     render() {
         return (
-            <LandingPageCard heading="Featured Content" landingPageCardType="fitContent">
+            <LandingPageCard heading="Featured Content" landingPageCardType="fitContent" blendWithBackground={true}>
                 <div ref={this.currentComponentRef} className="featured-content-section">
-                    <div className="featured-section-content featured-section-content-in-dark-room">
-                        <Card
-                            heading={this.getFeaturedPostHeading()}
-                            body={truncateTextBody(this.state.featuredPost.body, 50)}
+                    <div className="featured-section-content">
+                        <GalleryItem
+                            image="https://barbarabray.net/wp-content/uploads/2017/11/ikigai-1024x968.jpg"
+                            name={this.getFeaturedPostHeading()}
+                            subheading="⭐ 5 min read | 3 weeks ago"
+                            description={truncateTextBody(this.state.featuredPost.body, 50)}
+                            link={`/digital_chronicles/blog?id=${this.state.featuredPost._id.$oid}`} />
+                        <GalleryItem
+                            name={this.getFeaturedToolHeading()}
+                            image="http://llcode.tech/api/image/651942aaf9b642fb30be59ae"
+                            description={truncateTextBody(this.state.featuredTool.description)}
+                            link={this.state.featuredTool.link} />
+
+                        {/* <Card
+                            heading={}
+                            body={}
                             author={this.state.featuredPost.author}
                             date_created={this.state.featuredPost.date_created}
-                            link={`/digital_chronicles/blog?id=${this.state.featuredPost._id.$oid}`}
-                            image="https://barbarabray.net/wp-content/uploads/2017/11/ikigai-1024x968.jpg"
+                            image=""
                         />
 
                         <Card
                             heading={this.getFeaturedToolHeading()}
                             body={truncateTextBody(this.state.featuredTool.description)}
                             link={this.state.featuredTool.link}
-                        />
+                /> */}
                     </div>
                     <TwinCandle ref={this.twinCandleComponentRef} />
                 </div>

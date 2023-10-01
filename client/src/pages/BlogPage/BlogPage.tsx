@@ -6,7 +6,7 @@ import IBlogPageProps from "./Interface/IBlogPageProps";
 import Card from "../../components/Card/Card";
 
 class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
-    
+
     constructor(props: IBlogPageProps) {
         super(props);
         this.state = {
@@ -42,16 +42,18 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
     render() {
         return (
             <div className="blog-container cursor-pointer">
-                {this.sortPostsByDate(this.state.content).map((content, idx) => (
-                    <Card
-                        key={content._id.$oid}
-                        heading={content.heading}
-                        author={content.author}
-                        date_created={content.date_created}
-                        body={content.body}
-                        link={`/digital_chronicles/blog?id=${content._id.$oid}`}
-                    />
-                ))}
+                {
+                    this.sortPostsByDate(this.state.content).map((content, idx) => (
+                        <Card
+                            key={content._id.$oid}
+                            heading={content.heading}
+                            author={content.author}
+                            date_created={content.date_created}
+                            body={content.body}
+                            link={`/digital_chronicles/blog?id=${content._id.$oid}`}
+                        />
+                    ))
+                }
             </div>
         );
     }

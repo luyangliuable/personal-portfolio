@@ -62,7 +62,7 @@
     -moz-transition: var(--navbar-transition);
     width: var(--navbar-width);
     box-sizing: border-box;
-    border-bottom: 1px solid #FFF;
+    /* border-bottom: 1px solid #FFF; */
 }
 
 .navbar-content {

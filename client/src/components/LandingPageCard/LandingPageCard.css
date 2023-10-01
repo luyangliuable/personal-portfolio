@@ -77,3 +77,11 @@
         opacity: 1
     }
 }
+
+.blend-with-background {
+    border: none;
+    top: -25px;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+}

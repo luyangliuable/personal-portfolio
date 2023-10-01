@@ -1,6 +1,5 @@
 class PostRepository {
-    // static BASE_URL: string = process.env.REACT_APP_WEATHER_API_BASE_URL || "http://llcode.tech/api/posts";
-    static BASE_URL: string = process.env.REACT_APP_WEATHER_API_BASE_URL || "https://localhost:8000/api/posts";
+    static BASE_URL: string = process.env.REACT_APP_WEATHER_API_BASE_URL || "http://llcode.tech/api/posts";
 
     static options(method: 'GET' | 'DELETE' | 'POST' | 'PUT', body?: { [category: string]: any }): any {
         return {

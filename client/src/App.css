@@ -1,7 +1,7 @@
 :root {
     --page-top-margin: 68px;
     --page-bottom-margin: 120px;
-    --common-card-margin: 100px;
+    --common-card-margin: 10vh;
 
     --dark-mode-black: #1e1e1e;
     --dark-mode-purple: #491ed3;
@@ -130,9 +130,9 @@ body {
 
 
 .card {
-    background-color: rgba(200, 200, 200, 0.1);
+    background-color: rgba(150, 150, 150, 0.1);
     border-radius: 10px;
-    border: 1px solid #EEE;
+    border: 1px solid #CCC;
     position: relative; /* Need this here for cursor effect somehow */
     overflow: hidden;
 }

@@ -2,7 +2,8 @@ import UserNameResponse from "../repositories/Response/UserNameResponse";
 
 // TODO remove all anys
 class PostRepository {
-    static BASE_URL: string = process.env.REACT_APP_WEATHER_API_BASE_URL || "https://localhost:8000/api";
+    // static BASE_URL: string = process.env.REACT_APP_WEATHER_API_BASE_URL || "https://localhost:8000/api";
+    static BASE_URL: string = process.env.REACT_APP_WEATHER_API_BASE_URL || "https://llcode.tech/api";
 
     static options(method: 'GET' | 'DELETE' | 'POST' | 'PUT', body?: { [category: string]: any }): any {
         return {

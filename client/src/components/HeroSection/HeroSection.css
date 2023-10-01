@@ -11,6 +11,7 @@
 
     .hero-section__content__right {
         display: flex;
+        z-index: 1;
         margin-top: 2vh;
         justify-content: center;
     }
@@ -51,6 +52,7 @@
     }
 
     .hero-section__content__right {
+        z-index: 1;
         display: flex;
         width: 30%;
         justify-content: center;
@@ -117,6 +119,7 @@
 }
 
 .hero-section {
+    overflow: hidden;
 }
 
 

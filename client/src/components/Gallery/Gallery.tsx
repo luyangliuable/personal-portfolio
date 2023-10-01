@@ -2,6 +2,7 @@ import { Component } from "react";
 import { cardGradientEffect } from "../../components/Utility/MouseUtility";
 import { IGalleryProps } from "./Interface/IGalleryProps";
 import IGalleryState from "./Interface/IGalleryState";
+import GalleryItem from "./GalleryItem/GalleryItem";
 import "./Gallery.css";
 
 class Gallery extends Component<IGalleryProps, IGalleryState> {
@@ -21,23 +22,7 @@ class Gallery extends Component<IGalleryProps, IGalleryState> {
                 <div className="gallery-item__container">
                     {
                         this.props.content.map((item: any, index: number) => (
-                            <div
-                                key={index}
-                                onClick={(e) => {
-                                    window.location.href = item.link
-                                }}
-                                onMouseMove={cardGradientEffect}
-                                className="gallery-item card">
-
-                                <h3>
-                                    {item.name}
-                                </h3>
-                                <img className="gallery-item__image" src={item.image} />
-
-                                <p>
-                                    {item.description}
-                                </p>
-                            </div>
+                            <GalleryItem key={index} {...item} />
                         ))
                     }
                 </div>

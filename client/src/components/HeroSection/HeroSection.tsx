@@ -5,6 +5,7 @@ import IHeroState from "./Interface/IHeroState";
 import IHeroProps from "./Interface/IHeroProps";
 import LandingPageCard from "../LandingPageCard/LandingPageCard";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import Waves from "../Waves/Waves";
 
 
 class HeroSection extends Component<IHeroProps, IHeroState> {
@@ -91,9 +92,10 @@ I pride myself on my efficient time and effort management abilities and my aptit
                 <LandingPageCard
                     className="hero-section"
                     heading={heroSectionState.mainContent.heading}
-                    landingPageCardType="fitUnderNavbar">
+                    landingPageCardType="fitContent">
                     <div className="hero-section__content">
                         <div className="hero-section__content__left">
+                            <Waves />
                             <p className="hero-section__content__left__text">{heroSectionState.introduction}</p>
                             <p className="hero-section__content__left__text">
                                 {heroSectionState.mainContent.items.map((item: string, index: number) => (<p key={index} style={{ margin: "2px" }}>{item}</p>))}

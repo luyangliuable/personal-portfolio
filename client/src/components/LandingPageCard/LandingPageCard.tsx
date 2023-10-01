@@ -39,8 +39,17 @@ class LandingPageCard extends Component<ILandingPageCardProps, any> {
     }
 
     render(): any {
+        let classArray = [
+            this.determineWhatTypeOfLandingPageCardToUse(this.props.landingPageCardType),
+            this.props.className
+        ];
+
+        if (this.props.blendWithBackground) {
+            classArray.push('blend-with-background');
+        }
+
         return (
-            <div className={[this.determineWhatTypeOfLandingPageCardToUse(this.props.landingPageCardType), this.props.className].join(' ')}>
+            <div className={classArray.join(' ')}>
                 <div className="landing-page-card__content">
                     <h1 className="landing-page-card__heading">
                         {this.props.heading}

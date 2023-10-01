@@ -1,0 +1,64 @@
+.box {
+  position: absolute;
+  width: 200%;  
+  transform: translateX(-25%);
+  height: 300px;
+  left: 0;
+  top: 85%;
+  border-radius: 5px;
+}
+
+.wave {
+    opacity: 0.4;
+    position: absolute;
+    top: 3%;
+    left: 50%;
+    background: #0af;
+    width: 100%; 
+    height: auto; /* Maintains the aspect ratio */
+    padding-bottom: 100%; /* Keeps the aspect ratio 1:1 */
+    margin-left: -50%; /* Center align the wave */
+    transform-origin: 50% 48%;
+    border-radius: 43%;
+    animation: drift 20s infinite linear;
+}
+
+.wave.-three {
+    animation: drift 32s infinite linear;
+    transform: translateY(10px);
+}
+
+.wave.-two {
+    animation: drift 34s infinite linear;
+    opacity: 0.1;
+    background: yellow;
+    transform: translateY(20px);
+}
+
+.wave.-four {
+  animation: drift 43s infinite linear;
+  opacity: 0.2;
+  background: var(--dark-mode-purple);
+  transform: translateY(25px);
+}
+
+/* .box:after { */
+/*   content: ''; */
+/*   display: block; */
+/*   left: 0; */
+/*   top: 0; */
+/*   width: 100%; */
+/*   height: 100%; */
+/*   background: linear-gradient(to bottom, #e8a, rgba(221, 238, 255, 0) 80%, rgba(255, 255, 255, 0.5)); */
+/*   z-index: 11; */
+/*   transform: translate3d(0, 0, 0); */
+/* } */
+
+@keyframes drift {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
