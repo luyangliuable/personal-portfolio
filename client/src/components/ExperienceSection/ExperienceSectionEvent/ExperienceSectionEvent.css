@@ -5,16 +5,25 @@
     padding: 10px;
 }
 
-.card__image {
+.experience-section-card__image {
     align-items: center;
-    max-height: 100px;
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
+    max-height: 80px;
+    border-radius: 10px;
 }
 
-.card__image > i {
-    font-size: 6em;
-    opacity: 0.25;
-}
 
+@media screen and (max-width: 1000px) {
+    .experience-section-card h2 {
+        font-size: 12px;
+    }
+    .experience-section-card .light-black-text {
+        font-size: 10px;
+        color: #333;
+        font-weight: 200;
+    }
+
+    .experience-section-card {
+        width: 180px;
+        height: 160px;
+    }
+}

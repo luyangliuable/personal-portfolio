@@ -54,6 +54,11 @@ body {
     color: white;
 }
 
+.flex-vertical {
+    display: flex;
+    flex-direction: column;
+}
+
 .App-link {
     color: #61dafb;
 }

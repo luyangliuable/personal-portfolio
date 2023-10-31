@@ -1,14 +1,31 @@
-import { Component } from "react";
-import { cardGradientEffect } from "../../components/Utility/MouseUtility";
+import React, { Component, createRef } from "react";
 import { IGalleryProps } from "./Interface/IGalleryProps";
 import IGalleryState from "./Interface/IGalleryState";
 import GalleryItem from "./GalleryItem/GalleryItem";
 import "./Gallery.css";
 
+
 class Gallery extends Component<IGalleryProps, IGalleryState> {
+    galleryContainerRef: React.RefObject<HTMLDivElement>;
+
     constructor(props: IGalleryProps) {
         super(props);
-        this.state = {};
+
+        this.galleryContainerRef = createRef();
+        this.state = {
+            shouldAddDummy: false
+        };
+    }
+
+    componentDidMount(): void {
+        const container = this.galleryContainerRef.current!;
+        const itemCount = container.querySelectorAll(':scope > *').length;
+
+        if (itemCount === 1) {
+            this.setState({ shouldAddDummy: true });
+        } else {
+            this.setState({ shouldAddDummy: false });
+        }
     }
 
     render() {
@@ -19,12 +36,13 @@ class Gallery extends Component<IGalleryProps, IGalleryState> {
                         {this.props.heading}
                     </h1>
                 </div>
-                <div className="gallery-item__container">
+                <div ref={this.galleryContainerRef} className="gallery-item__container">
                     {
                         this.props.content.map((item: any, index: number) => (
                             <GalleryItem key={index} {...item} />
                         ))
                     }
+                    {this.state.shouldAddDummy && <GalleryItem style={{visibility: "hidden"}} />}
                 </div>
             </>
         );

@@ -1,7 +1,10 @@
 use rocket::{http::Status, State};
 use std::str::FromStr;
 use crate::{utils::markdown_util, models::post_model::Post, repository::post_repo::PostRepo};
-use mongodb::bson::oid::ObjectId;
+use mongodb::{
+    bson::{doc, to_bson, oid::ObjectId },
+    results::UpdateResult
+};
 use rocket::serde::json::Json;
 use mongodb::results::InsertOneResult;
 
@@ -31,25 +34,31 @@ pub async fn get_post(db: &State<PostRepo>, id: String) -> Result<Json<Post>, St
 
 #[get("/posts")]
 pub fn get_post_list(db: &State<PostRepo>) -> Result<Json<Vec<Post>>, Status> {
-    // The `0` here is accessing the inner `MongoRepo<Post>` of `PostRepo`.
-    let post_list_result = db.0.get_all(); 
-
-    let mut result = Vec::new();
-
-    let post_list = match post_list_result {
-        Ok(posts) => posts,
+    match db.0.get_all() {
+        Ok(posts) => Ok(Json(posts)),
         Err(_) => return Err(Status::InternalServerError),
-    };
-
-    for post in post_list {
-        match markdown_util::get_post_content_for_post(post) {
-            Ok(updated_post) => result.push(updated_post),
-            Err(_) => return Err(Status::NotFound),
-        }
     }
-
-    Ok(Json(result))
 }
+
+
+#[patch("/posts/<id>", data = "<new_post>")]
+pub fn update_post(id: String, new_post: Json<Post>, post_repo: &State<PostRepo>) -> Result<Json<UpdateResult>, Status> {
+    let new_post_data = new_post.into_inner();
+    
+    let update_doc = match to_bson(&new_post_data) {
+        Ok(mongodb::bson::Bson::Document(doc)) => doc,
+        Ok(_other) => return Err(Status::InternalServerError),
+        Err(_) => return Err(Status::BadRequest),
+    };
+    
+    let update = doc! { "$set": update_doc };
+    
+    match post_repo.0.update_one(id, update, None) {
+        Ok(update_result) => Ok(Json( update_result )),
+        Err(_) => Err(Status::BadRequest),
+    }
+}
+
 
 /// Adds a new post to the database.
 /// Accepts a JSON body with the post details and returns the result of the insertion.

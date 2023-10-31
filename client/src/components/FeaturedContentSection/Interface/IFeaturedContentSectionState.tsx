@@ -1,7 +1,7 @@
-import { blogContent } from "../../../pages/BlogPage/Interface/IBlogPageState";
+import BlogPostResponse from "../../../repositories/Response/BlogPostResponse";
 
 interface IFeaturedContentSectionState {
-    featuredPost?: blogContent;
+    featuredPost?: BlogPostResponse;
     featuredTool?: {
         name: string,
         description: string,

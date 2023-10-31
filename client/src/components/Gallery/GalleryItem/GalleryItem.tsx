@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, CSSProperties } from "react";
 import { cardGradientEffect } from "../../../components/Utility/MouseUtility";
 import "./GalleryItem.css";
 import IGalleryItemProps from "./Interface/IGalleryItemProps";
@@ -10,8 +10,11 @@ class GalleryItem extends Component<IGalleryItemProps, {}> {
     }
 
     render() {
+        const style: CSSProperties = this.props.style || {};
+
         return (
             <div
+                style={ style } 
                 key={this.props.key}
                 onClick={(e) => {
                     window.location.href = this.props.link

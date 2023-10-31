@@ -1,11 +1,8 @@
-interface IBlogContentState {
-    content: blogContent,
-    render?: () => React.ReactElement<any, any>,
-}
+import BlogPostResponse from "../../../../repositories/Response/BlogPostResponse";
 
-type blogContent = {
-    heading: string | null,
-    body: string | null,
+interface IBlogContentState {
+    content: BlogPostResponse,
+    render?: () => React.ReactElement<any, any>
 }
 
 export default IBlogContentState;

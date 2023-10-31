@@ -1,5 +1,8 @@
+import BlogPostResponse from "./Response/BlogPostResponse";
+
 class PostRepository {
     static BASE_URL: string = process.env.REACT_APP_WEATHER_API_BASE_URL || "http://llcode.tech/api/posts";
+    // static BASE_URL: string = "http://localhost:8000/api/posts";
 
     static options(method: 'GET' | 'DELETE' | 'POST' | 'PUT', body?: { [category: string]: any }): any {
         return {
@@ -24,7 +27,7 @@ class PostRepository {
             .catch(error => console.error('Error:', error));
     }
 
-    static async getPost(id: string): Promise<any> {
+    static async getPost(id: string): Promise<BlogPostResponse> {
         const url = `${PostRepository.BASE_URL}/${id}`;
 
         const options = PostRepository.options("GET");

@@ -19,9 +19,8 @@ use database::db_singleton::DB;
 
 use std::env;
 use mongodb::{
-    bson::{ doc, oid::ObjectId },
-    results::InsertOneResult,
-    sync::{Client, Collection, Database},
+    bson::doc,
+    sync::{Client, Database},
 };
 
 use models::post_model::Post;
@@ -51,6 +50,7 @@ impl Fairing for CORS {
         let allowed_origins = [
             "http://localhost:3000",
             "https://localhost:3000",
+            "http://localhost:3001",
             "http://llcode.tech",
             "https://llcode.tech",
             "http://170.64.250.107",
@@ -113,6 +113,7 @@ async fn rocket() -> _ {
         .mount("/api/", routes![api::posts::index_post])
         .mount("/api/", routes![api::posts::get_post])
         .mount("/api/", routes![api::posts::get_post_list])
+        .mount("/api/", routes![api::posts::update_post])
         .mount("/api/", routes![api::user::register])
         .mount("/api/", routes![api::user::login])
         .mount("/api/", routes![api::user::logout])

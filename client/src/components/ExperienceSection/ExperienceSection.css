@@ -19,11 +19,9 @@
 .experience-section-parent-container {
     overflow-x: hidden;
     text-align: left;
-    /* position: absolute; */
     position: -webkit-sticky;
     position: sticky;
     top: 1%;
-    /* transform: translateX(-50%); */
 }
 
 .experience-section-wrapper {
@@ -54,7 +52,7 @@
 }
 
 .experience-section-card.below {
-    margin-top: 285px; /* Adjust as needed */
+    margin-top: 40vh;
 }
 
 

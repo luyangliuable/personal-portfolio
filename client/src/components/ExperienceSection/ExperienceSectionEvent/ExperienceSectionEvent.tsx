@@ -1,6 +1,7 @@
 import { cardGradientEffect } from "../../Utility/MouseUtility";
 import { ExperienceSectionItem } from "../Interface/IExperienceSectionState";
 import "./ExperienceSectionEvent.css";
+import { PiMapPinLineThin } from "react-icons/pi";
 
 const ExperienceSectionEvent: React.FC<{ item: ExperienceSectionItem, index: number }> = ({ item, index }) => {
     const displayIsImage = item.display === "IMAGE";
@@ -8,7 +9,7 @@ const ExperienceSectionEvent: React.FC<{ item: ExperienceSectionItem, index: num
 
     return (
         <div
-            style={{ transform: `scale(${item.importance ?? 1})` }}
+            style={{ border: "none", background: "transparent", transform: `scale(${item.importance ?? 1})` }}
             onMouseMove={cardGradientEffect}
             className={`card experience-section-card ${index % 2 === 0 ? 'above' : 'below'}`}>
 
@@ -23,7 +24,11 @@ const ExperienceSectionEvent: React.FC<{ item: ExperienceSectionItem, index: num
             }
             {
                 displayIsImage && (
-                    <div className="light-black-text">
+                    <div className="light-black-text" style={{marginBottom: 0}}>
+                        <div style={{display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center"}}>
+                            {item.location && (<PiMapPinLineThin />)}
+                            <div>{item.location}</div>
+                        </div>
                         {item.cardDetailedText}
                     </div>
                 )
@@ -40,9 +45,9 @@ const ExperienceSectionEvent: React.FC<{ item: ExperienceSectionItem, index: num
                 justifyContent: "center",
                 alignItems: "center",
             }}>
-                <img className="card__image"
-                    style={displayIsImage ? { transform: "scale(2)" } : {}}
-                    src={item.media.source.url} />
+                <img className="experience-section-card__image"
+                    style={displayIsImage ? { maxHeight: "87%", objectFit: "cover", minWidth : "100%" } : {}}
+                src={item.media.source.url} />
             </div>
         </div>
     );

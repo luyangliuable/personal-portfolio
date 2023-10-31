@@ -77,7 +77,7 @@ function App() {
                     <div className="page-body">
                         <Routes>
                             <Route path="/" element={<LandingPage scrolled={appState.scrolled} scrolling={appState.scrolling} />} />
-                            <Route path="/digital_chronicles/blogs" element={<BlogPage />} />
+                            <Route path="/digital_chronicles/blogs" element={<BlogPage showTopPicks={true}/>} />
                             <Route path="/resume" element={<ResumePage />} />
                             <Route path="/projects/3d_printing" element={<ThreeDPrintingGallery />} />
                             <Route path="/projects/hardware" element={<HardwareProjectsPage />} />

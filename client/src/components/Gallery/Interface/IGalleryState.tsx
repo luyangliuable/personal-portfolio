@@ -1,1 +1,3 @@
-export default interface IGalleryState {};
+export default interface IGalleryState {
+    shouldAddDummy: boolean;
+};

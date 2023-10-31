@@ -23,14 +23,14 @@
     --landing-page-card-fit-content--width: 98vw;
     --landing-page-card-fit-content--max-width: 1500px;
     --landing-page-card-fit-content--height: fit-content;
-    --landing-page-card-box-shadow:  .2px .2px 1.5px #999;
+    --landing-page-card-box-shadow:  .6px .5px 2.8px #A5A58C;
     --landing-page-card-intro-animation: animate-slide-up-fade-in .5s ease-in;
     position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background: #F9F9F9;
-    border: 1px solid #EEE;
+    /* border: .1px solid #CCC; */
     box-shadow: var(--landing-page-card-box-shadow);
     -webkit-box-shadow: var(--landing-page-card-box-shadow);
     -moz-box-shadow: var(--landing-page-card-box-shadow);

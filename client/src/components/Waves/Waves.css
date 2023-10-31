@@ -1,62 +1,72 @@
-.box {
+.wave__container {
   position: absolute;
-  width: 200%;  
-  transform: translateX(-25%);
+  width: 200%;
+  transform: translate(-25%, 40%);
   height: 300px;
   left: 0;
   top: 85%;
   border-radius: 5px;
 }
 
+@media screen and (max-width: 1000px) {
+    .wave__container {
+        top: 65%;
+    }
+}
+
 .wave {
     opacity: 0.4;
     position: absolute;
-    top: 3%;
-    left: 50%;
-    background: #0af;
-    width: 100%; 
-    height: auto; /* Maintains the aspect ratio */
-    padding-bottom: 100%; /* Keeps the aspect ratio 1:1 */
-    margin-left: -50%; /* Center align the wave */
+    top: 4%;
+    left: 55%;
+    border: .3px solid #0af;
+    width: 110%; 
+    height: auto;
+    padding-bottom: 100%;
+    margin-left: -50%;
     transform-origin: 50% 48%;
     border-radius: 43%;
-    animation: drift 20s infinite linear;
+    animation: drift 10s infinite linear;
+    transition: all 1s ease-in;
+}
+
+.wave:hover {
+    background: #0af;
 }
 
 .wave.-three {
-    animation: drift 32s infinite linear;
-    transform: translateY(10px);
+    animation: drift 16s infinite linear;
+    border: .2px solid black;
+}
+
+.wave.-three:hover {
+    /* animation: drift 12s infinite linear; */
+    background: black;
 }
 
 .wave.-two {
-    animation: drift 34s infinite linear;
+    animation: drift 19s infinite linear;
     opacity: 0.1;
+    border: 1px solid yellow;
+}
+
+.wave.-two:hover {
     background: yellow;
-    transform: translateY(20px);
 }
 
 .wave.-four {
-  animation: drift 43s infinite linear;
-  opacity: 0.2;
-  background: var(--dark-mode-purple);
-  transform: translateY(25px);
+    animation: drift 43s infinite linear;
+    opacity: 0.2;
+    border: .5px solid var(--dark-mode-purple);
 }
 
-/* .box:after { */
-/*   content: ''; */
-/*   display: block; */
-/*   left: 0; */
-/*   top: 0; */
-/*   width: 100%; */
-/*   height: 100%; */
-/*   background: linear-gradient(to bottom, #e8a, rgba(221, 238, 255, 0) 80%, rgba(255, 255, 255, 0.5)); */
-/*   z-index: 11; */
-/*   transform: translate3d(0, 0, 0); */
-/* } */
+.wave.-four:hover {
+    background: var(--dark-mode-purple);
+}
 
 @keyframes drift {
     0% {
-        transform: rotate(0deg);
+        transform: rotate(10deg);
     }
     100% {
         transform: rotate(360deg);

@@ -2,3 +2,12 @@
     width: 70vw;
     text-align: left;
 }
+
+
+.gallery-item__container {
+    display: grid;
+    grid-template-columns: auto auto;
+    width: 80vw;
+    align-items: flex-start;
+    justify-items: center
+}

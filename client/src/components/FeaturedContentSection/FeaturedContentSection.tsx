@@ -3,14 +3,9 @@ import IFeaturedContentSectionState from "./Interface/IFeaturedContentSectionSta
 import IFeaturedContentSectionProps from "./Interface/IFeaturedContentSectionProps";
 import "./FeaturedContentSection.css";
 import { isCenterAlignedWithViewport } from "../Utility/ScrollUtility";
-import Card from "../../components/Card/Card";
-import Gallery from "../Gallery/Gallery";
 import GalleryItem from "../Gallery/GalleryItem/GalleryItem";
-
 import LandingPageCard from "../LandingPageCard/LandingPageCard";
-
 import { truncateTextBody, isoDateFormatToString } from "../Utility/StringUtility";
-
 import TwinCandle from "../TwinCandle/TwinCandle";
 
 class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFeaturedContentSectionState> {

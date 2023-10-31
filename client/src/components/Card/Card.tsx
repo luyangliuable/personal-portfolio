@@ -20,7 +20,7 @@ class Card extends Component<ICardProps, ICardState> {
     }
 
     render() {
-        const displayMinuteRead = this.props.minuteRead ? `{this.props.minuteRead} min read` : "X min read";
+        const displayMinuteRead = this.props.minuteRead ? `${this.props.minuteRead} min read` : "X min read";
         const displayDateCreated = this.checkDateIsValid() ? isoDateFormatToString(new Date(this.props.date_created)) : '';
 
         return (
@@ -39,7 +39,8 @@ class Card extends Component<ICardProps, ICardState> {
                     {`${displayMinuteRead} | ${displayDateCreated}`}
                 </p>
                 {/* <p className="card-item__description">{stripAwayHashSymbols(truncateTextBody(this.props.body))}</p> */}
-                <img className="card-image-preview" src={this.props.image ?? this.defaultImage} />
+                <img className="card-image-preview" src={this.props.image ? `http://llcode.tech/api/image/${this.props.image}` : this.defaultImage} />
+                <div className="card-item__tags">{this.props.tags && this.props.tags.map(item => <span>#{ item }</span>)}</div>
             </div>
         );
     }

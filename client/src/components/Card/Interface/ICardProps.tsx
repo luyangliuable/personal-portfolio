@@ -7,4 +7,5 @@ export default interface ICardProps {
     link?: string;
     image?: string;
     body: string;
+    tags?: string[]
 }

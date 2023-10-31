@@ -31,7 +31,7 @@ I pride myself on my efficient time and effort management abilities and my aptit
             linkToMyOtherSocialMedia: [
                 {
                     "name": "Notion",
-                    "link": "https://www.notion.so/luyangl/71be1ff365c44fd2b4f6f8dce14b7536?v=f1e55d08878e4bfda1b744e76b9480c7&pvs=4",
+                    "link": "https://luyangl.notion.site/luyangl/71be1ff365c44fd2b4f6f8dce14b7536?v=f1e55d08878e4bfda1b744e76b9480c7",
                     "imageSrc": "https://img.shields.io/badge/notion-%2312100E.svg?&style=for-the-badge&logo=notion&logoColor=%23333&color=%239e9e9e"
                 },
                 {
@@ -97,9 +97,7 @@ I pride myself on my efficient time and effort management abilities and my aptit
                         <div className="hero-section__content__left">
                             <Waves />
                             <p className="hero-section__content__left__text">{heroSectionState.introduction}</p>
-                            <p className="hero-section__content__left__text">
-                                {heroSectionState.mainContent.items.map((item: string, index: number) => (<p key={index} style={{ margin: "2px" }}>{item}</p>))}
-                            </p>
+                            {heroSectionState.mainContent.items.map((item: string, index: number) => (<p key={index} className="hero-section__content__left__text" style={{ margin: "2px" }}>{item}</p>))}
                             <div className="button noselect" onClick={() => window.location.href = "/digital_chronicles/blogs"}>See my Blogs <AiOutlineArrowRight /></div>
                             <div className="button noselect hero-section__project-button" onClick={() => window.location.href = "/projects/code"}>See my Projects <AiOutlineArrowRight /></div>
                         </div>

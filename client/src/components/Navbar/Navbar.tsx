@@ -4,7 +4,7 @@ import { INavbarState, Link } from "./Interface/INavbarState";
 import INavbarProps from "./Interface/INavbarProps";
 import NavBurgerPanel from "./NavBurgerPanel/NavBurgerPanel";
 import BurgerMenuIcon from "./BurgerMenuIcon/BurgerMenuIcon";
-import { AiFillCaretDown } from "react-icons/ai";
+import { AiOutlineDown } from "react-icons/ai";
 import LoginButton from "./LoginButton/LoginButton";
 import { AppContext, IAppContextProvider } from "../../stores/AppContext";
 import "./Navbar.css";
@@ -265,7 +265,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                 className={({ isActive }) => ["navbar-item", (isActive && link.to !== null) ? "navbar-item active-link" : null].filter(Boolean).join(" ")}
                 key={link.name}
                 onMouseOver={() => this.renderDropdownMenu(this.state.links.filter(item => item.name === link.name)[0].sublinks)}>
-                {link.name}{link.icon}{link.sublinks && (<AiFillCaretDown />)}
+                {link.name}{link.icon}{link.sublinks && (<AiOutlineDown />)}
             </NavLink>
         );
     }
