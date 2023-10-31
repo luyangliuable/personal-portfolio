@@ -11,3 +11,27 @@
     align-items: flex-start;
     justify-items: center
 }
+
+
+@media screen and (max-width: 1000px) {
+    .gallery-item__container {
+        display: grid;
+        grid-template-columns: auto;
+        justify-items: center;
+        align-items: center;
+        width: 100vw;
+    }
+
+    /* .gallery-item { */
+    /*     display: flex; */
+    /*     flex-direction: column; */
+    /*     justify-content: start; */
+    /*     align-items: center; */
+    /*     padding: 10px; */
+    /*     width: 80vw; */
+    /*     max-width: 500px; */
+    /*     height: fit-content; */
+    /*     margin: 10px; */
+    /*     border: .1px solid #AEAEAE; */
+    /* } */
+}
