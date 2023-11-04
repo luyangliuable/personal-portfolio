@@ -22,10 +22,15 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
     /**
      * Fetch the post list once the component mounts.
      */
-    async componentDidMount() {
-        await this.fetchPostList();
-        this.updateAllUniqueTags();
-        this.updateTopPickedPosts();
+    componentDidMount() {
+        this.fetchPostList();
+    }
+
+    componentDidUpdate(prevProps: Readonly<IBlogPageProps>, prevState: Readonly<IBlogPageState>, snapshot?: any): void {
+        if (prevState.content != this.state.content) {
+            this.updateAllUniqueTags();
+            this.updateTopPickedPosts();
+        }
     }
 
     /**
@@ -90,7 +95,7 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
     }
 
     stringToColour = (str: string) => {
-        const seed="ramen, noodles, sushi, pizza, gym";
+        const seed = "ramen, noodles, sushi, pizza, gym";
 
         let hash = 0;
         str = str + seed;
@@ -127,10 +132,12 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
             <div className="blog__featured">
                 <h3>Top Picks</h3>
                 {
-                    this.state.topPickedPosts.map(post => {
+                    this.state.topPickedPosts.map((post) => {
                         const imageURL = `http://llcode.tech/api/image/${post.image.$oid}`
                         return (
-                            <GalleryItem name={post.heading} image={imageURL} />
+                            <div key={post._id.$oid}>
+                                <GalleryItem name={post.heading} image={imageURL} />
+                            </div>
                         )
                     })
                 }
@@ -138,20 +145,25 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
         );
     }
 
+
+    renderTags = (): React.ReactNode | null => {
+        return [...this.state.allTags].map((tagName) => {
+            const bgColor = this.stringToColour(`#${tagName}`);
+            const textColor = this.getContrastTextColor(bgColor);
+            const boxShadow = `1px 1px 4px ${bgColor}`;
+            return (
+                <span key={tagName} className="blog__tag" style={{ background: bgColor, color: textColor, boxShadow: boxShadow }}>#{tagName}</span>
+            );
+        })
+    };
+
+
     render() {
         return (
             <div className="blog-container cursor-pointer">
                 <div className="blog-list">
                     <div className="blog__tag-container">
-                        {
-                            [...this.state.allTags].map((tagName) => {
-                                const bgColor = this.stringToColour(`#${tagName}`);
-                                const textColor = this.getContrastTextColor(bgColor);
-                                return (
-                                    <div className="blog__tag" style={{ background: bgColor, color: textColor}}>#{tagName}</div>
-                                );
-                            })
-                        }
+                        {this.renderTags()}
                     </div>
                     {this.renderPostsSortedByDateDescending()}
                 </div>

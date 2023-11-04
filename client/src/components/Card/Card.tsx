@@ -40,7 +40,7 @@ class Card extends Component<ICardProps, ICardState> {
                 </p>
                 {/* <p className="card-item__description">{stripAwayHashSymbols(truncateTextBody(this.props.body))}</p> */}
                 <img className="card-image-preview" src={this.props.image ? `http://llcode.tech/api/image/${this.props.image}` : this.defaultImage} />
-                <div className="card-item__tags">{this.props.tags && this.props.tags.map(item => <span>#{ item }</span>)}</div>
+                <div className="card-item__tags">{this.props.tags && this.props.tags.map(item => <span key={item}>#{ item }</span>)}</div>
             </div>
         );
     }

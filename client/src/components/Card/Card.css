@@ -24,7 +24,7 @@
 
 .card-image-preview {
     position: absolute;
-    opacity: .1;
+    opacity: .2;
     right: 1%;
     width: min(max(20vw, 200px), 400px);
     top: -50%;
@@ -39,9 +39,9 @@
 
 .card-item:hover .card-image-preview {
     right: 1%;
-    top: -52.5%;
-    height: 210%;
-    opacity: .8;
+    top: -60.0%;
+    height: 240%;
+    opacity: .9;
 }
 
 .card-item:hover .card-item__heading {

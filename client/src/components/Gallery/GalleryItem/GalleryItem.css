@@ -52,8 +52,8 @@
     .gallery-item__container {
         display: grid;
         grid-template-columns: auto;
-        justify-items: center; /* This will center items horizontally */
-        align-items: center; /* This will center items vertically */
+        justify-items: center; 
+        align-items: center;
         width: 100vw;
     }
 

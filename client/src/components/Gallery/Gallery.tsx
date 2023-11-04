@@ -42,7 +42,7 @@ class Gallery extends Component<IGalleryProps, IGalleryState> {
                             <GalleryItem key={index} {...item} />
                         ))
                     }
-                    {this.state.shouldAddDummy && <GalleryItem style={{visibility: "hidden"}} />}
+                    {this.state.shouldAddDummy && <GalleryItem style={{ visibility: "hidden" }} />}
                 </div>
             </>
         );

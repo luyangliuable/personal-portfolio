@@ -6,6 +6,6 @@ export default interface IGalleryItemProps {
     image?: string;
     description?: string;
     link?: string;
-    key?: number;
+    key?: number | string;
     style?: CSSProperties
 }
