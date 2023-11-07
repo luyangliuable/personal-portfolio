@@ -93,11 +93,12 @@ I pride myself on my efficient time and effort management abilities and my aptit
                     className="hero-section"
                     heading={heroSectionState.mainContent.heading}
                     landingPageCardType="fitContent">
+                    <Waves />
                     <div className="hero-section__content">
                         <div className="hero-section__content__left">
-                            <Waves />
                             <p className="hero-section__content__left__text">{heroSectionState.introduction}</p>
                             {heroSectionState.mainContent.items.map((item: string, index: number) => (<p key={index} className="hero-section__content__left__text" style={{ margin: "2px" }}>{item}</p>))}
+                            <br />
                             <div className="button noselect" onClick={() => window.location.href = "/digital_chronicles/blogs"}>See my Blogs <AiOutlineArrowRight /></div>
                             <div className="button noselect hero-section__project-button" onClick={() => window.location.href = "/projects/code"}>See my Projects <AiOutlineArrowRight /></div>
                         </div>

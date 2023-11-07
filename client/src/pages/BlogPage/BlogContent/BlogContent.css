@@ -2,7 +2,7 @@
     width: fit-content;
 }
 
-.blog-content__container {
+.blog-content {
     --padding-left-right: min( 5vw, 500px );
     --padding-top-bottom: min( 3vh, 200px );
     --margin-top: min(2vh, 200px);
@@ -17,7 +17,7 @@
     align-items: center;
 }
 
-.blog-content {
+.blog-content-body {
     border-bottom: 1px #CCC solid;
     border-radius: .5vh;
     font-size: max(min( 19px, 2vw ), 15px);
@@ -28,31 +28,31 @@
 }
 
 @media screen and (max-width: 768px) {
-    .blog-content, .blog-content__header {
+    .blog-content-body, .blog-content__header {
         min-width: 300px;
         max-width: 800px;
     }
 
-    .blog-content__container {
+    .blog-content {
         min-width: 90vw;
         margin-left: 0; /* no more table of contents for small sreen */
     }
 }
 
 @media screen and (min-width: 769px) {
-    .blog-content, .blog-content__header {
+    .blog-content-body, .blog-content__header {
         min-width: 500px;
         max-width: 1100px;
     }
 
-    .blog-content__container {
+    .blog-content {
         min-width: 500px;
     }
 }
 
 
 
-.blog-content pre {
+.blog-content-body pre {
     font-size: max(min( 14px, 1.8vw ), 10px);
     width: 90%;
     white-space: pre-wrap;  /* Allow text to wrap */
@@ -65,12 +65,12 @@
     margin-bottom: 12px;
 }
 
-.blog-content>h1 {
+.blog-content-body>h1 {
     display: none; /* Hide the title inside the markdown file itself because it already exists from request */
 }
 
 
-.blog-content img {
+.blog-content-body img {
     width: 98%;
     border-radius: 12px;
 }
@@ -96,4 +96,33 @@
 
 .card-image--author-info>* {
     margin-right: min(10px, 3vw);
+}
+
+.blog-content__table-of-contents {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    border-right: 1px solid #888;
+    flex-direction: column;
+    font-size: min(max(12px, .5vw), 18px);
+    /* Position is purely arbitrary */
+    position: fixed;
+    left: 25%;
+    transform: translateX(-100%);
+    top: 10vh;
+    width: fit-content;
+    height: min(75vh, calc(fit-content + 10px));
+    /* overflow-y: auto; */
+    transition: color 1s ease-in;
+}
+
+.blog-content__wrapper {
+}
+
+.blog-content__table-of-contents>span {
+    cursor: pointer;
+}
+
+.blog-content__table-of-contents>span:hover {
+    color: #333;
 }

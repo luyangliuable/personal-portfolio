@@ -4,7 +4,7 @@
   transform: translate(-25%, 40%);
   height: 300px;
   left: 0;
-  top: 85%;
+  top: 90%;
   border-radius: 5px;
 }
 
@@ -37,6 +37,7 @@
 .wave.-three {
     animation: drift 16s infinite linear;
     border: .2px solid black;
+    transform: rotate(20deg);
 }
 
 .wave.-three:hover {
@@ -47,6 +48,7 @@
 .wave.-two {
     animation: drift 19s infinite linear;
     opacity: 0.1;
+    transform: rotate(80deg);
     border: 1px solid yellow;
 }
 
@@ -57,6 +59,7 @@
 .wave.-four {
     animation: drift 43s infinite linear;
     opacity: 0.2;
+    transform: rotate(360deg);
     border: .5px solid var(--dark-mode-purple);
 }
 
@@ -65,8 +68,12 @@
 }
 
 @keyframes drift {
-    0% {
-        transform: rotate(10deg);
+    20% {
+        transform: rotate(0deg);
+    }
+    50% {
+        
+        transform: rotate(180deg);
     }
     100% {
         transform: rotate(360deg);

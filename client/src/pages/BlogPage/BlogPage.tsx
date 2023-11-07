@@ -19,9 +19,6 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
         };
     }
 
-    /**
-     * Fetch the post list once the component mounts.
-     */
     componentDidMount() {
         this.fetchPostList();
     }
@@ -33,9 +30,6 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
         }
     }
 
-    /**
-     * Fetch the post list from the repository and update the state.
-     */
     async fetchPostList() {
         const response = await PostRepository.getPostList();
         this.setState({
@@ -85,11 +79,6 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
         return luminance > 0.5 ? '#000' : '#FFF';
     }
 
-
-    /**
-     * Sort the posts in descending order by date created.
-     * @param posts The array of posts to sort.
-     */
     sortPostsByDate(posts: any[]): any[] {
         return posts.sort((a, b) => new Date(b.date_created).getTime() - new Date(a.date_created).getTime());
     }
@@ -136,7 +125,10 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
                         const imageURL = `http://llcode.tech/api/image/${post.image.$oid}`
                         return (
                             <div key={post._id.$oid}>
-                                <GalleryItem name={post.heading} image={imageURL} />
+                                <GalleryItem
+                                    name={post.heading}
+                                    link={`/digital_chronicles/blog?id=${post._id.$oid}`}
+                                    image={imageURL} />
                             </div>
                         )
                     })
