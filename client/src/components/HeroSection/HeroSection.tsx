@@ -102,12 +102,8 @@ I pride myself on my efficient time and effort management abilities and my aptit
                             <div className="button noselect" onClick={() => window.location.href = "/digital_chronicles/blogs"}>See my Blogs <AiOutlineArrowRight /></div>
                             <div className="button noselect hero-section__project-button" onClick={() => window.location.href = "/projects/code"}>See my Projects <AiOutlineArrowRight /></div>
                         </div>
-                        <div className="hero-section__background__wrapper">
-                            {heroSectionState.backgrounds}
-                        </div>
-                        <div className="hero-section__content__right">
-                            <CodingCat showAnimtion={this.props.scrolling} />
-                        </div>
+                        <div className="hero-section__background__wrapper">{heroSectionState.backgrounds}</div>
+                        <div className="hero-section__content__right"><CodingCat showAnimtion={this.props.scrolling} /></div>
                     </div>
                     <div className="hero-section-badge__container">
                         {

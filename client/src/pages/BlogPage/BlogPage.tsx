@@ -127,6 +127,10 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
                             <div key={post._id.$oid}>
                                 <GalleryItem
                                     name={post.heading}
+                                    tags={post.tags}
+                                    type="blog"
+                                    dateCreated={post.date_created}
+                                    minuteRead={post.reading_time_minutes}
                                     link={`/digital_chronicles/blog?id=${post._id.$oid}`}
                                     image={imageURL} />
                             </div>
@@ -156,6 +160,10 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
                 <div className="blog-list">
                     <div className="blog__tag-container">
                         {this.renderTags()}
+                    </div>
+                    <div className="blog__year">
+                        <span>2023</span>
+                        <div></div>
                     </div>
                     {this.renderPostsSortedByDateDescending()}
                 </div>

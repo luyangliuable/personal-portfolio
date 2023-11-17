@@ -1,12 +1,12 @@
 import BlogPostResponse from "../../../../repositories/Response/BlogPostResponse";
 
-interface IBlogContentState {
-    content: BlogPostResponse,
-    headings: {
-        title: string,
-        level: number
-    }[],
-    render?: () => React.ReactElement<any, any>
+export type IBlogHeading = {
+    title: string,
+    level: number
 }
 
-export default IBlogContentState;
+export interface IBlogContentState {
+    content: BlogPostResponse,
+    headings: IBlogHeading[],
+    render?: () => React.ReactElement<any, any>
+}

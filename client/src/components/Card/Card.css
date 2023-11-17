@@ -1,13 +1,15 @@
 .card-item {
     cursor: pointer;
     text-align: left;
+    background: transparent !important;
+    border: none !important;
     border-bottom: 1px #CCC solid;
-    padding: 2vh 2vw 2vh 2vw;
+    padding: 30px 0 30px 2vw;
+    margin: 2px 0 2px;
     border-radius: .5vh;
     width: 90%;
     max-width: 1000px;
 }
-
 
 .card-item__heading {
     margin: 2px 0px !important;
@@ -24,24 +26,44 @@
 
 .card-image-preview {
     position: absolute;
-    opacity: .2;
+    opacity: .65;
     right: 1%;
-    width: min(max(20vw, 200px), 400px);
+    width: min(max(20vw, 170px), 300px);
     top: -50%;
     height: 200%;
     object-fit: cover;
     box-shadow: 1px 1px 50px rgba(255, 255, 255, 0.9);
     z-index: 0;
-    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 75%);
-    mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 90%);
+    mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 90%);
     transition: all .1s ease-in;
+}
+
+.card-item__content {
+    width: 65%;
+}
+
+@media screen and (max-width: 768px) {
+    .card-item__content {
+        width: 100%;
+    }
+
+    .card-image-preview { 
+        opacity: .25;
+        -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
+        mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
+    }
+
+    .card-item {
+        padding: 10px 0 10px 2vw;
+    }
 }
 
 .card-item:hover .card-image-preview {
     right: 1%;
-    top: -60.0%;
+    top: -70.0%;
     height: 240%;
-    opacity: .9;
+    opacity: 1;
 }
 
 .card-item:hover .card-item__heading {
@@ -67,19 +89,4 @@
 .card-item h3 {
     font-size: min(4vw, 19px);
     text-align: left;
-}
-
-.card-item__tags {
-    color: #888;
-    margin-top: min(1vh, 50px);
-    min-height: 7px;
-}
-
-.card-item__tags>span {
-    margin-right: 5px;
-    box-shadow: .3px .3px .3px #CCC;
-    background: #E9E9E9;
-    border: .1px solid #CCC;
-    border-radius: 4px;
-    padding: 3px;
 }

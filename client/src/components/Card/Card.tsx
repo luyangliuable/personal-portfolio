@@ -2,6 +2,7 @@ import { Component, createRef } from "react";
 import "./Card.css";
 import { cardGradientEffect } from "../../components/Utility/MouseUtility";
 import { truncateTextBody, stripAwayHashSymbols, isoDateFormatToString } from "../../components/Utility/StringUtility";
+import TagCloud from "../TagCloud/TagCloud";
 
 import ICardProps from "./Interface/ICardProps";
 import ICardState from "./Interface/ICardState";
@@ -34,13 +35,13 @@ class Card extends Component<ICardProps, ICardState> {
                     <img className="card-image--author-image" src={this.props.authorImage ?? this.defaultAuthorImage} />
                     {this.props.author ?? ""}
                 </div>
-                <h3 className="card-item__heading">{this.props.heading}</h3>
-                <p className="card-item__label">
-                    {`${displayMinuteRead} | ${displayDateCreated}`}
-                </p>
-                {/* <p className="card-item__description">{stripAwayHashSymbols(truncateTextBody(this.props.body))}</p> */}
+                <div className="card-item__content">
+                    <h3 className="card-item__heading">{this.props.heading}</h3>
+                    <p className="card-item__label">{`${displayMinuteRead} | ${displayDateCreated}`}</p>
+                </div>
+
                 <img className="card-image-preview" src={this.props.image ? `http://llcode.tech/api/image/${this.props.image}` : this.defaultImage} />
-                <div className="card-item__tags">{this.props.tags && this.props.tags.map(item => <span key={item}>#{ item }</span>)}</div>
+                <TagCloud tags={this.props.tags} />
             </div>
         );
     }

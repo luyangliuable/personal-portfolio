@@ -1,0 +1,31 @@
+.blog-content__table-of-contents {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    border-right: 1px solid #888;
+    flex-direction: column;
+    font-size: min(max(12px, .5vw), 18px);
+    /* Position is purely arbitrary */
+    position: fixed;
+    left: 25%;
+    transform: translateX(-100%);
+    top: 10vh;
+    width: fit-content;
+    height: min(75vh, calc(fit-content + 10px));
+    /* overflow-y: auto; */
+    transition: color 1s ease-in;
+}
+
+.blog-content__table-of-contents>span:hover {
+    color: #333;
+}
+
+@media screen and (max-width: 1400px) {
+    .blog-content__table-of-contents {
+        display: none;
+    }
+}
+
+.blog-content__table-of-contents>span {
+    cursor: pointer;
+}

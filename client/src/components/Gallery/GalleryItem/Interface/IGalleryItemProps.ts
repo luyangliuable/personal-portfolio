@@ -5,7 +5,11 @@ export default interface IGalleryItemProps {
     subheading?: string;
     image?: string;
     description?: string;
+    dateCreated?: string;
+    minuteRead?: number;
     link?: string;
+    type?: "blog" | "project" | "tool" | "url";
     key?: number | string;
-    style?: CSSProperties
+    style?: CSSProperties;
+    tags?: string[]
 }

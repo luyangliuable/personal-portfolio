@@ -245,6 +245,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
      */
     lockPosition(): void {
         const isNotPastUnlockPosition = this.props.scrolled < this.state.unlockPosition || this.state.unlockPosition === null
+
         if (isNotPastUnlockPosition) {
             this.setState({ isLocked: true });
             this.updateLockPosition();
@@ -255,7 +256,8 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
      * Updates the component's lock position state.
      */
     updateLockPosition(): void {
-        if (this.state.lockPosition === null && this.state.fallBackLockPosition > this.props.scrolled) {
+        if (this.state.lockPosition === null) {
+            console.log(this.props.scrolled);
             this.setState({ lockPosition: this.props.scrolled });
         }
     }

@@ -1,5 +1,6 @@
 .experience-section-content-container {
     width: auto;
+    padding-left: 40vw;
     width: min-content;
     display: inline-flex;
     flex-direction: row;

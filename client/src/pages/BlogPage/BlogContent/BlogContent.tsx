@@ -1,12 +1,13 @@
 import { Component } from "react";
 import ReactMarkdown from "react-markdown"
 import PostRepository from "../../../repositories/PostRepository";
-import IBlogContentState from "./Interface/IBlogContentState";
+import { IBlogContentState } from "./Interface/IBlogContentState";
 import IBlogContentProps from "./Interface/IBlogContentProps";
 import remarkGfm from "remark-gfm";
 import JsonToMarkdown from "./Utilities/JsonToMarkdown";
 import BlogPostResponse from "../../../repositories/Response/BlogPostResponse";
 import { isoDateFormatToString } from "../../../components/Utility/StringUtility";
+import TableOfContent from "./TableOfContents/TableOfContents";
 import "./BlogContent.css";
 
 class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
@@ -107,7 +108,7 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
         return (
             <div className="page-container">
                 <div className="blog-content__wrapper">
-                    <div className="blog-content__table-of-contents">{this.renderTableOfContents()}</div>
+                    <TableOfContent headings={this.state.headings} />
                     <div className="blog-content card">
                         <div className="blog-content__header">
                             <h1>{this.state.content.heading}</h1>

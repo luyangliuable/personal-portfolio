@@ -1,8 +1,5 @@
-:root {
-    --featured-section-height: 50vh;
-}
-
 .featured-section-content {
+    --featured-section-height: 50vh;
     display: flex;
     justify-content: space-evenly;
     position: relative;
@@ -13,7 +10,7 @@
     margin-bottom: 10vh; /* Leave room for the candles */
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 568px) {
     .featured-section-content {
         flex-direction: column;
     }

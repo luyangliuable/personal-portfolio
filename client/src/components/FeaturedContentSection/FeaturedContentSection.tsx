@@ -59,11 +59,13 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
                         <GalleryItem
                             image="https://barbarabray.net/wp-content/uploads/2017/11/ikigai-1024x968.jpg"
                             name={this.getFeaturedPostHeading()}
+                            type="blog"
                             subheading="⭐ 5 min read | 3 weeks ago"
                             description={truncateTextBody(this.state.featuredPost.body, 50)}
                             link={`/digital_chronicles/blog?id=${this.state.featuredPost._id.$oid}`} />
                         <GalleryItem
                             name={this.getFeaturedToolHeading()}
+                            type="tool"
                             image="http://llcode.tech/api/image/651942aaf9b642fb30be59ae"
                             description={truncateTextBody(this.state.featuredTool.description)}
                             link={this.state.featuredTool.link} />

@@ -20,37 +20,12 @@
 .blog-content-body {
     border-bottom: 1px #CCC solid;
     border-radius: .5vh;
-    font-size: max(min( 19px, 2vw ), 15px);
+    font-size: 16px;
     width: fit-content;
     text-decoration: none;
     color: #000;
     transition: background .3s ease-in;
 }
-
-@media screen and (max-width: 768px) {
-    .blog-content-body, .blog-content__header {
-        min-width: 300px;
-        max-width: 800px;
-    }
-
-    .blog-content {
-        min-width: 90vw;
-        margin-left: 0; /* no more table of contents for small sreen */
-    }
-}
-
-@media screen and (min-width: 769px) {
-    .blog-content-body, .blog-content__header {
-        min-width: 500px;
-        max-width: 1100px;
-    }
-
-    .blog-content {
-        min-width: 500px;
-    }
-}
-
-
 
 .blog-content-body pre {
     font-size: max(min( 14px, 1.8vw ), 10px);
@@ -98,31 +73,33 @@
     margin-right: min(10px, 3vw);
 }
 
-.blog-content__table-of-contents {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    border-right: 1px solid #888;
-    flex-direction: column;
-    font-size: min(max(12px, .5vw), 18px);
-    /* Position is purely arbitrary */
-    position: fixed;
-    left: 25%;
-    transform: translateX(-100%);
-    top: 10vh;
-    width: fit-content;
-    height: min(75vh, calc(fit-content + 10px));
-    /* overflow-y: auto; */
-    transition: color 1s ease-in;
+.blog-content__wrapper {}
+
+@media screen and (max-width: 768px) {
+    .blog-content-body, .blog-content__header {
+        min-width: 300px;
+        max-width: 800px;
+    }
+
+    .blog-content {
+        min-width: 90vw;
+        margin-left: 0; /* no more table of contents for small sreen */
+    }
 }
 
-.blog-content__wrapper {
+@media screen and (min-width: 768px) {
+    .blog-content-body, .blog-content__header {
+        min-width: 500px;
+        max-width: 1100px;
+    }
+
+    .blog-content {
+        min-width: 500px;
+    }
 }
 
-.blog-content__table-of-contents>span {
-    cursor: pointer;
-}
-
-.blog-content__table-of-contents>span:hover {
-    color: #333;
+@media screen and (min-width: 1200px) {
+    .blog-content {
+        width: 30vw;
+    }
 }

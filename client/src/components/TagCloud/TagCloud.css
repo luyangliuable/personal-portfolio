@@ -1,0 +1,16 @@
+.card-item__tags {
+    color: #888;
+    margin-top: min(1vh, 50px);
+    min-height: 7px;
+    width: 91%;
+    flex-wrap: wrap;
+}
+
+.card-item__tags>span {
+    margin-right: 5px;
+    box-shadow: .3px .3px .3px #CCC;
+    background: #E9E9E9;
+    border: .1px solid #CCC;
+    border-radius: 4px;
+    padding: 3px;
+}

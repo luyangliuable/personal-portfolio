@@ -281,7 +281,7 @@
 #scroll-progress {
     position: absolute;
     background: #00bfff;
-    box-shadow: 0px 0px min( 5px, .5vh ) #00bfff;
+    /* box-shadow: 0px 0px min( 5px, .5vh ) #00bfff; */
     height: var(--progress-height);
     z-index: 11;
     width: 100vw;

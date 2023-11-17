@@ -9,16 +9,26 @@
     grid-template-columns: auto auto;
     width: 80vw;
     align-items: flex-start;
-    justify-items: center
 }
 
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 768px) {
     .gallery-item__container {
-        display: grid;
         grid-template-columns: auto;
-        justify-items: center;
+        justify-items: center; 
         align-items: center;
         width: 100vw;
+    }
+}
+
+@media screen and (min-width: 1700px) {
+    .gallery-item__container {
+        grid-template-columns: auto auto auto;
+    }
+}
+
+@media screen and (min-width: 2200px) {
+    .gallery-item__container {
+        grid-template-columns: auto auto auto auto;
     }
 }
