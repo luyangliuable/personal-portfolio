@@ -8,7 +8,8 @@
     display: grid;
     grid-template-columns: auto auto;
     width: 80vw;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: space-around;
 }
 
 
@@ -21,13 +22,13 @@
     }
 }
 
-@media screen and (min-width: 1700px) {
+@media screen and (min-width: 1600px) {
     .gallery-item__container {
         grid-template-columns: auto auto auto;
     }
 }
 
-@media screen and (min-width: 2200px) {
+@media screen and (min-width: 2100px) {
     .gallery-item__container {
         grid-template-columns: auto auto auto auto;
     }

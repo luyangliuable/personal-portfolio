@@ -1,48 +1,101 @@
 import { Component, createRef } from "react";
 import "./Card.css";
+import { NavLink } from "react-router-dom";
 import { cardGradientEffect } from "../../components/Utility/MouseUtility";
 import { truncateTextBody, stripAwayHashSymbols, isoDateFormatToString } from "../../components/Utility/StringUtility";
 import TagCloud from "../TagCloud/TagCloud";
-
+import ImageRepository from "../../repositories/ImageRepository";
 import ICardProps from "./Interface/ICardProps";
 import ICardState from "./Interface/ICardState";
 
 class Card extends Component<ICardProps, ICardState> {
     iframePreviewRef = createRef<HTMLIFrameElement>();
-    defaultImage: string = "http://llcode.tech/api/image/651942aaf9b642fb30be59ae";
-    defaultAuthorImage: string = "http://llcode.tech/api/image/65194be0f9b642fb30be59af";
+    imageRepository: ImageRepository;
+
+    static defaultProps = {
+        defaultImage:"http://llcode.tech/api/image/651942aaf9b642fb30be59ae",
+        defaultImageId:"651942aaf9b642fb30be59ae",
+        defaultAuthorImage:"http://llcode.tech/api/image/65194be0f9b642fb30be59af",
+        defaultAuthorImageId:"65194be0f9b642fb30be59af"
+    };
 
     constructor(props: ICardProps) {
         super(props);
+        this.imageRepository = ImageRepository.getInstance();
+        this.state = {
+            fetchedImageUrl: Card.defaultProps.defaultImage,
+            fetchedAuthorImageUrl: Card.defaultProps.defaultAuthorImage
+        };
+    }
+
+    componentDidMount() {
+        this.updateImage();
+    }
+
+    componentDidUpdate(prevProps: ICardProps) {
+        if (this.props.image !== prevProps.image) {
+            this.updateImage();
+        }
     }
 
     checkDateIsValid(): boolean {
         return this.props.date_created !== "";
     }
 
+    extractRouteFromURL(url: string): string | null {
+        console.log(url)
+        try {
+            const parsedUrl = new URL(url);
+            if (parsedUrl.hostname === "llcode.tech") {
+                return parsedUrl.pathname; // Returns the path (route) of the URL
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.error("Invalid URL:", error);
+            return null;
+        }
+    }
+
+    async updateImage() {
+        try {
+            const imageId = this.props.image ?? Card.defaultProps.defaultImageId;
+            const authorImageId = this.props.authorImage ?? Card.defaultProps.defaultAuthorImageId;
+
+            const [imageUrl, authorImageUrl] = await Promise.all([
+                this.imageRepository.getImageById(imageId),
+                this.imageRepository.getImageById(authorImageId)
+            ]);
+
+            this.setState({
+                fetchedImageUrl: imageUrl,
+                fetchedAuthorImageUrl: authorImageUrl
+            });
+
+        } catch (error) {
+            console.error("Error fetching images:", error);
+        }
+    }
+
     render() {
-        const displayMinuteRead = this.props.minuteRead ? `${this.props.minuteRead} min read` : "X min read";
-        const displayDateCreated = this.checkDateIsValid() ? isoDateFormatToString(new Date(this.props.date_created)) : '';
+        const { link, authorImage, author, heading, minuteRead, tags, date_created } = this.props;
+        const { fetchedImageUrl } = this.state;
+        const displayMinuteRead = `${minuteRead || "X"} min read`;
+        const displayDateCreated = date_created ? isoDateFormatToString(new Date(date_created)) : '';
 
         return (
-            <div
-                onClick={(e) => {
-                    window.location.href = this.props.link
-                }}
-                onMouseMove={cardGradientEffect}
-                className="card-item card">
+            <NavLink onMouseMove={cardGradientEffect} className="card card-item" to={link}>
                 <div className="card-image--author-info">
-                    <img className="card-image--author-image" src={this.props.authorImage ?? this.defaultAuthorImage} />
-                    {this.props.author ?? ""}
+                    <img className="card-image--author-image" src={authorImage || Card.defaultProps.defaultAuthorImage} alt="Author" />
+                    {author}
                 </div>
                 <div className="card-item__content">
-                    <h3 className="card-item__heading">{this.props.heading}</h3>
+                    <h3 className="card-item__heading">{heading}</h3>
                     <p className="card-item__label">{`${displayMinuteRead} | ${displayDateCreated}`}</p>
                 </div>
-
-                <img className="card-image-preview" src={this.props.image ? `http://llcode.tech/api/image/${this.props.image}` : this.defaultImage} />
-                <TagCloud tags={this.props.tags} />
-            </div>
+                <img className="card-image-preview" src={fetchedImageUrl} alt="Card Preview" />
+                <TagCloud tags={tags} />
+            </NavLink>
         );
     }
 }

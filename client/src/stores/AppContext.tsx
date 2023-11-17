@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import UserRepository from '../repositories/UserRepository';
-import IAppContextProvider from './Interface/IAppContextProvider';
-import IAppContextProps from './Interface/IAppContextProps';
+import React, { useEffect, useState } from "react";
+import UserRepository from "../repositories/UserRepository";
+import IAppContextProvider from "./Interface/IAppContextProvider";
+import IAppContextProps from "./Interface/IAppContextProps";
 import UserNameResponse from "../repositories/Response/UserNameResponse";
 
 export const AppContext = React.createContext<IAppContextProvider>({
-  userName: '',
+  userName: "",
   loginStatus: false,
 });
 
 
 export const AppContextProvider: React.FC<IAppContextProps> = ({ children }) => {
-  const [userName, setUserName] = useState<string>('');
+  const [userName, setUserName] = useState<string>("");
   const [loginStatus, setLoginStatus] = useState<boolean>(false);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export const AppContextProvider: React.FC<IAppContextProps> = ({ children }) => 
         })
         .catch((error) => {
           // Handle errors
-          console.error('An error occurred:', error);
+          console.error("An error occurred:", error);
         });
     };
 

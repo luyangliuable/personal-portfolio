@@ -8,9 +8,13 @@ import Card from "../../components/Card/Card";
 import GalleryItem from "../../components/Gallery/GalleryItem/GalleryItem";
 
 class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
+    postRepository: PostRepository;
 
     constructor(props: IBlogPageProps) {
         super(props);
+
+        this.postRepository = PostRepository.getInstance();
+
         this.state = {
             content: [],
             allTags: new Set(),
@@ -31,7 +35,7 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
     }
 
     async fetchPostList() {
-        const response = await PostRepository.getPostList();
+        const response = await this.postRepository.getPostList();
         this.setState({
             content: response
         });
@@ -144,11 +148,13 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
 
     renderTags = (): React.ReactNode | null => {
         return [...this.state.allTags].map((tagName) => {
-            const bgColor = this.stringToColour(`#${tagName}`);
-            const textColor = this.getContrastTextColor(bgColor);
-            const boxShadow = `1px 1px 4px ${bgColor}`;
+            // Hash string of tag to color but someone told me it is ugly so i will make it more consistent
+            // const bgColor = this.stringToColour(`#${tagName}`);
+            // const textColor = this.getContrastTextColor(bgColor);
+            // const boxShadow = `1px 1px 4px ${bgColor}`;
+
             return (
-                <span key={tagName} className="blog__tag" style={{ background: bgColor, color: textColor, boxShadow: boxShadow }}>#{tagName}</span>
+                <span key={tagName} className="blog__tag noselect blog__tag--unselect">#{tagName}</span>
             );
         })
     };

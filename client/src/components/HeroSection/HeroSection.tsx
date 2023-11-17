@@ -2,6 +2,7 @@ import { Component } from 'react';
 import CodingCat from "../CodingCat/CodingCat";
 import './HeroSection.css';
 import IHeroState from "./Interface/IHeroState";
+import { NavLink } from "react-router-dom";
 import IHeroProps from "./Interface/IHeroProps";
 import LandingPageCard from "../LandingPageCard/LandingPageCard";
 import { AiOutlineArrowRight } from "react-icons/ai";
@@ -99,8 +100,12 @@ I pride myself on my efficient time and effort management abilities and my aptit
                             <p className="hero-section__content__left__text">{heroSectionState.introduction}</p>
                             {heroSectionState.mainContent.items.map((item: string, index: number) => (<p key={index} className="hero-section__content__left__text" style={{ margin: "2px" }}>{item}</p>))}
                             <br />
-                            <div className="button noselect" onClick={() => window.location.href = "/digital_chronicles/blogs"}>See my Blogs <AiOutlineArrowRight /></div>
-                            <div className="button noselect hero-section__project-button" onClick={() => window.location.href = "/projects/code"}>See my Projects <AiOutlineArrowRight /></div>
+                            <NavLink to="/digital_chronicles/blogs">
+                                <div className="button noselect">See my Blogs <AiOutlineArrowRight /></div>
+                            </NavLink>
+                            <NavLink to="/projects/code">
+                                <div className="button noselect hero-section__project-button">See my Projects <AiOutlineArrowRight /></div>
+                            </NavLink>
                         </div>
                         <div className="hero-section__background__wrapper">{heroSectionState.backgrounds}</div>
                         <div className="hero-section__content__right"><CodingCat showAnimtion={this.props.scrolling} /></div>

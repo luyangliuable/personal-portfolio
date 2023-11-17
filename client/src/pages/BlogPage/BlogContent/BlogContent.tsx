@@ -6,6 +6,7 @@ import IBlogContentProps from "./Interface/IBlogContentProps";
 import remarkGfm from "remark-gfm";
 import JsonToMarkdown from "./Utilities/JsonToMarkdown";
 import BlogPostResponse from "../../../repositories/Response/BlogPostResponse";
+import ImageRepository from "../../../repositories/ImageRepository";
 import { isoDateFormatToString } from "../../../components/Utility/StringUtility";
 import TableOfContent from "./TableOfContents/TableOfContents";
 import "./BlogContent.css";
@@ -13,17 +14,51 @@ import "./BlogContent.css";
 class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
     jsonToMarkdown: JsonToMarkdown;
     defaultAuthorImage: string = "http://llcode.tech/api/image/65194be0f9b642fb30be59af";
+    defaultAuthorImageId: string = "65194be0f9b642fb30be59af";
+    postRepository: PostRepository;
+    imageRepository: ImageRepository;
+
 
     constructor(props: IBlogContentProps) {
         super(props);
         this.jsonToMarkdown = new JsonToMarkdown();
+        this.postRepository = PostRepository.getInstance();
+        this.imageRepository = ImageRepository.getInstance();
         this.state = {
             headings: [],
+            cache: {
+                fetchedImageUrl: "",
+                fetchedAuthorImageUrl: ""
+            },
             content: {
                 heading: null,
                 body: null,
                 author: null
             }
+        }
+    }
+
+    async updateImage() {
+        try {
+            const imageId = this.state.content.image?.$oid ?? "";
+            const authorImageId = this.defaultAuthorImageId;
+
+
+            const [imageUrl, authorImageUrl] = await Promise.all([
+                this.imageRepository.getImageById(imageId),
+                this.imageRepository.getImageById(authorImageId)
+            ]);
+
+
+            this.setState({
+                cache: {
+                    fetchedImageUrl: imageUrl,
+                    fetchedAuthorImageUrl: authorImageUrl
+                }
+            });
+
+        } catch (error) {
+            console.error("Error fetching images:", error);
         }
     }
 
@@ -61,7 +96,7 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
             queryObj[key] = value;
         }
 
-        PostRepository.getPost(queryObj.id).then((response: BlogPostResponse) => {
+        this.postRepository.getPost(queryObj.id).then((response: BlogPostResponse) => {
             this.updateContentToDisplay(response);
         });
     }
@@ -77,6 +112,10 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
     ): void {
         if (this.state.content.body !== prevState.content.body) {
             this.updateBlogContentHeadings();
+        }
+
+        if (this.state.content.image !== prevState.content.image) {
+            this.updateImage();
         }
     }
 
@@ -102,7 +141,7 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
     render() {
         const displayDateCreated = isoDateFormatToString(new Date(this.state.content.date_created));
         const authorName = this.state.content.author;
-        const image = this.state.content.image && (<img className="blog-content__image" src={`http://llcode.tech/api/image/${this.state.content.image.$oid}`} />);
+        const image = this.state.content.image && (<img className="blog-content__image" src={this.state.cache.fetchedImageUrl} />);
         const blogContentBody = this.state.content.body;
 
         return (

@@ -26,10 +26,6 @@
         z-index: 0;
     }
 
-    .hero-section__project-button {
-        display: none
-    }
-
     .hero-section__background {
         display: none;
     }

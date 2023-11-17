@@ -59,14 +59,24 @@
     align-items: center;
     justify-content: center;
     padding: 5px 9px;
+    cursor: pointer;
+    background: #555;
+    color: #EEE;
     font-size: min(max(12px, .5vw), 15px);
     border-radius: 4px;
     box-shadow: .2px .2px .1px #888;
     border: .1px solid #888;
-    color: white;
     margin: 3px 2px;
     white-space: nowrap;
     text-overflow: ellipsis;
+    transition: all .5s ease-in;
+}
+
+.blog__tag--unselect {
+    border: .1px dashed #888;
+    background: #EEE;
+    color: #555;
+    box-shadow: none;
 }
 
 .blog__year {

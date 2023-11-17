@@ -8,5 +8,9 @@ export type IBlogHeading = {
 export interface IBlogContentState {
     content: BlogPostResponse,
     headings: IBlogHeading[],
+    cache: {
+        fetchedImageUrl?: string,
+        fetchedAuthorImageUrl?: string
+    },
     render?: () => React.ReactElement<any, any>
 }

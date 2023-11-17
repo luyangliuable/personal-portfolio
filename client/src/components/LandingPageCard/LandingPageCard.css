@@ -15,20 +15,14 @@
     --landing-page-card-large--max-width: 2500px;
     --landing-page-card-large--padding: 2vh;
     --landing-page-card-large--height: calc(97vh - var(--landing-page-card-large--padding)*2);
-    --landing-page-card-fit-under-navbar--width: 98vw;
-    --landing-page-card-fit-under-navbar--max-width: 1700px;
-    --landing-page-card-fit-under-navbar--height: calc(97vh - 100px);
     --landing-page-card-fit-under-navbar--max-height: 170vw;
-    --landing-page-card-fit-content--width: 98vw;
-    --landing-page-card-fit-content--max-width: 1700px;
-    --landing-page-card-fit-content--height: fit-content;
     --landing-page-card-box-shadow:  .6px .5px 2.8px #A5A58C;
     --landing-page-card-intro-animation: animate-slide-up-fade-in .5s ease-in;
     position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-right: .7vw; /* IDK what is causing this but there is a offset by .7vw to the right */
+    margin-right: .6vw; /* IDK what is causing this but there is a offset by .7vw to the right */
     background: #F9F9F9;
     box-shadow: var(--landing-page-card-box-shadow);
     -webkit-box-shadow: var(--landing-page-card-box-shadow);
@@ -48,12 +42,18 @@
 
 /* Specialized Classes */
 .landing-page-card--fit-content {
+    --landing-page-card-fit-content--width: 98vw;
+    --landing-page-card-fit-content--max-width: 1700px;
+    --landing-page-card-fit-content--height: fit-content;
     width: var(--landing-page-card-fit-content--width);
     max-width: var(--landing-page-card-fit-content--max-width);
     height: var(--landing-page-card-fit-content--height);
 }
 
 .landing-page-card--fit-under-navbar {
+    --landing-page-card-fit-under-navbar--width: 98vw;
+    --landing-page-card-fit-under-navbar--max-width: 1700px;
+    --landing-page-card-fit-under-navbar--height: calc(97vh - 100px);
     width: var(--landing-page-card-fit-under-navbar--width);
     max-width: var(--landing-page-card-fit-under-navbar--max-width);
     height: var(--landing-page-card-fit-under-navbar--height);

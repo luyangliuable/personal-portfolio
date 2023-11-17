@@ -261,7 +261,6 @@ class NavBar extends Component<INavbarProps, INavbarState> {
         return (
             <NavLink
                 to={link.to}
-                onClick={() => link.onClick()}
                 className={({ isActive }) => ["navbar-item", (isActive && link.to !== null) ? "navbar-item active-link" : null].filter(Boolean).join(" ")}
                 key={link.name}
                 onMouseOver={() => this.renderDropdownMenu(this.state.links.filter(item => item.name === link.name)[0].sublinks)}>
