@@ -15,18 +15,30 @@ class PostRepository {
         return PostRepository.instance;
     }
 
-    private static options(method: 'GET' | 'DELETE' | 'POST' | 'PUT', body?: { [category: string]: any }): any {
+    private static options(method: 'GET' | 'DELETE' | 'POST' | 'PUT', body?: { [key: string]: any }): any {
         return {
             method: method,
-            cache: "no-cache",
-            credentials: "same-origin",
-            body: JSON.stringify(body)
-        }
+            // headers: {
+            //     'Content-Type': 'application/json',
+            // }, //TODO
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            body: body ? JSON.stringify(body) : null
+        };
     }
 
+    sortPostsByDate(posts: any[], type?: "asc" | "desc"): any[] {
+        return [...posts].sort((a, b) => {
+            const dateA = new Date(a.date_created).getTime();
+            const dateB = new Date(b.date_created).getTime();
+
+            return type === "asc" ? dateA - dateB : dateB - dateA;
+        });
+    }
 
     async getFeaturedPostList(): Promise<any> {
         const postList = await this.getPostList();
+        return this.sortPostsByDate(postList);
     }
 
     async getPostList(): Promise<any> {

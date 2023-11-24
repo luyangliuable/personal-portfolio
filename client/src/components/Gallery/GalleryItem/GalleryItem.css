@@ -1,13 +1,30 @@
 .gallery-item {
     display: flex;
+    transition: all .3s ease-in;
     flex-direction: column;
+    opacity: 0;
     justify-content: start;
     align-items: center;
+    transform: translateX(100px);
     width: 400px;
     min-height: 320px;
     height: fit-content;
     padding-bottom: 10px;
     margin: 10px 0;
+}
+
+.initially-hidden {
+    opacity: 0;
+}
+
+.initially-hidden-show {
+    animation: fadeIn 1s ease-in forwards; /* Use forwards to retain the final state of the animation */
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
 }
 
 @media screen and (max-width: 1200px) {

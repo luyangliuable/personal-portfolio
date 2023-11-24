@@ -1,4 +1,4 @@
-import { Component, CSSProperties } from "react";
+import { Component, CSSProperties,createRef, RefObject  } from "react";
 import { isoDateFormatToString } from "../../../components/Utility/StringUtility";
 import { NavLink } from "react-router-dom";
 import { cardGradientEffect } from "../../../components/Utility/MouseUtility";
@@ -9,18 +9,27 @@ import ImageRepository from "../../../repositories/ImageRepository";
 import { TbToolsOff } from "react-icons/tb";
 import { CgWebsite } from "react-icons/cg";
 import TagCloud from "../../TagCloud/TagCloud";
+import DynamicLoadQueue from "../../../stores/DynamicLoadQueue/DynamicLoadQueue";
 
 class GalleryItem extends Component<IGalleryItemProps, IGalleryItemState> {
     imageRepository: ImageRepository;
+    galleryItemRef: RefObject<HTMLDivElement>;
+    dynamicLoadQueue: DynamicLoadQueue;
 
     constructor(props: IGalleryItemProps) {
         super(props);
+        this.dynamicLoadQueue = DynamicLoadQueue.getInstance();
+        this.galleryItemRef = createRef();
         this.imageRepository = ImageRepository.getInstance();
         this.state = {};
     }
 
     componentDidMount() {
         this.updateImage();
+
+        if (this.galleryItemRef.current) {
+            this.dynamicLoadQueue.addToQueue(this.galleryItemRef.current);
+        }
     }
 
     componentDidUpdate(prevProps: IGalleryItemProps) {
@@ -72,6 +81,7 @@ class GalleryItem extends Component<IGalleryItemProps, IGalleryItemState> {
         return (
             <NavLink to={this.props.link ?? ""}>
                 <div
+                    ref={this.galleryItemRef}
                     style={style}
                     key={this.props.key}
                     onMouseMove={cardGradientEffect}

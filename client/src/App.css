@@ -179,3 +179,7 @@ a {
   justify-content: center;
   align-items: center;
 }
+
+.semi-opaque {
+    opacity: .5;
+}

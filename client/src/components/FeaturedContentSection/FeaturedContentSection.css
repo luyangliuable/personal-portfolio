@@ -1,10 +1,11 @@
 .featured-section-content {
     --featured-section-height: 50vh;
     display: flex;
-    justify-content: space-evenly;
-    position: relative;
+    justify-content: center;
     flex-direction: row;
     align-items: center;
+    flex-wrap: wrap;
+    position: relative;
     width: var(--home-container-small--width);
     max-width: var(--home-container-small--max-width);
     margin-bottom: 10vh; /* Leave room for the candles */
@@ -14,10 +15,4 @@
     .featured-section-content {
         flex-direction: column;
     }
-}
-
-.featured-section-item-card {
-    width: 100% !important;
-    text-align: left;
-    padding: 20px;
 }

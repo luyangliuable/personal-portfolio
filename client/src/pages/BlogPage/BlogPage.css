@@ -18,6 +18,23 @@
     align-items: center;
 }
 
+.blog-list__content {
+    width: 100%;
+}
+
+
+@media screen and (min-width: 1025px) {
+    .blog-list__content:hover .card-item {
+        opacity: 0.5;
+    }
+
+    .blog-list__content .card-item:hover {
+        opacity: 1;
+        background: #EAEAEA !important;
+    }
+}
+
+
 .blog__featured {
     width: 30%;
     border-left: .1px solid #888;
@@ -54,6 +71,7 @@
     }
 }
 
+
 .blog__tag {
     display: flex;
     align-items: center;
@@ -77,6 +95,12 @@
     background: #EEE;
     color: #555;
     box-shadow: none;
+}
+
+.blog__tag:hover {
+    background: #555;
+    border: .1px solid #888;
+    color: #EEE;
 }
 
 .blog__year {

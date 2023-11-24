@@ -1,36 +1,82 @@
-import { Component, createRef } from "react";
+import React, { Component, createRef, RefObject } from 'react';
+import { isCenterAlignedWithViewport } from "../Utility/ScrollUtility";
+import { truncateTextBody } from "../Utility/StringUtility";
 import IFeaturedContentSectionState from "./Interface/IFeaturedContentSectionState";
 import IFeaturedContentSectionProps from "./Interface/IFeaturedContentSectionProps";
-import "./FeaturedContentSection.css";
-import { isCenterAlignedWithViewport } from "../Utility/ScrollUtility";
 import GalleryItem from "../Gallery/GalleryItem/GalleryItem";
 import LandingPageCard from "../LandingPageCard/LandingPageCard";
-import { truncateTextBody, isoDateFormatToString } from "../Utility/StringUtility";
+import PostRepository from "../../repositories/PostRepository";
 import TwinCandle from "../TwinCandle/TwinCandle";
 
+import "./FeaturedContentSection.css";
+
 class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFeaturedContentSectionState> {
-    private currentComponentRef = createRef<HTMLDivElement>();
-    private twinCandleComponentRef = createRef<TwinCandle>();
+    private currentComponentRef: RefObject<HTMLDivElement>;
+    private twinCandleComponentRef: RefObject<TwinCandle>;
+    private postRepository: PostRepository;
+    showMoreButtonRef: RefObject<HTMLDivElement>;
 
     constructor(props: IFeaturedContentSectionProps) {
         super(props);
+        this.postRepository = PostRepository.getInstance();
+        this.showMoreButtonRef = createRef<HTMLDivElement>();
+        this.currentComponentRef = createRef<HTMLDivElement>();
+        this.twinCandleComponentRef = createRef<TwinCandle>();
+
         this.state = {
-            featuredPost: {
-                _id: {
-                    $oid: "64f2f5d0481c4558176ca3b2"
-                },
-                body: "",
-                heading: "Why I Will Treat Ikigai as My Soulful Quest for Purpose and Passion",
-                author: "Luyang Liu",
-                date_created: "2023-07-30T12:34:56Z",
-                url: "",
-            },
+            featuredPosts: [],
+            numOfElementsToShow: 0,
             featuredTool: {
                 name: "Coming Soon",
                 description: "Coming Soon",
                 link: "Coming Soon"
             }
         }
+    }
+
+    componentDidMount() {
+        this.calculateElementsToShow();
+        this.fetchPostList();
+    }
+
+    calculateElementsToShow = () => {
+        const elementWidth = 400;
+        let numOfElementsToShow = Math.floor(window.innerWidth / elementWidth);
+        this.setState({numOfElementsToShow: Math.max(numOfElementsToShow, 2)});
+    }
+
+
+    showAllElements = () => {
+        this.setState({ numOfElementsToShow: this.state.featuredPosts.length + 2});
+        this.showMoreButtonRef.current.style.display = 'none';
+    }
+
+    renderTopPickedPostsSortedByDateDescending = (): React.ReactNode => {
+        const sliceEnd = this.state.numOfElementsToShow - 2;
+        return this.state.featuredPosts.slice(0, sliceEnd).map((content, idx) => {
+            const imageURL = `http://llcode.tech/api/image/${content.image.$oid}`
+
+            return (
+                <div key={content._id.$oid}>
+                    <GalleryItem
+                        name={content.heading}
+                        tags={content.tags}
+                        type="blog"
+                        dateCreated={content.date_created}
+                        minuteRead={content.reading_time_minutes}
+                        style={{ margin: "5px 20px" }}
+                        link={`/digital_chronicles/blog?id=${content._id.$oid}`}
+                        image={imageURL} />
+                </div>
+            )
+        });
+    }
+
+    async fetchPostList() {
+        const response = await this.postRepository.getPostList();
+        this.setState({
+            featuredPosts: response
+        });
     }
 
     componentDidUpdate(prevProps: Readonly<IFeaturedContentSectionProps>): void {
@@ -43,10 +89,6 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
         }
     }
 
-    getFeaturedPostHeading() {
-        return "Featured Post: " + this.state.featuredPost.heading;
-    }
-
     getFeaturedToolHeading() {
         return "Featured Tool: " + this.state.featuredTool.name;
     }
@@ -57,32 +99,14 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
                 <div ref={this.currentComponentRef} className="featured-content-section">
                     <div className="featured-section-content">
                         <GalleryItem
-                            image="https://barbarabray.net/wp-content/uploads/2017/11/ikigai-1024x968.jpg"
-                            name={this.getFeaturedPostHeading()}
-                            type="blog"
-                            subheading="⭐ 5 min read | 3 weeks ago"
-                            description={truncateTextBody(this.state.featuredPost.body, 50)}
-                            link={`/digital_chronicles/blog?id=${this.state.featuredPost._id.$oid}`} />
-                        <GalleryItem
                             name={this.getFeaturedToolHeading()}
                             type="tool"
-                            image="http://llcode.tech/api/image/651942aaf9b642fb30be59ae"
+                            style={{ margin: "5px 20px" }}
+                            image="http://llcode.tech/api/image/65596ad4ad7cc31ee9263e32"
                             description={truncateTextBody(this.state.featuredTool.description)}
                             link={this.state.featuredTool.link} />
-
-                        {/* <Card
-                            heading={}
-                            body={}
-                            author={this.state.featuredPost.author}
-                            date_created={this.state.featuredPost.date_created}
-                            image=""
-                        />
-
-                        <Card
-                            heading={this.getFeaturedToolHeading()}
-                            body={truncateTextBody(this.state.featuredTool.description)}
-                            link={this.state.featuredTool.link}
-                /> */}
+                        {this.renderTopPickedPostsSortedByDateDescending()}
+                        <div ref={this.showMoreButtonRef} className="button" onClick={this.showAllElements}>Show More</div>
                     </div>
                     <TwinCandle ref={this.twinCandleComponentRef} />
                 </div>

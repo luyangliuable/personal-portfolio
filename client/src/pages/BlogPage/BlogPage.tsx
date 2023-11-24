@@ -148,11 +148,6 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
 
     renderTags = (): React.ReactNode | null => {
         return [...this.state.allTags].map((tagName) => {
-            // Hash string of tag to color but someone told me it is ugly so i will make it more consistent
-            // const bgColor = this.stringToColour(`#${tagName}`);
-            // const textColor = this.getContrastTextColor(bgColor);
-            // const boxShadow = `1px 1px 4px ${bgColor}`;
-
             return (
                 <span key={tagName} className="blog__tag noselect blog__tag--unselect">#{tagName}</span>
             );
@@ -164,14 +159,13 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
         return (
             <div className="blog-container cursor-pointer">
                 <div className="blog-list">
-                    <div className="blog__tag-container">
-                        {this.renderTags()}
-                    </div>
+                    <div className="blog__tag-container">{this.renderTags()}</div>
                     <div className="blog__year">
                         <span>2023</span>
-                        <div></div>
                     </div>
-                    {this.renderPostsSortedByDateDescending()}
+                    <div className="blog-list__content flex-column-centered-centered">
+                        {this.renderPostsSortedByDateDescending()}
+                    </div>
                 </div>
 
                 {this.renderTopPickedBlogPost()}

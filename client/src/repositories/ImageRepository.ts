@@ -1,6 +1,7 @@
 class ImageRepository {
     private static instance: ImageRepository | null = null;
     private cache = new Map<string, string>();
+    private ongoingRequests = new Map<string, Promise<string>>();
     private static BASE_URL: string = "http://llcode.tech/api/image/";
 
     private constructor() {}
@@ -21,27 +22,39 @@ class ImageRepository {
             url = `${ImageRepository.BASE_URL}${idOrUrl}`;
         }
 
-        // Check if the URL is already cached
         if (this.cache.has(url)) {
-            console.log(`Image URL is cached`);
             return this.cache.get(url)!;
         }
 
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const blob = await response.blob();
-            const imageURL = URL.createObjectURL(blob);
-
-            // Cache using the URL
-            this.cache.set(url, imageURL);
-            return imageURL;
-        } catch (error) {
-            console.error('Error fetching image:', error);
-            throw error;
+        if (this.ongoingRequests.has(url)) {
+            return this.ongoingRequests.get(url)!;
         }
+
+        const fetchImage = async () => {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const blob = await response.blob();
+                const imageURL = URL.createObjectURL(blob);
+
+                this.cache.set(url, imageURL);
+                this.ongoingRequests.delete(url);
+                return imageURL;
+            } catch (error) {
+                console.error('Error fetching image:', error);
+                this.ongoingRequests.delete(url);
+                throw error;
+            }
+        };
+
+        const fetchPromise = fetchImage();
+        this.ongoingRequests.set(url, fetchPromise);
+        return fetchPromise;
+    } catch(error: any) {
+        console.error('Error fetching image:', error);
+        throw error;
     }
 }
 
