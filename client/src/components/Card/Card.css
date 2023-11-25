@@ -52,8 +52,6 @@
 
 
 .card-item {
-    opacity: 0;
-    transform: translateY(200px) rotate(-3deg);
     text-align: left;
     background: transparent;
     border: none;
@@ -64,7 +62,11 @@
     width: 90%;
     max-width: 1000px;
     transition: all .2s ease-in;
+    opacity: 0;
+    transform: translateY(100px) rotate(-3deg);
 }
+
+.card-item
 
 .card-item__heading {
     margin: 2px 0;

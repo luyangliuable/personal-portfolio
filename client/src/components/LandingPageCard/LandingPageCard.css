@@ -43,7 +43,7 @@
 /* Specialized Classes */
 .landing-page-card--fit-content {
     --landing-page-card-fit-content--width: 98vw;
-    --landing-page-card-fit-content--max-width: 1700px;
+    /* --landing-page-card-fit-content--max-width: 1700px; */
     --landing-page-card-fit-content--height: fit-content;
     width: var(--landing-page-card-fit-content--width);
     max-width: var(--landing-page-card-fit-content--max-width);

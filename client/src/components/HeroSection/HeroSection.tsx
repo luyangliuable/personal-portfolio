@@ -20,7 +20,7 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
 ranging from web and mobile app development to machine learning research. \
 I pride myself on my efficient time and effort management abilities and my aptitude for continuous learning.",
             mainContent: {
-                heading: "Hi There 👋",
+                heading: "Hi There 👋. I am Luyang!",
                 itemsToShow: [],
                 items: [
                     "🔭 I’m currently working on a personal profile website.",
@@ -92,11 +92,11 @@ I pride myself on my efficient time and effort management abilities and my aptit
             <div className="hero-section__wrapper">
                 <LandingPageCard
                     className="hero-section"
-                    heading={heroSectionState.mainContent.heading}
                     landingPageCardType="fitContent">
                     <Waves />
                     <div className="hero-section__content">
                         <div className="hero-section__content__left">
+                            <h1>{heroSectionState.mainContent.heading}</h1>
                             <p className="hero-section__content__left__text">{heroSectionState.introduction}</p>
                             {heroSectionState.mainContent.items.map((item: string, index: number) => (<p key={index} className="hero-section__content__left__text" style={{ margin: "2px" }}>{item}</p>))}
                             <br />
