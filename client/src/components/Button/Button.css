@@ -1,0 +1,67 @@
+.button {
+	position: relative;
+	background: #EEE;
+	border-radius: 12px;
+	cursor: pointer;
+	width: fit-content;
+	color: #333;
+	transition: background .5s ease-in-out;
+	-webkit-transition: background .5s ease-in-out;
+	-moz-transition: background .5s ease-in-out;
+	margin: 5px;
+	z-index: 1;
+	border: none;
+}
+.t-button {
+	--mouse-x: 0px;
+	--mouse-y: 0px;
+	--height: 30px;
+	--width: fit-content;
+	--border-radius: 4px;
+	border-radius: var(--border-radius);
+	display: flex;
+	padding: 5px 20px;
+	align-items: center;
+	justify-content: center;
+	height: var(--height);
+	width: var(--width);
+	cursor: pointer;
+	position: relative;
+	z-index: 1;
+}
+.t-button:hover {
+	color: #FFF
+}
+.t-button:hover::after {
+	border-radius: var(--border-radius);
+	animation: .2s settle-position ease-in;
+	opacity: 1;
+}
+.t-button span {
+	position: relative;
+	z-index: 2;
+}
+.t-button::after {
+	background: #1e90ff;
+	opacity: 0;
+	content: "";
+	border-radius: 2px;
+	transition: .1s all ease-in;
+	height: var(--height);
+	width: 100%;
+	position: absolute;
+	z-index: 0;
+	padding: 5px 0px;
+}
+@keyframes settle-position {
+	0% {
+		opacity: 0;
+		transform: translate(var(--mouse-x), var(--mouse-y));
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		transform: ;
+	}
+}

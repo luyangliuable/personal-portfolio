@@ -1,12 +1,14 @@
 import { Component } from 'react';
-import CodingCat from "../CodingCat/CodingCat";
-import './HeroSection.css';
-import IHeroState from "./Interface/IHeroState";
 import { NavLink } from "react-router-dom";
-import IHeroProps from "./Interface/IHeroProps";
-import LandingPageCard from "../LandingPageCard/LandingPageCard";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import IHeroState from "./Interface/IHeroState";
+import IHeroProps from "./Interface/IHeroProps";
+import CodingCat from "../CodingCat/CodingCat";
+import Button from "../Button/Button";
+import LandingPageCard from "../LandingPageCard/LandingPageCard";
 import Waves from "../Waves/Waves";
+
+import './HeroSection.css';
 
 
 class HeroSection extends Component<IHeroProps, IHeroState> {
@@ -99,25 +101,24 @@ I pride myself on my efficient time and effort management abilities and my aptit
                             <h1>{heroSectionState.mainContent.heading}</h1>
                             <p className="hero-section__content__left__text">{heroSectionState.introduction}</p>
                             {heroSectionState.mainContent.items.map((item: string, index: number) => (<p key={index} className="hero-section__content__left__text" style={{ margin: "2px" }}>{item}</p>))}
+
                             <br />
-                            <NavLink to="/digital_chronicles/blogs">
-                                <div className="button noselect">See my Blogs <AiOutlineArrowRight /></div>
-                            </NavLink>
-                            <NavLink to="/projects/code">
-                                <div className="button noselect hero-section__project-button">See my Projects <AiOutlineArrowRight /></div>
-                            </NavLink>
+
+                            <Button to="/digital_chronicles/blogs">See my Blogs <AiOutlineArrowRight /></Button>
+                            <Button to="/projects/code">See my Projects <AiOutlineArrowRight /></Button>
+
                         </div>
                         <div className="hero-section__background__wrapper">{heroSectionState.backgrounds}</div>
                         <div className="hero-section__content__right"><CodingCat showAnimtion={this.props.scrolling} /></div>
                     </div>
                     <div className="hero-section-badge__container">
-                        {
+                        {/*
                             heroSectionState.linkToMyOtherSocialMedia.map((item: any, index: number) => (
                                 <a key={index} href={item.link} className="hero-section-badge__link" target="_blank">
                                     <img src={item.imageSrc} alt={item.name} />
                                 </a>
                             ))
-                        }
+                        */}
                     </div>
                 </LandingPageCard>
             </div>

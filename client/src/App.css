@@ -136,25 +136,16 @@ a {
 }
 
 
-/*****************************************************************************/
-/*                                  Buttons                                  */
-/*****************************************************************************/
 
+.flex-column-centered-centered {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-.button {
-    position: relative;
-    background: var( --dark-mode-purple-2 );
-    padding: max(10px, 1vw);
-    border-radius: 12px;
-    cursor: pointer;
-    width: fit-content;
-    color: white;
-    transition: background .5s ease-in-out;
-    -webkit-transition: background .5s ease-in-out;
-    -moz-transition: background .5s ease-in-out;
-    margin: 5px;
-    z-index: 1;
-    border: none;
+.semi-opaque {
+    opacity: .5;
 }
 
 .noselect {
@@ -167,19 +158,3 @@ a {
 }
 
 
-
-.button:hover {
-    background: var(--dark-mode-blue);
-}
-
-
-.flex-column-centered-centered {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.semi-opaque {
-    opacity: .5;
-}
