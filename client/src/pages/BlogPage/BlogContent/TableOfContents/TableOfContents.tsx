@@ -19,7 +19,7 @@ class TableOfContents extends Component<ItableOfContentsProps, ITableOfContentsS
 
         return subheadings?.map(({ title, level }, idx: number) => {
             const indentation = `${level * 20}px`;
-            const marginBottom = `${12 - 4.5 * (level)}px`;
+            const marginBottom = `${22 - 4.5 * (level)}px`;
             const color = getTextColor(level);
 
             return (

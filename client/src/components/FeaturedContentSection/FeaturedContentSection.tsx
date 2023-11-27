@@ -3,6 +3,7 @@ import { isCenterAlignedWithViewport } from "../Utility/ScrollUtility";
 import { truncateTextBody } from "../Utility/StringUtility";
 import IFeaturedContentSectionState from "./Interface/IFeaturedContentSectionState";
 import IFeaturedContentSectionProps from "./Interface/IFeaturedContentSectionProps";
+import Button from "../Button/Button";
 import GalleryItem from "../Gallery/GalleryItem/GalleryItem";
 import LandingPageCard from "../LandingPageCard/LandingPageCard";
 import PostRepository from "../../repositories/PostRepository";
@@ -42,12 +43,12 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
     calculateElementsToShow = () => {
         const elementWidth = 400;
         let numOfElementsToShow = Math.floor(window.innerWidth / elementWidth);
-        this.setState({numOfElementsToShow: Math.max(numOfElementsToShow, 2)});
+        this.setState({ numOfElementsToShow: Math.max(numOfElementsToShow, 2) });
     }
 
 
     showAllElements = () => {
-        this.setState({ numOfElementsToShow: this.state.featuredPosts.length + 2});
+        this.setState({ numOfElementsToShow: this.state.featuredPosts.length + 2 });
         this.showMoreButtonRef.current.style.display = 'none';
     }
 
@@ -106,7 +107,7 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
                             description={truncateTextBody(this.state.featuredTool.description)}
                             link={this.state.featuredTool.link} />
                         {this.renderTopPickedPostsSortedByDateDescending()}
-                        <div ref={this.showMoreButtonRef} className="button" onClick={this.showAllElements}>Show More</div>
+                        <div ref={this.showMoreButtonRef}><Button onClick={this.showAllElements}>Show More...</Button></div>
                     </div>
                     <TwinCandle ref={this.twinCandleComponentRef} />
                 </div>
