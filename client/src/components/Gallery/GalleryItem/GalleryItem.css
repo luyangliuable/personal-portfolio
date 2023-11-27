@@ -1,0 +1,138 @@
+.gallery-item {
+    display: flex;
+    transition: all .3s ease-in;
+    flex-direction: column;
+    opacity: 0;
+    justify-content: start;
+    align-items: center;
+    transform: translateX(100px);
+    width: 400px;
+    min-height: 320px;
+    height: fit-content;
+    padding-bottom: 10px;
+    margin: 10px 0;
+}
+
+.initially-hidden {
+    opacity: 0;
+}
+
+.initially-hidden-show {
+    animation: fadeIn 1s ease-in forwards; /* Use forwards to retain the final state of the animation */
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .gallery-item {
+        width: 280px;
+        max-width: 90vw;
+        min-height: 140px;
+        padding: 10px;
+        margin: 10px;
+    }
+}
+
+.gallery-item>p {
+    width: 90%;
+    text-align: left;
+    color: #555;
+    margin: 0;
+    font-size: 14px;
+}
+
+.gallery-item h3 {
+    width: 90%;
+    font-size: max(min(2vw, 19px), 12px);
+    margin-bottom: 2px;
+    text-align: left;
+}
+
+.gallery-item__image {
+    width: 100%;
+    height: min( 40vw, 200px );
+    object-fit: cover;
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+	  display: block;
+	  transition: width 200ms ease-out;
+}
+
+
+.gallery-item:hover .gallery-item__image {
+    width: 110%;
+}
+
+
+
+
+.gallery-item__image:hover {
+    cursor: grabbing;
+}
+
+
+.gallery-item__metadata {
+}
+
+.gallery-item__type {
+    height: 60px;
+    width: 120px;
+    border-bottom: 1px solid #888;
+    /* box-shadow: 1px 1px 1px 1px #AAA; */
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(12px);
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: rotate(-45deg) translateX(-50%);
+    transform-origin: 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.gallery-item__type>* {
+    /* transform: rotate(45deg); */
+    width: 22px;
+    height: 25px;
+}
+
+.gallery-item__type span {
+    font-size: 14px;
+    width: 100%;
+    text-align: center;
+}
+
+.gallery-item:hover .gallery-item__type>* {
+    animation: bounce 2.2s infinite;
+}
+
+@keyframes bounce {
+    10% {
+        transform: translateY(5px);
+    }
+    20% {
+        transform: translateY(-5px);
+    }
+    30% {
+        transform: translateY(3px);
+    }
+    60% {
+        transform: translateY(-3px);
+    }
+    70% {
+        transform: translateY(1px);
+    }
+    80% {
+        transform: translateY(-1px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}

@@ -6,7 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rocket = { version = "0.5.0-rc.2", features = ["json"] }
+rocket = { version = "0.5.0-rc.2", features = ["json", "tls"] }
 rocket_dyn_templates = { version = "0.1.0-rc.2", features = ["tera"] }
 rocket_codegen = "0.4.5"
 serde = "1.0.152"
@@ -28,3 +28,11 @@ log = "0.4"
 version = "2.2.0"
 default-features = false
 features = ["sync"] 
+
+
+[global.tls]
+certs = "./cert.pem"
+key = "./key.pem"
+
+[development]
+tls = { certs = "./certs.pem", key = "./key.pem" }

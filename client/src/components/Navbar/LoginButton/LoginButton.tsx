@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { CiLogin } from 'react-icons/ci';
 import { AiFillCaretDown } from 'react-icons/ai';
 import UserRepository from "../../../repositories/UserRepository";
+import { truncateTextBody } from "../../Utility/StringUtility";
 import { AppContext, IAppContextProvider } from "../../../stores/AppContext";
 
 import ILoginButtonState from "./Interface/ILoginButtonState";
@@ -50,7 +51,7 @@ class LoginButton extends Component<ILoginButtonProps, ILoginButtonState> {
         if (loginStatus) {
             return (
                 <>
-                    Hello {userName} {this.state.loginButtonLoggedInState.icon}
+                    Hello {truncateTextBody(userName, 7)} {this.state.loginButtonLoggedInState.icon}
                 </>
             );
         } else {

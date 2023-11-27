@@ -1,44 +1,6 @@
-.gallery-item {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    padding: 10px;
-    width: 30vw;
-    max-width: 500px;
-    height: fit-content;
-    margin: 10px;
-    border: .1px solid #AEAEAE;
-    /* box-shadow: 0.1rem 0.1rem 0.2rem rgba(0, 0, 0, 0.2); */
-}
-
-.gallery-item p {
-    padding: 0 10px;
-    color: #888;
-}
-
-.gallery-item__image {
-    height: 80%;
-    width: 80%;
-    object-fit: cover;
-    /* transition: transform 0.25s ease; */
-    /* cursor: grab; */
-    border-radius: 12px;
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
-	  display: block;
-	  object-fit: cover;
-	  transition: zoom 400ms ease-out;
-}
-
-
-.gallery-item:hover .gallery-item__image {
-    zoom: 1.15;
-}
-
-
-.gallery-item__image:hover {
-    cursor: grabbing;
+.heading__wrapper {
+    width: 70vw;
+    text-align: left;
 }
 
 
@@ -46,34 +8,28 @@
     display: grid;
     grid-template-columns: auto auto;
     width: 80vw;
-}
-
-.heading__wrapper {
-    width: 70vw;
-    text-align: left;
+    align-items: center;
+    justify-content: space-around;
 }
 
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 768px) {
     .gallery-item__container {
-        display: grid;
         grid-template-columns: auto;
-        justify-items: center; /* This will center items horizontally */
-        align-items: center; /* This will center items vertically */
+        justify-items: center; 
+        align-items: center;
         width: 100vw;
     }
+}
 
-    .gallery-item {
-        display: flex;
-        flex-direction: column;
-        justify-content: start;
-        align-items: center;
-        padding: 10px;
-        width: 80vw;
-        max-width: 500px;
-        height: fit-content;
-        margin: 10px;
-        border: .1px solid #AEAEAE;
-        /* box-shadow: 0.1rem 0.1rem 0.2rem rgba(0, 0, 0, 0.2); */
+@media screen and (min-width: 1600px) {
+    .gallery-item__container {
+        grid-template-columns: auto auto auto;
+    }
+}
+
+@media screen and (min-width: 2100px) {
+    .gallery-item__container {
+        grid-template-columns: auto auto auto auto;
     }
 }

@@ -13,5 +13,9 @@ pub struct Post {
     pub month: i32,
     pub date_created: String,
     pub file_name: String,
+    pub tags: Option<Vec<String>>,
+    pub reading_time_minutes: Option<i32>,
+    pub is_featured: Option<bool>,
+    pub image: Option<ObjectId>,
     pub body: String
 }

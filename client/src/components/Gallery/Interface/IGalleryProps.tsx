@@ -8,7 +8,7 @@ type GalleryItem = {
 
 interface IGalleryProps {
     content: GalleryItem[];
-    heading: string,
+    heading: string
 }
 
 

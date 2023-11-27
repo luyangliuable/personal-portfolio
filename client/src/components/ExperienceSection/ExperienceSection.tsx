@@ -1,8 +1,7 @@
 import { Component, createRef } from 'react';
 import IExperienceSectionProps from "./Interface/IExperienceSectionProps";
 import { IExperienceSectionState, ExperienceSectionItem } from './Interface/IExperienceSectionState';
-import { resetElementPosition, isCloseToAnotherElement, isCenterAlignedWithViewport, getHTMLElementCenterYPosition } from "../Utility/ScrollUtility";
-import { cardGradientEffect } from "../Utility/MouseUtility";
+import { isCenterAlignedWithViewport, getHTMLElementCenterYPosition } from "../Utility/ScrollUtility";
 import ExperienceSectionEvent from "./ExperienceSectionEvent/ExperienceSectionEvent";
 
 import "./ExperienceSection.css";
@@ -32,9 +31,10 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                 {
                     dateTime: "2021",
                     cardTitle: "",
+                    location: "Brighton Beach, Victoria Park, Vic, Australia",
                     url: "",
                     cardSubtitle: "",
-                    cardDetailedText: "Every week, my family and I would journey to our favorite beach, drawn by the allure of the sunset and the embrace of the fresh breeze.",
+                    cardDetailedText: "",
                     importance: 1,
                     display: "IMAGE",
                     media: {
@@ -94,7 +94,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                     cardTitle: "",
                     url: "",
                     cardSubtitle: "",
-                    cardDetailedText: "Teddie's arrival in my universe was akin to the birth of a radiant star. ",
+                    cardDetailedText: "Teddie was born.",
                     importance: 1,
                     display: "IMAGE",
                     media: {
@@ -245,6 +245,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
      */
     lockPosition(): void {
         const isNotPastUnlockPosition = this.props.scrolled < this.state.unlockPosition || this.state.unlockPosition === null
+
         if (isNotPastUnlockPosition) {
             this.setState({ isLocked: true });
             this.updateLockPosition();
@@ -255,7 +256,8 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
      * Updates the component's lock position state.
      */
     updateLockPosition(): void {
-        if (this.state.lockPosition === null && this.state.fallBackLockPosition > this.props.scrolled) {
+        if (this.state.lockPosition === null) {
+            console.log(this.props.scrolled);
             this.setState({ lockPosition: this.props.scrolled });
         }
     }

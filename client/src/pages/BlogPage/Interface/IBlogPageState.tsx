@@ -1,18 +1,11 @@
+import BlogPostResponse from "../../../repositories/Response/BlogPostResponse";
 
 interface IBlogPageState {
-    content: blogContent[],
+    content: BlogPostResponse[],
+    allTags: Set<string>,
+    currentSelectTags: string[],
+    topPickedPosts: BlogPostResponse[],
     render?: () => React.ReactElement<any, any>,
 }
 
-type blogContent = {
-    _id: {
-        $oid: string
-    }
-    body: string,
-    heading: string,
-    author: string,
-    date_created: string,
-    url: string,
-}
-
-export { IBlogPageState, blogContent }
+export { IBlogPageState }
