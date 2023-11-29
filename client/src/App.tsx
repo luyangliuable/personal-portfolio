@@ -12,7 +12,6 @@ import LogInPage from "./pages/LogInPage/LogInPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import React, { useState, useEffect } from 'react';
 import { useNavigate, BrowserRouter, Route, Routes } from 'react-router-dom';
-import ObservedComponent from "./components/ObservedComponent/ObservedComponent";
 import './App.css';
 
 interface IAppStateInterface {
@@ -76,9 +75,8 @@ function App() {
                     <div className="page-body">
                         <Routes>
                             <Route path="/" element={
-                                <ObservedComponent>
-                                    <LandingPage scrolled={appState.scrolled} scrolling={appState.scrolling} />
-                                </ObservedComponent>} />
+                                <LandingPage scrolled={appState.scrolled} scrolling={appState.scrolling} />
+                            } />
                             <Route path="/digital_chronicles/blogs" element={<BlogPage showTopPicks={true} />} />
                             <Route path="/resume" element={<ResumePage />} />
                             <Route path="/projects/3d_printing" element={<ThreeDPrintingGallery />} />

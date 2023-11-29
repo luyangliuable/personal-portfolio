@@ -2,50 +2,31 @@ import { Component, createRef, RefObject } from "react";
 import "./Card.css";
 import { NavLink } from "react-router-dom";
 import { cardGradientEffect } from "../../components/Utility/MouseUtility";
-import { truncateTextBody, stripAwayHashSymbols, isoDateFormatToString } from "../../components/Utility/StringUtility";
+import { isoDateFormatToString } from "../../components/Utility/StringUtility";
 import TagCloud from "../TagCloud/TagCloud";
-import SkeletonImage from "../SkeletonComponents/SkeletonImage/SkeletonImage";
-import ImageRepository from "../../repositories/ImageRepository";
+import Image from "../Image/Image";
 import ICardProps from "./Interface/ICardProps";
 import ICardState from "./Interface/ICardState";
 import DynamicLoadQueue from "../../stores/DynamicLoadQueue/DynamicLoadQueue";
 
 class Card extends Component<ICardProps, ICardState> {
     iframePreviewRef = createRef<HTMLIFrameElement>();
-    imageRepository: ImageRepository;
     cardItemRef: RefObject<HTMLAnchorElement>;
     dynamicLoadQueue: DynamicLoadQueue;
 
-    static defaultProps = {
-        defaultImage: "http://llcode.tech/api/image/651942aaf9b642fb30be59ae",
-        defaultImageId: "651942aaf9b642fb30be59ae",
-        defaultAuthorImage: "http://llcode.tech/api/image/65194be0f9b642fb30be59af",
-        defaultAuthorImageId: "65194be0f9b642fb30be59af"
-    };
-
     constructor(props: ICardProps) {
         super(props);
-        this.imageRepository = ImageRepository.getInstance();
         this.cardItemRef = createRef();
         this.dynamicLoadQueue = DynamicLoadQueue.getInstance();
 
         this.state = {
             fetchedImageUrl: null,
-            fetchedAuthorImageUrl: Card.defaultProps.defaultAuthorImage
         };
     }
 
     componentDidMount() {
-        this.updateImage();
-
         if (this.cardItemRef.current) {
             this.dynamicLoadQueue.addToQueue(this.cardItemRef.current);
-        }
-    }
-
-    componentDidUpdate(prevProps: ICardProps) {
-        if (this.props.image !== prevProps.image) {
-            this.updateImage();
         }
     }
 
@@ -68,36 +49,15 @@ class Card extends Component<ICardProps, ICardState> {
         }
     }
 
-    async updateImage() {
-        try {
-            const imageId = this.props.image ?? Card.defaultProps.defaultImageId;
-            const authorImageId = this.props.authorImage ?? Card.defaultProps.defaultAuthorImageId;
-
-            const [imageUrl, authorImageUrl] = await Promise.all([
-                this.imageRepository.getImageById(imageId),
-                this.imageRepository.getImageById(authorImageId)
-            ]);
-
-            this.setState({
-                fetchedImageUrl: imageUrl,
-                fetchedAuthorImageUrl: authorImageUrl
-            });
-
-        } catch (error) {
-            console.error("Error fetching images:", error);
-        }
-    }
-
     render() {
-        const { link, authorImage, author, heading, minuteRead, tags, date_created } = this.props;
-        const { fetchedImageUrl } = this.state;
+        const { link, authorImage, image, author, heading, minuteRead, tags, date_created } = this.props;
         const displayMinuteRead = `${minuteRead || "X"} min read`;
         const displayDateCreated = date_created ? isoDateFormatToString(new Date(date_created)) : '';
 
         return (
             <NavLink ref={this.cardItemRef} onMouseMove={cardGradientEffect} className="card card-item" to={link}>
                 <div className="card-image--author-info">
-                    <img className="card-image--author-image" src={authorImage || Card.defaultProps.defaultAuthorImage} alt="Author" />
+                    {<Image src="http://llcode.tech/api/image/65194be0f9b642fb30be59af" className="card-image--author-image" alt="Author" />}
                     {author}
                 </div>
                 <div className="card-item__content">
@@ -105,11 +65,7 @@ class Card extends Component<ICardProps, ICardState> {
                     <p className="card-item__label">{`${displayMinuteRead} | ${displayDateCreated}`}</p>
                 </div>
                 <div className="card-image-preview__wrapper">
-                    {
-                        fetchedImageUrl ?
-                            <img className="card-image-preview" src={fetchedImageUrl} alt="Card Preview" />
-                            : <SkeletonImage class="card-image-preview" />
-                    }
+                    {<Image src={image} className="card-image-preview" alt="Card Preview" />}
                 </div>
                 <TagCloud tags={tags} />
             </NavLink>

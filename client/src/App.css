@@ -17,8 +17,6 @@
     --dark-mode-background-color: #0d0d0d;
     --zenburn-background: #3F3F3F;
     --zenburn-foreground: #DCDCCC;
-    
-    --phone-screen-media-selector-width-threshold: 1000px;
 }
 
 
@@ -135,8 +133,6 @@ a {
     -webkit-transform: translate(-50%, -50%) !important;
 }
 
-
-
 .flex-column-centered-centered {
   display: flex;
   flex-direction: column;
@@ -157,4 +153,15 @@ a {
     user-select: none;
 }
 
+/*****************************************************************************/
+/*                         Global Animation Keyframes                        */
+/*****************************************************************************/
 
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}

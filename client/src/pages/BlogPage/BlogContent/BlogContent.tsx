@@ -1,13 +1,14 @@
 import { Component } from "react";
-import ReactMarkdown from "react-markdown"
+import { marked } from 'marked';
 import PostRepository from "../../../repositories/PostRepository";
 import { IBlogContentState } from "./Interface/IBlogContentState";
+import { isoDateFormatToString } from "../../../components/Utility/StringUtility";
+import MarkdownRenderer from "./MarkdownRenderer/MarkdownRenderer";
+import SkeletonBlogContent from "./SkeletonBlogContent/SkeletonBlogContent";
 import IBlogContentProps from "./Interface/IBlogContentProps";
-import remarkGfm from "remark-gfm";
 import JsonToMarkdown from "./Utilities/JsonToMarkdown";
 import BlogPostResponse from "../../../repositories/Response/BlogPostResponse";
 import ImageRepository from "../../../repositories/ImageRepository";
-import { isoDateFormatToString } from "../../../components/Utility/StringUtility";
 import TableOfContent from "./TableOfContents/TableOfContents";
 import "./BlogContent.css";
 
@@ -30,11 +31,7 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
                 fetchedImageUrl: "",
                 fetchedAuthorImageUrl: ""
             },
-            content: {
-                heading: null,
-                body: null,
-                author: null
-            }
+            content: null
         }
     }
 
@@ -69,24 +66,20 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
         });
     }
 
-    updateBlogContentHeadings(): void {
-        const regexReplaceCode = /(```.+?```)/gms
-        const regexRemoveLinks = /\[(.*?)\]\(.*?\)/g
-        const regXHeader = /#{1,6}.+/g
+    updateBlogContentHeadings() {
+        const renderer = new marked.Renderer();
+        const originalHeadingRenderer = renderer.heading.bind(renderer);
 
-        const markdownWithoutLinks = this.state.content.body?.replace(regexRemoveLinks, "")
-        const markdownWithoutCodeBlocks = markdownWithoutLinks.replace(regexReplaceCode, "")
-        const headingsList = markdownWithoutCodeBlocks.match(regXHeader)
+        let headings: {title: string, level: number}[] = [];
 
-        const headings = headingsList.map(heading => {
-            const level = heading.lastIndexOf('#') - heading.indexOf('#');
-            return {
-                title: heading.replace(/^#+\s/, ''),
-                level: level
-            };
-        });
+        renderer.heading = (text, level) => {
+            headings.push({ title: text, level: level });
+            return originalHeadingRenderer(text, level);
+        };
 
-        this.setState({headings : headings});
+        marked(this.state.content?.body, { renderer });
+
+        this.setState({ headings: headings });
     }
 
     async getBlogContentFromQuery(): Promise<void> {
@@ -110,12 +103,14 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
         prevState: Readonly<IBlogContentState>,
         snapshot?: any
     ): void {
-        if (this.state.content.body !== prevState.content.body) {
-            this.updateBlogContentHeadings();
-        }
+        if (this.state.content && this.state.content !== prevState.content) {
+            if (this.state.content.body !== prevState.content?.body) {
+                this.updateBlogContentHeadings();
+            }
 
-        if (this.state.content.image !== prevState.content.image) {
-            this.updateImage();
+            if (this.state.content.image !== prevState.content?.image) {
+                this.updateImage();
+            }
         }
     }
 
@@ -138,32 +133,40 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
         });
     }
 
-    render() {
+
+    renderBlogContent(): React.ReactNode {
         const displayDateCreated = isoDateFormatToString(new Date(this.state.content.date_created));
         const authorName = this.state.content.author;
-        const image = this.state.content.image && (<img className="blog-content__image" src={this.state.cache.fetchedImageUrl} />);
         const blogContentBody = this.state.content.body;
+        const image = this.state.content.image && (<img className="blog-content__image" src={this.state.cache.fetchedImageUrl} />);
+
+        return (
+            <div className="blog-content">
+                <div className="blog-content__header">
+                    <h1>{this.state.content.heading}</h1>
+                    <div className="card-image--author-info">
+                        <img className="blog-content--author-image" src={this.defaultAuthorImage} />
+                        <div className="flex-vertical">
+                            <span>{authorName}</span>
+                            <span>{displayDateCreated}</span>
+                        </div>
+                    </div>
+                </div>
+                {image}
+                <div className="blog-content-body">
+                    <MarkdownRenderer markdown={blogContentBody} />
+                </div>
+            </div>
+        )
+    }
+
+    render() {
 
         return (
             <div className="page-container">
                 <div className="blog-content__wrapper">
                     <TableOfContent headings={this.state.headings} />
-                    <div className="blog-content card">
-                        <div className="blog-content__header">
-                            <h1>{this.state.content.heading}</h1>
-                            <div className="card-image--author-info">
-                                <img className="blog-content--author-image" src={this.defaultAuthorImage} />
-                                <div className="flex-vertical">
-                                    <span>{authorName}</span>
-                                    <span>{displayDateCreated}</span>
-                                </div>
-                            </div>
-                        </div>
-                        {image}
-                        <div className="blog-content-body">
-                            <ReactMarkdown children={blogContentBody} remarkPlugins={[remarkGfm]} />
-                        </div>
-                    </div>
+                    {this.state.content ? this.renderBlogContent() : <SkeletonBlogContent />}
                 </div>
             </div>
         )

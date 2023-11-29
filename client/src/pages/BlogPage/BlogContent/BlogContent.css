@@ -83,7 +83,7 @@
 
     .blog-content {
         min-width: 90vw;
-        margin-left: 0; /* no more table of contents for small sreen */
+        margin-left: 0;
     }
 }
 

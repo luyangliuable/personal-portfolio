@@ -26,7 +26,6 @@ class DynamicLoadQueue {
     }
 
     addToQueue(element: TargetObservedElement) {
-        console.log(`observing ${element}`)
         this.observer.observe(element);
     };
 

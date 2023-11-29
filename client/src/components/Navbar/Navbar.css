@@ -3,6 +3,7 @@
     opacity: 0;
     transform: translateX(var(--dynamic-translate));
     width: var(--navbar-item-width);
+    max-width: var(--navbar-item-max-width);
     padding: var(--navbar-item-padding);
     color: var(--selected-navlink-window-color);
     border-radius: var(--navbar-item-border-radius);
@@ -27,6 +28,7 @@
     color: #000;
     padding: var(--navbar-item-padding);
     width: var(--navbar-item-width);
+    max-width: var(--navbar-item-max-width);
     transition: background .3s ease-in;
     border-radius: var(--navbar-item-border-radius);
     z-index: 1;
@@ -50,6 +52,7 @@
     --progress-height: 3.5px;
     --navbar-item-border-radius: 4px;
     --navbar-item-width: 8.5vw;
+    --navbar-item-max-width: 180px;
     --navbar-item-margin: 0.1vw;
     --navbar-item-padding: 10px 0 10px;
     --navbar-transition: background .2s ease-in-out, box-shadow .1s ease-in-out, transform .1s ease-in-out;

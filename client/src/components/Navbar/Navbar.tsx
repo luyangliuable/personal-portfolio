@@ -173,7 +173,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                 if (child !== selectedNavlinkWindow) {
                     child.addEventListener("mouseover", () => {
                         const factor = navbarLeft.children.length - index - 1;
-                        const translateXValue = `calc(-${factor}*( var(--navbar-item-width) + var(--navbar-item-margin)) + var(--navbar-item-margin) )`;
+                        const translateXValue = `calc(-${factor}*( min(var(--navbar-item-width), var(--navbar-item-max-width)) + var(--navbar-item-margin)) + var(--navbar-item-margin) )`;
                         selectedNavlinkWindow.style.setProperty("--dynamic-translate", `${translateXValue}`);
                     });
                 }
