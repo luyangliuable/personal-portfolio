@@ -8,6 +8,7 @@ export type IBlogHeading = {
 export interface IBlogContentState {
     content: BlogPostResponse,
     headings: IBlogHeading[],
+    activeSection: string[],
     cache: {
         fetchedImageUrl?: string,
         fetchedAuthorImageUrl?: string

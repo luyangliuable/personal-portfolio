@@ -6,21 +6,19 @@
     --padding-left-right: min( 5vw, 500px );
     --padding-top-bottom: min( 3vh, 200px );
     --margin-top: min(2vh, 200px);
-    --margin-left: min(8vw, 500px);
     padding: var(--padding-top-bottom) var(--padding-left-right);
     margin-top: var( --margin-top );
     text-align: left;
     display: flex;
     flex-direction: column;
     width: 40vw;
-    margin-left: var(--margin-left); /* Leave room for table of contents */
     align-items: center;
 }
 
 .blog-content-body {
     border-bottom: 1px #CCC solid;
     border-radius: .5vh;
-    font-size: 16px;
+    font-size: 20px;
     width: fit-content;
     text-decoration: none;
     color: #000;
@@ -73,7 +71,10 @@
     margin-right: min(10px, 3vw);
 }
 
-.blog-content__wrapper {}
+.blog-content__wrapper {
+    display: flex;
+    flex-direction: row;
+}
 
 @media screen and (max-width: 768px) {
     .blog-content-body, .blog-content__header {

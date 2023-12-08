@@ -13,6 +13,12 @@
     margin: 10px 0;
 }
 
+.gallery-item--no-boundary {
+    background: transparent;
+    border: none;
+    margin: 20px 0;
+}
+
 .initially-hidden {
     opacity: 0;
 }
@@ -82,8 +88,7 @@
 .gallery-item__type {
     height: 60px;
     width: 120px;
-    border-bottom: 1px solid #888;
-    /* box-shadow: 1px 1px 1px 1px #AAA; */
+    /* border-bottom: .2px solid #888; */
     background-color: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(12px);
     position: absolute;

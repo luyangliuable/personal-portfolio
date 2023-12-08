@@ -1,5 +1,7 @@
 :root {
     --page-top-margin: 68px;
+    --navbar-height: 68px;
+
     --page-bottom-margin: 120px;
     --common-card-margin: 10vh;
 
@@ -17,6 +19,7 @@
     --dark-mode-background-color: #0d0d0d;
     --zenburn-background: #3F3F3F;
     --zenburn-foreground: #DCDCCC;
+
 }
 
 

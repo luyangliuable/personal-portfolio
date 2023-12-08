@@ -59,7 +59,7 @@ class GalleryItem extends Component<IGalleryItemProps, IGalleryItemState> {
                     style={style}
                     key={this.props.key}
                     onMouseMove={cardGradientEffect}
-                    className="gallery-item card">
+                    className="gallery-item gallery-item--no-boundary card">
                     {this.GalleryItemTypeSegment}
                     <Image className="gallery-item__image" src={ image } />
                     <h3>{this.props.name}</h3>

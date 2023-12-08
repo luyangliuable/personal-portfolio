@@ -27,6 +27,7 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
         this.imageRepository = ImageRepository.getInstance();
         this.state = {
             headings: [],
+            activeSection: [],
             cache: {
                 fetchedImageUrl: "",
                 fetchedAuthorImageUrl: ""

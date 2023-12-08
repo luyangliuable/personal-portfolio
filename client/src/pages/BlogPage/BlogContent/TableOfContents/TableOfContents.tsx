@@ -8,29 +8,53 @@ class TableOfContents extends Component<ItableOfContentsProps, ITableOfContentsS
         super(props);
     }
 
+    getIdFromHeading(str: string): number {
+        let hash = 0;
 
-    renderTableOfContents(): React.ReactNode {
-        function getTextColor(level: number): string {
-            const lightness = level * 20;
-            return `hsl(0, 0%, ${lightness}%)`;
+        for (let i = 0; i < str.length; i++) {
+            const char = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash |= 0; // Convert to 32bit integer
         }
 
-        const subheadings = this.props.headings?.filter(({ title, level }) => level !== 0);
+        return hash;
+    }
 
+    handleClick = (event: React.MouseEvent<HTMLDivElement>, id: string) => {
+
+        const targetElement = document.getElementById(id);
+
+        document.documentElement.style.scrollBehavior = "smooth";
+
+        if (targetElement) {
+            targetElement.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        }
+    };
+
+    renderTableOfContents(): React.ReactNode {
+        const getTextColor = (level: number): string => {
+            const lightness = level * 20;
+            return `hsl(0, 0%, ${lightness}%)`;
+        };
+
+        const subheadings = this.props.headings?.filter(({ level }) => level !== 0);
         return subheadings?.map(({ title, level }, idx: number) => {
             const indentation = `${level * 20}px`;
-            const marginBottom = `${22 - 4.5 * (level)}px`;
+            const marginBottom = `${(22 - 4.5 * level) / 2}px`;
             const color = getTextColor(level);
+            const id = this.getIdFromHeading(title);
 
             return (
-                <span key={idx} style={{ color: color, marginRight: indentation, marginBottom: marginBottom }}>{title}</span>
-            )
+                <div key={idx} style={{ color, padding: `${marginBottom} ${indentation}` }} onClick={(e) => this.handleClick(e, id.toString())}>
+                    {title}
+                </div>
+            );
         });
     }
 
     render() {
         return (
-            <div className="blog-content__table-of-contents">{this.renderTableOfContents()}</div>
+            <div className="table-of-contents">{this.renderTableOfContents()}</div>
         )
     }
 }

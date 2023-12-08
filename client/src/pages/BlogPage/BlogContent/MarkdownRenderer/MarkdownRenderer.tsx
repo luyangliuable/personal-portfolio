@@ -9,9 +9,21 @@ type MarkdownRendererProps = {
 const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ markdown }) => {
     const renderer = new marked.Renderer();
 
+    function getIdFromHeading(str: string): number {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            const char = str.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash |= 0; // Convert to 32bit integer
+        }
+
+        return hash;
+    }
+
     renderer.heading = (text, level) => {
         const className = `header-${level}`;
-        return `<h${level} class="${className}">${text}</h${level}>`;
+        const id = `${getIdFromHeading(text)}`;
+        return `<h${level} id=${id} class="${className}">${text}</h${level}>`;
     };
 
     renderer.blockquote = (quote) => {
@@ -55,7 +67,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ markdown }) => {
         return null;
     }
 
-    return (<div dangerouslySetInnerHTML={ { __html: html } } />);
+    return (<div dangerouslySetInnerHTML={{ __html: html }} />);
 };
 
 
