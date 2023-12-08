@@ -53,6 +53,8 @@ function App() {
     useEffect(() => {
         let scrollTimeout: NodeJS.Timeout;
 
+        const timeToCheckScrollingHasStoppedMiliseconds =  2;
+
         scrollTimeout = setInterval(() => {
             if (appState.scrolling === true) {
                 setAppState(prevState => ({
@@ -60,7 +62,7 @@ function App() {
                     scrolling: false
                 }));
             }
-        }, 10);
+        }, timeToCheckScrollingHasStoppedMiliseconds);
 
         return () => {
             window.clearInterval(scrollTimeout);

@@ -132,6 +132,8 @@ class NavBar extends Component<INavbarProps, INavbarState> {
         } else if (Math.max(0, lastScrollY - scrollStatus.scrolled!) >= hideNavBarScrollSensitivity && this.state.isNavbarHidden) {
             this.showNavBar();
         }
+
+        this.setState({ lastScrollY: scrollStatus.scrolled! });
     };
 
     listenContinuousScrolled = () => {
@@ -145,7 +147,6 @@ class NavBar extends Component<INavbarProps, INavbarState> {
 
         const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
         this.updateScrolledProgress(scrollStatus.scrolled! / pageHeight);
-        this.setState({ lastScrollY: scrollStatus.scrolled! });
     };
 
     addBurgerClickOutEventLister() {
@@ -190,6 +191,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
 
     private updateScrollingBehavior(prevProps: INavbarProps) {
         const { scrollStatus } = this.props;
+
         if (scrollStatus.scrolling !== prevProps.scrollStatus.scrolling) {
             this.listenDeltaScrolled();
         }

@@ -145,15 +145,18 @@
 
 .detached {
     position: fixed;
-    backdrop-filter: blur(8px);
-    background: rgba(200,200,200,.1);
+    backdrop-filter: blur(12px);
+    background: rgba(200,200,200, .4);
     box-shadow: .1px .1px 1px #888;
 }
 
 .detached .navbar-content .navbar-left .navbar-item {
-    color: #555;
+    color: #000;
     font-weight: 700;
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5), -1px -1px 3px rgba(255, 255, 255, 0.5); /* Subtle text shadow for contrast */
 }
+
+
 
 .logo {
     --primary-font: 'Proxima Nova Bold', monospace;
@@ -226,6 +229,7 @@
 .active-link {
     background: var(--dark-mode-purple-2);
     color: #FEFEFE !important;
+    text-shadow: none !important; /* No need to have text shadow when background is opaque duh */
 }
 
 /*****************************************************************************/
