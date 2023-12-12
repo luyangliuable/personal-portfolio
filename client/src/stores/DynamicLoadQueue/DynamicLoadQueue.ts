@@ -54,7 +54,6 @@ class DynamicLoadQueue {
 
     fadeInElement(element: Element) {
         (element as HTMLElement).style.opacity = '1';
-        // (element as HTMLElement).style.transition = 'all .5s ease-in';
         (element as HTMLElement).style.transform = 'translateX(0)';
     };
 }

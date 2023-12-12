@@ -1,6 +1,6 @@
 .gallery-item {
     display: flex;
-    transition: all .3s ease-in;
+    transition: all .1s ease-in;
     flex-direction: column;
     opacity: 0;
     justify-content: start;
@@ -15,6 +15,8 @@
 
 .gallery-item--no-boundary {
     background: transparent;
+    background: rgba(200, 200, 200, .1);
+    backdrop-filter: blur(2px);
     border: none;
     margin: 20px 0;
 }

@@ -3,16 +3,16 @@
   width: 200%;
   height: 50px;
   left: 0;
-  transform: translate(-25%, 40%) scale(170%, 90%);
-  top: 120%;
+  transform: translate(-25%, 40%) scale(170%, 40%);
+  top: 90%;
   border-radius: 5px;
 }
 
 
 @media screen and (min-width: 2400px) {
     .wave__container {
-        transform: translate(-25%, 40%) scale(220%, 70%);
-        top: 120%;
+        transform: translate(-25%, 40%) scale(210%, 40%);
+        top: 95%;
     }
 }
 
@@ -24,80 +24,71 @@
 }
 
 .wave {
-    animation: drift 80s infinite linear;
     opacity: 0.4;
     position: absolute;
     top: 4%;
     left: 45%;
-    border: 1px solid #0af;
     width: 110%; 
     height: auto;
     padding-bottom: 100%;
     margin-left: -50%;
     transform-origin: 50% 48%;
     border-radius: 43%;
-    transition: all 1s ease-in;
 }
 
-.wave:hover {
-    background: #0af;
+.wave.-one {
+    --target-rotation: 20deg;
+    border: 1px solid #0af;
+    transform: rotate(var(--target-rotation));
+    background-color: rgba(0, 85, 170, 0.8);
+    /* animation: drift 66s infinite linear; */
+    animation: drift 2s ease-out;
 }
 
 .wave.-three {
     --red-component: 0;
     --green-component: 0;
     --blue-component: 0;
-    --alpha-component: 0;
+    --alpha-component: .1;
+    --target-rotation: 120deg;
+    transform: rotate(var(--target-rotation));
     border: .8px solid black;
-    transform: rotate(20deg);
     background-color: rgba(var(--red-component), var(--green-component), var(--blue-component), var(--alpha-component));
-    animation: drift 66s infinite linear;
-}
-
-.wave.-three:hover {
-    background: black;
+    animation: drift 1s ease-out;
 }
 
 .wave.-two {
     --red-component: 255;
-    --green-component: 255;
+    --green-component: 85;
     --blue-component: 0;
-    animation: drift 69s infinite linear;
+    --alpha-component: 0.8;
+    --target-rotation: 160deg;
     opacity: 0.1;
-    transform: rotate(80deg);
+    transform: rotate(var(--target-rotation));
     border: 1px solid orange;
-}
-
-.wave.-two:hover {
-    background: yellow;
+    background-color: rgba(var(--red-component), var(--green-component), var(--blue-component), var(--alpha-component));
+    /* animation: drift 69s infinite linear; */
+    animation: drift 3s ease-out;
 }
 
 .wave.-four {
     --red-component: 73;
     --green-component: 30;
     --blue-component: 211;
-    animation: drift 123s infinite linear;
+    --alpha-component: .9;
+    --target-rotation: 110deg;
     opacity: 0.2;
-    transform: rotate(360deg);
+    transform: rotate(var(--target-rotation));
     border: 1px solid var(--dark-mode-purple);
-}
-
-.wave.-four:hover {
-    background: var(--dark-mode-purple);
+    background-color: rgba(var(--red-component), var(--green-component), var(--blue-component), var(--alpha-component));
+    animation: drift 2s ease-out;
 }
 
 @keyframes drift {
     20% {
         transform: rotate(0deg);
-        /* background-color: rgba(var(--red-component), var(--green-component), var(--blue-component), .2); */
-    }
-    50% {
-        
-        transform: rotate(180deg);
-        /* background-color: rgba(var(--red-component), var(--green-component), var(--blue-component), 0); */
     }
     100% {
-        transform: rotate(360deg);
-        /* background-color: rgba(var(--red-component), var(--green-component), var(--blue-component), .2); */
+        transform: rotate(--target-rotation);
     }
 }

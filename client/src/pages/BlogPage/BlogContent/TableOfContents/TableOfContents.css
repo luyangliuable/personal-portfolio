@@ -4,27 +4,34 @@
     top: calc(var(--navbar-height) + 15px);
     margin-top: 7vh;
 
+    backdrop-filter: blur(2px);
+
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     justify-content: flex-start;
 
     width: fit-content;
-    height: 70vh;
+    height: fit-content;
+    max-height: 80vh;
+
+
     overflow: auto;
 
     font-size: min(max(12px, .5vw), 18px);
     transition: color 1s ease-in;
+
 }
 
     .table-of-contents div {
-        width: 200px;
+        max-width: 200px;
         text-align: right;
         border-bottom: .1px dashed #DEDEDE;
         cursor: pointer;
         border-radius: 7px;
         border: 1px solid transparent;
         transition: all .2s ease-in;
+        word-wrap: break-word;
     }
 
     .table-of-contents>div:hover {

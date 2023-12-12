@@ -54,6 +54,8 @@
 .card-item {
     text-align: left;
     background: transparent;
+    background: rgba(200, 200, 200, .1);
+    backdrop-filter: blur(2px);
     border: none;
     border-bottom: 1px solid #CCC;
     padding: 40px 0 40px 2vw;

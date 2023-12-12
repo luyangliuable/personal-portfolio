@@ -23,6 +23,8 @@
     position: -webkit-sticky;
     position: sticky;
     top: 1%;
+    top: var(--navbar-height);
+    height: calc(95.5vh - var(--navbar-height));
 }
 
 .experience-section-wrapper {

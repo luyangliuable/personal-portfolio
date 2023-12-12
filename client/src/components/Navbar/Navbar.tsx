@@ -288,7 +288,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
         return (
             <>
                 <div
-                    className="navbar"
+                    className="navbar grid-background--dot"
                     onMouseLeave={() => this.hideDropdownMenu()}
                     ref={this.navbar}>
                     <div className="navbar-content">

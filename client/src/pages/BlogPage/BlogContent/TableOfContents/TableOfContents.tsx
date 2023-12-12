@@ -45,7 +45,7 @@ class TableOfContents extends Component<ItableOfContentsProps, ITableOfContentsS
             const id = this.getIdFromHeading(title);
 
             return (
-                <div key={idx} style={{ color, padding: `${marginBottom} ${indentation}` }} onClick={(e) => this.handleClick(e, id.toString())}>
+                <div key={idx} style={{ color, margin: `${marginBottom} ${indentation}` }} onClick={(e) => this.handleClick(e, id.toString())}>
                     {title}
                 </div>
             );

@@ -145,6 +145,17 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
         );
     }
 
+    handleChangeQuery = (newQueryValue: string) => {
+        // const searchParams = new URLSearchParams(location.search);
+
+        // searchParams.set('yourQueryParam', newQueryValue);
+
+        // this.props.history.push({
+        //     pathname: location.pathname,
+        //     search: '?' + searchParams.toString(), // Add '?' to make it a valid query string
+        // });
+    };
+
 
     renderTags = (): React.ReactNode | null => {
         return [...this.state.allTags].map((tagName) => {
