@@ -6,11 +6,14 @@ import BlogPostResponse from "../../repositories/Response/BlogPostResponse";
 import IBlogPageProps from "./Interface/IBlogPageProps";
 import Card from "../../components/Card/Card";
 import GalleryItem from "../../components/Gallery/GalleryItem/GalleryItem";
+import { Link } from 'react-router-dom';
 
-class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
+class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
+    // Put any for props because for some reaosn i can't import `RouteComponentProps` for location
+
     postRepository: PostRepository;
 
-    constructor(props: IBlogPageProps) {
+    constructor(props: IBlogPageProps | any) {
         super(props);
 
         this.postRepository = PostRepository.getInstance();
@@ -73,39 +76,18 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
         });
     }
 
-    getContrastTextColor(hexColor: string): string {
-        const r = parseInt(hexColor.slice(1, 3), 16);
-        const g = parseInt(hexColor.slice(3, 5), 16);
-        const b = parseInt(hexColor.slice(5, 7), 16);
-
-        const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-
-        return luminance > 0.5 ? '#000' : '#FFF';
-    }
-
     sortPostsByDate(posts: any[]): any[] {
         return posts.sort((a, b) => new Date(b.date_created).getTime() - new Date(a.date_created).getTime());
     }
 
-    stringToColour = (str: string) => {
-        const seed = "ramen, noodles, sushi, pizza, gym";
-
-        let hash = 0;
-        str = str + seed;
-
-        str.split('').forEach(char => {
-            hash = char.charCodeAt(0) + ((hash << 5) - hash)
-        })
-        let colour = '#'
-        for (let i = 0; i < 3; i++) {
-            const value = (hash >> (i * 8)) & 0xff
-            colour += value.toString(16).padStart(2, '0')
-        }
-        return colour
-    }
-
     renderPostsSortedByDateDescending = (): React.ReactNode => {
-        return this.sortPostsByDate(this.state.content).map((content, idx) => (
+        const selectedTags = this.currentSelectedTags;
+
+        const isSubset = (array1: string[], array2: string[]) => {
+            return array1.every(item => array2.includes(item));
+        }
+
+        return this.sortPostsByDate(this.state.content).filter(({ tags }) => isSubset(selectedTags, tags) || !selectedTags).map((content, _) => (
             <Card
                 key={content._id.$oid}
                 heading={content.heading}
@@ -145,23 +127,47 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
         );
     }
 
-    handleChangeQuery = (newQueryValue: string) => {
-        // const searchParams = new URLSearchParams(location.search);
+    get currentSelectedTags(): string[] {
+        const currentSearch = window.location.search;
+        const queryParams = new URLSearchParams(currentSearch);
+        const tag = queryParams.get('tag');
+        const tagsIntoArr = tag ? tag.split(",") : [];
+        return tagsIntoArr;
+    }
 
-        // searchParams.set('yourQueryParam', newQueryValue);
+    renderSelectedTags = (): React.ReactNode | null => {
+        const baseUrlLink = "/digital_chronicles/blogs";
 
-        // this.props.history.push({
-        //     pathname: location.pathname,
-        //     search: '?' + searchParams.toString(), // Add '?' to make it a valid query string
-        // });
+        return [...this.state.allTags].map((tagName) => {
+            const tagAlreadySelected = this.currentSelectedTags.includes(tagName);
+
+            if (tagAlreadySelected) {
+                let selectedTagsString: string[] = [];
+                selectedTagsString = this.currentSelectedTags.filter(tag => tag !== tagName);
+                const tagClassName = ['blog__tag', 'noselect', tagAlreadySelected ? 'blog__tag--selected' : ''].join(" ");
+
+                return (
+                    <Link to={`${baseUrlLink}?tag=${encodeURIComponent(selectedTagsString.join(","))}`} key={tagName} className={tagClassName}>#{tagName}</Link>
+                );
+            }
+        })
     };
 
+    renderUnSelectedTags = (): React.ReactNode | null => {
+        const baseUrlLink = "/digital_chronicles/blogs";
 
-    renderTags = (): React.ReactNode | null => {
         return [...this.state.allTags].map((tagName) => {
-            return (
-                <span key={tagName} className="blog__tag noselect blog__tag--unselect">#{tagName}</span>
-            );
+            const tagAlreadySelected = this.currentSelectedTags.includes(tagName);
+
+            if (!tagAlreadySelected) {
+                let selectedTagsString: string[] = [];
+                selectedTagsString = this.currentSelectedTags.concat(tagName);
+                const tagClassName = ['blog__tag', 'noselect', tagAlreadySelected ? 'blog__tag--selected' : ''].join(" ");
+
+                return (
+                    <Link to={`${baseUrlLink}?tag=${encodeURIComponent(selectedTagsString.join(","))}`} key={tagName} className={tagClassName}>#{tagName}</Link>
+                );
+            }
         })
     };
 
@@ -170,7 +176,8 @@ class BlogPage extends Component<IBlogPageProps, IBlogPageState> {
         return (
             <div className="blog-container cursor-pointer">
                 <div className="blog-list">
-                    <div className="blog__tag-container">{this.renderTags()}</div>
+                    {this.currentSelectedTags.length > 0 && (<div className="grid-background--dot blog__tag-container--selected">{this.renderSelectedTags()}</div>)}
+                    <div className="blog__tag-container"> {this.renderUnSelectedTags()}</div>
                     <div className="blog__year">
                         <span>2023</span>
                     </div>

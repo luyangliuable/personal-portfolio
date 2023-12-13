@@ -68,8 +68,6 @@
     transform: translateY(100px) rotate(-3deg);
 }
 
-.card-item
-
 .card-item__heading {
     margin: 2px 0;
     padding: 10px 0;

@@ -5,17 +5,18 @@ import { IBlogContentState } from "./Interface/IBlogContentState";
 import { isoDateFormatToString } from "../../../components/Utility/StringUtility";
 import MarkdownRenderer from "./MarkdownRenderer/MarkdownRenderer";
 import SkeletonBlogContent from "./SkeletonBlogContent/SkeletonBlogContent";
+import TagCloud from "../../../components/TagCloud/TagCloud";
 import IBlogContentProps from "./Interface/IBlogContentProps";
 import JsonToMarkdown from "./Utilities/JsonToMarkdown";
 import BlogPostResponse from "../../../repositories/Response/BlogPostResponse";
 import ImageRepository from "../../../repositories/ImageRepository";
 import TableOfContent from "./TableOfContents/TableOfContents";
+import Image from "../../../components/Image/Image";
 import "./BlogContent.css";
 
 class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
     jsonToMarkdown: JsonToMarkdown;
     defaultAuthorImage: string = "http://llcode.tech/api/image/65194be0f9b642fb30be59af";
-    defaultAuthorImageId: string = "65194be0f9b642fb30be59af";
     postRepository: PostRepository;
     imageRepository: ImageRepository;
 
@@ -33,30 +34,6 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
                 fetchedAuthorImageUrl: ""
             },
             content: null
-        }
-    }
-
-    async updateImage() {
-        try {
-            const imageId = this.state.content.image?.$oid ?? "";
-            const authorImageId = this.defaultAuthorImageId;
-
-
-            const [imageUrl, authorImageUrl] = await Promise.all([
-                this.imageRepository.getImageById(imageId),
-                this.imageRepository.getImageById(authorImageId)
-            ]);
-
-
-            this.setState({
-                cache: {
-                    fetchedImageUrl: imageUrl,
-                    fetchedAuthorImageUrl: authorImageUrl
-                }
-            });
-
-        } catch (error) {
-            console.error("Error fetching images:", error);
         }
     }
 
@@ -108,10 +85,6 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
             if (this.state.content.body !== prevState.content?.body) {
                 this.updateBlogContentHeadings();
             }
-
-            if (this.state.content.image !== prevState.content?.image) {
-                this.updateImage();
-            }
         }
     }
 
@@ -136,10 +109,9 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
 
 
     renderBlogContent(): React.ReactNode {
-        const displayDateCreated = isoDateFormatToString(new Date(this.state.content.date_created));
-        const authorName = this.state.content.author;
-        const blogContentBody = this.state.content.body;
-        const image = this.state.content.image && (<img className="blog-content__image" src={this.state.cache.fetchedImageUrl} />);
+        const { date_created, tags, image , body, author } = this.state.content;
+        const displayDateCreated = isoDateFormatToString(new Date(date_created));
+        const imageId = image?.$oid;
 
         return (
             <div className="blog-content">
@@ -148,14 +120,15 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
                     <div className="card-image--author-info">
                         <img className="blog-content--author-image" src={this.defaultAuthorImage} />
                         <div className="flex-vertical">
-                            <span>{authorName}</span>
+                            <span>{author}</span>
                             <span>{displayDateCreated}</span>
                         </div>
                     </div>
+                    <TagCloud tags={tags} />
                 </div>
-                {image}
+                <Image className="blog-content__image" src={imageId} />
                 <div className="blog-content-body">
-                    <MarkdownRenderer markdown={blogContentBody} />
+                    <MarkdownRenderer markdown={body} />
                 </div>
             </div>
         )
@@ -168,6 +141,7 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
                 <div className="blog-content__wrapper">
                     <TableOfContent headings={this.state.headings} />
                     {this.state.content ? this.renderBlogContent() : <SkeletonBlogContent />}
+                    <div className="blog-content__side-components"></div>
                 </div>
             </div>
         )

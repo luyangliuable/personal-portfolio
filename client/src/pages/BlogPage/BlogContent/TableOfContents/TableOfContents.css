@@ -1,30 +1,14 @@
 .table-of-contents {
-    position: -webkit-sticky;
-    position: sticky;
-    top: calc(var(--navbar-height) + 15px);
-    margin-top: 7vh;
-
-    backdrop-filter: blur(2px);
-
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     justify-content: flex-start;
 
-    width: fit-content;
-    height: fit-content;
-    max-height: 80vh;
-
-
     overflow: auto;
-
-    font-size: min(max(12px, .5vw), 18px);
-    transition: color 1s ease-in;
-
 }
 
-    .table-of-contents div {
-        max-width: 200px;
+.table-of-contents div {
+    max-width: 150px;
         text-align: right;
         border-bottom: .1px dashed #DEDEDE;
         cursor: pointer;
@@ -42,12 +26,6 @@
 @media screen and (max-width: 1400px) {
     .table-of-contents {
         left: 28%;
-    }
-}
-
-@media screen and (max-width: 1000px) {
-    .table-of-contents {
-        display: none;
     }
 }
 

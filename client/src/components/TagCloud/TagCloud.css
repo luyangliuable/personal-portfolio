@@ -4,6 +4,8 @@
     min-height: 7px;
     width: 91%;
     flex-wrap: wrap;
+    overflow-wrap: break-word;
+    line-height: 2;
 }
 
 .card-item__tags>span {

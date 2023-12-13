@@ -30,9 +30,7 @@ body {
     with: 100vw !important;
 }
 
-.App {
-    text-align: center;
-}
+.App {}
 
 .App-logo {
     height: 40vmin;
@@ -145,8 +143,8 @@ a {
 
 .grid-background--line {
     background-image:
-        linear-gradient(to right, #DDD 1px, transparent 1px),
-        linear-gradient(to bottom, #DDD 1px, transparent 1px);
+        linear-gradient(to right, #EEE 1px, transparent 1px),
+        linear-gradient(to bottom, #EEE 1px, transparent 1px);
 }
 
 

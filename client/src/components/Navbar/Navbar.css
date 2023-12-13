@@ -177,6 +177,7 @@
     background-size: 200% 200%;
     width: 220px;
     background-clip: text;
+    text-align: center;
     text-fill-color: transparent;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

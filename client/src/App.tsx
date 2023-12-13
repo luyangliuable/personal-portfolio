@@ -24,6 +24,7 @@ const RedirectToRoot = (props: { link: string }): React.ReactElement<{ link: str
     React.useEffect(() => {
         navigate(props.link);
     }, [navigate]);
+
     return null;
 }
 

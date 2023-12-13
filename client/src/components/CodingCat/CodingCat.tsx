@@ -5,6 +5,8 @@ import { gsap } from 'gsap';
 import ICodingCatProps from './Interface/ICodingCatProps';
 import ICodingCatState from './Interface/ICodingCatState';
 
+import ChristmasHat from "./ChristmasHat/ChristmasHat";
+
 class CodingCat extends Component<ICodingCatProps, ICodingCatState> {
     constructor(props: ICodingCatProps) {
         super(props);
@@ -146,6 +148,7 @@ class CodingCat extends Component<ICodingCatProps, ICodingCatState> {
     render() {
         return (
             <div className={`coding-cat-container ${!this.props.showAnimation ? "stop-music-note-animation" : ""}`}>
+                <ChristmasHat />
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 783.55 354.91">
                     <g id="coding-cat">
                         <g className="head">

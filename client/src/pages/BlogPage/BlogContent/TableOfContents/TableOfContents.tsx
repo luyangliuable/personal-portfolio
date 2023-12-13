@@ -54,7 +54,7 @@ class TableOfContents extends Component<ItableOfContentsProps, ITableOfContentsS
 
     render() {
         return (
-            <div className="table-of-contents">{this.renderTableOfContents()}</div>
+            <div className="blog-content__side-components table-of-contents">{this.renderTableOfContents()}</div>
         )
     }
 }

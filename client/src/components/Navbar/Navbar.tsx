@@ -39,7 +39,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                         to: "/digital_chronicles/scenic_memories",
                     }, {
                         name: "🧩 My Daily Leetcode",
-                        to: "/digital_chronicles/daily_leetcode",
+                        to: "/digital_chronicles/blogs?tag=daily-leetcode",
                     },
                     ]
                 },
