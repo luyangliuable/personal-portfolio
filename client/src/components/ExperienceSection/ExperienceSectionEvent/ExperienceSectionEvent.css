@@ -1,29 +1,96 @@
 .experience-section-card {
     width: 300px;
-    height: 240px;
     margin: 0 5px;
+    height: fit-content;
     padding: 10px;
+    position: relative;
+    border: none;
+    background: transparent;
+}
+
+.experience-section-card__text-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.experience-section-card__text-body > h2,
+.experience-section-card__date,
+.experience-section-card__job-title {
+    align-self: flex-start;
+    color: #555; /* Combined color property */
+}
+
+.experience-section-card__detailed-text {
+    text-align: center;
+    font-size: 13px;
+    width: 80%;
+    color: #555; /* Moved color property here to avoid repetition */
+}
+
+.experience-section-card__location {
+    display: flex;
+    font-size: 9px;
+    text-align: left;
+    margin-top: min(10px, 1vh);
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.experience-section-card__location > svg {
+    color: #000;
+    font-size: 25px;
+}
+
+.experience-section-card__location > * {
+    margin: 0 5px;
+}
+
+.experience-section-card__image-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.experience-section-card__image-wrapper--image,
+.experience-section-card__image-wrapper--experience {
+    display: flex; /* Added for consistency */
+}
+
+.experience-section-card__image-wrapper--image {
+    height: 80%;
+    align-items: flex-end;
+}
+
+.experience-section-card__image-wrapper--experience {
+    height: 50%;
+    align-items: center;
 }
 
 .experience-section-card__image {
     align-items: center;
     max-height: 80px;
     border-radius: 10px;
+    margin-top: 10px;
 }
 
+@media screen and (max-height: 1000px) {
+    .experience-section-card {
+        width: 180px;
+        height: 200px;
+    }
 
-@media screen and (max-width: 1000px) {
     .experience-section-card h2 {
         font-size: 12px;
     }
-    .experience-section-card .light-black-text {
+
+    .experience-section-card div {
         font-size: 10px;
         color: #333;
         font-weight: 200;
     }
 
-    .experience-section-card {
-        width: 180px;
-        height: 160px;
+    .experience-section-card__location {
+        display: none;
     }
 }

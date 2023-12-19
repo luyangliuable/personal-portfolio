@@ -39,7 +39,8 @@ class TableOfContents extends Component<ItableOfContentsProps, ITableOfContentsS
 
         const subheadings = this.props.headings?.filter(({ level }) => level !== 0);
         return subheadings?.map(({ title, level }, idx: number) => {
-            const indentation = `${level * 20}px`;
+            const indentation = `${Math.max((level - 1), 0) * 20}px`;
+
             const marginBottom = `${(22 - 4.5 * level) / 2}px`;
             const color = getTextColor(level);
             const id = this.getIdFromHeading(title);
@@ -53,8 +54,13 @@ class TableOfContents extends Component<ItableOfContentsProps, ITableOfContentsS
     }
 
     render() {
+	const className = ["table-of-contents", this.props.className].join(" ");
+
         return (
-            <div className="blog-content__side-components table-of-contents">{this.renderTableOfContents()}</div>
+            <div className={className}>
+		<h2>Table of Contents:</h2>
+		{this.renderTableOfContents()}
+	    </div>
         )
     }
 }

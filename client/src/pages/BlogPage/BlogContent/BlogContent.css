@@ -46,7 +46,7 @@
     border-bottom: 1px #CCC solid;
     width: 100%;
     border-radius: .5vh;
-    font-size: 20px;
+    font-size: 1rem;
     text-decoration: none;
     color: #000;
     transition: background .3s ease-in;
@@ -96,16 +96,24 @@
     width: 100%;
 }
 
+.table-of-content--small-screen {
+    display: none
+}
 
 @media screen and (max-width: 1000px) {
     .blog-content__side-components {
-        display: none;
+        display: none
+    }
+
+    .table-of-content--small-screen {
+	display: flex
     }
 
     .blog-content {
-        width: 80%;
+        width: 80%
     }
 }
+
 
 /* Default Code block wrapped inside ````` rendered by markdown renderer from Markdown */
 .code-block--native__container {
@@ -121,21 +129,10 @@
 
 .code-block--native {
     margin: 0;
-    overflow-x: scroll;
-    padding-bottom: 10px;
+    overflow-x: auto;
+    padding-bottom: .25em; /* Extra space for scrollbar */
     box-sizing: border-box; /* Ensure padding doesn't make it wider than parent */
 }
 
 .code-block--native>code {
-}
-
-.code-block--native::before {
-    content: "";
-    width: 100%;
-    left: 0;
-    top: -20px;
-    position: absolute;
-    height: var(--header-height);
-    border-radius: 6px 6px 0 0;
-    background: #333;
 }

@@ -45,7 +45,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ markdown }) => {
     };
 
     renderer.codespan = (code) => {
-        return `<kbd style="background: #DDD; font-weight: 500; border: .2px solid #CCC; padding: 3px; font-size: 15px; margin-bottom: 3px; border-radius: 4px; color: #1e90ff">${code}</kbd>`;
+        return `<kbd style="background: #DDD; font-weight: 500; border: .2px solid #CCC; padding: 2px; font-size: .75rem; margin-bottom: 3px; border-radius: 4px; color: #1e90ff">${code}</kbd>`;
     };
 
     renderer.blockquote = (quote) => {

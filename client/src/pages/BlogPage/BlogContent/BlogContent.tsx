@@ -16,7 +16,7 @@ import "./BlogContent.css";
 
 class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
     jsonToMarkdown: JsonToMarkdown;
-    defaultAuthorImage: string = "http://llcode.tech/api/image/65194be0f9b642fb30be59af";
+    defaultAuthorImage: string = "http://llcode.tech/api/image/65817ae96c73ceb16ba51731";
     postRepository: PostRepository;
     imageRepository: ImageRepository;
 
@@ -102,7 +102,7 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
             const color = getTextColor(level);
 
             return (
-                <span key={idx} style={{ color: color, marginRight: indentation, marginBottom: marginBottom }}>{title}</span>
+                <span key={idx} style={{ color: color, marginLeft: indentation, marginBottom: marginBottom }}>{title}</span>
             )
         });
     }
@@ -127,6 +127,9 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
                     <TagCloud tags={tags} />
                 </div>
                 <Image className="blog-content__image" src={imageId} />
+		<div className="w-full flex-col justify-center items-center translucent-white table-of-content--small-screen">
+		    <TableOfContent className="w-80" headings={this.state.headings} />
+		</div>
                 <div className="blog-content-body">
                     <MarkdownRenderer markdown={body} />
                 </div>
@@ -139,9 +142,11 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
         return (
             <div className="page-container">
                 <div className="blog-content__wrapper">
-                    <TableOfContent headings={this.state.headings} />
-                    {this.state.content ? this.renderBlogContent() : <SkeletonBlogContent />}
                     <div className="blog-content__side-components"></div>
+                    {this.state.content ? this.renderBlogContent() : <SkeletonBlogContent />}
+		    <div className="blog-content__side-components">
+			<TableOfContent headings={this.state.headings} />
+		    </div>
                 </div>
             </div>
         )

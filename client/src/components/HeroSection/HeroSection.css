@@ -1,6 +1,6 @@
 @media screen and (max-width: 1000px) {
     .hero-section-badge__container {
-        display: none !important;
+        /* display: none !important; */
     }
 
     .hero-section__content__left {
@@ -31,16 +31,16 @@
     }
 }
 
+.hero-section-badge__container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    overflow-x: auto;
+}
+
 @media screen and (min-width: 1000px) {
-    .hero-section-badge__container {
-        display: flex;
-        width: 100%;
-        justify-content: center;
-        align-items: center;
-        z-index: 1;
-    }
-
-
     .hero-section__content__left {
         padding: 0 5vw 0 5vw;
         z-index: 1;

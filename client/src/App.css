@@ -1,3 +1,4 @@
+
 :root {
     --page-top-margin: 68px;
     --navbar-height: 68px;
@@ -20,14 +21,6 @@
     --zenburn-background: #3F3F3F;
     --zenburn-foreground: #DCDCCC;
 
-}
-
-
-body {
-    background: #EEE;
-    font-family: 'Proxima Nova';
-    overflow-x: hidden;
-    with: 100vw !important;
 }
 
 .App {}
@@ -162,6 +155,24 @@ a {
     -webkit-transform: translate(-50%, -50%) !important;
 }
 
+/* Common CSS Without Tailwind */
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
+
 .flex-column-centered-centered {
   display: flex;
   flex-direction: column;
@@ -180,6 +191,26 @@ a {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+.border-1-solid-black {
+    border: 1px solid black
+}
+
+.w-full {
+    width: 100%;
+}
+
+.w-80 {
+    width: 80%;
+}
+
+.w-half {
+    width: 50%;
+}
+
+.translucent-white {
+    background: rgba(255, 255, 255, 0.2)
 }
 
 /*****************************************************************************/

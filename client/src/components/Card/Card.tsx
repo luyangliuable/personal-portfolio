@@ -57,7 +57,7 @@ class Card extends Component<ICardProps, ICardState> {
         return (
             <NavLink ref={this.cardItemRef} onMouseMove={cardGradientEffect} className="card card-item" to={link}>
                 <div className="card-image--author-info">
-                    {<Image src="http://llcode.tech/api/image/65194be0f9b642fb30be59af" className="card-image--author-image" alt="Author" />}
+                    {<Image src="http://llcode.tech/api/image/65817ae96c73ceb16ba51731" className="card-image--author-image" alt="Author" />}
                     {author}
                 </div>
                 <div className="card-item__content">

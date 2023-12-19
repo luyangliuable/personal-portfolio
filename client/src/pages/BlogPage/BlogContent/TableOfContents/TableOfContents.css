@@ -1,18 +1,24 @@
 .table-of-contents {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-start;
+    align-items: flex-start;
 
+    width: 100%;
+    height: 50vw;
+
+    padding: 10px;
     overflow: auto;
+
+    overflow-x: visible;
+    overflow-y: auto
 }
 
 .table-of-contents div {
-    max-width: 150px;
-        text-align: right;
+        text-align: left;
         border-bottom: .1px dashed #DEDEDE;
         cursor: pointer;
         border-radius: 7px;
+	font-weight: bold;
         border: 1px solid transparent;
         transition: all .2s ease-in;
         word-wrap: break-word;
@@ -22,6 +28,12 @@
         color: #333;
         border: 1px solid #333;
     }
+
+@media screen and (max-width: 1000px) {
+    .table-of-contents {
+	height: fit-content;
+    }
+}
 
 @media screen and (max-width: 1400px) {
     .table-of-contents {
