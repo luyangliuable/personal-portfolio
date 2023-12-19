@@ -21,7 +21,7 @@ jobs:
 
       - name: Build Project
         run: |
-          cd ./client/build
+          cd ./client
           npm install
           npm run build
 
