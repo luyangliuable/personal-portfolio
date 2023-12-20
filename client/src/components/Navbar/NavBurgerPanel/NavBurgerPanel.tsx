@@ -29,5 +29,3 @@ class NavBurgerPanel extends Component<INavBurgerPanelProps, {}> {
 
 
 export default NavBurgerPanel;
-
-
