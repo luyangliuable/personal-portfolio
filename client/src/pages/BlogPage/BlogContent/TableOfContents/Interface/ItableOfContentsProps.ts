@@ -1,5 +1,7 @@
 import { IBlogHeading } from "../../Interface/IBlogContentState";
  
 export default interface ItableOfContentsProps {
-    headings: IBlogHeading[]
+    headings: IBlogHeading[];
+    activeSectionIds?: string[];
+    className?: string
 }

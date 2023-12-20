@@ -8,7 +8,7 @@ class SkeletonImage extends Component<ISkeletonImageProps, {}> {
     }
 
     render() {
-        const className = ["image-skeleton", ...this.props.class].join(" ");
+        const className = `image-skeleton ${this.props.class}`;
         return (
             <div className={className} style={this.props.style}></div>
         );

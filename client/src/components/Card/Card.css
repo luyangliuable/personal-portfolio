@@ -54,6 +54,8 @@
 .card-item {
     text-align: left;
     background: transparent;
+    background: rgba(200, 200, 200, .1);
+    backdrop-filter: blur(2px);
     border: none;
     border-bottom: 1px solid #CCC;
     padding: 40px 0 40px 2vw;
@@ -61,12 +63,10 @@
     border-radius: .5vh;
     width: 90%;
     max-width: 1000px;
-    transition: all .2s ease-in;
+    transition: all .1s ease-in;
     opacity: 0;
     transform: translateY(100px) rotate(-3deg);
 }
-
-.card-item
 
 .card-item__heading {
     margin: 2px 0;

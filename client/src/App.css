@@ -1,5 +1,8 @@
+
 :root {
     --page-top-margin: 68px;
+    --navbar-height: 68px;
+
     --page-bottom-margin: 120px;
     --common-card-margin: 10vh;
 
@@ -17,20 +20,10 @@
     --dark-mode-background-color: #0d0d0d;
     --zenburn-background: #3F3F3F;
     --zenburn-foreground: #DCDCCC;
-    
-    --phone-screen-media-selector-width-threshold: 1000px;
+
 }
 
-
-body {
-    background: #EEE;
-    font-family: 'Proxima Nova';
-    overflow-x: hidden
-}
-
-.App {
-    text-align: center;
-}
+.App {}
 
 .App-logo {
     height: 40vmin;
@@ -125,6 +118,33 @@ a {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    position: relative;
+    background-image: radial-gradient(rgba(194, 194, 194, 1) 1px, rgba(194, 194, 194, 0) 0);
+    background-size: 8px 8px;
+    background-position: -19px -19px;
+    animation: background-scroll 8s linear infinite;
+}
+
+@keyframes background-scroll {
+    0% {
+        background-position: -19px -19px;
+    }
+    100% {
+        background-position: 19px 19px;
+    }
+}
+
+.grid-background--line {
+    background-image:
+        linear-gradient(to right, #EEE 1px, transparent 1px),
+        linear-gradient(to bottom, #EEE 1px, transparent 1px);
+}
+
+
+.grid-background--dot {
+    background-image: radial-gradient(#CCC 1px, transparent 0);
+    background-size: 4px 4px;
+    background-position: -19px -19px;
 }
 
 .fixed {
@@ -135,7 +155,23 @@ a {
     -webkit-transform: translate(-50%, -50%) !important;
 }
 
+/* Common CSS Without Tailwind */
 
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.items-center {
+  align-items: center;
+}
 
 .flex-column-centered-centered {
   display: flex;
@@ -157,4 +193,46 @@ a {
     user-select: none;
 }
 
+.border-1-solid-black {
+    border: 1px solid black
+}
 
+.w-full {
+    width: 100%;
+}
+
+.w-80 {
+    width: 80%;
+}
+
+.w-half {
+    width: 50%;
+}
+
+.translucent-white {
+    background: rgba(255, 255, 255, 0.2)
+}
+
+
+.box-shadow-medium {
+    box-shadow: 1px 1px 2px rgba(139, 101, 77, 0.2), /* Bottom shadow */
+                1px 1px 2px rgba(139, 101, 77, 0.2); /* Right shadow */
+}
+
+.box-shadow {
+    box-shadow: .5px .5px 1px rgba(139, 101, 77, 0.2), /* Bottom shadow */
+                .5px .5px 1px rgba(139, 101, 77, 0.2); /* Right shadow */
+}
+
+/*****************************************************************************/
+/*                         Global Animation Keyframes                        */
+/*****************************************************************************/
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}

@@ -1,28 +1,34 @@
+code {
+    font-family: 'Fira Code', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+                 monospace;
+}
+
 @font-face {
     font-family: 'Fira Code';
-    src: url('fonts/FiraCode/FiraCode-Regular.ttf') format('truetype');
+    src: url('fonts/FiraCode/FiraCode-Regular.ttf') format('woff2');
 }
 
 @font-face {
     font-family: 'Proxima Nova';
-    src: url('fonts/ProximaNova/ProximaNova-Regular.otf') format('opentype');
+    src: url('fonts/ProximaNova/ProximaNova-Regular.woff2') format('woff2');
 }
 
 @font-face {
     font-family: 'Proxima Nova Bold';
-    src: url('fonts/ProximaNova/ProximaNova-Bold.otf') format('opentype');
+    src: url('fonts/ProximaNova/ProximaNova-Bold.woff2') format('woff2');
 }
 
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-                 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-                 sans-serif;
+    background: #EEE;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    with: 100vw !important;
 }
 
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-                 monospace;
+html {
+    font-family: 'Proxima Nova', ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI, Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
 }
+
+

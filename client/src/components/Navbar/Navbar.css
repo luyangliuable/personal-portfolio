@@ -3,6 +3,7 @@
     opacity: 0;
     transform: translateX(var(--dynamic-translate));
     width: var(--navbar-item-width);
+    max-width: var(--navbar-item-max-width);
     padding: var(--navbar-item-padding);
     color: var(--selected-navlink-window-color);
     border-radius: var(--navbar-item-border-radius);
@@ -23,10 +24,10 @@
     align-items: center;
     text-decoration: none;
     cursor: pointer;
-    color: #FFF;
     color: #000;
     padding: var(--navbar-item-padding);
     width: var(--navbar-item-width);
+    max-width: var(--navbar-item-max-width);
     transition: background .3s ease-in;
     border-radius: var(--navbar-item-border-radius);
     z-index: 1;
@@ -50,6 +51,7 @@
     --progress-height: 3.5px;
     --navbar-item-border-radius: 4px;
     --navbar-item-width: 8.5vw;
+    --navbar-item-max-width: 180px;
     --navbar-item-margin: 0.1vw;
     --navbar-item-padding: 10px 0 10px;
     --navbar-transition: background .2s ease-in-out, box-shadow .1s ease-in-out, transform .1s ease-in-out;
@@ -73,14 +75,6 @@
 }
 
 @media screen and (min-width: 900px) {
-    .navbar-burger, .navbar-burger-icon {
-        display: none;
-    }
-
-    .nav-burger-panel {
-        display: none;
-    }
-
     .navbar-left {
         padding: 10px;
         display: flex;
@@ -101,9 +95,7 @@
     --transition: background .2s ease-in-out;
     border: .1px solid #CCC;
     opacity: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: none;
     align-items: center;
     top: calc( var(--navbar-height) - var(--dropdown-top-offset));
     position: fixed;
@@ -111,7 +103,6 @@
     height: fit-content;
     padding: 10px;
     border-radius: 0 0 12px 12px;
-    background: var(--zenburn-background); /* For dark mode */
     background: rgba(250,250,250,0.8);
     backdrop-filter: blur(28px);
     transition: var(--transition);
@@ -141,85 +132,37 @@
         display: none;
     }
 
-    .nav-burger {
-        width: 50px;
-        height: 50px;
-        margin-left: auto;
-        margin-right: 10px;
-        border-radius: 5px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        /* background: rgba(255, 255, 255, 0.1); */
-        border: .1px solid rgba(255, 255, 255, 0.3);
-    }
-
-
     .navbar-content svg {
         stroke: rgba(0, 0, 0, .35);
     }
-
-    .nav-burger-panel {
-        --navbar-height: 61px;
-        top: 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        z-index: 11;
-        right: 0;
-        position: fixed;
-        width: 30%;
-        padding-top: 5vh;
-        height: 100%;
-        background: var(--dark-mode-black);
-        transition: transform .2s ease-in-out;
-    }
-
-    .nav-burger-panel-move-lower {
-        transform: translateY(var(--navbar-height));
-    }
-
-    .nav-burger-panel-hide {
-        transform: translate(100%, var(--navbar-height));
-    }
-
-    .burger-item {
-        color: #FFF;
-        padding: 2px;
-        margin: 2px;
-        width: 27vw;
-        border-radius: 5px;
-        text-decoration: none;
-    }
-
 }
 
 
 .hidden {
-    transform: translateY(calc(-var(--navbar-height)));
+    transform: translateY(calc(var(--navbar-height)));
     transform: translateY(-59px); /* For some reason the above doesn't work so I put this here for now */
 }
 
 .detached {
     position: fixed;
-    backdrop-filter: blur(8px);
-    background: rgba(200,200,200,.1);
+    backdrop-filter: blur(12px);
+    background: rgba(200,200,200, .4);
     box-shadow: .1px .1px 1px #888;
 }
 
 .detached .navbar-content .navbar-left .navbar-item {
-    color: #555;
+    color: #000;
     font-weight: 700;
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5), -1px -1px 3px rgba(255, 255, 255, 0.5); /* Subtle text shadow for contrast */
 }
 
+
+
 .logo {
-    --primary-font: 'Proxima Nova Bold', monospace;
-    --font-weight-bold: 900;
+    --font-weight-bold: 800;
     --font-size-large: 20px;
     display: inline-block;
-    font-family: var(--primary-font);
+    font-family: 'Proxima Nova Bold',Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
     font-size: var(--font-size-large);
     font-weight: var(--font-weight-bold);
     background: linear-gradient(
@@ -233,6 +176,7 @@
     background-size: 200% 200%;
     width: 220px;
     background-clip: text;
+    text-align: center;
     text-fill-color: transparent;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -245,11 +189,6 @@
     -moz-font-smoothing: antialiased;
     -webkit-text-stroke-width: 0.2px;
     -webkit-text-stroke-color: #1E1E1E;
-}
-
-.detached .navbar-content .nav-burger {
-    border: 1px solid rgba(255, 255, 255, 1);
-    background: rgba(255, 255, 255, .5)
 }
 
 .detached .navbar-content .logo {
@@ -290,6 +229,7 @@
 .active-link {
     background: var(--dark-mode-purple-2);
     color: #FEFEFE !important;
+    text-shadow: none !important; /* No need to have text shadow when background is opaque duh */
 }
 
 /*****************************************************************************/

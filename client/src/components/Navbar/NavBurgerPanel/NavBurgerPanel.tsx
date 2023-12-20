@@ -1,7 +1,7 @@
 import { Component }  from 'react';
 import { NavLink } from "react-router-dom";
-
 import INavBurgerPanelProps from "./Interface/INavBurgerPanelProps";
+import "./NavBurgerPanel.css";
 
 class NavBurgerPanel extends Component<INavBurgerPanelProps, {}> {
     constructor(props: INavBurgerPanelProps) {

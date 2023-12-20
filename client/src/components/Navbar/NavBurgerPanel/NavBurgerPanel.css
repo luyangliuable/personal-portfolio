@@ -1,0 +1,62 @@
+/* Styles for screens wider than 900px */
+@media screen and (min-width: 900px) {
+    .navbar-burger, .navbar-burger-icon {
+        display: none;
+    }
+
+    .nav-burger-panel {
+        display: none;
+    }
+}
+
+/* Styles for screens narrower than 900px */
+@media screen and (max-width: 900px) {
+    .nav-burger {
+        width: 50px;
+        height: 50px;
+        margin-left: auto;
+        margin-right: 10px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border: 0.1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .nav-burger-panel {
+        top: 0;
+        right: 0;
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        z-index: 11;
+        width: 30%;
+        padding-top: 5vh;
+        height: 100%;
+        background: rgba(0, 0, 0, .7);
+        backdrop-filter: blur(15px);
+        transition: transform 0.2s ease-in-out;
+        transform: translateY(var(--navbar-height));
+    }
+
+    .nav-burger-panel-hide {
+        transform: translate(100%, var(--navbar-height));
+    }
+
+    .burger-item {
+        color: #FFF;
+        padding: 2px;
+        margin: 2px;
+        width: 27vw;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+}
+
+.detached .navbar-content .nav-burger {
+    border: 1px solid rgba(255, 255, 255, 1);
+    background: rgba(255, 255, 255, 0.5);
+}

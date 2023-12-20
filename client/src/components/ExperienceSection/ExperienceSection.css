@@ -1,5 +1,4 @@
 .experience-section-content-container {
-    width: auto;
     padding-left: 40vw;
     width: min-content;
     display: inline-flex;
@@ -14,22 +13,20 @@
     position: absolute;
     z-index: -1;
     top: 50%;
-    border-top: 5px dotted #aeaeae;
+    border-top: 1px solid #aeaeae;
 }
 
 .experience-section-parent-container {
     overflow-x: hidden;
-    text-align: left;
-    position: -webkit-sticky;
     position: sticky;
-    top: 1%;
+    top: var(--navbar-height);
+    height: calc(95.5vh - var(--navbar-height));
 }
 
 .experience-section-wrapper {
     width: 100%;
     display: flex;
     justify-content: center;
-    text-align: left;
     margin-bottom: var(--common-card-margin);
 }
 
@@ -37,23 +34,13 @@
     flex-shrink: 0; /* Prevents children from shrinking if space is tight */
 }
 
-.experience-section-timeline-line {
-    width: calc(400px * 12);
-    height: 10px;
-    background: #000;
-    display: none;
-}
-
 .experience-section-container {
     width: calc(var(--home-container-width) - 3vw);
-    max-width: calc( var(--home-container-max-width) - 3vw);
+    max-width: calc(var(--home-container-max-width) - 3vw);
     display: flex;
     flex-direction: column;
-    width: calc(var(--home-container-width) - 3vw);
 }
 
 .experience-section-card.below {
     margin-top: 40vh;
 }
-
-

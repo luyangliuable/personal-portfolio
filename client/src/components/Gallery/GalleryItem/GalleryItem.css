@@ -1,9 +1,9 @@
 .gallery-item {
     display: flex;
-    transition: all .3s ease-in;
+    transition: all .1s ease-in;
     flex-direction: column;
     opacity: 0;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     transform: translateX(100px);
     width: 400px;
@@ -11,6 +11,14 @@
     height: fit-content;
     padding-bottom: 10px;
     margin: 10px 0;
+}
+
+.gallery-item--no-boundary {
+    background: transparent;
+    background: rgba(200, 200, 200, .1);
+    backdrop-filter: blur(2px);
+    border: none;
+    margin: 20px 0;
 }
 
 .initially-hidden {
@@ -82,8 +90,7 @@
 .gallery-item__type {
     height: 60px;
     width: 120px;
-    border-bottom: 1px solid #888;
-    /* box-shadow: 1px 1px 1px 1px #AAA; */
+    /* border-bottom: .2px solid #888; */
     background-color: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(12px);
     position: absolute;

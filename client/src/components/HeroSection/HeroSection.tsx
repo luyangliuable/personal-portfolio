@@ -18,7 +18,7 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
         super(props);
         this.state = {
             backgrounds: [],
-            introduction: "I am a motivated software engineering student with a diverse array of skills and experiences, \
+            introduction: "I am a motivated software engineering grad with a diverse array of skills and experiences, \
 ranging from web and mobile app development to machine learning research. \
 I pride myself on my efficient time and effort management abilities and my aptitude for continuous learning.",
             mainContent: {
@@ -112,13 +112,13 @@ I pride myself on my efficient time and effort management abilities and my aptit
                         <div className="hero-section__content__right"><CodingCat showAnimtion={this.props.scrolling} /></div>
                     </div>
                     <div className="hero-section-badge__container">
-                        {/*
+                        {
                             heroSectionState.linkToMyOtherSocialMedia.map((item: any, index: number) => (
                                 <a key={index} href={item.link} className="hero-section-badge__link" target="_blank">
                                     <img src={item.imageSrc} alt={item.name} />
                                 </a>
                             ))
-                        */}
+                        }
                     </div>
                 </LandingPageCard>
             </div>

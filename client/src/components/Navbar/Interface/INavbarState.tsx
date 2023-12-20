@@ -5,9 +5,9 @@ interface INavbarState {
     links: Link[];
     currentlyHoveredNavbarLinkName: string | null;
     lastScrollY: number;
+    isNavbarHidden: boolean;
     hideNavBarScrollSensitivity: number;
     navBarDetached: boolean;
-    showBurgerPanel: boolean;
     dropdownMenuLinkDisplay: ReactNode[]
 }
 

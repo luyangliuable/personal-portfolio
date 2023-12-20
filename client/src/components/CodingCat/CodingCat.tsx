@@ -5,6 +5,8 @@ import { gsap } from 'gsap';
 import ICodingCatProps from './Interface/ICodingCatProps';
 import ICodingCatState from './Interface/ICodingCatState';
 
+import ChristmasHat from "./ChristmasHat/ChristmasHat";
+
 class CodingCat extends Component<ICodingCatProps, ICodingCatState> {
     constructor(props: ICodingCatProps) {
         super(props);

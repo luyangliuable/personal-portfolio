@@ -1,0 +1,94 @@
+/* Comments and Documentation */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: #6b7380; /* A muted grayish-blue for comments and documentation */
+}
+
+/* Punctuation */
+.token.punctuation {
+    color: #444; /* A darker gray for punctuation */
+}
+
+/* Namespace */
+.token.namespace {
+    opacity: .7;
+    color: #2e2987; /* A slightly muted blue for namespace */
+}
+
+/* Keywords and Control Flow */
+.token.keyword {
+    color: #0077b6; /* A vibrant blue for keywords */
+}
+
+/* Properties, Tags, and Constants */
+.token.property,
+.token.tag,
+.token.constant {
+    color: #e94560; /* A bright red for properties, tags, and constants */
+}
+
+/* Strings and Characters */
+.token.string,
+.token.char {
+    color: #00a17e; /* A teal-green for strings and characters */
+}
+
+/* Numbers and Booleans */
+.token.number,
+.token.boolean {
+    color: #ff6f61; /* A vivid red for numbers and booleans */
+}
+
+/* Selectors and Attribute Names */
+.token.selector,
+.token.attr-name {
+    color: #f9a03f; /* A warm orange for selectors and attribute names */
+}
+
+/* Built-in and Inserted */
+.token.builtin,
+.token.inserted {
+    color: #52cc52; /* A bright green for built-in and inserted content */
+}
+
+/* Operators, Entities, URLs, and Variables */
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+    color: #9a6ded; /* A rich violet for operators, entities, URLs, and variables */
+}
+
+/* At-rules, Attribute Values, Functions, and Class Names */
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+    color: #3b14a7; /* A deep blue for at-rules, attribute values, functions, and class names */
+}
+
+/* Regular Expressions and Important Keywords */
+.token.regex,
+.token.important {
+    color: #ff9a41; /* An orange for regular expressions and important keywords */
+}
+
+/* Bold Text */
+.token.important,
+.token.bold {
+    font-weight: bold;
+}
+
+/* Italic Text */
+.token.italic {
+    font-style: italic;
+}
+
+/* Cursor Style */
+.token.entity {
+    cursor: help;
+}

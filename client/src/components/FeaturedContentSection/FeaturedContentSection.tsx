@@ -65,7 +65,7 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
                         type="blog"
                         dateCreated={content.date_created}
                         minuteRead={content.reading_time_minutes}
-                        style={{ margin: "5px 20px" }}
+                        style={{ margin: "25px 20px" }}
                         link={`/digital_chronicles/blog?id=${content._id.$oid}`}
                         image={imageURL} />
                 </div>

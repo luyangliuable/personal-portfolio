@@ -35,6 +35,7 @@
 
 .blog__featured {
     width: 30%;
+    position: relative;
     border-left: .1px solid #888;
     padding: 4vh 0 0 4vw;
 }
@@ -51,6 +52,24 @@
     width: 82%;
     margin-bottom: 5vh;
     flex-wrap: wrap;
+}
+
+.blog__tag-container--selected {
+    position: sticky;
+    background: rgba(255, 255, 255, .2);
+    padding: min(12px, .5vw) 0;
+    border-radius: 0 0 10px 10px;
+    backdrop-filter: blur(12px);
+    z-index: 2;
+    top: var(--navbar-height);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: 2vh;
+    flex-wrap: wrap;
+    transition: .15s top ease-in;
 }
 
 
@@ -76,27 +95,27 @@
     justify-content: center;
     padding: 5px 9px;
     cursor: pointer;
-    background: #555;
-    color: #EEE;
     font-size: min(max(12px, .5vw), 15px);
     border-radius: 4px;
-    box-shadow: .2px .2px .1px #888;
-    border: .1px solid #888;
+    box-shadow: none;
     margin: 3px 2px;
     white-space: nowrap;
     text-overflow: ellipsis;
-    transition: all .5s ease-in;
+    transition: all .2s ease-in;
+    background: #EEE;
+    border: .1px dashed #888;
+    color: #555;
 }
 
-.blog__tag--unselect {
-    border: .1px dashed #888;
-    background: #EEE;
-    color: #555;
-    box-shadow: none;
+.blog__tag--selected {
+    background: #555;
+    color: #EEE;
+    border: .1px solid #888;
+    box-shadow: .2px .2px .1px #888;
 }
 
 .blog__tag:hover {
-    background: #555;
+    background: #1e90ff;
     border: .1px solid #888;
     color: #EEE;
 }

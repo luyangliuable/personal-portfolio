@@ -39,7 +39,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                         to: "/digital_chronicles/scenic_memories",
                     }, {
                         name: "🧩 My Daily Leetcode",
-                        to: "/digital_chronicles/daily_leetcode",
+                        to: "/digital_chronicles/blogs?tag=daily-leetcode",
                     },
                     ]
                 },
@@ -106,18 +106,15 @@ class NavBar extends Component<INavbarProps, INavbarState> {
             navBarDetached: false,
             currentlyHoveredNavbarLinkName: null,
             hideNavBarScrollSensitivity: 1,
-            showBurgerPanel: false,
+            isNavbarHidden: false,
             name: "~/llcode.tech",
             dropdownMenuLinkDisplay: []
         };
     }
 
     get navBarHeight(): number {
-        const selectedNavlinkWindow = this.selectedNavlinkWindow.current!;
-
         const element = this.navbar.current!;
         const height = element?.getBoundingClientRect().height || 0;
-        selectedNavlinkWindow.style.setProperty("--navbar-height", `${height}px`);
 
         return height;
     }
@@ -130,11 +127,13 @@ class NavBar extends Component<INavbarProps, INavbarState> {
         const { scrollStatus } = this.props;
         const { lastScrollY, hideNavBarScrollSensitivity } = this.state;
 
-        if (scrollStatus.scrolled! - Math.max(0, lastScrollY) >= hideNavBarScrollSensitivity) {
+        if (scrollStatus.scrolled! - Math.max(0, lastScrollY) >= hideNavBarScrollSensitivity && !this.state.isNavbarHidden) {
             this.hideNavBar();
-        } else if (Math.max(0, lastScrollY - scrollStatus.scrolled!) >= hideNavBarScrollSensitivity) {
+        } else if (Math.max(0, lastScrollY - scrollStatus.scrolled!) >= hideNavBarScrollSensitivity && this.state.isNavbarHidden) {
             this.showNavBar();
         }
+
+        this.setState({ lastScrollY: scrollStatus.scrolled! });
     };
 
     listenContinuousScrolled = () => {
@@ -148,7 +147,6 @@ class NavBar extends Component<INavbarProps, INavbarState> {
 
         const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
         this.updateScrolledProgress(scrollStatus.scrolled! / pageHeight);
-        this.setState({ lastScrollY: scrollStatus.scrolled! });
     };
 
     addBurgerClickOutEventLister() {
@@ -173,7 +171,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                 if (child !== selectedNavlinkWindow) {
                     child.addEventListener("mouseover", () => {
                         const factor = navbarLeft.children.length - index - 1;
-                        const translateXValue = `calc(-${factor}*( var(--navbar-item-width) + var(--navbar-item-margin)) + var(--navbar-item-margin) )`;
+                        const translateXValue = `calc(-${factor}*( min(var(--navbar-item-width), var(--navbar-item-max-width)) + var(--navbar-item-margin)) + var(--navbar-item-margin) )`;
                         selectedNavlinkWindow.style.setProperty("--dynamic-translate", `${translateXValue}`);
                     });
                 }
@@ -193,6 +191,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
 
     private updateScrollingBehavior(prevProps: INavbarProps) {
         const { scrollStatus } = this.props;
+
         if (scrollStatus.scrolling !== prevProps.scrollStatus.scrolling) {
             this.listenDeltaScrolled();
         }
@@ -221,13 +220,26 @@ class NavBar extends Component<INavbarProps, INavbarState> {
     };
 
     hideNavBar = () => {
+        // If the navbar is not already hidden, hide it and set the navbar height to 0px
         this.navbar.current?.classList.add("hidden");
-        this.burgerPanel.current?.classList.remove("nav-burger-panel-move-lower");
+        document.documentElement.style.setProperty('--navbar-height', '0px');
+
+        this.setState({
+            ...this.state,
+            isNavbarHidden: true
+        });
     };
 
     showNavBar = () => {
         this.navbar.current?.classList.remove("hidden");
-        this.burgerPanel.current?.classList.add("nav-burger-panel-move-lower");
+
+        // Connascence of value here /Users/blackfish/personal-portfolio/client/src/App.css:5
+        document.documentElement.style.setProperty('--navbar-height', `${this.navBarHeight}px`);
+
+        this.setState({
+            ...this.state,
+            isNavbarHidden: false
+        });
     };
 
     toggleBurgerMenu = () => {
@@ -276,7 +288,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
         return (
             <>
                 <div
-                    className="navbar"
+                    className="navbar grid-background--dot"
                     onMouseLeave={() => this.hideDropdownMenu()}
                     ref={this.navbar}>
                     <div className="navbar-content">

@@ -1,8 +1,7 @@
 .image-skeleton {
     --loader-background-color: #EEEEEE;
+    --loader-background-color: transparent;
     --loader-highlight-color: #DEDEDE;
-    width: 300px;
-    height: 200px;
     position: relative;
     z-index: -1;
     background: linear-gradient(90deg, var(--loader-background-color) 25%, var(--loader-highlight-color) 50%, var(--loader-background-color) 75%);

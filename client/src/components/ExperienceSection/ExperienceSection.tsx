@@ -49,6 +49,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                     cardTitle: "",
                     url: "",
                     cardSubtitle: "",
+                    location: "-37.902488, 145.164690",
                     cardDetailedText: "In the park where I habitually strolled with Teddie post-work or studies, the sunset painted serene silences. ",
                     importance: 1,
                     display: "IMAGE",
@@ -69,8 +70,8 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                     display: "IMAGE",
                     media: {
                         type: "IMAGE",
-                        source: {
-                            url: enrouteToCamberwell
+                    source: {
+                        url: enrouteToCamberwell
                         }
                     }
                 },
@@ -79,6 +80,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                     cardTitle: "",
                     url: "",
                     cardSubtitle: "",
+                    location: "-37.829423, 145.058246",
                     cardDetailedText: "A image I took of the sunset in Camberwell where I used to live.",
                     importance: .9,
                     display: "IMAGE",
@@ -137,7 +139,8 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                     cardTitle: "",
                     url: "",
                     cardSubtitle: "",
-                    cardDetailedText: "I captured this serene view at Mad Patties during the COVID era. Every afternoon, it greeted me, making it unforgettable.",
+                    location: "-37.790968, 145.172341",
+                    cardDetailedText: "I captured this serene view at Mad Patties during the COVID era. Every afternoon, it greeted me, making it unforgettable. A year following my departure, the shop closed down.",
                     importance: 1,
                     display: "IMAGE",
                     media: ({
@@ -192,7 +195,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                     dateTime: "2023",
                     cardTitle: "WEX",
                     url: "http://www.wex.com",
-                    cardSubtitle: "Started role as Software Development Intern",
+                    cardSubtitle: "Software Developer",
                     cardDetailedText: "",
                     importance: 1,
                     media: {
