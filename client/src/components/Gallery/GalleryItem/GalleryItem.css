@@ -3,7 +3,7 @@
     transition: all .1s ease-in;
     flex-direction: column;
     opacity: 0;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     transform: translateX(100px);
     width: 400px;

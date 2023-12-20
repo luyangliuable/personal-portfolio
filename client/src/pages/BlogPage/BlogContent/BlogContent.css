@@ -37,9 +37,7 @@
     background: rgba(238, 238, 238, .1);
     backdrop-filter: blur(2px);
     border-radius: 12px;
-    border: .1px solid #CCC;
-    box-shadow: .5px .5px 1px rgba(139, 101, 77, 0.2), /* Bottom shadow */
-                .5px .5px 1px rgba(139, 101, 77, 0.2); /* Right shadow */
+    border: .1px solid #CCC
 }
 
 .blog-content-body {

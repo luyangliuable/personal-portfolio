@@ -46,8 +46,8 @@ const ExperienceSectionEvent: React.FC<{ item: ExperienceSectionItem, index: num
             {defaultDisplay && experienceSectionCardTextExperienceBody()}
 
             <div className={imageWrapperclassName.join(" ")}>
-                <img className="experience-section-card__image"
-                    style={displayIsImage ? { height: "200px", maxHeight: "80%", objectFit: "cover", minWidth: "100%", marginBottom: "10px" } : {}}
+                <img className="experience-section-card__image box-shadow-medium"
+                    style={displayIsImage ? { maxHeight: "180px", objectFit: "cover", minWidth: "100%", marginBottom: "10px" } : {}}
                     src={item.media.source.url} />
             </div>
 

@@ -114,7 +114,7 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
         const imageId = image?.$oid;
 
         return (
-            <div className="blog-content">
+            <div className="blog-content box-shadow">
                 <div className="blog-content__header">
                     <h1>{this.state.content.heading}</h1>
                     <div className="card-image--author-info">

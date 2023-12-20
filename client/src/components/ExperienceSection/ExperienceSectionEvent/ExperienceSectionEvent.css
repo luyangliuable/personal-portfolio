@@ -2,7 +2,7 @@
     width: 300px;
     margin: 0 5px;
     height: fit-content;
-    padding: 10px;
+    padding: 8px;
     position: relative;
     border: none;
     background: transparent;
@@ -54,12 +54,11 @@
 
 .experience-section-card__image-wrapper--image,
 .experience-section-card__image-wrapper--experience {
-    display: flex; /* Added for consistency */
+    display: flex;
 }
 
 .experience-section-card__image-wrapper--image {
     height: 80%;
-    align-items: flex-end;
 }
 
 .experience-section-card__image-wrapper--experience {
@@ -68,13 +67,12 @@
 }
 
 .experience-section-card__image {
-    align-items: center;
     max-height: 80px;
     border-radius: 10px;
     margin-top: 10px;
 }
 
-@media screen and (max-height: 1000px) {
+@media screen and (max-height: 850px) {
     .experience-section-card {
         width: 180px;
         height: 200px;
