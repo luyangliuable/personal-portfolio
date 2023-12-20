@@ -139,7 +139,7 @@
 
 
 .hidden {
-    transform: translateY(calc(-var(--navbar-height)));
+    transform: translateY(calc(var(--navbar-height)));
     transform: translateY(-59px); /* For some reason the above doesn't work so I put this here for now */
 }
 

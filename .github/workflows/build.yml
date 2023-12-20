@@ -1,0 +1,27 @@
+name: Test Building Works
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - deploy
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '21'  # Set the Node.js version
+
+      - name: Build Project
+        run: |
+          cd ./client
+          npm install typescript@4.x.x --save-dev  # Force TypeScript to a compatible version
+          npm install
+          npm run build

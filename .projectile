@@ -1,0 +1,11 @@
+-.dot
+-.jcs
+-.svg
+-.txt
+-.png
+-.woff2
+/fonts/
+/server/
+/public/
+/node_modules/
+

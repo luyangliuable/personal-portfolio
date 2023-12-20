@@ -3,7 +3,8 @@ name: Deploy to Server
 on:
   push:
     branches:
-      - main  # Set your branch name here
+      - main
+      - deploy
 
 jobs:
   build-and-deploy:
@@ -16,13 +17,15 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'  # Set the Node.js version
+          node-version: '21'  # Set the Node.js version
 
       - name: Build Project
         run: |
-          cd ./client/build
+          cd ./client
+          npm install typescript@4.x.x --save-dev  # Force TypeScript to a compatible version
           npm install
           npm run build
+
 
       - name: Copy files to the server
         uses: appleboy/scp-action@master
@@ -31,13 +34,14 @@ jobs:
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          source: "./client/build/*"
+          source: "client/build/*"
           target: "/var/www/llcode.tech/html/"
+          strip_components: 2
 
       - name: Reload Nginx
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.REMOTE_NGINX_HOST }}
+          host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
