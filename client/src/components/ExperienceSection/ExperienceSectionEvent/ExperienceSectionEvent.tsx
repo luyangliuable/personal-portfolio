@@ -6,7 +6,7 @@ import { PiMapPinLineThin } from "react-icons/pi";
 interface ExperienceSectionEventProps {
     item: ExperienceSectionItem,
     index: number,
-    alt?: string 
+    alt?: string
 }
 
 const ExperienceSectionEvent: React.FC<ExperienceSectionEventProps> = ({ item, index, alt }) => {

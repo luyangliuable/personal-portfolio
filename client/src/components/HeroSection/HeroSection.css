@@ -6,7 +6,7 @@
     .hero-section__content__left {
         animation: .5s animate-slide-up-fade-in ease-in;
         padding: 0 5vw 0 5vw;
-        font-size: calc(.7rem + 0.1vw); 
+        font-size: calc(.7rem + 0.1vw);
     }
 
     .hero-section__content__right {

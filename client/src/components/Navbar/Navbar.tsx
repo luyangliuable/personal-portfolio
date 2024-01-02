@@ -34,7 +34,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                         to: "/digital_chronicles/blogs",
                     }, {
                         name: "🧑‍💻 Coding Notes",
-                        isLocked: true, 
+                        isLocked: true,
                         to: "/digital_chronicles/coding_notes",
                     }, {
                         name: "🏞 Scenic Memories",
