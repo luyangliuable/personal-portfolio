@@ -131,7 +131,7 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
 		    <TableOfContent className="w-80" headings={this.state.headings} />
 		</div>
                 <div className="blog-content-body">
-                    <MarkdownRenderer markdown={body} />
+                <MarkdownRenderer markdown={body} />
                 </div>
             </div>
         )

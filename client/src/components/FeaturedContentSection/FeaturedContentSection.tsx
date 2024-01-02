@@ -41,8 +41,11 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
     }
 
     calculateElementsToShow = () => {
+        const windowWidth = window.innerWidth;
         const elementWidth = 400;
-        let numOfElementsToShow = Math.floor(window.innerWidth / elementWidth);
+        const wrapperWidth = 1900; // Connascence of value with FeaturedContentSection.css:10
+
+        let numOfElementsToShow = Math.floor(Math.min(windowWidth, wrapperWidth) / elementWidth);
         this.setState({ numOfElementsToShow: Math.max(numOfElementsToShow, 2) });
     }
 
@@ -55,6 +58,7 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
     renderTopPickedPostsSortedByDateDescending = (): React.ReactNode => {
         const sliceEnd = this.state.numOfElementsToShow - 2;
         return this.state.featuredPosts.slice(0, sliceEnd).map((content, idx) => {
+
             const imageURL = `http://llcode.tech/api/image/${content.image.$oid}`
 
             return (
@@ -65,7 +69,7 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
                         type="blog"
                         dateCreated={content.date_created}
                         minuteRead={content.reading_time_minutes}
-                        style={{ margin: "25px 20px" }}
+                        style={{ margin: "2px 20px" }}
                         link={`/digital_chronicles/blog?id=${content._id.$oid}`}
                         image={imageURL} />
                 </div>
@@ -97,8 +101,8 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
     render() {
         return (
             <LandingPageCard heading="Featured Content" landingPageCardType="fitContent" blendWithBackground={true}>
-                <div ref={this.currentComponentRef} className="featured-content-section">
-                    <div className="featured-section-content">
+                <div ref={this.currentComponentRef} className="featured-content__wrapper">
+                    <div className="featured-section">
                         <GalleryItem
                             name={this.getFeaturedToolHeading()}
                             type="tool"

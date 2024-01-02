@@ -1,0 +1,28 @@
+.hero-header {
+    width: 90vw;
+    padding: 2vh 5vw;
+    margin-bottom: 5vh;
+    background: rgb(235, 235, 235);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    jusify-content: flex-start;
+    backdrop-filter: blur(5px)
+}
+
+.hero-header>p {
+    width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+    .hero-header>p {
+        width: fit-content;
+    }
+}
+
+.hero-header__graphics-container {
+    position: relative;
+    width: 20vw;
+    height: 20vw;
+    padding: 0 50px;
+}

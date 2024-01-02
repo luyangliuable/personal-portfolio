@@ -1,6 +1,6 @@
-import { Link } from "../../Interface/INavbarState";
+import { NavbarItem } from "../../Interface/INavbarState";
 
 export default interface ILoginButtonState {
-    loginButtonLoggedInState: Link;
-    loginButtonLoggedOffState: Link
+    loginButtonLoggedInState: NavbarItem;
+    loginButtonLoggedOffState: NavbarItem
 }

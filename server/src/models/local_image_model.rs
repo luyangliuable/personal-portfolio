@@ -11,5 +11,6 @@ pub struct LocalImage {
     pub month: Option<i32>,
     pub date_created: Option<String>,
     pub file_name: String,
+    pub description:  Option<String>,
     pub source: Option<String>
 }

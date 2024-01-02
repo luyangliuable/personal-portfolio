@@ -17,7 +17,7 @@
     --landing-page-card-large--height: calc(97vh - var(--landing-page-card-large--padding)*2);
     --landing-page-card-fit-under-navbar--max-height: 170vw;
     --landing-page-card-box-shadow:  .6px .5px 2.8px #A5A58C;
-    --landing-page-card-intro-animation: animate-slide-up-fade-in .5s ease-in;
+    --landing-page-card-intro-animation: animate-slide-up-fade-in .1s ease-in;
     position: relative;
     display: flex;
     justify-content: space-between;

@@ -3,6 +3,7 @@ import SkeletonImage from './SkeletonImage/SkeletonImage';
 import IImageProps from './Interface/IImageProps';
 import IImageState from './Interface/IImageState';
 import ImageRepository from "../../repositories/ImageRepository";
+import "./Image.css";
 
 class Image extends Component<IImageProps, IImageState> {
     imageRepository: ImageRepository;
