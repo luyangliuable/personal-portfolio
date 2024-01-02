@@ -59,7 +59,7 @@ class GalleryItem extends Component<IGalleryItemProps, IGalleryItemState> {
                     style={style}
                     key={this.props.key}
                     onMouseMove={cardGradientEffect}
-                    className="gallery-item gallery-item--no-boundary card">
+                    className="gallery-item flex flex-col justify-start items-center opacity-0 pb-10 blur-boundary card">
                     {this.GalleryItemTypeSegment}
                     <Image className="gallery-item__image" src={image} />
                     <h3>{this.props.name}</h3>
@@ -68,7 +68,7 @@ class GalleryItem extends Component<IGalleryItemProps, IGalleryItemState> {
                         (<p className="gallery-item__metadata">{this.props.minuteRead} min read | {isoDateFormatToString(new Date(this.props.dateCreated))} </p>)
                     }
                     <p>{this.props.subheading}</p>
-                    <p style={{ marginTop: "10px" }}>{this.props.description}</p>
+                    <p className="mt-5">{this.props.description}</p>
                     <TagCloud tags={this.props.tags} />
                 </div>
             </NavLink>

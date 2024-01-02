@@ -57,20 +57,17 @@ class Card extends Component<ICardProps, ICardState> {
 
         return (
             <NavLink ref={this.cardItemRef} onMouseMove={cardGradientEffect} className="card card-item" to={link}>
-                <div className="card-image--author-info">
-                <Image src={authorImage} className="user-image card-image--author-image" alt="Author" />
-                {author}
-            </div>
+                <div className="card-image--author-info"><Image src={authorImage} className="user-image card-image--author-image" alt="Author" />{author}</div>
+
                 <div className="card-item__content">
-                <h3 className="card-item__heading">{heading}</h3>
-                <p className="card-item__label">
-                {`${displayMinuteRead} | ${displayDateCreated}`} {in_progress && (<>| <InProgressBlock /></>)}<TagCloud tags={tags} />
-                </p>
+                    <h3 className="card-item__heading">{heading}</h3>
+                    <p className="card-item__label flex flex-row items-center">{`${displayMinuteRead} | ${displayDateCreated}`}{in_progress && <InProgressBlock />}</p>
+                    <TagCloud tags={tags} />
                 </div>
                 <div className="card-image-preview__wrapper">
-                {<Image src={image} className="card-image-preview" alt="Card Preview" />}
-            </div>
-                </NavLink>
+                    {<Image src={image} className="card-image-preview" alt="Card Preview" />}
+                </div>
+            </NavLink>
         );
     }
 }

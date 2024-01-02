@@ -142,7 +142,16 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
         return (
             <div className="page-container">
                 <div className="blog-content__wrapper">
-                <div className="blog-content__side-components position-sticky"></div>
+                <div className="blog-content__side-components position-sticky">
+                <a href="https://ko-fi.com/D1D1PFTTH" target="_blank" rel="noopener noreferrer">
+                <img
+            height="36"
+            style={{ border: '0px', height: '36px' }}
+            src="https://storage.ko-fi.com/cdn/kofi2.png?v=3"
+            alt="Buy Me a Coffee at ko-fi.com"
+                />
+                </a>
+                </div>
                 {this.state.content ? this.renderBlogContent() : <SkeletonBlogContent />}
 		            <div className="blog-content__side-components position-sticky">
 			          <TableOfContent headings={this.state.headings} />

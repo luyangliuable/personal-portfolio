@@ -4,15 +4,12 @@
 
 .blog-list {
     padding-top: 4vh;
-}
 
-.blog-list__content {
-    width: 100%;
 }
 
 .blog__featured {
+    display: flex; /* Define here instead of class .flex because need to override display: none later */
     border-left: .1px solid #888;
-    padding: 4vh 0 0 4vw;
 }
 
 .blog__featured>* {

@@ -1,24 +1,8 @@
 .gallery-item {
-    display: flex;
     transition: all .1s ease-in;
-    flex-direction: column;
-    opacity: 0;
-    justify-content: flex-start;
-    align-items: center;
     transform: translateX(100px);
-    width: 400px;
-    min-height: 320px;
-    height: fit-content;
-    padding-bottom: 10px;
-    margin: 10px 0;
-}
-
-.gallery-item--no-boundary {
-    background: transparent;
-    background: rgba(200, 200, 200, .1);
-    backdrop-filter: blur(2px);
-    border: none;
-    margin: 20px 0;
+    width: 400px; height: fit-content; min-height: 320px;
+    margin: 20px 20px !important; /* I don't know what is causing margin: 2px 20px in element.style */
 }
 
 .initially-hidden {
@@ -35,13 +19,11 @@
     }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1300px) {
     .gallery-item {
-        width: 280px;
+        width: 300px;
         max-width: 90vw;
         min-height: 140px;
-        padding: 10px;
-        margin: 10px;
     }
 }
 

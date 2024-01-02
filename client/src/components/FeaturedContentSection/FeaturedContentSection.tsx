@@ -102,7 +102,7 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
         return (
             <LandingPageCard heading="Featured Content" landingPageCardType="fitContent" blendWithBackground={true}>
                 <div ref={this.currentComponentRef} className="featured-content__wrapper">
-                    <div className="featured-section">
+                    <div className="featured-section w-full">
                         <GalleryItem
                             name={this.getFeaturedToolHeading()}
                             type="tool"
