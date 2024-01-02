@@ -19,5 +19,5 @@
     top: 50%;
     transform: translateY(-50%);
     left: 5px;
-    animation: blink 2s infinite;
+    animation: blink 1s infinite alternate;
 }

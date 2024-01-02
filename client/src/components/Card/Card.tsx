@@ -64,7 +64,7 @@ class Card extends Component<ICardProps, ICardState> {
                 <div className="card-item__content">
                 <h3 className="card-item__heading">{heading}</h3>
                 <p className="card-item__label">
-                    {`${displayMinuteRead} | ${displayDateCreated}`} {in_progress && <InProgressBlock />}<TagCloud tags={tags} />
+                {`${displayMinuteRead} | ${displayDateCreated}`} {in_progress && (<>| <InProgressBlock /></>)}<TagCloud tags={tags} />
                 </p>
                 </div>
                 <div className="card-image-preview__wrapper">

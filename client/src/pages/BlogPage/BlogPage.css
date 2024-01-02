@@ -84,7 +84,7 @@
     position: relative;
     left: 20px;
     margin: 40px 0;
-    margin: min(40px, 2vh) 0;
+    margin: min(60px, 4vh) 0 min(30px, 2vh);
     font-size: 1.5rem;
 }
 
