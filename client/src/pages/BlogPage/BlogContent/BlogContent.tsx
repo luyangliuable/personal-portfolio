@@ -116,24 +116,24 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
         return (
             <div className="blog-content box-shadow">
                 <div className="blog-content__header">
-                    <h1>{this.state.content.heading}</h1>
-                    <div className="card-image--author-info">
-                        <Image className="user-image blog-content--author-image" src={this.defaultAuthorImage} />
-                        <div className="flex-vertical">
-                            <span>{author}</span>
-                            <span>{displayDateCreated}</span>
-                        </div>
-                    </div>
-                    <TagCloud tags={tags} />
+                <h1>{this.state.content.heading}</h1>
+                <div className="card-image--author-info">
+                <Image className="user-image blog-content--author-image" src={this.defaultAuthorImage} />
+                <div className="flex-vertical">
+                <span>{author}</span>
+                <span>{displayDateCreated}</span>
+                </div>
+                </div>
+                <TagCloud tags={tags} />
                 </div>
                 <Image className="blog-content__image" src={imageId} />
-		<div className="w-full flex-col justify-center items-center translucent-white table-of-content--small-screen">
-		    <TableOfContent className="w-80" headings={this.state.headings} />
-		</div>
+		            <div className="w-full flex-col justify-center items-center translucent-white table-of-content--small-screen">
+		            <TableOfContent className="w-80" headings={this.state.headings} />
+		            </div>
                 <div className="blog-content-body">
                 <MarkdownRenderer markdown={body} />
                 </div>
-            </div>
+                </div>
         )
     }
 
@@ -142,13 +142,13 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
         return (
             <div className="page-container">
                 <div className="blog-content__wrapper">
-                    <div className="blog-content__side-components"></div>
-                    {this.state.content ? this.renderBlogContent() : <SkeletonBlogContent />}
-		    <div className="blog-content__side-components">
-			<TableOfContent headings={this.state.headings} />
-		    </div>
+                <div className="blog-content__side-components position-sticky"></div>
+                {this.state.content ? this.renderBlogContent() : <SkeletonBlogContent />}
+		            <div className="blog-content__side-components position-sticky">
+			          <TableOfContent headings={this.state.headings} />
+		            </div>
                 </div>
-            </div>
+                </div>
         )
     }
 }

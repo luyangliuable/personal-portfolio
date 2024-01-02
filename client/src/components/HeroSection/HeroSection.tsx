@@ -17,7 +17,7 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
         super(props);
         this.state = {
             backgrounds: [],
-            introduction: "I am a motivated software engineering grad with a diverse array of skills and experiences, ranging from web and mobile app development to machine learning research. I pride myself on my efficient time and effort management abilities and my aptitude for continuous learning.",
+            introduction: (<>I am a motivated software engineering grad with a <span className="fancy-underline">diverse array of skills</span> and experiences, ranging from web and mobile app development to machine learning research. I pride myself on my efficient <span className="fancy-underline">time management abilities</span> and my aptitude for <span className="fancy-underline">continuous learning.</span></>),
             mainContent: {
                 heading: "Hi There 👋. I am Luyang!",
                 itemsToShow: [],
@@ -98,12 +98,10 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
                             <h1>{heroSectionState.mainContent.heading}</h1>
                             <p className="hero-section__content__left__text">{heroSectionState.introduction}</p>
                             {heroSectionState.mainContent.items.map((item: string, index: number) => (<p key={index} className="hero-section__content__left__text" style={{ margin: "2px" }}>{item}</p>))}
-
-                            <br />
-
-                            <Button to="/digital_chronicles/blogs">See my Blogs <AiOutlineArrowRight /></Button>
-                            <Button to="/projects/code">See my Projects <AiOutlineArrowRight /></Button>
-
+                            <div className="flex flex-row mt-5 justify-start">
+                                <Button to="/digital_chronicles/blogs">See my Blogs <AiOutlineArrowRight /></Button>
+                                <Button to="/projects/code">See my Projects <AiOutlineArrowRight /></Button>
+                            </div>
                         </div>
                         <div className="hero-section__background__wrapper">{heroSectionState.backgrounds}</div>
                         <div className="hero-section__content__right"><CodingCat showAnimtion={this.props.scrolling} /></div>

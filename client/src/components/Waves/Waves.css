@@ -23,6 +23,12 @@
     }
 }
 
+@media (prefers-reduced-motion) {
+    .wave__container {
+        display: none
+    }
+}
+
 .wave {
     opacity: 0.4;
     position: absolute;

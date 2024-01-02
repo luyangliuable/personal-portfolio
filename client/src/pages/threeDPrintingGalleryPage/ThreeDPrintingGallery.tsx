@@ -13,7 +13,7 @@ class ThreeDPrintingGallery extends Component<{}, IThreeDPrintingGalleryState> {
 
         this.heroHeaderContent = Object.freeze({
             heading: "3D Printing Projects",
-            description: (<>I 3D printed all these myself with a printer that was released in 2016, back in 2017. I will get back to printing once I make enough money to purchase a new one. My current one is broken. I also designed the models for some of these as well</>)
+            description: (<>I fabricated these items using a 2016-model 3D printer, acquired in 2017. I plan to resume printing with a new printer once funds allow, as my current one is non-operational. I also designed several of the models myself.</>)
         }); // as const
 
         this.state = {

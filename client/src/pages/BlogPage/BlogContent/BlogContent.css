@@ -1,7 +1,4 @@
 .blog-content__side-components {
-    position: -webkit-sticky;
-    position: sticky;
-
     left: 0;
     margin-top: 20vh;
     top: calc(var(--navbar-height) + 2px);
