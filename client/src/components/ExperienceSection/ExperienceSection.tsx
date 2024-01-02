@@ -173,7 +173,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                     media: {
                         type: "IMAGE",
                         source: {
-                            url: "https://media.licdn.com/dms/image/C560BAQEdvzZMUGZKJw/company-logo_200_200/0/1603077144281?e=2147483647&v=beta&t=4WMjvRe0GWGQOTH8m4o59cIDL1wWCGflYwochdR7E-w"
+                            url: "https://metro.co.uk/wp-content/uploads/2016/02/poo_emoji.jpg?quality=90&strip=all&zoom=1&resize=644%2C429"
                         }
                     }
                 },

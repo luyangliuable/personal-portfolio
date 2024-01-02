@@ -146,7 +146,17 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ markdown }) => {
 
         const elements = Array.from(container.childNodes).map(processNodes);
 
-        return <>{elements.map((el) => (typeof el === 'string' ? React.createElement('div', { dangerouslySetInnerHTML: { __html: el } }) : el))}</>;
+        return (
+            <>
+                {elements.map((el, index) => {
+                    // Use a combination of the element's type and its index as a key
+                    const key = typeof el + index;
+                    return typeof el === 'string'
+                        ? React.createElement('div', { dangerouslySetInnerHTML: { __html: el }, key: key })
+                        : React.cloneElement(el, { key: key });
+                })}
+            </>
+        );
     };
 
     useEffect(() => {
