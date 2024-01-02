@@ -6,6 +6,7 @@ import loadable from '@loadable/component'
 import './App.css';
 
 // import BlogPage from './pages/BlogPage/BlogPage';
+
 const LandingPage = loadable(() => import('./pages/LandingPage/LandingPage'));
 const ResumePage = loadable(() => import('./pages/ResumePage/ResumePage'));
 const UnderConstruction = loadable(() => import('./pages/UnderConstructionPage/UnderConstruction'));
@@ -15,9 +16,7 @@ const HardwareProjectsPage = loadable(() => import("./pages/HardwareProjectsPage
 const CodingProjectsPage = loadable(() => import("./pages/CodingProjectsPage/CodingProjectsPage"));
 const LogInPage = loadable(() => import("./pages/LogInPage/LogInPage"));
 const RegisterPage = loadable(() => import("./pages/RegisterPage/RegisterPage"));
-
-
-const BlogPage = React.lazy(() => import('./pages/BlogPage/BlogPage'));
+const BlogPage = loadable(() => import('./pages/BlogPage/BlogPage'));
 
 interface IAppStateInterface {
     scrollY: number | null,

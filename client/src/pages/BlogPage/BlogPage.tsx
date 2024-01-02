@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import "./BlogPage.css";
 import HeroHeader from "../../components/HeroHeader/HeroHeader";
 import PostRepository from "../../repositories/PostRepository";
@@ -109,7 +109,7 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
         const groupedPosts = this.groupPostsByYear(this.sortPostsByDate(this.state.content).filter(({ tags }) => isSubset(selectedTags, tags) || !selectedTags));
 
         return Object.keys(groupedPosts).sort((a, b) => parseInt(b) - parseInt(a)).map(year => (
-            <>
+            <React.Fragment key={year}>
                 <div className="blog__year"><span>{year}</span></div>
                 {
                     groupedPosts[year].map(( content: BlogPostResponse ) => {
@@ -133,7 +133,7 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
                         )
                     })
                 }
-            </>
+            </React.Fragment>
         ));
     }
 
@@ -146,7 +146,7 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
                         const imageURL = `http://llcode.tech/api/image/${post.image.$oid}`
                         return (
                             <div key={post._id.$oid}>
-                                <GalleryItem
+                            <GalleryItem
                             name={post.heading}
                             tags={post.tags}
                             type="blog"
