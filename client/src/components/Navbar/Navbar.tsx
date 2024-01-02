@@ -143,14 +143,10 @@ class NavBar extends Component<INavbarProps, INavbarState> {
             to: "/misc/algorithm_of_the_Day",
             isLocked: true
         }, {
-            name: "🎓 My Credentials",
-            to: "/misc/credentials",
+            name: "🙏 Wall of Gratefulness",
+            to: "/misc/wall_of_gratefulness",
             isLocked: true
-        }, {
-            name: "🏆 My Awards",
-            to: "/misc/awards",
-            isLocked: true
-        }
+        },
     ]
 }
             ],

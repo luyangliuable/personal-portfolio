@@ -112,8 +112,8 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
             <>
                 <div className="blog__year"><span>{year}</span></div>
                 {
-                    groupedPosts[year].map(( content: any ) => {
-                        const {_id, heading, author, date_created, body, reading_time_minutes, tags, image} = content;
+                    groupedPosts[year].map(( content: BlogPostResponse ) => {
+                        const {_id, in_progress, heading, author, date_created, date_updated, body, reading_time_minutes, tags, image} = content;
                         const link = `/digital_chronicles/blog?id=${_id.$oid}`;
 
                         return (
@@ -123,8 +123,10 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
                             authorImage={authorImage}
                             author={author}
                             date_created={date_created}
+                            date_updated={date_updated}
                             body={body}
                             minuteRead={reading_time_minutes}
+                            in_progress={in_progress}
                             tags={tags}
                             image={image && image.$oid}
                             link={link} />
@@ -137,7 +139,7 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
 
     renderTopPickedBlogPost = (): React.ReactNode | null => {
         return this.props.showTopPicks && (
-            <div className="blog__featured w-40">
+            <div className="w-half flex-col items-start pl-3vw blog__featured">
                 <h3>Top Picks</h3>
                 {
                     this.state.topPickedPosts.map((post) => {
@@ -225,14 +227,12 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
                 <div className="blog-container flex w-full cursor-pointer">
                 <div className="blog-list flex flex-col w-full items-center">
                 {this.currentSelectedTags.length > 0 && (<div className={tagContainerClasses}>{this.renderSelectedTags()}</div>)}
-                <div className="blog__tag-container w-full flex justify-center flex-wrap"> {this.renderUnSelectedTags()}</div>
-                <div className="blog-list__content flex flex-col items-center">
-                {this.renderPostsSortedByDateDescending()}
-            </div>
+                <div className="blog__tag-container w-full flex justify-center flex-wrap">{this.renderUnSelectedTags()}</div>
+                <div className="w-full flex flex-col items-center">{this.renderPostsSortedByDateDescending()}</div>
                 </div>
                 {this.renderTopPickedBlogPost()}
-            </div>
-                </>
+                </div>
+            </>
         );
     }
 }

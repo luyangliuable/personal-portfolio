@@ -77,6 +77,7 @@
 .card-item__label {
     color: #333;
     margin: 0;
+    font-size: .84rem;
 }
 
 .card-item__description {

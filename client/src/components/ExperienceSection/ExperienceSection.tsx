@@ -29,6 +29,63 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
             isLocked: false,
             items: [
                 {
+                    dateTime: "2023",
+                    cardTitle: "",
+                    location: "-24.997805, 172.478887",
+                    url: "",
+                    cardSubtitle: "",
+                    cardDetailedText: "Last sunset captured onboard the princess cruise voyage.",
+                    importance: 1,
+                    display: "IMAGE",
+                    media: {
+                        type: "IMAGE",
+                        source: {
+                            url: "http://llcode.tech/api/image/65920a4af1f0fe657dc4683b"
+                        }
+                    }
+                },
+                {
+                    dateTime: "2024",
+                    cardTitle: "Commbank",
+                    url: "https://www.linkedin.com/company/sonorus-au/",
+                    cardSubtitle: "Software Engineer",
+                    cardDetailedText: "",
+                    importance: 1,
+                    media: {
+                        type: "IMAGE",
+                        source: {
+                            url: "https://www.commbank.com.au/content/dam/commbank/commBank-logo.svg"
+                        }
+                    }
+                }, {
+                    dateTime: "2023",
+                    cardTitle: "Sonorous",
+                    url: "https://www.linkedin.com/company/sonorus-au/",
+                    cardSubtitle: "ML Engineer",
+                    cardDetailedText: "",
+                    importance: 1,
+                    media: {
+                        type: "IMAGE",
+                        source: {
+                            url: "http://llcode.tech/api/image/65920366f1f0fe657dc46839"
+                        }
+                    }
+                }, {
+                    dateTime: "2023",
+                    cardTitle: "",
+                    location: "-37.830474, 145.058351",
+                    url: "",
+                    cardSubtitle: "",
+                    cardDetailedText: "A sunset silhouettes a distant cityscape beneath a radiant sky, framed by the gentle foliage of Camberwell.",
+                    importance: 1,
+                    display: "IMAGE",
+                    media: {
+                        type: "IMAGE",
+                        source: {
+                            url: "http://llcode.tech/api/image/65920b85f1f0fe657dc4683c"
+                        }
+                    }
+                }, {
                     dateTime: "2021",
                     cardTitle: "",
                     location: "Brighton Beach, Victoria Park, Vic, Australia",
@@ -122,20 +179,6 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                 },
                 {
                     dateTime: "2021",
-                    cardTitle: "Cisco",
-                    url: "http://www.cisco.com",
-                    cardSubtitle: "Network Engineer Intern",
-                    cardDetailedText: "",
-                    importance: 0.7,
-                    media: {
-                        type: "IMAGE",
-                        source: {
-                            url: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Cisco_logo_blue_2016.svg/440px-Cisco_logo_blue_2016.svg.png"
-                        }
-                    }
-                },
-                {
-                    dateTime: "2021",
                     cardTitle: "",
                     url: "",
                     cardSubtitle: "",
@@ -147,19 +190,6 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                         type: "IMAGE",
                         source: {
                             url: madPattiesSunset
-                        }
-                    })
-                },
-                {
-                    dateTime: "2021",
-                    cardTitle: "Mad Patties",
-                    url: "http://www.cisco.com",
-                    cardSubtitle: "Kitchen Hand",
-                    cardDetailedText: "",
-                    media: ({
-                        type: "IMAGE",
-                        source: {
-                            url: "https://madpatties.com/wp-content/uploads/2021/05/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20210511102354-150x150.png"
                         }
                     })
                 },
@@ -202,6 +232,31 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                         type: "IMAGE",
                         source: {
                             url: "https://www.wexinc.com/wp-content/uploads/2020/03/social-share-logo.png"
+                        }
+                    }
+                }, {
+                    dateTime: "2021",
+                    cardTitle: "Mad Patties",
+                    url: "http://www.cisco.com",
+                    cardSubtitle: "Kitchen Hand",
+                    cardDetailedText: "",
+                    media: ({
+                        type: "IMAGE",
+                        source: {
+                            url: "https://madpatties.com/wp-content/uploads/2021/05/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20210511102354-150x150.png"
+                        }
+                    })
+                }, {
+                    dateTime: "2021",
+                    cardTitle: "Cisco",
+                    url: "http://www.cisco.com",
+                    cardSubtitle: "Network Engineer Intern",
+                    cardDetailedText: "",
+                    importance: 0.7,
+                    media: {
+                        type: "IMAGE",
+                        source: {
+                            url: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Cisco_logo_blue_2016.svg/440px-Cisco_logo_blue_2016.svg.png"
                         }
                     }
                 }
