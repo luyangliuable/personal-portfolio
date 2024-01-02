@@ -25,8 +25,8 @@ class LandingPage extends Component<ILandingPageProps, ILandingPagestate> {
                     <Experiences scrolled={this.props.scrolled} />
                 </div>
 
-                <LandingPageCard landingPageCardType="fitContent" heading="Digital Chronicles of the Real World">
-                    <BlogPage />
+                <LandingPageCard landingPageCardType="fitContent" className="blend-with-background" heading="Digital Chronicles of the Real World">
+                    <div className="flex-column-centered-centered"><BlogPage /></div>
                 </LandingPageCard>
             </div>
         )

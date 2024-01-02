@@ -1,0 +1,86 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+      - deploy
+
+jobs:
+  build-and-deploy-client:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '21'  # Set the Node.js version
+
+      - name: Build Project
+        run: |
+          cd ./client
+          npm install typescript@4.x.x --save-dev  # Force TypeScript to a compatible version
+          npm install
+          npm run build
+
+
+      - name: Copy files to the server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          source: "client/build/*"
+          target: "/var/www/llcode.tech/html/"
+          strip_components: 2
+
+      - name: Reload Nginx
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: "nginx -s reload"
+
+  build-and-deploy-server:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly-2023-03-01
+          override: true
+
+      - name: Build Project Server
+        run: |
+          cd ./server
+          cargo build --release --verbose
+
+      - name: Copy files to the server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          source: "server/target/release/server"
+          target: "/usr/local/bin/"
+          strip_components: 3
+
+      - name: Reload Systemd
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: "sudo systemctl daemon-reload && sudo systemctl restart personal_portfolio_client.service"

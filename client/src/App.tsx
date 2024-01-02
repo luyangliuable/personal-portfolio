@@ -24,11 +24,11 @@ const RedirectToRoot = (props: { link: string }): React.ReactElement<{ link: str
     React.useEffect(() => {
         navigate(props.link);
     }, [navigate]);
+
     return null;
 }
 
 function App() {
-    // Put any type for now because idk what the future will bring
     const [appState, setAppState] = useState<IAppStateInterface>({
         scrolled: null,
         scrolling: null
@@ -46,7 +46,6 @@ function App() {
 
         window.addEventListener("scroll", handleScroll);
 
-        // Cleanup
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
@@ -55,6 +54,8 @@ function App() {
     useEffect(() => {
         let scrollTimeout: NodeJS.Timeout;
 
+        const timeToCheckScrollingHasStoppedMiliseconds =  2;
+
         scrollTimeout = setInterval(() => {
             if (appState.scrolling === true) {
                 setAppState(prevState => ({
@@ -62,7 +63,7 @@ function App() {
                     scrolling: false
                 }));
             }
-        }, 10);
+        }, timeToCheckScrollingHasStoppedMiliseconds);
 
         return () => {
             window.clearInterval(scrollTimeout);
@@ -76,8 +77,10 @@ function App() {
                     <NavBar scrollStatus={{ scrolled: appState.scrolled, scrolling: appState.scrolling }} />
                     <div className="page-body">
                         <Routes>
-                            <Route path="/" element={<LandingPage scrolled={appState.scrolled} scrolling={appState.scrolling} />} />
-                            <Route path="/digital_chronicles/blogs" element={<BlogPage />} />
+                            <Route path="/" element={
+                                <LandingPage scrolled={appState.scrolled} scrolling={appState.scrolling} />
+                            } />
+                            <Route path="/digital_chronicles/blogs" element={<BlogPage showTopPicks={true} />} />
                             <Route path="/resume" element={<ResumePage />} />
                             <Route path="/projects/3d_printing" element={<ThreeDPrintingGallery />} />
                             <Route path="/projects/hardware" element={<HardwareProjectsPage />} />

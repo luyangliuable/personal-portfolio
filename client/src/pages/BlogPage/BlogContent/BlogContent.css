@@ -1,42 +1,135 @@
-@media screen and (max-width: 768px) {
+.blog-content__side-components {
+    position: -webkit-sticky;
+    position: sticky;
+
+    left: 0;
+    margin-top: 20vh;
+    top: calc(var(--navbar-height) + 2px);
+
+    backdrop-filter: blur(2px);
+
+    font-size: min(max(12px, .5vw), 18px);
+    transition: color 1s ease-in;
+
+    height: fit-content;
+    max-height: 80vh;
+    max-width: 200px;
+    min-width: 200px;
+
+    transition: .15s top ease-in;
+}
+
+.blog-content__header {
+    width: fit-content;
+    width: 100%;
+}
+
+.blog-content {
+    --padding-left-right: min( 5vw, 500px );
+    --padding-top-bottom: min( 3vh, 200px );
+    --margin-top: min(2vh, 200px);
+    width: 500px;
+    padding: var(--padding-top-bottom) var(--padding-left-right);
+    margin-top: var( --margin-top );
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background: rgba(238, 238, 238, .1);
+    backdrop-filter: blur(2px);
+    border-radius: 12px;
+    border: .1px solid #CCC
+}
+
+.blog-content-body {
+    border-bottom: 1px #CCC solid;
+    width: 100%;
+    border-radius: .5vh;
+    font-size: 1rem;
+    text-decoration: none;
+    color: #000;
+    transition: background .3s ease-in;
+}
+
+.blog-content__header>h1 {
+    margin-bottom: 12px;
+}
+
+.blog-content-body>h1 {
+    display: none; /* Hide the title inside the markdown file itself because it already exists from request */
+}
+
+
+.blog-content-body img {
+    width: 98%;
+    border-radius: 12px;
+}
+
+.blog-content__image {
+    --blog-content__image-top-bottom-margin: min(10vh, 25px);
+    width: 98%;
+    height: min(30vh, 400px);
+    margin: var(--blog-content__image-top-bottom-margin) var(--blog-content__image-top-bottom-margin);
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.blog-content__header {
+    width: 80%;
+}
+
+.blog-content--author-image {
+    width: 40px;
+    height: 40px
+}
+
+.card-image--author-info>* {
+    margin-right: min(10px, 3vw);
+}
+
+.blog-content__wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+.table-of-content--small-screen {
+    display: none
+}
+
+@media screen and (max-width: 1000px) {
+    .blog-content__side-components {
+        display: none
+    }
+
+    .table-of-content--small-screen {
+	display: flex
+    }
+
     .blog-content {
-        /* cursor: pointer; */
-        text-align: left;
-        border-bottom: 1px #CCC solid;
-        padding: 2vh 2vw 2vh 2vw;
-        border-radius: .5vh;
-        width: 40%;
-        min-width: 300px;
-        max-width: 1000px;
-        text-decoration: none;
-        color: #000;
-        transition: background .3s ease-in;
+        width: 80%
     }
 }
 
-@media screen and (min-width: 769px) {
-    .blog-content {
-        /* cursor: pointer; */
-        text-align: left;
-        border-bottom: 1px #CCC solid;
-        padding: 2vh 2vw 2vh 2vw;
-        border-radius: .5vh;
-        width: 40%;
-        min-width: 300px;
-        max-width: 1000px;
-        text-decoration: none;
-        color: #000;
-        margin-right: 12vw;
-        transition: background .3s ease-in;
-    }
+
+/* Default Code block wrapped inside ````` rendered by markdown renderer from Markdown */
+.code-block--native__container {
+    --header-height: 20px;
+    position: relative;
+    width: 95%;
+    font-size: max(min(14px, 1.8vw), 10px);
+    padding: 10px;
+    background: #DDD;
+    margin-top: calc(var(--header-height) * 2);
+    border-radius: 0 0 6px 6px;
 }
 
+.code-block--native {
+    margin: 0;
+    overflow-x: auto;
+    padding-bottom: .25em; /* Extra space for scrollbar */
+    box-sizing: border-box; /* Ensure padding doesn't make it wider than parent */
+}
 
-.blog-content img {
-    width: 30vw;
-    max-width: 300px;
-    height: auto;
-    max-width: 100%;
-    margin: 0 auto;
-    display: block;
+.code-block--native>code {
 }

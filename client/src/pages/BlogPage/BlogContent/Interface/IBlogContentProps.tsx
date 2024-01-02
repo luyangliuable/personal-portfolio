@@ -1,4 +1,3 @@
-interface BlogContentProps {
-}
+interface BlogContentProps {}
 
 export default BlogContentProps;

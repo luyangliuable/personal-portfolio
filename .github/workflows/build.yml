@@ -1,0 +1,45 @@
+name: Test Building Works
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - deploy
+
+jobs:
+  build-client:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '21'  # Set the Node.js version
+
+      - name: Build Project Client
+        run: |
+          cd ./client
+          npm install typescript@4.x.x --save-dev  # Force TypeScript to a compatible version
+          npm install
+          npm run build
+
+  build-server:
+    runs-on: ubuntu-latest
+    needs: build-client
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: nightly-2023-03-01
+          override: true
+
+      - name: Build Project Server
+        run: |
+          cd ./server
+          cargo build --verbose

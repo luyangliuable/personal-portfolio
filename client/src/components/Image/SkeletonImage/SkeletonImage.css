@@ -1,0 +1,21 @@
+.image-skeleton {
+    --loader-background-color: #EEEEEE;
+    --loader-background-color: transparent;
+    --loader-highlight-color: #DEDEDE;
+    position: relative;
+    z-index: -1;
+    background: linear-gradient(90deg, var(--loader-background-color) 25%, var(--loader-highlight-color) 50%, var(--loader-background-color) 75%);
+    background-size: 200% 100%;
+    animation: loading 2s infinite ease-in-out;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}

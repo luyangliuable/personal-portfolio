@@ -34,7 +34,6 @@ pub async fn index_image(local_image_repo: &State<LocalImageRepo>, new_image: Js
 pub fn get_image(id: String, local_image_repo:&State<LocalImageRepo>) -> Result<(ContentType, Vec<u8>), Status> {
     let object_id = ObjectId::from_str(&id).expect("Failed to convert id to ObjectId");
 
-    // Get the LocalImage
     let local_image_result = match local_image_repo.0.get(object_id) {
         Ok(local_image) => local_image,
         Err(_) => return Err(Status::NotFound),
@@ -45,7 +44,6 @@ pub fn get_image(id: String, local_image_repo:&State<LocalImageRepo>) -> Result<
         Err(_) => return Err(Status::NotFound)
     };
 
-    // Read the file
     let image_bytes = std::fs::read(local_image_path).map_err(|e| {
         println!("Failed to read the file: {:?}", e);
         Status::InternalServerError

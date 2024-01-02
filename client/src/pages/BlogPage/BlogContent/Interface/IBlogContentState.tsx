@@ -1,11 +1,17 @@
-interface IBlogContentState {
-    content: blogContent,
-    render?: () => React.ReactElement<any, any>,
+import BlogPostResponse from "../../../../repositories/Response/BlogPostResponse";
+
+export type IBlogHeading = {
+    title: string,
+    level: number
 }
 
-type blogContent = {
-    heading: string | null,
-    body: string | null,
+export interface IBlogContentState {
+    content: BlogPostResponse,
+    headings: IBlogHeading[],
+    activeSection: string[],
+    cache: {
+        fetchedImageUrl?: string,
+        fetchedAuthorImageUrl?: string
+    },
+    render?: () => React.ReactElement<any, any>
 }
-
-export default IBlogContentState;

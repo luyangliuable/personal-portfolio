@@ -2,9 +2,18 @@
     width: 40vw !important;
     min-width: 300px;
     min-height: 200px;
+    max-width: 650px;
+    max-height: 400px;
     height: 20vw !important;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.under-contruction-card__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 80vh;
+    align-items: center;
+}

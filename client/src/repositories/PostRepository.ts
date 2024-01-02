@@ -1,40 +1,71 @@
+import BlogPostResponse from "./Response/BlogPostResponse";
+
 class PostRepository {
-  //"http://170.64.250.107/api/posts";
-  static BASE_URL: string = process.env.REACT_APP_WEATHER_API_BASE_URL || "http://llcode.tech/api/posts";
+    private static instance: PostRepository;
+    private static postListCache: any[] | null = null;
 
-  static options(method: 'GET' | 'DELETE' | 'POST' | 'PUT', body?: { [category: string]: any }): any {
-    return {
-      method: method,
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: {
-        // 'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body)
+    static BASE_URL: string = process.env.REACT_APP_WEATHER_API_BASE_URL || "http://llcode.tech/api/posts";
+
+    private constructor() {}
+
+    static getInstance(): PostRepository {
+        if (!PostRepository.instance) {
+            PostRepository.instance = new PostRepository();
+        }
+        return PostRepository.instance;
     }
-  };
 
+    private static options(method: 'GET' | 'DELETE' | 'POST' | 'PUT', body?: { [key: string]: any }): any {
+        return {
+            method: method,
+            // headers: {
+            //     'Content-Type': 'application/json',
+            // }, //TODO
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            body: body ? JSON.stringify(body) : null
+        };
+    }
 
-  static async getPostList(): Promise<any> {
-    const url = PostRepository.BASE_URL;
+    sortPostsByDate(posts: any[], type?: "asc" | "desc"): any[] {
+        return [...posts].sort((a, b) => {
+            const dateA = new Date(a.date_created).getTime();
+            const dateB = new Date(b.date_created).getTime();
 
-    const options = PostRepository.options("GET");
+            return type === "asc" ? dateA - dateB : dateB - dateA;
+        });
+    }
 
-    return fetch(url, options)
-      .then(response => response.json())
-      .catch(error => console.error('Error:', error));
-  }
+    async getFeaturedPostList(): Promise<any> {
+        const postList = await this.getPostList();
+        return this.sortPostsByDate(postList);
+    }
 
-  static async getPost(id: string): Promise<any> {
-    const url = `${PostRepository.BASE_URL}/${id}`;
+    async getPostList(): Promise<any> {
+        if (PostRepository.postListCache) {
+            return Promise.resolve(PostRepository.postListCache);
+        }
 
-    const options = PostRepository.options("GET");
+        const url = PostRepository.BASE_URL;
+        const options = PostRepository.options("GET");
 
-    return fetch(url, options)
-      .then(response => response.json())
-      .catch(error => console.error('Error:', error));
-  }
+        return fetch(url, options)
+            .then(response => response.json())
+            .then(data => {
+                PostRepository.postListCache = data;
+                return data;
+            })
+            .catch(error => console.error('Error:', error));
+    }
 
+    async getPost(id: string): Promise<BlogPostResponse> {
+        const url = `${PostRepository.BASE_URL}/${id}`;
+        const options = PostRepository.options("GET");
+
+        return fetch(url, options)
+            .then(response => response.json())
+            .catch(error => console.error('Error:', error));
+    }
 }
 
 export default PostRepository;

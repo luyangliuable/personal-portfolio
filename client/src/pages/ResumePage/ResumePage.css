@@ -1,8 +1,16 @@
 .browser {
     border: none;
     width: 100vw;
-    height: 85vh;
+    height: 92vh;
     position: fixed;
     left:0;
-    top: 100px;
+    top: 70px;
+}
+
+@media screen and (max-width: 100px) {
+    .browser {
+        display: none;
+        height: 50vh;
+        transform: scale(.5);
+    }
 }

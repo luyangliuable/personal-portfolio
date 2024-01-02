@@ -17,7 +17,7 @@ class CodingProjectsPage extends Component<{}, ICodingCatState> {
                 },
                 {
                     name: "Personal Website",
-                    description: "Dive into my digital alcove where tech meets whimsy. Discover intriguing blogs, handy tools, and snippets about me and my canine sidekick. Powered by React, TypeScript, and fortified with Rust, it's a playground for the curious and dog-loving tech enthusiasts alike.",
+                    description: "My personal website showcasing details about myself, my skils and my dog.",
                     image: "http://llcode.tech/api/image/650532f2f9b642fb30be59a3"
                 },
                 {

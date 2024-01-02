@@ -16,7 +16,7 @@ class HardwareProjectsPage extends Component<{}, IHardwareProjectsPageState> {
                 },
                 {
                     name: "",
-                    description: "This nifty Raspberry Pi is my domestic wizard; commanding home devices and banishing pesky ads with its Pi-hole prowess. A real tech charm!",
+                    description: "I used this Raspberry Pi for commanding home devices and blocking ads by using Pi-hole. A real tech charm!",
                     image: "http://llcode.tech/api/image/6505281ef9b642fb30be599e"
                 },
                 {

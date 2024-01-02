@@ -1,7 +1,10 @@
+
 :root {
     --page-top-margin: 68px;
+    --navbar-height: 68px;
+
     --page-bottom-margin: 120px;
-    --common-card-margin: 100px;
+    --common-card-margin: 10vh;
 
     --dark-mode-black: #1e1e1e;
     --dark-mode-purple: #491ed3;
@@ -17,20 +20,10 @@
     --dark-mode-background-color: #0d0d0d;
     --zenburn-background: #3F3F3F;
     --zenburn-foreground: #DCDCCC;
-    
-    --phone-screen-media-selector-width-threshold: 1000px;
+
 }
 
-
-body {
-    background: #EEE;
-    font-family: 'Proxima Nova';
-    overflow-x: hidden
-}
-
-.App {
-    text-align: center;
-}
+.App {}
 
 .App-logo {
     height: 40vmin;
@@ -54,6 +47,11 @@ body {
     color: white;
 }
 
+.flex-vertical {
+    display: flex;
+    flex-direction: column;
+}
+
 .App-link {
     color: #61dafb;
 }
@@ -71,6 +69,12 @@ body {
     h1 {
         font-size: 1.5rem !important;
     }
+}
+
+a {
+    text-decoration: none;
+    display: block;
+    color: inherit;
 }
 
 .landing-page-content {
@@ -114,6 +118,33 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    position: relative;
+    background-image: radial-gradient(rgba(194, 194, 194, 1) 1px, rgba(194, 194, 194, 0) 0);
+    background-size: 8px 8px;
+    background-position: -19px -19px;
+    animation: background-scroll 8s linear infinite;
+}
+
+@keyframes background-scroll {
+    0% {
+        background-position: -19px -19px;
+    }
+    100% {
+        background-position: 19px 19px;
+    }
+}
+
+.grid-background--line {
+    background-image:
+        linear-gradient(to right, #EEE 1px, transparent 1px),
+        linear-gradient(to bottom, #EEE 1px, transparent 1px);
+}
+
+
+.grid-background--dot {
+    background-image: radial-gradient(#CCC 1px, transparent 0);
+    background-size: 4px 4px;
+    background-position: -19px -19px;
 }
 
 .fixed {
@@ -124,130 +155,33 @@ body {
     -webkit-transform: translate(-50%, -50%) !important;
 }
 
-/*****************************************************************************/
-/*                                   cards                                   */
-/*****************************************************************************/
+/* Common CSS Without Tailwind */
 
-
-.card {
-    background-color: rgba(200, 200, 200, 0.1);
-    border-radius: 10px;
-    border: 1px solid #EEE;
-    position: relative; /* Need this here for cursor effect somehow */
-    overflow: hidden;
+.flex {
+  display: flex;
 }
 
-.card:hover::before {
-    opacity: 1;
+.flex-col {
+  flex-direction: column;
 }
 
-.card::before,
-.card::after {
-    border-radius: inherit;
-    content: "";
-    height: 100%;
-    left: 0px;
-    opacity: 0;
-    position: absolute;
-    top: 0px;
-    transition: opacity 500ms;
-    width: 100%;
+.justify-center {
+  justify-content: center;
 }
 
-.card::before {
-    background: radial-gradient(
-        800px circle at var(--mouse-x) var(--mouse-y), 
-        rgba(200, 200, 200, 0.3),
-        transparent 40%
-    );
-    z-index: 3;
+.items-center {
+  align-items: center;
 }
 
-.card::after {  
-    background: radial-gradient(
-        600px circle at var(--mouse-x) var(--mouse-y), 
-        rgba(200, 200, 200, 0.4),
-        transparent 40%
-    );
-    z-index: 1;
+.flex-column-centered-centered {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.page-container {
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.cursor-pointer {
-    cursor: pointer;
-}
-
-
-.card > .card-content {
-    background-color: var(--card-color);
-    border-radius: inherit;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    inset: 1px;
-    padding: 10px;
-    position: absolute;
-    z-index: 2;
-}
-
-/* -- ↓ ↓ ↓ extra card content styles ↓ ↓ ↓ -- */
-
-.card-info-wrapper {
-    align-items: center;
-    display: flex;
-    flex-grow: 1;
-    justify-content: flex-start;
-    padding: 0px 20px;
-}
-
-.card-info {
-    align-items: flex-start;
-    display: flex;
-    gap: 10px;
-}
-
-.card-info > i {  
-    font-size: 1em;
-    height: 20px;
-    line-height: 20px;
-}
-
-.card-info-title > h3 {
-    font-size: 1.1em;
-    line-height: 20px;
-}
-
-.card-info-title > h4 {
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 0.85em;
-    margin-top: 8px;
-}
-
-/*****************************************************************************/
-/*                                  Buttons                                  */
-/*****************************************************************************/
-
-
-.button {
-    position: relative;
-    background: var( --dark-mode-purple-2 );
-    padding: max(10px, 1vw);
-    border-radius: 12px;
-    cursor: pointer;
-    width: fit-content;
-    color: white;
-    transition: background .5s ease-in-out;
-    -webkit-transition: background .5s ease-in-out;
-    -moz-transition: background .5s ease-in-out;
-    margin: 5px;
-    z-index: 1;
-    border: none;
+.semi-opaque {
+    opacity: .5;
 }
 
 .noselect {
@@ -259,8 +193,51 @@ body {
     user-select: none;
 }
 
+.border-1-solid-black {
+    border: 1px solid black
+}
+
+.w-full {
+    width: 100%;
+}
+
+.w-80 {
+    width: 80%;
+}
+
+.w-half {
+    width: 50%;
+}
+
+.translucent-white {
+    background: rgba(255, 255, 255, 0.2)
+}
 
 
-.button:hover {
-    background: var(--dark-mode-blue);
+.box-shadow-medium {
+    box-shadow: 1px 1px 2px rgba(139, 101, 77, 0.2), /* Bottom shadow */
+                1px 1px 2px rgba(139, 101, 77, 0.2); /* Right shadow */
+}
+
+.box-shadow {
+    box-shadow: .5px .5px 1px rgba(139, 101, 77, 0.2), /* Bottom shadow */
+                .5px .5px 1px rgba(139, 101, 77, 0.2); /* Right shadow */
+}
+
+.user-image {
+    border-radius: 100%;
+    object-fit: cover
+}
+
+/*****************************************************************************/
+/*                         Global Animation Keyframes                        */
+/*****************************************************************************/
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
 }
