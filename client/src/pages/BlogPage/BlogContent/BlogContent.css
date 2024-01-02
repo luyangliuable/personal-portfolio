@@ -76,11 +76,8 @@
 
 .blog-content--author-image {
     width: 40px;
-    height: 40px
-}
-
-.card-image--author-info>* {
-    margin-right: min(10px, 3vw);
+    height: 40px;
+    margin-right: min(10px,3vw)
 }
 
 .blog-content__wrapper {

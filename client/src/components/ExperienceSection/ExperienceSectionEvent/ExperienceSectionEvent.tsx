@@ -13,7 +13,7 @@ const ExperienceSectionEvent: React.FC<ExperienceSectionEventProps> = ({ item, i
     const displayIsImage = item.display === "IMAGE";
     const defaultDisplay = item.display === "NORMAL" || !item.display;
     const experienceSectionCardIndexIsEvenNumber = index % 2 === 0;
-    const experienceSectionCardClassName = ["card experience-section-card"];
+    const experienceSectionCardClassName = ["card experience-section-card no-boundary"];
 
     experienceSectionCardIndexIsEvenNumber ? experienceSectionCardClassName.push("above")
         : experienceSectionCardClassName.push("below");

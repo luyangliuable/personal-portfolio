@@ -134,3 +134,7 @@
 .hero-section__content__left h1 {
     font-size: 2.4rem;
 }
+
+.hero-section__text_small {
+    font-size: .87rem;
+}

@@ -57,8 +57,7 @@ class Card extends Component<ICardProps, ICardState> {
 
         return (
             <NavLink ref={this.cardItemRef} onMouseMove={cardGradientEffect} className="card card-item" to={link}>
-                <div className="card-image--author-info"><Image src={authorImage} className="user-image card-image--author-image" alt="Author" />{author}</div>
-
+                <div className="flex"><Image src={authorImage} className="user-image card-image--author-image" alt="Author" />{author}</div>
                 <div className="card-item__content">
                     <h3 className="card-item__heading">{heading}</h3>
                     <p className="card-item__label flex flex-row items-center">{`${displayMinuteRead} | ${displayDateCreated}`}{in_progress && <InProgressBlock />}</p>
