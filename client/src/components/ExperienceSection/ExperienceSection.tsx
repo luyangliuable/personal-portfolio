@@ -121,7 +121,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                     }
                 },
                 {
-                    dateTime: "2020",
+                    dateTime: "2021",
                     cardTitle: "Cisco",
                     url: "http://www.cisco.com",
                     cardSubtitle: "Network Engineer Intern",
@@ -336,7 +336,8 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
         const isBeforeLockPosition = this.props.scrolled < this.getLockPosition();
 
         // TODO check if it is past timelime and show a default overlay when locked
-        const isPastTimelineLength = this.isLocked() && this.props.scrolled - this.getLockPosition() > this.state.timeLineLength;
+        // const isPastTimelineLength = this.isLocked() && this.props.scrolled - this.getLockPosition() > this.state.timeLineLength;
+
         return isBeforeLockPosition;
     }
 

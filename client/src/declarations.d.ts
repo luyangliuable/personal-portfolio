@@ -6,3 +6,7 @@ declare module "*.gif";
 
 declare module "prismjs";
 declare module 'dompurify';
+
+declare module '@mdx-js/runtime' {
+    export function mdx(component: string, props?: any): any;
+}

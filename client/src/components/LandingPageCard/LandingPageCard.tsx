@@ -53,8 +53,8 @@ class LandingPageCard extends Component<ILandingPageCardProps, any> {
         return (
             <div className={classArray.join(' ')}>
                 <div className="landing-page-card__content">
-                    <h1 className="landing-page-card__heading">{landingPageCardHeading}</h1>
-                    {this.props.children}
+                <h1 className="landing-page-card__heading">{landingPageCardHeading}</h1>
+                {this.props.children}
                 </div>
             </div>
         );

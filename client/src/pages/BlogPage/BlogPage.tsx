@@ -1,22 +1,31 @@
 import { Component } from "react";
 import "./BlogPage.css";
+import HeroHeader from "../../components/HeroHeader/HeroHeader";
 import PostRepository from "../../repositories/PostRepository";
 import { IBlogPageState } from "./Interface/IBlogPageState";
+import IHeroHeaderProps from "../../components/HeroHeader/Interface/IHeroHeaderProps";
 import BlogPostResponse from "../../repositories/Response/BlogPostResponse";
 import IBlogPageProps from "./Interface/IBlogPageProps";
 import Card from "../../components/Card/Card";
 import GalleryItem from "../../components/Gallery/GalleryItem/GalleryItem";
+import BlogPostGraphics from "../../components/BlogPostGraphics/BlogPostGraphics";
 import { Link } from 'react-router-dom';
 
 class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
     // Put any for props because for some reaosn i can't import `RouteComponentProps` for location
 
     postRepository: PostRepository;
+    heroHeaderContent: IHeroHeaderProps;
 
     constructor(props: IBlogPageProps | any) {
         super(props);
-
         this.postRepository = PostRepository.getInstance();
+
+        this.heroHeaderContent = Object.freeze({
+            heading: "Blog Posts",
+            description: "Blog posts for documenting useful code, mark memorable moments in my life and help my journey of endless self-improvement."
+        }); // as const
+
 
         this.state = {
             content: [],
@@ -31,7 +40,7 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
     }
 
     componentDidUpdate(prevProps: Readonly<IBlogPageProps>, prevState: Readonly<IBlogPageState>, snapshot?: any): void {
-        if (prevState.content != this.state.content) {
+        if (prevState.content !== this.state.content) {
             this.updateAllUniqueTags();
             this.updateTopPickedPosts();
         }
@@ -87,18 +96,22 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
             return array1.every(item => array2.includes(item));
         }
 
+        // TODO: Backend send user image id and card gets it
+        const authorImage = "http://llcode.tech/api/image/65817ae96c73ceb16ba51731";
+
         return this.sortPostsByDate(this.state.content).filter(({ tags }) => isSubset(selectedTags, tags) || !selectedTags).map((content, _) => (
             <Card
-                key={content._id.$oid}
-                heading={content.heading}
-                author={content.author}
-                date_created={content.date_created}
-                body={content.body}
-                minuteRead={content.reading_time_minutes}
-                tags={content.tags}
-                image={content.image && content.image.$oid}
-                link={`/digital_chronicles/blog?id=${content._id.$oid}`}
-            />
+            key={content._id.$oid}
+            heading={content.heading}
+            authorImage={authorImage}
+            author={content.author}
+            date_created={content.date_created}
+            body={content.body}
+            minuteRead={content.reading_time_minutes}
+            tags={content.tags}
+            image={content.image && content.image.$oid}
+            link={`/digital_chronicles/blog?id=${content._id.$oid}`}
+                />
         ));
     }
 
@@ -112,14 +125,14 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
                         return (
                             <div key={post._id.$oid}>
                                 <GalleryItem
-                                    name={post.heading}
-                                    tags={post.tags}
-                                    type="blog"
-                                    dateCreated={post.date_created}
-                                    minuteRead={post.reading_time_minutes}
-                                    link={`/digital_chronicles/blog?id=${post._id.$oid}`}
-                                    image={imageURL} />
-                            </div>
+                            name={post.heading}
+                            tags={post.tags}
+                            type="blog"
+                            dateCreated={post.date_created}
+                            minuteRead={post.reading_time_minutes}
+                            link={`/digital_chronicles/blog?id=${post._id.$oid}`}
+                            image={imageURL} />
+                                </div>
                         )
                     })
                 }
@@ -137,57 +150,63 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
 
     renderSelectedTags = (): React.ReactNode | null => {
         const baseUrlLink = "/digital_chronicles/blogs";
-
-        return [...this.state.allTags].map((tagName) => {
-            const tagAlreadySelected = this.currentSelectedTags.includes(tagName);
-
-            if (tagAlreadySelected) {
+        return [...this.state.allTags]
+            .filter(tagName => {
+                const tagAlreadySelected = this.currentSelectedTags.includes(tagName);
+                return tagAlreadySelected;
+            })
+            .map((tagName) => {
                 let selectedTagsString: string[] = [];
                 selectedTagsString = this.currentSelectedTags.filter(tag => tag !== tagName);
-                const tagClassName = ['blog__tag', 'noselect', tagAlreadySelected ? 'blog__tag--selected' : ''].join(" ");
-
+                const tagClassName = ['blog__tag', 'noselect', 'blog__tag--selected'].join(" ");
+                const to = `${baseUrlLink}?tag=${encodeURIComponent(selectedTagsString.join(","))}`;
                 return (
-                    <Link to={`${baseUrlLink}?tag=${encodeURIComponent(selectedTagsString.join(","))}`} key={tagName} className={tagClassName}>#{tagName}</Link>
+                    <Link to={to} key={tagName} className={tagClassName}>#{tagName}</Link>
                 );
-            }
-        })
+            })
     };
 
     renderUnSelectedTags = (): React.ReactNode | null => {
         const baseUrlLink = "/digital_chronicles/blogs";
-
-        return [...this.state.allTags].map((tagName) => {
-            const tagAlreadySelected = this.currentSelectedTags.includes(tagName);
-
-            if (!tagAlreadySelected) {
+        return [...this.state.allTags]
+            .filter(tagName => {
+                const tagAlreadySelected = this.currentSelectedTags.includes(tagName);
+                return !tagAlreadySelected;
+            })
+            .map((tagName) => {
                 let selectedTagsString: string[] = [];
                 selectedTagsString = this.currentSelectedTags.concat(tagName);
-                const tagClassName = ['blog__tag', 'noselect', tagAlreadySelected ? 'blog__tag--selected' : ''].join(" ");
-
+                const tagClassName = ['blog__tag', 'noselect'].join(" ");
+                const to = `${baseUrlLink}?tag=${encodeURIComponent(selectedTagsString.join(","))}`;
                 return (
-                    <Link to={`${baseUrlLink}?tag=${encodeURIComponent(selectedTagsString.join(","))}`} key={tagName} className={tagClassName}>#{tagName}</Link>
+                    <Link to={to} key={tagName} className={tagClassName}>#{tagName}</Link>
                 );
-            }
-        })
+            });
     };
 
 
     render() {
+        const heroHeading = this.heroHeaderContent.heading;
+        const heroDescription = this.heroHeaderContent.description;
+
         return (
-            <div className="blog-container cursor-pointer">
+            <>
+                <HeroHeader heading={heroHeading} description={heroDescription} graphics={<BlogPostGraphics />} />
+                <div className="blog-container cursor-pointer">
                 <div className="blog-list">
-                    {this.currentSelectedTags.length > 0 && (<div className="grid-background--dot blog__tag-container--selected">{this.renderSelectedTags()}</div>)}
-                    <div className="blog__tag-container"> {this.renderUnSelectedTags()}</div>
-                    <div className="blog__year">
-                        <span>2023</span>
-                    </div>
-                    <div className="blog-list__content flex-column-centered-centered">
-                        {this.renderPostsSortedByDateDescending()}
-                    </div>
+                {this.currentSelectedTags.length > 0 && (<div className="grid-background--dot blog__tag-container blog__tag-container--selected">{this.renderSelectedTags()}</div>)}
+                <div className="blog__tag-container"> {this.renderUnSelectedTags()}</div>
+                <div className="blog__year">
+                <span>2023</span>
+                </div>
+                <div className="blog-list__content flex-column-centered-centered">
+                {this.renderPostsSortedByDateDescending()}
+            </div>
                 </div>
 
                 {this.renderTopPickedBlogPost()}
             </div>
+                </>
         );
     }
 }

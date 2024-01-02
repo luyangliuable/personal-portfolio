@@ -45,7 +45,7 @@
 
 .navbar {
     --navbar-width: 100%;
-    --navbar-height: 61px; /* Default value, real value determine inside Navbar.tsx */
+    --navbar-height: 61px; /* Default value, real value determined inside Navbar.tsx */
     --navbar-submenu-height: 120px;
     --navbar-max-height: 93px;
     --progress-height: 3.5px;
@@ -91,7 +91,7 @@
 }
 
 .navbar-item__dropdown {
-    --dropdown-top-offset: 10px;
+    --dropdown-top-offset: 12px;
     --transition: background .2s ease-in-out;
     border: .1px solid #CCC;
     opacity: 0;
@@ -114,6 +114,7 @@
 .navbar-item__dropdown > .navbar-item {
     padding: var(--navbar-item-padding) 5px;
     width: 180px;
+    justify-content: space-between;
     margin-bottom: 1px;
 }
 
@@ -123,9 +124,9 @@
 }
 
 .detached .navbar-item__dropdown {
-    background: rgba(250,250,250,0.8);
-    backdrop-filter: blur(28px);
+    background: rgba(240,240,240,0.9);
 }
+
 
 @media screen and (max-width: 900px) {
     .navbar-left {

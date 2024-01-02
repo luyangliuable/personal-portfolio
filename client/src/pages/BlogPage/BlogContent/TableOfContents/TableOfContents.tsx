@@ -1,14 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 import ItableOfContentsProps from "./Interface/ItableOfContentsProps"
-import ITableOfContentsState from "./Interface/ITableOfContentsState"
+// import ITableOfContentsState from "./Interface/ITableOfContentsState"
 import "./TableOfContents.css";
 
-class TableOfContents extends Component<ItableOfContentsProps, ITableOfContentsState> {
-    constructor(props: ItableOfContentsProps) {
-        super(props);
-    }
+const TableOfContents: React.FC<ItableOfContentsProps> = (props) => {
+    // const [tableOfContentsState, settableOfContentsState] = useState<ITableOfContentsState>({});
 
-    getIdFromHeading(str: string): number {
+    const getIdFromHeading = (str: string): number => {
         let hash = 0;
 
         for (let i = 0; i < str.length; i++) {
@@ -20,7 +18,7 @@ class TableOfContents extends Component<ItableOfContentsProps, ITableOfContentsS
         return hash;
     }
 
-    handleClick = (event: React.MouseEvent<HTMLDivElement>, id: string) => {
+    const handleClick = (event: React.MouseEvent<HTMLDivElement>, id: string) => {
 
         const targetElement = document.getElementById(id);
 
@@ -31,38 +29,36 @@ class TableOfContents extends Component<ItableOfContentsProps, ITableOfContentsS
         }
     };
 
-    renderTableOfContents(): React.ReactNode {
+    const renderTableOfContents = (): React.ReactNode => {
         const getTextColor = (level: number): string => {
             const lightness = level * 20;
             return `hsl(0, 0%, ${lightness}%)`;
         };
 
-        const subheadings = this.props.headings?.filter(({ level }) => level !== 0);
+        const subheadings = props.headings?.filter(({ level }) => level !== 0);
         return subheadings?.map(({ title, level }, idx: number) => {
             const indentation = `${Math.max((level - 1), 0) * 20}px`;
 
             const marginBottom = `${(22 - 4.5 * level) / 2}px`;
             const color = getTextColor(level);
-            const id = this.getIdFromHeading(title);
+            const id = getIdFromHeading(title);
 
             return (
-                <div key={idx} style={{ color, margin: `${marginBottom} ${indentation}` }} onClick={(e) => this.handleClick(e, id.toString())}>
+                <div key={idx} style={{ color, margin: `${marginBottom} ${indentation}` }} onClick={(e) => handleClick(e, id.toString())}>
                     {title}
                 </div>
             );
         });
     }
 
-    render() {
-	const className = ["table-of-contents", this.props.className].join(" ");
+	  const className = ["table-of-contents", props.className].join(" ");
 
-        return (
-            <div className={className}>
-		<h2>Table of Contents:</h2>
-		{this.renderTableOfContents()}
-	    </div>
-        )
-    }
+    return (
+        <div className={className}>
+		        <h2>Table of Contents:</h2>
+		    {renderTableOfContents()}
+	      </div>
+    )
 }
 
 export default TableOfContents;

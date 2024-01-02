@@ -1,5 +1,5 @@
 interface IImageState {
-    fetchedImageUrl: string
+    fetchedImageUrl?: string
 }
 
 export default IImageState;

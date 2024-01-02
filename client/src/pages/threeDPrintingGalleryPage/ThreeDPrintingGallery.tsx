@@ -1,11 +1,20 @@
 import { Component } from "react";
 import "./ThreeDPrintingGallery.css";
 import IThreeDPrintingGalleryState from "./Interface/IThreeDPrintingGalleryState";
+import IHeroHeaderProps from "../../components/HeroHeader/Interface/IHeroHeaderProps";
+import HeroHeader from "../../components/HeroHeader/HeroHeader";
 import Gallery from "../../components/Gallery/Gallery";
 
 class ThreeDPrintingGallery extends Component<{}, IThreeDPrintingGalleryState> {
+    heroHeaderContent: IHeroHeaderProps;
+
     constructor(props: {}) {
         super(props);
+
+        this.heroHeaderContent = Object.freeze({
+            heading: "3D Printing Projects",
+            description: (<>I 3D printed all these myself with a printer that was released in 2016, back in 2017. I will get back to printing once I make enough money to purchase a new one. My current one is broken. I also designed the models for some of these as well</>)
+        }); // as const
 
         this.state = {
             content: [
@@ -29,8 +38,11 @@ class ThreeDPrintingGallery extends Component<{}, IThreeDPrintingGalleryState> {
     }
 
     render() {
+        const { heading, description } = this.heroHeaderContent;
+
         return (
             <>
+                <HeroHeader heading={heading} description={description} />
                 <Gallery content={this.state.content} heading="3D Printing Gallery" />
             </>
         );

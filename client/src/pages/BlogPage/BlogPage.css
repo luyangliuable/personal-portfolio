@@ -48,8 +48,8 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: flex-start;
-    width: 82%;
+    align-itemsems: flex-start;
+    width: 90%;
     margin-bottom: 5vh;
     flex-wrap: wrap;
 }
@@ -63,13 +63,26 @@
     z-index: 2;
     top: var(--navbar-height);
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    width: 100%;
     margin-bottom: 2vh;
-    flex-wrap: wrap;
-    transition: .15s top ease-in;
+    transition: .15s all ease-in;
+}
+
+.blog__tag-container * {
+    z-index: 1;
+    transition: .15s all ease-in;
+}
+
+
+.move-to-location {
+    /* position: absolute; /\* Set position to absolute to move freely *\/ */
+    animation: move-to-location 100s ease-in-out forwards; /* Use forwards to retain the end state */
+}
+
+@keyframes move-to-location {
+    100% {
+        top: var(--target-x-location); /* Animate to the target location */
+        left: var(--target-y-location);
+    }
 }
 
 

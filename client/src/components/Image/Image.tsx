@@ -3,6 +3,7 @@ import SkeletonImage from './SkeletonImage/SkeletonImage';
 import IImageProps from './Interface/IImageProps';
 import IImageState from './Interface/IImageState';
 import ImageRepository from "../../repositories/ImageRepository";
+import "./Image.css";
 
 class Image extends Component<IImageProps, IImageState> {
     imageRepository: ImageRepository;
@@ -13,6 +14,8 @@ class Image extends Component<IImageProps, IImageState> {
         defaultAuthorImage: "http://llcode.tech/api/image/65194be0f9b642fb30be59af",
         defaultAuthorImageId: "65194be0f9b642fb30be59af"
     };
+
+    defaultImageAlt = "You are blind";
 
     componentDidMount(): void {
         this.updateImage();
@@ -26,12 +29,8 @@ class Image extends Component<IImageProps, IImageState> {
 
     constructor(props: IImageProps) {
         super(props);
-
         this.imageRepository = ImageRepository.getInstance();
-
-        this.state = {
-            fetchedImageUrl: null
-        }
+        this.state = {}
     }
 
     async updateImage() {
@@ -53,12 +52,14 @@ class Image extends Component<IImageProps, IImageState> {
 
     render() {
         const { fetchedImageUrl } = this.state;
+        let { className, alt } = this.props;
+        alt ??= this.defaultImageAlt;
 
         return (
             <>
                 {
                     fetchedImageUrl ?
-                        <img className={this.props.className} src={fetchedImageUrl} alt={this.props.alt} />
+                        <img className={className} src={fetchedImageUrl} alt={alt} />
                         : <SkeletonImage class={this.props.className} />
                 }
             </>

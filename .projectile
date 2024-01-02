@@ -4,6 +4,7 @@
 -.txt
 -.png
 -.woff2
+-.md
 /fonts/
 /server/
 /public/

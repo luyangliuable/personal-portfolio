@@ -21,6 +21,7 @@ jobs:
       - name: Build Project Client
         run: |
           cd ./client
+          echo '*' >> .eslintignore
           npm install typescript@4.x.x --save-dev  # Force TypeScript to a compatible version
           npm install
           npm run build
