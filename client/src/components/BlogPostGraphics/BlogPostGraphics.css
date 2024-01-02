@@ -13,7 +13,7 @@
     0% {
         transform: rotateY(120deg);
     }
-    100% { 
+    100% {
         transform: rotateY(0deg);
     }
 }
@@ -22,13 +22,13 @@
     0%, 100% {
         margin-top: -5px;
     }
-    50% { 
+    50% {
         margin-top: 5px;
     }
 }
 
 .blog-graphics__paper, .paper.-two {
-    width: 80%; height: 100%; 
+    width: 90%; height: 100%;
     min-width: 80px; min-height: 130px;
     max-width: 200px; max-height: 300px;
     border: .1px solid black;
@@ -47,7 +47,7 @@
 
 .blog-graphics__paper:before {
     --paper-background-color: rgb(235, 235, 235);
-    --paper-flip-size: max(min(5vw, 100px), 25px);
+    --paper-flip-size: max(min(5vw, 60px), 25px);
     content: '';
     position: absolute;
     top: -1px; right: -1px;
@@ -76,6 +76,6 @@
 .paper.-two {
     position: absolute;
     background: #E9E9E9;
-    transform: rotateX(-40deg) rotateZ(-20deg) translate(max(-1vw, -10px), min(1.5vw, 12px)); 
+    transform: rotateX(-40deg) rotateZ(-20deg) translate(max(-1vw, -10px), min(1.5vw, 12px));
     background-image: radial-gradient(#333 1px, transparent 0); background-size: 4px 4px; background-position: -19px -19px;
 }

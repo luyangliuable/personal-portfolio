@@ -121,6 +121,37 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                     isLocked: true
                 }
             ]
+}, {
+    name: "Misc.",
+    to: null,
+    sublinks: [
+        {
+            name: "🎵 Music Playlist",
+            to: "/misc/music_playlist",
+            isLocked: true
+        },
+        {
+            name: "🎥 Youtube Playlist",
+            to: "/misc/youtube_playlist",
+            isLocked: true
+        }, {
+            name: "⌨️ Man of the Day",
+            to: "/misc/man_of_the_Day",
+            isLocked: true
+        }, {
+            name: "📐 Algorithm of the Day",
+            to: "/misc/algorithm_of_the_Day",
+            isLocked: true
+        }, {
+            name: "🎓 My Credentials",
+            to: "/misc/credentials",
+            isLocked: true
+        }, {
+            name: "🏆 My Awards",
+            to: "/misc/awards",
+            isLocked: true
+        }
+    ]
 }
             ],
 lastScrollY: 0,

@@ -23,9 +23,8 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
 
         this.heroHeaderContent = Object.freeze({
             heading: "Blog Posts",
-            description: "Blog posts for documenting useful code, mark memorable moments in my life and help my journey of endless self-improvement."
+            description: (<>Blog posts for <span className="fancy-underline"> documenting useful code</span>, mark <span className="fancy-underline">memorable moments</span> in my life and help my journey of endless <span className="fancy-underline">self-improvement</span>.</>),
         }); // as const
-
 
         this.state = {
             content: [],
@@ -89,35 +88,56 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
         return posts.sort((a, b) => new Date(b.date_created).getTime() - new Date(a.date_created).getTime());
     }
 
+    groupPostsByYear(posts: any): any {
+        return posts.reduce((groupedPosts: any, post: any) => {
+            const year = new Date(post.date_created).getFullYear().toString();
+            if (!groupedPosts[year]) {
+                groupedPosts[year] = [];
+            }
+            groupedPosts[year].push(post);
+            return groupedPosts;
+        }, {});
+    }
+
     renderPostsSortedByDateDescending = (): React.ReactNode => {
         const selectedTags = this.currentSelectedTags;
-
-        const isSubset = (array1: string[], array2: string[]) => {
+        const isSubset = (array1: string[], array2: string[]): boolean => {
             return array1.every(item => array2.includes(item));
-        }
-
+        };
         // TODO: Backend send user image id and card gets it
         const authorImage = "http://llcode.tech/api/image/65817ae96c73ceb16ba51731";
+        const groupedPosts = this.groupPostsByYear(this.sortPostsByDate(this.state.content).filter(({ tags }) => isSubset(selectedTags, tags) || !selectedTags));
 
-        return this.sortPostsByDate(this.state.content).filter(({ tags }) => isSubset(selectedTags, tags) || !selectedTags).map((content, _) => (
-            <Card
-            key={content._id.$oid}
-            heading={content.heading}
-            authorImage={authorImage}
-            author={content.author}
-            date_created={content.date_created}
-            body={content.body}
-            minuteRead={content.reading_time_minutes}
-            tags={content.tags}
-            image={content.image && content.image.$oid}
-            link={`/digital_chronicles/blog?id=${content._id.$oid}`}
-                />
+        return Object.keys(groupedPosts).sort((a, b) => parseInt(b) - parseInt(a)).map(year => (
+            <>
+                <div className="blog__year"><span>{year}</span></div>
+                {
+                    groupedPosts[year].map(( content: any ) => {
+                        const {_id, heading, author, date_created, body, reading_time_minutes, tags, image} = content;
+                        const link = `/digital_chronicles/blog?id=${_id.$oid}`;
+
+                        return (
+                            <Card
+                            key={_id.$oid}
+                            heading={heading}
+                            authorImage={authorImage}
+                            author={author}
+                            date_created={date_created}
+                            body={body}
+                            minuteRead={reading_time_minutes}
+                            tags={tags}
+                            image={image && image.$oid}
+                            link={link} />
+                        )
+                    })
+                }
+            </>
         ));
     }
 
     renderTopPickedBlogPost = (): React.ReactNode | null => {
         return this.props.showTopPicks && (
-            <div className="blog__featured">
+            <div className="blog__featured w-40">
                 <h3>Top Picks</h3>
                 {
                     this.state.topPickedPosts.map((post) => {
@@ -188,22 +208,28 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
     render() {
         const heroHeading = this.heroHeaderContent.heading;
         const heroDescription = this.heroHeaderContent.description;
+        const tagContainerClasses = [
+            'position-sticky',
+            'grid-background--dot',
+            'flex',
+            'flex-wrap',
+            'justify-center',
+            'blog__tag-container',
+            'blog__tag-container--selected',
+            'transition'
+        ].join(' ');
 
         return (
             <>
                 <HeroHeader heading={heroHeading} description={heroDescription} graphics={<BlogPostGraphics />} />
-                <div className="blog-container cursor-pointer">
-                <div className="blog-list">
-                {this.currentSelectedTags.length > 0 && (<div className="grid-background--dot blog__tag-container blog__tag-container--selected">{this.renderSelectedTags()}</div>)}
-                <div className="blog__tag-container"> {this.renderUnSelectedTags()}</div>
-                <div className="blog__year">
-                <span>2023</span>
-                </div>
-                <div className="blog-list__content flex-column-centered-centered">
+                <div className="blog-container flex w-full cursor-pointer">
+                <div className="blog-list flex flex-col w-full items-center">
+                {this.currentSelectedTags.length > 0 && (<div className={tagContainerClasses}>{this.renderSelectedTags()}</div>)}
+                <div className="blog__tag-container w-full flex justify-center flex-wrap"> {this.renderUnSelectedTags()}</div>
+                <div className="blog-list__content flex flex-col items-center">
                 {this.renderPostsSortedByDateDescending()}
             </div>
                 </div>
-
                 {this.renderTopPickedBlogPost()}
             </div>
                 </>

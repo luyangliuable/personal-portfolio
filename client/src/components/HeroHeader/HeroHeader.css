@@ -3,20 +3,21 @@
     padding: 2vh 5vw;
     margin-bottom: 5vh;
     background: rgb(235, 235, 235);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    jusify-content: flex-start;
     backdrop-filter: blur(5px)
+}
+
+.hero-header__content {
+    width: 100%;
 }
 
 .hero-header p {
     color: #555;
+    width: min(85%, 600px);
 }
 
 .hero-header__graphics-container {
     position: relative;
     width: min(20vw, 200px);
     height: min(20vw, 250px);
-    padding: 0 50px;
+    margin: 0 40px;
 }

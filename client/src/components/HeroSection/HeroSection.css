@@ -108,6 +108,19 @@
 .hero-section__content__left__text {
     color: #888;
     max-width: 550px;
+    font-size: .95rem;
+}
+
+@media (min-width: 768px) {
+    .hero-section__content__left__text {
+        font-size: 1.125rem; /* Slightly larger on larger screens */
+    }
+}
+
+@media (min-width: 1024px) {
+    .hero-section__content__left__text {
+        font-size: 1.25rem; /* Even larger on larger screens */
+    }
 }
 
 .hero-section {
@@ -117,3 +130,7 @@
 .hero-section__wrapper {}
 
 .hero-section__content__left__text {}
+
+.hero-section__content__left h1 {
+    font-size: 2.4rem;
+}
