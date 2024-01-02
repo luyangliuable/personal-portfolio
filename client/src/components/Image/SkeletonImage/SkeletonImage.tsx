@@ -1,18 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import "./SkeletonImage.css";
 import ISkeletonImageProps from "./Interface/ISkeletonImageProps";
 
-class SkeletonImage extends Component<ISkeletonImageProps, {}> {
-    constructor(props: ISkeletonImageProps) {
-        super(props);
-    }
+const SkeletonImage: React.FC<ISkeletonImageProps> = (props) => {
+    const className = `image-skeleton ${props.class}`;
 
-    render() {
-        const className = `image-skeleton ${this.props.class}`;
-        return (
-            <div className={className} style={this.props.style}></div>
-        );
-    }
+    return (
+        <div className={className} style={props.style}></div>
+    );
 }
 
 export default SkeletonImage;

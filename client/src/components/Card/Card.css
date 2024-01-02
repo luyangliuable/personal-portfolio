@@ -151,8 +151,7 @@
 .card-image--author-image {
     width: 20px;
     height: 20px;
-    margin-right: 4px;
-    border-radius: 100%;
+    margin-right: 4px
 }
 
 .card-image--author-info {

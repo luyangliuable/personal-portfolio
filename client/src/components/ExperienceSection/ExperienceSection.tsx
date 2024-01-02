@@ -336,7 +336,8 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
         const isBeforeLockPosition = this.props.scrolled < this.getLockPosition();
 
         // TODO check if it is past timelime and show a default overlay when locked
-        const isPastTimelineLength = this.isLocked() && this.props.scrolled - this.getLockPosition() > this.state.timeLineLength;
+        // const isPastTimelineLength = this.isLocked() && this.props.scrolled - this.getLockPosition() > this.state.timeLineLength;
+
         return isBeforeLockPosition;
     }
 

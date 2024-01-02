@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import UserRepository from "../repositories/UserRepository";
 import IAppContextProvider from "./Interface/IAppContextProvider";
 import IAppContextProps from "./Interface/IAppContextProps";
@@ -21,7 +21,7 @@ export const AppContextProvider: React.FC<IAppContextProps> = ({ children }) => 
         return 1
     };
 
-    const processQueue = () => {
+    const processQueue = useCallback(() => {
         if (queueRef.current.length === 0) return;
 
         const element = queueRef.current.shift();
@@ -30,7 +30,7 @@ export const AppContextProvider: React.FC<IAppContextProps> = ({ children }) => 
         }
 
         setTimeout(processQueue, 200);
-    };
+    }, []); // Empty dependency array to ensure it doesn't change
 
     const fadeInElement = (element: Element) => {
         (element as HTMLElement).style.opacity = '1';
@@ -39,7 +39,7 @@ export const AppContextProvider: React.FC<IAppContextProps> = ({ children }) => 
 
     useEffect(() => {
         processQueue();
-    }, [queueRef.current]);
+    }, [processQueue]);
 
     useEffect(() => {
 

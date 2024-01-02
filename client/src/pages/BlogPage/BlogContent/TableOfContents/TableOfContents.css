@@ -6,8 +6,10 @@
     width: 100%;
     height: 50vw;
 
-    padding: 10px;
     overflow: auto;
+
+    margin: 0 10px 10px 10px;
+
 
     overflow-x: visible;
     overflow-y: auto

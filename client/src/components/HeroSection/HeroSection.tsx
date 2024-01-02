@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import { NavLink } from "react-router-dom";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import IHeroState from "./Interface/IHeroState";
 import IHeroProps from "./Interface/IHeroProps";
@@ -18,9 +17,7 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
         super(props);
         this.state = {
             backgrounds: [],
-            introduction: "I am a motivated software engineering grad with a diverse array of skills and experiences, \
-ranging from web and mobile app development to machine learning research. \
-I pride myself on my efficient time and effort management abilities and my aptitude for continuous learning.",
+            introduction: "I am a motivated software engineering grad with a diverse array of skills and experiences, ranging from web and mobile app development to machine learning research. I pride myself on my efficient time and effort management abilities and my aptitude for continuous learning.",
             mainContent: {
                 heading: "Hi There 👋. I am Luyang!",
                 itemsToShow: [],
@@ -114,7 +111,12 @@ I pride myself on my efficient time and effort management abilities and my aptit
                     <div className="hero-section-badge__container">
                         {
                             heroSectionState.linkToMyOtherSocialMedia.map((item: any, index: number) => (
-                                <a key={index} href={item.link} className="hero-section-badge__link" target="_blank">
+                                <a
+                                    key={index}
+                                    href={item.link}
+                                    className="hero-section-badge__link"
+                                    target="_blank"
+                                    rel="noopener noreferrer">
                                     <img src={item.imageSrc} alt={item.name} />
                                 </a>
                             ))

@@ -28,24 +28,24 @@ class GalleryItem extends Component<IGalleryItemProps, IGalleryItemState> {
         }
     }
 
-    get GalleryItemTypeSegment(): React.ReactElement | undefined {
-        switch (this.props.type) {
-            case "blog":
-                return (
-                    <div className="gallery-item__type">
-                        <CgWebsite />
-                        <span>Blog</span>
-                    </div>
-                )
-                break;
-            case "tool":
-                return (
-                    <div className="gallery-item__type">
-                        <TbToolsOff />
-                        <span>Tool</span>
-                    </div>
-                )
+    get GalleryItemTypeSegment(): React.ReactElement {
+        const type = this.props.type;
+
+        if (type === "blog") {
+            return (
+                <div className="gallery-item__type">
+                    <CgWebsite />
+                    <span>Blog</span>
+                </div>
+            )
         }
+
+        return (
+            <div className="gallery-item__type">
+                <TbToolsOff />
+                <span>Tool</span>
+            </div>
+        )
     }
 
     render() {
@@ -61,7 +61,7 @@ class GalleryItem extends Component<IGalleryItemProps, IGalleryItemState> {
                     onMouseMove={cardGradientEffect}
                     className="gallery-item gallery-item--no-boundary card">
                     {this.GalleryItemTypeSegment}
-                    <Image className="gallery-item__image" src={ image } />
+                    <Image className="gallery-item__image" src={image} />
                     <h3>{this.props.name}</h3>
                     {
                         this.props.minuteRead && this.props.dateCreated &&

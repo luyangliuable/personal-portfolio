@@ -125,15 +125,14 @@ class NavBar extends Component<INavbarProps, INavbarState> {
 
     listenDeltaScrolled = () => {
         const { scrollStatus } = this.props;
-        const { lastScrollY, hideNavBarScrollSensitivity } = this.state;
+        const { hideNavBarScrollSensitivity } = this.state;
+        const deltaScrolled = scrollStatus.deltaScrolled ?? 0;
 
-        if (scrollStatus.scrolled! - Math.max(0, lastScrollY) >= hideNavBarScrollSensitivity && !this.state.isNavbarHidden) {
+        if (deltaScrolled >= hideNavBarScrollSensitivity && !this.state.isNavbarHidden) {
             this.hideNavBar();
-        } else if (Math.max(0, lastScrollY - scrollStatus.scrolled!) >= hideNavBarScrollSensitivity && this.state.isNavbarHidden) {
+        } else if (deltaScrolled <= -hideNavBarScrollSensitivity && this.state.isNavbarHidden) {
             this.showNavBar();
         }
-
-        this.setState({ lastScrollY: scrollStatus.scrolled! });
     };
 
     listenContinuousScrolled = () => {
@@ -186,13 +185,15 @@ class NavBar extends Component<INavbarProps, INavbarState> {
     }
 
     componentDidUpdate(prevProps: INavbarProps) {
-        this.updateScrollingBehavior(prevProps);
+        if (prevProps !== this.props)
+            this.updateScrollingBehavior(prevProps);
     }
 
     private updateScrollingBehavior(prevProps: INavbarProps) {
         const { scrollStatus } = this.props;
 
-        if (scrollStatus.scrolling !== prevProps.scrollStatus.scrolling) {
+        if (scrollStatus.deltaScrolled !== 0) {
+            console.log(scrollStatus.deltaScrolled)
             this.listenDeltaScrolled();
         }
 
@@ -283,7 +284,6 @@ class NavBar extends Component<INavbarProps, INavbarState> {
 
     render() {
         const { name, links } = this.state;
-        const currentlyHoveredNavbarLinkName = this.state.currentlyHoveredNavbarLinkName;
 
         return (
             <>

@@ -3,13 +3,13 @@ import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import Prism from "prismjs";
 
-// import "prismjs/themes/prism-okaidia.css";
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-bash';
 import 'prismjs/components/prism-python';
 import 'prismjs/components/prism-nginx';
 import 'prismjs/components/prism-rust';
 import 'prismjs/components/prism-toml';
+import 'prismjs/components/prism-lisp';
 
 import "./MarkdownRenderer.css";
 

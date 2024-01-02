@@ -3,7 +3,13 @@ import { ExperienceSectionItem } from "../Interface/IExperienceSectionState";
 import "./ExperienceSectionEvent.css";
 import { PiMapPinLineThin } from "react-icons/pi";
 
-const ExperienceSectionEvent: React.FC<{ item: ExperienceSectionItem, index: number }> = ({ item, index }) => {
+interface ExperienceSectionEventProps {
+    item: ExperienceSectionItem,
+    index: number,
+    alt?: string 
+}
+
+const ExperienceSectionEvent: React.FC<ExperienceSectionEventProps> = ({ item, index, alt }) => {
     const displayIsImage = item.display === "IMAGE";
     const defaultDisplay = item.display === "NORMAL" || !item.display;
 
@@ -47,6 +53,7 @@ const ExperienceSectionEvent: React.FC<{ item: ExperienceSectionItem, index: num
 
             <div className={imageWrapperclassName.join(" ")}>
                 <img className="experience-section-card__image box-shadow-medium"
+                    alt={alt}
                     style={displayIsImage ? { maxHeight: "180px", objectFit: "cover", minWidth: "100%", marginBottom: "10px" } : {}}
                     src={item.media.source.url} />
             </div>

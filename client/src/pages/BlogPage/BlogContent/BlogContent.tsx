@@ -118,7 +118,7 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
                 <div className="blog-content__header">
                     <h1>{this.state.content.heading}</h1>
                     <div className="card-image--author-info">
-                        <img className="blog-content--author-image" src={this.defaultAuthorImage} />
+                        <Image className="user-image blog-content--author-image" src={this.defaultAuthorImage} />
                         <div className="flex-vertical">
                             <span>{author}</span>
                             <span>{displayDateCreated}</span>

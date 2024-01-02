@@ -31,7 +31,7 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
     }
 
     componentDidUpdate(prevProps: Readonly<IBlogPageProps>, prevState: Readonly<IBlogPageState>, snapshot?: any): void {
-        if (prevState.content != this.state.content) {
+        if (prevState.content !== this.state.content) {
             this.updateAllUniqueTags();
             this.updateTopPickedPosts();
         }
@@ -87,10 +87,14 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
             return array1.every(item => array2.includes(item));
         }
 
+        // TODO: Backend send user image id and card gets it
+        const authorImage = "http://llcode.tech/api/image/65817ae96c73ceb16ba51731";
+
         return this.sortPostsByDate(this.state.content).filter(({ tags }) => isSubset(selectedTags, tags) || !selectedTags).map((content, _) => (
             <Card
                 key={content._id.$oid}
                 heading={content.heading}
+                authorImage={authorImage}
                 author={content.author}
                 date_created={content.date_created}
                 body={content.body}
@@ -137,38 +141,38 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
 
     renderSelectedTags = (): React.ReactNode | null => {
         const baseUrlLink = "/digital_chronicles/blogs";
-
-        return [...this.state.allTags].map((tagName) => {
-            const tagAlreadySelected = this.currentSelectedTags.includes(tagName);
-
-            if (tagAlreadySelected) {
+        return [...this.state.allTags]
+            .filter(tagName => {
+                const tagAlreadySelected = this.currentSelectedTags.includes(tagName);
+                return tagAlreadySelected;
+            })
+            .map((tagName) => {
                 let selectedTagsString: string[] = [];
                 selectedTagsString = this.currentSelectedTags.filter(tag => tag !== tagName);
-                const tagClassName = ['blog__tag', 'noselect', tagAlreadySelected ? 'blog__tag--selected' : ''].join(" ");
-
+                const tagClassName = ['blog__tag', 'noselect', 'blog__tag--selected'].join(" ");
+                const to = `${baseUrlLink}?tag=${encodeURIComponent(selectedTagsString.join(","))}`;
                 return (
-                    <Link to={`${baseUrlLink}?tag=${encodeURIComponent(selectedTagsString.join(","))}`} key={tagName} className={tagClassName}>#{tagName}</Link>
+                    <Link to={to} key={tagName} className={tagClassName}>#{tagName}</Link>
                 );
-            }
-        })
+            })
     };
 
     renderUnSelectedTags = (): React.ReactNode | null => {
         const baseUrlLink = "/digital_chronicles/blogs";
-
-        return [...this.state.allTags].map((tagName) => {
-            const tagAlreadySelected = this.currentSelectedTags.includes(tagName);
-
-            if (!tagAlreadySelected) {
+        return [...this.state.allTags]
+            .filter(tagName => {
+                const tagAlreadySelected = this.currentSelectedTags.includes(tagName);
+                return !tagAlreadySelected;
+            })
+            .map((tagName) => {
                 let selectedTagsString: string[] = [];
                 selectedTagsString = this.currentSelectedTags.concat(tagName);
-                const tagClassName = ['blog__tag', 'noselect', tagAlreadySelected ? 'blog__tag--selected' : ''].join(" ");
-
+                const tagClassName = ['blog__tag', 'noselect'].join(" ");
+                const to = `${baseUrlLink}?tag=${encodeURIComponent(selectedTagsString.join(","))}`;
                 return (
-                    <Link to={`${baseUrlLink}?tag=${encodeURIComponent(selectedTagsString.join(","))}`} key={tagName} className={tagClassName}>#{tagName}</Link>
+                    <Link to={to} key={tagName} className={tagClassName}>#{tagName}</Link>
                 );
-            }
-        })
+            });
     };
 
 
@@ -176,14 +180,14 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
         return (
             <div className="blog-container cursor-pointer">
                 <div className="blog-list">
-                    {this.currentSelectedTags.length > 0 && (<div className="grid-background--dot blog__tag-container--selected">{this.renderSelectedTags()}</div>)}
-                    <div className="blog__tag-container"> {this.renderUnSelectedTags()}</div>
-                    <div className="blog__year">
-                        <span>2023</span>
-                    </div>
-                    <div className="blog-list__content flex-column-centered-centered">
-                        {this.renderPostsSortedByDateDescending()}
-                    </div>
+                {this.currentSelectedTags.length > 0 && (<div className="grid-background--dot blog__tag-container--selected">{this.renderSelectedTags()}</div>)}
+                <div className="blog__tag-container"> {this.renderUnSelectedTags()}</div>
+                <div className="blog__year">
+                <span>2023</span>
+                </div>
+                <div className="blog-list__content flex-column-centered-centered">
+                {this.renderPostsSortedByDateDescending()}
+            </div>
                 </div>
 
                 {this.renderTopPickedBlogPost()}
