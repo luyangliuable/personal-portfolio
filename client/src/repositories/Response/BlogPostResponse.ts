@@ -5,6 +5,8 @@ export default interface BlogPostResponse {
     author: string;
     body: string;
     date_created?: string;
+    date_updated?: string;
+    in_progress?: boolean;
     file_name?: string;
     url?: string;
     heading: string;

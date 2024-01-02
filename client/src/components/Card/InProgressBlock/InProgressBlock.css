@@ -1,0 +1,23 @@
+.in-progress-block {
+    background: rgba(80, 250, 50, .9);
+    position: relative;
+    font-size: .75em;
+    color: rgb(0, 50, 0);
+    margin-right: 5px;
+    padding: 3px 5px 3px 15px;
+    display:inline;
+    border-radius: 4px;
+    box-shadow: .3px .3px .3px #CCC;
+}
+
+.in-progress-block:before {
+    content: "";
+    position: absolute;
+    background: rgb(0, 150, 0);
+    border-radius: 100%;
+    width: 5px; height: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 5px;
+    animation: blink 2s infinite;
+}
