@@ -10,19 +10,13 @@
     backdrop-filter: blur(5px)
 }
 
-.hero-header>p {
-    width: 50%;
-}
-
-@media screen and (max-width: 768px) {
-    .hero-header>p {
-        width: fit-content;
-    }
+.hero-header p {
+    color: #555;
 }
 
 .hero-header__graphics-container {
     position: relative;
-    width: 20vw;
-    height: 20vw;
+    width: min(20vw, 200px);
+    height: min(20vw, 250px);
     padding: 0 50px;
 }

@@ -26,10 +26,6 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ markdown }) => {
 
     const renderer = new marked.Renderer();
 
-    useEffect(() => {
-        Prism.highlightAll();
-    }, [])
-
     function getIdFromHeading(str: string): number {
         let hash = 0;
         for (let i = 0; i < str.length; i++) {
@@ -162,7 +158,12 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ markdown }) => {
             console.error('Error parsing markdown:', error);
             return null;
         }
+
     }, []);
+
+    useEffect(() => {
+        Prism.highlightAll();
+    }, [content]);
 
     return <div>{content}</div>;
 };
