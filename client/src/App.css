@@ -334,15 +334,17 @@ a {
     width: 50%;
 }
 
+/* Override Styles (!important only allowed here) */
 .blur-boundary {
-    background: rgba(200, 200, 200, .1);
-    backdrop-filter: blur(2px);
-    border: none;
+    background: rgba(200, 200, 200, .1) !important;
+    backdrop-filter: blur(2px) !important;
+    border: none !important
 }
 
 .no-boundary {
-    background: transparent;
-    border: none;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important
 }
 
 .translucent-white {

@@ -49,7 +49,7 @@ class DynamicLoadQueue {
             setTimeout(() => {
                 this.processQueue(); // Use an arrow function to preserve 'this'
             }, 100);
-        }
+       }
     };
 
     fadeInElement(element: Element) {

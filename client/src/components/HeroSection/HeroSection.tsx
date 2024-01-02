@@ -97,7 +97,7 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
                         <div className="hero-section__content__left">
                             <h1>{heroSectionState.mainContent.heading}</h1>
                             <p className="hero-section__content__left__text">{heroSectionState.introduction}</p>
-                            { heroSectionState.mainContent.items.map((item: string, index: number) => (<p key={index} className="hero-section__content__left__text text-small" style={{ margin: "2px" }}>{item}</p>)) }
+                { heroSectionState.mainContent.items.map((item: string, index: number) => (<p key={index} className="hero-section__content__left__text hero-section__text_small" style={{ margin: "2px" }}>{item}</p>)) }
                             <div className="flex flex-row mt-5 justify-start">
                                 <Button to="/digital_chronicles/blogs">See my Blogs <AiOutlineArrowRight /></Button>
                                 <Button to="/projects/code">See my Projects <AiOutlineArrowRight /></Button>

@@ -1,18 +1,22 @@
-import NavBar from './components/Navbar/Navbar';
-import BlogPage from './pages/BlogPage/BlogPage';
-import LandingPage from './pages/LandingPage/LandingPage';
-import ResumePage from './pages/ResumePage/ResumePage';
-import UnderConstruction from './pages/UnderConstructionPage/UnderConstruction';
-import BlogContent from "./pages/BlogPage/BlogContent/BlogContent";
-import ThreeDPrintingGallery from "./pages/threeDPrintingGalleryPage/ThreeDPrintingGallery";
-import HardwareProjectsPage from "./pages/HardwareProjectsPage/HardwareProjectsPage";
-import { AppContextProvider } from "./stores/AppContext";
-import CodingProjectsPage from "./pages/CodingProjectsPage/CodingProjectsPage";
-import LogInPage from "./pages/LogInPage/LogInPage";
-import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import React, { useState, useEffect } from 'react';
 import { useNavigate, BrowserRouter, Route, Routes } from 'react-router-dom';
+import NavBar from './components/Navbar/Navbar';
+import { AppContextProvider } from "./stores/AppContext";
+import loadable from '@loadable/component'
 import './App.css';
+
+// import BlogPage from './pages/BlogPage/BlogPage';
+
+const LandingPage = loadable(() => import('./pages/LandingPage/LandingPage'));
+const ResumePage = loadable(() => import('./pages/ResumePage/ResumePage'));
+const UnderConstruction = loadable(() => import('./pages/UnderConstructionPage/UnderConstruction'));
+const BlogContent = loadable(() => import("./pages/BlogPage/BlogContent/BlogContent"));
+const ThreeDPrintingGallery = loadable(() => import("./pages/threeDPrintingGalleryPage/ThreeDPrintingGallery"));
+const HardwareProjectsPage = loadable(() => import("./pages/HardwareProjectsPage/HardwareProjectsPage"));
+const CodingProjectsPage = loadable(() => import("./pages/CodingProjectsPage/CodingProjectsPage"));
+const LogInPage = loadable(() => import("./pages/LogInPage/LogInPage"));
+const RegisterPage = loadable(() => import("./pages/RegisterPage/RegisterPage"));
+const BlogPage = loadable(() => import('./pages/BlogPage/BlogPage'));
 
 interface IAppStateInterface {
     scrollY: number | null,
