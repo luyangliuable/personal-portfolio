@@ -7,12 +7,10 @@ const HeroHeader: React.FC<IHeroHeaderProps> = ({heading, description, graphics}
         <div className="hero-header flex flex-row justify-start items-center">
             {
                 graphics && (
-                    <div className="hero-header__graphics-container">
-                        {graphics}
-                    </div>
+                    <div className="hero-header__graphics-container">{graphics}</div>
                 )
             }
-            <div className="hero-header__content">
+            <div className="w-full">
                 <h1>{heading}</h1>
                 <p>{description}</p>
             </div>

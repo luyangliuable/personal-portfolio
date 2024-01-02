@@ -297,6 +297,10 @@ a {
     padding-left: 10px
 }
 
+.px-5 {
+    padding: 0 10px
+}
+
 .pl-3vw {
     padding-left: 3vw
 }
@@ -371,50 +375,25 @@ a {
     object-fit: cover
 }
 
-/* .fancy-underline { */
-/*     --deco-height: 0.3125em;  /\* Initial height of the underline *\/ */
-/*     position: relative; */
-/*     white-space: nowrap; */
-/*     display: inline-block; /\* Ensures the container fits the content *\/ */
-/*     color: #000; */
-/* } */
-
-/* .fancy-underline:hover { */
-/*     --deco-height: 1em; /\* Height of the underline on hover *\/ */
-/* } */
-
-/* .fancy-underline::after { */
-/*     content: ""; */
-/*     position: absolute; */
-/*     left: 0; */
-/*     right: 0; */
-/*     bottom: 0; /\* Align the bottom of the underline with the bottom of the text *\/ */
-/*     background: var(--dark-mode-pink); */
-/*     height: var(--deco-height); */
-/*     transform-origin: bottom; /\* Ensures the scaling is upwards *\/ */
-/*     transition: height .5s ease-in-out, transform 0.5s ease-in-out; */
-/*     z-index: -1; */
-/* } */
-
-
 .fancy-underline {
 	  position: relative;
-	  white-space: nowrap;
+    display: inline;
+    word-spacing: -0.09em;
+	  white-space: nowrap
 }
 
 .fancy-underline:after {
 	  --deco-height: 0.3125em;
 	  content: "";
 	  position: absolute;
-	  left: 0;
-	  right: 0;
+	  left: 0; right: 0;
 	  bottom: calc(var(--deco-height) * -0.625);
 	  height: var(--deco-height);
 	  background-image: url("data:image/svg+xml,%3Csvg width='100' height='64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23a)'%3E%3Cpath d='M-17 30.5 C-1 22 72 -4 54 13 37.9 28.2 -2.5 57.5 16 55.5 s 72 -29 104 -40' stroke='%230050E2' stroke-width='6'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h100v64H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E%0A");
 	  background-size: auto 100%;
 	  background-repeat: round;
 	  background-position: 0em;
-    animation: fade-in 1s ease-in-out;
+    animation: fade-in 1s ease-in-out
 }
 
 
