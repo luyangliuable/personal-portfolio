@@ -1,7 +1,7 @@
 interface IHeroProps {
     name?: string,
     current?: string,
-    scrolling: boolean,
+    scrolling?: boolean,
     [category: string]: any
 }
 

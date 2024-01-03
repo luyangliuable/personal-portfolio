@@ -1,13 +1,12 @@
-.experience-section-content-container {
+.experience-section--content {
     padding-left: 40vw;
     width: min-content;
     display: inline-flex;
     flex-direction: row;
     justify-content: flex-start;
-    margin: 0 !important;
 }
 
-.timeline-line {
+.timeline__line {
     width: 100%;
     background: transparent;
     position: absolute;
@@ -31,11 +30,11 @@
     margin-bottom: var(--common-card-margin);
 }
 
-.experience-section-content-container > * {
+.experience-section--content > * {
     flex-shrink: 0; /* Prevents children from shrinking if space is tight */
 }
 
-.experience-section-container {
+.experience-section {
     width: calc(var(--home-container-width) - 3vw);
     max-width: calc(var(--home-container-max-width) - 3vw);
     display: flex;

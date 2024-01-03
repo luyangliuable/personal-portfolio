@@ -1,9 +1,7 @@
 interface INavbarProps {
-    name?: string;
-    current?: string;
     scrollStatus: {
-        scrolled: number | null;
-        deltaScrolled: number | null;
+        scrolled: number | undefined;
+        deltaScrolled: number | undefined
     }
 }
 
