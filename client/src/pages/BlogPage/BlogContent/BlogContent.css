@@ -1,10 +1,7 @@
 .blog-content__side-components {
-    position: -webkit-sticky;
-    position: sticky;
-
     left: 0;
-    top: calc(var(--navbar-height) + 15px);
-    margin-top: 7vh;
+    margin-top: 20vh;
+    top: calc(var(--navbar-height) + 2px);
 
     backdrop-filter: blur(2px);
 
@@ -80,11 +77,7 @@
 .blog-content--author-image {
     width: 40px;
     height: 40px;
-    border-radius: 100%;
-}
-
-.card-image--author-info>* {
-    margin-right: min(10px, 3vw);
+    margin-right: min(10px,3vw)
 }
 
 .blog-content__wrapper {

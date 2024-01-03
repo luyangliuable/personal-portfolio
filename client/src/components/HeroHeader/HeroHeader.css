@@ -1,0 +1,23 @@
+.hero-header {
+    width: 90vw;
+    padding: 2vh 5vw;
+    margin-bottom: 5vh;
+    background: rgb(235, 235, 235);
+    backdrop-filter: blur(5px)
+}
+
+.hero-header__content {
+    width: 100%;
+}
+
+.hero-header p {
+    color: #555;
+    width: min(85%, 600px);
+}
+
+.hero-header__graphics-container {
+    position: relative;
+    width: min(20vw, 200px);
+    height: min(20vw, 250px);
+    margin: 0 40px;
+}

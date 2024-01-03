@@ -1,10 +1,9 @@
-
 :root {
     --page-top-margin: 68px;
     --navbar-height: 68px;
 
     --page-bottom-margin: 120px;
-    --common-card-margin: 10vh;
+    --common-card-margin: 25vh;
 
     --dark-mode-black: #1e1e1e;
     --dark-mode-purple: #491ed3;
@@ -157,27 +156,153 @@ a {
 
 /* Common CSS Without Tailwind */
 
+/* Colors */
+
+.bg-red {
+    background: red
+}
+
+.bg-blue {
+    background: blue
+}
+
+/* Scroll */
+
+.overflow-scroll {
+    overflow: scroll
+}
+
+.overflow-x-scroll {
+    overflow-x: scroll
+}
+
+/* Dimensions */
+
+.w-full {
+    width: 100%
+}
+
+.w-30 {
+    width: 30%
+}
+
+/* Flex */
+
 .flex {
-  display: flex;
+    display: flex
 }
 
 .flex-col {
-  flex-direction: column;
+    flex-direction: column
+}
+
+.flex-row {
+    flex-direction: row
 }
 
 .justify-center {
-  justify-content: center;
+    justify-content: center
+}
+
+.justify-start {
+    justify-content: flex-start
 }
 
 .items-center {
-  align-items: center;
+    align-items: center
 }
 
-.flex-column-centered-centered {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.items-start {
+    align-items: flex-start
+}
+
+.flex-wrap {
+    flex-wrap: wrap
+}
+
+/* Position */
+
+.position-relative {
+    position: relative
+}
+
+.position-absolute {
+    position: absolute
+}
+
+.position-fixed {
+    position: fixed
+}
+
+.position-sticky {
+    position: -webkit-sticky;
+    position: sticky
+}
+
+/* Border effects */
+
+.border-radius {
+    border-radius: var(-border-radius);
+    -moz-border-radius: var(-border-radius);
+    -ms-border-radius: var(-border-radius);
+    -o-border-radius: var(-border-radius);
+}
+
+/* Animation */
+
+.transition {
+    transition: var(--transition);
+    -webkit-transition: var(--transition);
+    -moz-transition: var(--transition);
+    -o-transition: var(--transition);
+    -ms-transition: var(--transition)
+}
+
+/* Margin */
+
+.mt-5 {
+    margin-top: 10px
+}
+
+
+.my-5 {
+    margin: 100px 0
+}
+
+.opacity-0 {
+    opacity: 0
+}
+
+/* Text */
+
+.whitespace-nowrap {
+    white-space: nowrap
+}
+
+
+.text-medium {
+    font-size: .95rem
+}
+
+.text-small {
+    font-size: .87rem;
+}
+
+/* Padding  */
+.pb-5 {
+    padding-bottom: 10px
+}
+
+.pl-5 {
+    padding-left: 10px
+}
+
+.pl-3vw {
+    padding-left: 3vw
+}
+
+.justify-start {
+    justify-content: flex-start;
 }
 
 .semi-opaque {
@@ -209,20 +334,89 @@ a {
     width: 50%;
 }
 
+/* Override Styles (!important only allowed here) */
+.blur-boundary {
+    background: rgba(200, 200, 200, .1) !important;
+    backdrop-filter: blur(2px) !important;
+    border: none !important
+}
+
+.no-boundary {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important
+}
+
 .translucent-white {
     background: rgba(255, 255, 255, 0.2)
 }
 
+.box-shadow-large {
+    box-shadow: 1px 1px 4px rgba(139, 101, 77, 0.2), /* Bottom shadow */
+                1px 1px 4px rgba(139, 101, 77, 0.2); /* Right shadow */
+}
 
 .box-shadow-medium {
-    box-shadow: 1px 1px 2px rgba(139, 101, 77, 0.2), /* Bottom shadow */
-                1px 1px 2px rgba(139, 101, 77, 0.2); /* Right shadow */
+    box-shadow: 1px 1px 2px rgba(139, 101, 77, 0.2),
+                1px 1px 2px rgba(139, 101, 77, 0.2);
 }
 
 .box-shadow {
-    box-shadow: .5px .5px 1px rgba(139, 101, 77, 0.2), /* Bottom shadow */
-                .5px .5px 1px rgba(139, 101, 77, 0.2); /* Right shadow */
+    box-shadow: .5px .5px 1px rgba(139, 101, 77, 0.2),
+                .5px .5px 1px rgba(139, 101, 77, 0.2);
 }
+
+.user-image {
+    border-radius: 100%;
+    object-fit: cover
+}
+
+/* .fancy-underline { */
+/*     --deco-height: 0.3125em;  /\* Initial height of the underline *\/ */
+/*     position: relative; */
+/*     white-space: nowrap; */
+/*     display: inline-block; /\* Ensures the container fits the content *\/ */
+/*     color: #000; */
+/* } */
+
+/* .fancy-underline:hover { */
+/*     --deco-height: 1em; /\* Height of the underline on hover *\/ */
+/* } */
+
+/* .fancy-underline::after { */
+/*     content: ""; */
+/*     position: absolute; */
+/*     left: 0; */
+/*     right: 0; */
+/*     bottom: 0; /\* Align the bottom of the underline with the bottom of the text *\/ */
+/*     background: var(--dark-mode-pink); */
+/*     height: var(--deco-height); */
+/*     transform-origin: bottom; /\* Ensures the scaling is upwards *\/ */
+/*     transition: height .5s ease-in-out, transform 0.5s ease-in-out; */
+/*     z-index: -1; */
+/* } */
+
+
+.fancy-underline {
+	  position: relative;
+	  white-space: nowrap;
+}
+
+.fancy-underline:after {
+	  --deco-height: 0.3125em;
+	  content: "";
+	  position: absolute;
+	  left: 0;
+	  right: 0;
+	  bottom: calc(var(--deco-height) * -0.625);
+	  height: var(--deco-height);
+	  background-image: url("data:image/svg+xml,%3Csvg width='100' height='64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23a)'%3E%3Cpath d='M-17 30.5 C-1 22 72 -4 54 13 37.9 28.2 -2.5 57.5 16 55.5 s 72 -29 104 -40' stroke='%230050E2' stroke-width='6'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h100v64H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E%0A");
+	  background-size: auto 100%;
+	  background-repeat: round;
+	  background-position: 0em;
+    animation: fade-in 1s ease-in-out;
+}
+
 
 /*****************************************************************************/
 /*                         Global Animation Keyframes                        */
@@ -234,5 +428,36 @@ a {
     }
     100% {
         background-position: -200% 0;
+    }
+}
+
+
+@keyframes blink {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        transform: translateX(-10px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0px);
+        opacity: 1
+    }
+}
+
+
+@keyframes fade-in--width {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
     }
 }

@@ -28,24 +28,24 @@ class GalleryItem extends Component<IGalleryItemProps, IGalleryItemState> {
         }
     }
 
-    get GalleryItemTypeSegment(): React.ReactElement | undefined {
-        switch (this.props.type) {
-            case "blog":
-                return (
-                    <div className="gallery-item__type">
-                        <CgWebsite />
-                        <span>Blog</span>
-                    </div>
-                )
-                break;
-            case "tool":
-                return (
-                    <div className="gallery-item__type">
-                        <TbToolsOff />
-                        <span>Tool</span>
-                    </div>
-                )
+    get GalleryItemTypeSegment(): React.ReactElement {
+        const type = this.props.type;
+
+        if (type === "blog") {
+            return (
+                <div className="gallery-item__type">
+                    <CgWebsite />
+                    <span>Blog</span>
+                </div>
+            )
         }
+
+        return (
+            <div className="gallery-item__type">
+                <TbToolsOff />
+                <span>Tool</span>
+            </div>
+        )
     }
 
     render() {
@@ -59,16 +59,16 @@ class GalleryItem extends Component<IGalleryItemProps, IGalleryItemState> {
                     style={style}
                     key={this.props.key}
                     onMouseMove={cardGradientEffect}
-                    className="gallery-item gallery-item--no-boundary card">
+                    className="gallery-item flex flex-col justify-start items-center opacity-0 pb-10 blur-boundary card">
                     {this.GalleryItemTypeSegment}
-                    <Image className="gallery-item__image" src={ image } />
+                    <Image className="gallery-item__image" src={image} />
                     <h3>{this.props.name}</h3>
                     {
                         this.props.minuteRead && this.props.dateCreated &&
                         (<p className="gallery-item__metadata">{this.props.minuteRead} min read | {isoDateFormatToString(new Date(this.props.dateCreated))} </p>)
                     }
                     <p>{this.props.subheading}</p>
-                    <p style={{ marginTop: "10px" }}>{this.props.description}</p>
+                    <p className="mt-5">{this.props.description}</p>
                     <TagCloud tags={this.props.tags} />
                 </div>
             </NavLink>

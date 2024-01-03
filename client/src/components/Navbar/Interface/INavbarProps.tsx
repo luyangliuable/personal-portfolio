@@ -3,7 +3,7 @@ interface INavbarProps {
     current?: string;
     scrollStatus: {
         scrolled: number | null;
-        scrolling: boolean | null;
+        deltaScrolled: number | null;
     }
 }
 

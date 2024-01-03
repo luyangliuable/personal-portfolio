@@ -1,15 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import Prism from "prismjs";
 
-// import "prismjs/themes/prism-okaidia.css";
+import Image from "../../../../components/Image/Image"
+
 import 'prismjs/components/prism-javascript';
 import 'prismjs/components/prism-bash';
 import 'prismjs/components/prism-python';
 import 'prismjs/components/prism-nginx';
 import 'prismjs/components/prism-rust';
 import 'prismjs/components/prism-toml';
+import 'prismjs/components/prism-lisp';
+
+import BlogPostGraphics from "../../../../components/BlogPostGraphics/BlogPostGraphics";
 
 import "./MarkdownRenderer.css";
 
@@ -18,11 +22,9 @@ type MarkdownRendererProps = {
 };
 
 const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ markdown }) => {
-    const renderer = new marked.Renderer();
+    const [content, setContent] = useState<JSX.Element | null>(null);
 
-    useEffect(() => {
-        Prism.highlightAll();
-    }, [])
+    const renderer = new marked.Renderer();
 
     function getIdFromHeading(str: string): number {
         let hash = 0;
@@ -90,16 +92,90 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ markdown }) => {
         return `<li class="list-item">${text}</li>`;
     };
 
-    let html: string;
+    type Attributes = { [key: string]: string };
 
-    try {
-        html = DOMPurify.sanitize(marked.parse(markdown, { renderer }));
-    } catch (error) {
-        console.error('Error parsing markdown:', error);
-        return null;
-    }
+    const extractAttributes = (html: string): Attributes => {
+        const element = (new DOMParser()).parseFromString(html, "text/html").body.firstChild as HTMLElement | null;
+        const attrs: Attributes = {};
+        const attributeNameMap: { [key: string]: string } = {
+            "class": "className"
+        };
 
-    return (<div dangerouslySetInnerHTML={{ __html: html }} />);
+        if (element && element.attributes) {
+            Array.from(element.attributes).forEach((attribute) => {
+                const attributeName = attributeNameMap[attribute.name] || attribute.name;
+                attrs[attributeName] = attribute.value;
+            });
+        }
+
+        return attrs;
+    };
+
+    // Define whitelist as React nodes
+    const allowedPlaceholders: {[key: string]: any} = {
+        'blogpostgraphics': BlogPostGraphics,
+        'img': Image,
+    };
+
+    const getFirstTagName = (html: string): string | null => {
+        const matches = html.match(/<([a-z0-9]+)(\s|>)/i);
+        return matches ? matches[1].toLowerCase() : null;
+    };
+
+    const convertHtmlToReact = (htmlString: string): JSX.Element => {
+        const container = document.createElement('div');
+        container.innerHTML = htmlString;
+
+        const processNodes = (node: HTMLElement): any => {
+            if (node.nodeType === Node.TEXT_NODE) {
+                return node.textContent;
+            }
+
+            if (node.nodeType === Node.ELEMENT_NODE && node.tagName.toLowerCase() === 'div') {
+                const firstTag = getFirstTagName(node.innerHTML);
+                if (firstTag && Object.keys(allowedPlaceholders).includes(firstTag)) {
+                    const Component = allowedPlaceholders[firstTag];
+                    const attributes = extractAttributes(node.innerHTML);
+                    console.log(attributes);
+                    return React.createElement(Component, attributes);
+                }
+            }
+
+            return node.outerHTML;
+        };
+
+        const elements = Array.from(container.childNodes).map(processNodes);
+
+        return (
+            <>
+                {elements.map((el, index) => {
+                    // Use a combination of the element's type and its index as a key
+                    const key = typeof el + index;
+                    return typeof el === 'string'
+                        ? React.createElement('div', { dangerouslySetInnerHTML: { __html: el }, key: key })
+                        : React.cloneElement(el, { key: key });
+                })}
+            </>
+        );
+    };
+
+    useEffect(() => {
+        try {
+            let renderedHtml: string = marked.parse(markdown, { renderer });
+            renderedHtml = DOMPurify.sanitize(renderedHtml);
+            setContent(convertHtmlToReact(renderedHtml));
+        } catch (error) {
+            console.error('Error parsing markdown:', error);
+            return null;
+        }
+
+    }, []);
+
+    useEffect(() => {
+        Prism.highlightAll();
+    }, [content]);
+
+    return <div>{content}</div>;
 };
 
 

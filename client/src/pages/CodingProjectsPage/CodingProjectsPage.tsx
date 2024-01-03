@@ -1,11 +1,20 @@
 import { Component } from "react";
 import "./CodingProjectsPage.css";
 import Gallery from "../../components/Gallery/Gallery";
+import IHeroHeaderProps from "../../components/HeroHeader/Interface/IHeroHeaderProps";
 import ICodingCatState from "../../components/CodingCat/Interface/ICodingCatState";
+import HeroHeader from "../../components/HeroHeader/HeroHeader";
 
 class CodingProjectsPage extends Component<{}, ICodingCatState> {
+    heroHeaderContent: IHeroHeaderProps;
+
     constructor(props: {}) {
         super(props);
+
+        this.heroHeaderContent = Object.freeze({
+            heading: "Coding Projects",
+            description: (<>My coding projects <b>outside of work</b> from uni, self-interest or for fun</>)
+        }); // as const
 
         this.state = {
             projectsICreated: [
@@ -64,11 +73,14 @@ class CodingProjectsPage extends Component<{}, ICodingCatState> {
     }
 
     render() {
+        const { heading, description } = this.heroHeaderContent;
+
         return (
             <>
+                <HeroHeader heading={heading} description={description} />
                 <Gallery heading="Noteworthy Coding Projects" content={this.state.projectsICreated} />
                 <Gallery heading="Coding Projects that I Have Contributed to" content={this.state.projectsWithContributions} />
-            </>
+                </>
         );
     }
 }

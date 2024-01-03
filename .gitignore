@@ -17,3 +17,10 @@ Cargo.lock
 *.pdb
 
 *.pem
+
+# *.mdx or *.md Posts to be stored locally when there is no internet
+posts/
+
+# Added by cargo
+
+/target

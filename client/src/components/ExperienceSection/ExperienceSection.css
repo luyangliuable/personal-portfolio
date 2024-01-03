@@ -21,6 +21,7 @@
     position: sticky;
     top: var(--navbar-height);
     height: calc(95.5vh - var(--navbar-height));
+    transition: all .1s ease-in;
 }
 
 .experience-section-wrapper {

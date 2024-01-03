@@ -82,7 +82,7 @@ const adjustElementPositionAbsoluteY = (element: HTMLElement, y: number = 0): vo
 
     // Center the element in the viewport taking the scroll position into account
     /* element.style.top = `calc(50% + ${scrollTop}px)`; */
-    if (y != 0)
+    if (y !== 0)
         element.style.top = `calc(${y}px)`;
     element.style.transform = 'translate(-50%, -50%)';
 }

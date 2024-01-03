@@ -2,7 +2,6 @@ import React, { Component, createRef } from "react";
 import { IGalleryProps } from "./Interface/IGalleryProps";
 import IGalleryState from "./Interface/IGalleryState";
 import GalleryItem from "./GalleryItem/GalleryItem";
-import TagCloud from "../TagCloud/TagCloud";
 import "./Gallery.css";
 
 
@@ -38,7 +37,7 @@ class Gallery extends Component<IGalleryProps, IGalleryState> {
     render() {
         return (
             <>
-                <div className="heading__wrapper"><h1>{this.props.heading}</h1></div>
+                <div className="heading__wrapper"><h2>{this.props.heading}</h2></div>
                 <div ref={this.galleryContainerRef} className="gallery-item__container">
                     {this.renderGalleryItems()}
                     {this.state.shouldAddDummy && <GalleryItem style={{ visibility: "hidden" }} />}

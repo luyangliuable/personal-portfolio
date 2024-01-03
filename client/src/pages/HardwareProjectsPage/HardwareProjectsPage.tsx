@@ -2,10 +2,19 @@ import { Component } from "react";
 import "./HardwareProjectsPage.css";
 import Gallery from "../../components/Gallery/Gallery";
 import IHardwareProjectsPageState from "./Interface/IHardwareProjectsPageState";
+import IHeroHeaderProps from "../../components/HeroHeader/Interface/IHeroHeaderProps";
+import HeroHeader from "../../components/HeroHeader/HeroHeader";
 
 class HardwareProjectsPage extends Component<{}, IHardwareProjectsPageState> {
+    heroHeaderContent: IHeroHeaderProps;
+
     constructor(props: {}) {
         super(props);
+
+        this.heroHeaderContent = Object.freeze({
+            heading: "Hardware Projects",
+            description: (<>I used these hardware components and my arduino for past competitions and also my personal projects. I will release the videos of the projects here soon as well.</>)
+        }); // as const
 
         this.state = {
             content: [
@@ -39,8 +48,11 @@ class HardwareProjectsPage extends Component<{}, IHardwareProjectsPageState> {
     }
 
     render() {
+        const { heading, description } = this.heroHeaderContent;
+
         return (
             <>
+                <HeroHeader heading={heading} description={description} />
                 <Gallery heading="3D Hardware that I Use for My Projects" content={this.state.content} />
             </>
         );

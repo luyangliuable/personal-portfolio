@@ -1,0 +1,6 @@
+.blog-image {
+    height: 20vw;
+    min-height: 200px;
+    max-height: fit-content;
+    object-fit: cover;
+}

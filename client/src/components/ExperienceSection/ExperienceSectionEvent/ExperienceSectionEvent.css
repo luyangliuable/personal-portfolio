@@ -4,8 +4,6 @@
     height: fit-content;
     padding: 8px;
     position: relative;
-    border: none;
-    background: transparent;
 }
 
 .experience-section-card__text-body {
@@ -74,7 +72,7 @@
 
 @media screen and (max-height: 850px) {
     .experience-section-card {
-        width: 180px;
+        width: 260px;
         height: 200px;
     }
 
