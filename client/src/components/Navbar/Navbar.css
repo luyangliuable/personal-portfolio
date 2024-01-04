@@ -160,7 +160,7 @@
 
 
 .logo {
-    --font-weight-bold: 800;
+    --font-weight-bold: 400;
     --font-size-large: 20px;
     display: inline-block;
     font-family: 'Proxima Nova Bold',Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;

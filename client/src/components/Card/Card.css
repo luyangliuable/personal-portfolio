@@ -21,14 +21,14 @@
     top: 0;
     transition: opacity 500ms;
     width: 100%;
-    z-index: 1; 
+    z-index: 1;
 }
 
 .card::before {
     background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(200, 200, 200, 0.3), transparent 40%);
 }
 
-.card::after {  
+.card::after {
     background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(200, 200, 200, 0.4), transparent 40%);
 }
 
@@ -52,7 +52,6 @@
 
 
 .card-item {
-    text-align: left;
     background: transparent;
     background: rgba(200, 200, 200, .1);
     backdrop-filter: blur(2px);
@@ -70,7 +69,7 @@
 
 .card-item__heading {
     margin: 2px 0;
-    padding: 10px 0;
+    padding: 10px 120px 0 0;
     overflow-x: auto;
 }
 
@@ -87,6 +86,10 @@
 .card-image-preview {
     opacity: .9;
     object-fit: cover;
+    -webkit-box-shadow: 1px 1px 50px rgba(255, 255, 255, 0.9);
+    -moz-box-shadow: 1px 1px 50px rgba(255, 255, 255, 0.9);
+    -o-box-shadow: 1px 1px 50px rgba(255, 255, 255, 0.9);
+    -khtml-box-shadow: 1px 1px 50px rgba(255, 255, 255, 0.9);
     box-shadow: 1px 1px 50px rgba(255, 255, 255, 0.9);
     transition: all .1s ease-in;
     width: 100%;
@@ -96,10 +99,13 @@
 .card-image-preview__wrapper {
     height: 100%;
     overflow: hidden;
-    width: min(max(20vw, 170px), 300px);
+    min-width: 240px;
+    max-width: 300px;
+    width: 20vw;
     position: absolute;
-    right: 0;
-    top: 0;
+    display: flex;
+    align-items: center;
+    right: 0; top: 0;
 }
 
 .card-item__content {
@@ -124,8 +130,8 @@
         min-width: 40%;
     }
 
-    .card-image-preview { 
-        opacity: .35;
+    .card-image-preview {
+        opacity: .45;
         width: 130%;
         min-height: 130%;
         -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
@@ -157,6 +163,12 @@
 }
 
 .card-item h3 {
-    font-size: min(4vw, 19px);
+    font-size: 19px;
     text-align: left;
+}
+
+@media (max-width: 475px) {
+    .card-item h3 {
+        font-size: 4vw;
+    }
 }
