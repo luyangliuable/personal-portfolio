@@ -13,20 +13,12 @@ pub fn check_health() -> &'static str {
 pub fn check_env_variable() -> Result<String, Status> {
     let mut result = String::new();
 
-    // let check = vec![markdown_util::markdown_store_location, local_image_util::image_store_location];
-    
-    let mut checks = HashMap::new();
+    let mut checks: HashMap<&str, fn() -> Result<String, std::io::Error>> = HashMap::new();
 
-    checks.insert(
-        "markdown",
-        markdown_util::markdown_store_location as fn() -> Result<String, std::io::Error>
-    );
-    checks.insert(
-        "image",
-        local_image_util::image_store_location as fn() -> Result<String, std::io::Error>
-    );
+    checks.insert("markdown", markdown_util::markdown_store_location);
+    checks.insert("image", local_image_util::image_store_location);
 
-    for (check_name, check_method ) in checks {
+    for (check_name, check_method) in &checks {
         match check_method() {
             Ok(path) => {
                 result.push_str(&format!("{} store location: {}\n", check_name, path));
@@ -37,16 +29,28 @@ pub fn check_env_variable() -> Result<String, Status> {
         }
     }
 
+    let environment = env::var("ENVIRONMENT").unwrap_or_else(|_| "None".to_string());
+
+    result.push_str(&format!("Environment: {}\n", environment));
+
     Ok(result)
 }
 
-
 #[get("/check_mongodb_uri")]
 pub fn check_mongodb_uri() -> Result<String, Status> {
-    let uri = match env::var("MONGOURI") {
+    let environment = match env::var("ENVIRONMENT") {
         Ok(v) => v.to_string(),
         Err(_) => "mongodb://localhost:27017".to_string(),
     };
 
-    Ok(uri)
+    if environment != "production" {
+        let uri = match env::var("MONGOURI") {
+            Ok(v) => v.to_string(),
+            Err(_) => "mongodb://localhost:27017".to_string(),
+        };
+
+        return Ok(uri);
+    }
+
+    Err(Status::Unauthorized)
 }
