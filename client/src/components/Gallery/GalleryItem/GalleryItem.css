@@ -1,6 +1,6 @@
 .gallery-item {
-    transition: all .1s ease-in;
-    transform: translateX(100px);
+    transition: transform .1s ease-in, opacity .1s ease-in;
+    transform: translateX(30px);
     width: 400px; height: fit-content; min-height: 320px;
     margin: 20px 20px !important; /* I don't know what is causing margin: 2px 20px in element.style */
 }

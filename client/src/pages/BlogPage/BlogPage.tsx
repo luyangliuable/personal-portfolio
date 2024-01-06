@@ -113,7 +113,7 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
                 <div className="blog__year"><span>{year}</span></div>
                 {
                     groupedPosts[year].map(( content: BlogPostResponse ) => {
-                        const {_id, in_progress, heading, author, date_created, date_updated, body, reading_time_minutes, tags, image} = content;
+                        const {_id, in_progress, heading, author, date_created, date_last_modified, body, reading_time_minutes, tags, image} = content;
                         const link = `/digital_chronicles/blog?id=${_id.$oid}`;
 
                         return (
@@ -123,7 +123,7 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
                             authorImage={authorImage}
                             author={author}
                             date_created={date_created}
-                            date_updated={date_updated}
+                            date_updated={date_last_modified}
                             body={body}
                             minuteRead={reading_time_minutes}
                             in_progress={in_progress}

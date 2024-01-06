@@ -5,7 +5,7 @@
     align-items: center;
     width: 100%;
     height: 100%;
-    animation: spin-intro .5s ease-in-out, bob 2s ease-in-out infinite;
+    animation: bob 2s ease-in-out infinite;
 }
 
 

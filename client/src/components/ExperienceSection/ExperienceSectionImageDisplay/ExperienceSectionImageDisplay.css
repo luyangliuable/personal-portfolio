@@ -1,0 +1,35 @@
+.image_display__detailed-text {
+    text-align: center;
+    font-size: 13px;
+    width: 80%;
+    color: #555;
+}
+
+.experience-section-card__location {
+    display: flex;
+    font-size: 9px;
+    text-align: left;
+    margin-top: min(10px, 1vh);
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.experience-section-card__location > svg {
+    color: #000;
+    font-size: 25px;
+}
+
+.experience-section-card__location > * {
+    margin: 0 5px;
+}
+
+.image_display__wrapper {
+    height: 80%;
+}
+
+.image_display__image {
+    max-height: 80px;
+    border-radius: 10px;
+    margin-top: 10px;
+}

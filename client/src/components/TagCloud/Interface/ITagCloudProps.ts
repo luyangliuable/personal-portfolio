@@ -1,5 +1,5 @@
 interface ITagCloudProps {
-    tags: string[]
+    tags?: string[]
 }
 
 export default ITagCloudProps;
