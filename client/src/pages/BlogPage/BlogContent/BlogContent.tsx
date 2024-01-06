@@ -87,9 +87,10 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
         prevState: Readonly<IBlogContentState>,
         snapshot?: any
     ): void {
+        console.log(this.state);
+
         if (this.state.content && this.state.content !== prevState.content) {
             const { body, tags} = this.state.content;
-
             if (body !== prevState.content?.body) {
                 this.updateBlogContentHeadings();
             } else if (tags !== prevState.content?.tags) {
@@ -99,11 +100,7 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
     }
 
     async updatedRelatedPosts(): Promise<void> {
-        if (this.state.content === undefined) {
-            return;
-        }
-
-        const { tags, _id } = this.state.content;
+        const { tags, _id } = this.state.content!;
 
         this.setState({
             relatedPosts: await this.postRepository.getRelatedPosts(tags, _id.$oid, 3)
@@ -203,7 +200,7 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
 
     renderRelatedPosts(): React.ReactNode {
         if (this.state.relatedPosts === undefined) {
-            return <SkeletonBlogContent />;
+            return (<></>);
         }
 
         try {
