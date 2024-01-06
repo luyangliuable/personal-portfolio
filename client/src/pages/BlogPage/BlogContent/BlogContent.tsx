@@ -87,7 +87,7 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
         prevState: Readonly<IBlogContentState>,
         snapshot?: any
     ): void {
-        console.log(this.state);
+        console.log(this.state.content?.tags !== prevState.content?.tags);
 
         if (this.state.content && this.state.content !== prevState.content) {
             const { body, tags} = this.state.content;
