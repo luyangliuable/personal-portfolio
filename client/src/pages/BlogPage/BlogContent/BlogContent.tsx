@@ -95,6 +95,9 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
                 this.updateBlogContentHeadings();
             } else if (tags !== prevState.content?.tags) {
                 this.updatedRelatedPosts();
+                console.log("Updated related posts")
+            } else if (this.state.relatedPosts != prevState.relatedPosts) {
+                console.log(this.state.relatedPosts);
             }
         }
     }
