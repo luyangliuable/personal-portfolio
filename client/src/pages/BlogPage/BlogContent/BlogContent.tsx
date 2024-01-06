@@ -87,17 +87,11 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
         prevState: Readonly<IBlogContentState>,
         snapshot?: any
     ): void {
-        console.log(this.state.content?.tags !== prevState.content?.tags);
-
         if (this.state.content && this.state.content !== prevState.content) {
-            const { body, tags} = this.state.content;
+            const { body } = this.state.content;
+            this.updatedRelatedPosts();
             if (body !== prevState.content?.body) {
                 this.updateBlogContentHeadings();
-            } else if (tags !== prevState.content?.tags) {
-                this.updatedRelatedPosts();
-                console.log("Updated related posts")
-            } else if (this.state.relatedPosts != prevState.relatedPosts) {
-                console.log(this.state.relatedPosts);
             }
         }
     }
