@@ -3,14 +3,11 @@ use rocket::{
     serde::json::Json,
     State,
 };
-
 use mongodb::{
     bson::{doc, to_bson, oid::ObjectId},
     results::{InsertOneResult, UpdateResult}
 };
-
 use std::str::FromStr;
-
 use crate::{
     models::local_image_model::LocalImage,
     repository::local_image_repo::LocalImageRepo,
@@ -18,11 +15,11 @@ use crate::{
 };
 
 
-/// Adds a new post to the database.
-/// Accepts a JSON body with the post details and returns the result of the insertion.
 #[post("/image", data = "<new_image>")]
-pub async fn index_image(local_image_repo: &State<LocalImageRepo>, new_image: Json<LocalImage>) -> Result<Json<InsertOneResult>, Status> {
-    let data = new_image.into_inner();
+pub async fn index_local_image(local_image_repo: &State<LocalImageRepo>, new_image: Json<LocalImage>) -> Result<Json<InsertOneResult>, Status> {
+    let mut data = new_image.into_inner();
+
+    data.date_created = Some(chrono::offset::Utc::now());
 
     match local_image_repo.0.create(data) {
         Ok(user) => Ok(Json(user)),
@@ -30,8 +27,16 @@ pub async fn index_image(local_image_repo: &State<LocalImageRepo>, new_image: Js
     }
 }
 
+#[get("/image")]
+pub fn get_all_local_image(db: &State<LocalImageRepo>) -> Result<Json<Vec<LocalImage>>, Status> {
+    match db.0.get_all() {
+        Ok(posts) => Ok(Json(posts)),
+        Err(_) => return Err(Status::InternalServerError),
+    }
+}
+
 #[get("/image/<id>")]
-pub fn get_image(id: String, local_image_repo:&State<LocalImageRepo>) -> Result<(ContentType, Vec<u8>), Status> {
+pub fn get_local_image(id: String, local_image_repo:&State<LocalImageRepo>) -> Result<(ContentType, Vec<u8>), Status> {
     let object_id = ObjectId::from_str(&id).expect("Failed to convert id to ObjectId");
 
     let local_image_result = match local_image_repo.0.get(object_id) {
@@ -55,8 +60,10 @@ pub fn get_image(id: String, local_image_repo:&State<LocalImageRepo>) -> Result<
 
 
 #[put("/image/<id>", data = "<new_image>")]
-pub fn update_image_index(id: String, new_image: Json<LocalImage>, local_image_repo: &State<LocalImageRepo>) -> Result<Json<UpdateResult>, Status> {
-    let new_image_data = new_image.into_inner();
+pub fn update_local_image(id: String, new_image: Json<LocalImage>, local_image_repo: &State<LocalImageRepo>) -> Result<Json<UpdateResult>, Status> {
+    let mut new_image_data = new_image.into_inner();
+
+    new_image_data.date_last_modified = Some(chrono::offset::Utc::now());
     
     let update_doc = match to_bson(&new_image_data) {
         Ok(mongodb::bson::Bson::Document(doc)) => doc,
@@ -68,7 +75,6 @@ pub fn update_image_index(id: String, new_image: Json<LocalImage>, local_image_r
     
     match local_image_repo.0.update_one(id, update, None) {
         Ok(update_result) => {
-            // Here, assuming user is of a type that has these methods; adjust as necessary
             Ok(Json( update_result ))
         },
         Err(_) => Err(Status::BadRequest),

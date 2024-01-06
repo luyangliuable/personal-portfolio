@@ -3,27 +3,19 @@ use log::{error, info};
 use mongodb::{
     bson::{ doc, oid::ObjectId, Document },
     results::InsertOneResult,
-    sync::{Client, Collection, Database},
+    sync::{Collection, Database},
 };
 use std::str::FromStr;
 use mongodb::results::UpdateResult;
 use mongodb::options::UpdateOptions;
 use crate::models::mongo_model::MongoModel;
 
-/// Represents a generic MongoDB repository for type `T` which implements the `MongoModel` trait.
 pub struct MongoRepo<T: MongoModel> {
     pub insert_col: Collection<T>,
     pub get_col: Collection<T>
 }
 
 impl<T: MongoModel> MongoRepo<T> {
-    /// Initializes a new MongoDB repository with the given collection name.
-    ///
-    /// # Parameters
-    /// * `collection_name`: The name of the MongoDB collection to use.
-    ///
-    /// # Returns
-    /// A new instance of `MongoRepo` for the specified collection.
     pub async fn init(collection_name: &str, db: &Database) -> Self {
         let get_col: Collection<T> = db.collection(collection_name);
         let insert_col: Collection<T> = db.collection(collection_name);
@@ -31,13 +23,6 @@ impl<T: MongoModel> MongoRepo<T> {
         MongoRepo { insert_col, get_col }
     }
 
-    /// Creates a new entity in the MongoDB collection.
-    ///
-    /// # Parameters
-    /// * `new_entity`: The entity to be inserted into the collection.
-    ///
-    /// # Returns
-    /// A result with either the `InsertOneResult` from the MongoDB operation or an error.
     pub fn create(&self, new_entity: T) -> Result<InsertOneResult, Error> {
         let result = self
             .insert_col
@@ -49,14 +34,6 @@ impl<T: MongoModel> MongoRepo<T> {
     }
 
 
-    /// Creates a new entity in the MongoDB collection.
-    ///
-    /// # Parameters
-    /// * `new_entity`: The entity to be inserted into the collection.
-    ///
-    /// # Returns
-    /// A result with either the `InsertOneResult` from the MongoDB operation or an error.
-    /// Updates the session token for a user identified by their ID.
     pub fn update_one(&self, id: String, update: Document, options: Option<UpdateOptions>) -> Result<UpdateResult, Error> {
         let filter = ObjectId::from_str(&id)
             .map(|object_id| doc! {"_id": object_id})
@@ -88,13 +65,6 @@ impl<T: MongoModel> MongoRepo<T> {
         }
     }
 
-    /// Retrieves an entity with the specified `ObjectId` from the MongoDB collection.
-    ///
-    /// # Parameters
-    /// * `id`: The `ObjectId` of the entity to be retrieved.
-    ///
-    /// # Returns
-    /// A result with either the entity of type `T` or an error.
     pub fn get(&self, id: ObjectId) -> Result<T, Error> {
         let filter = doc! { "_id": id };
 

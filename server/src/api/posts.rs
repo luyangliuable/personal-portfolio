@@ -8,8 +8,6 @@ use mongodb::{
 use rocket::serde::json::Json;
 use mongodb::results::InsertOneResult;
 
-/// Fetches a post based on its ObjectId.
-/// Returns the post content as a `Post` object wrapped in JSON.
 #[get("/posts/<id>")]
 pub async fn get_post(db: &State<PostRepo>, id: String) -> Result<Json<Post>, Status> {
     match ObjectId::from_str(&id) {
@@ -33,7 +31,7 @@ pub async fn get_post(db: &State<PostRepo>, id: String) -> Result<Json<Post>, St
 
 
 #[get("/posts")]
-pub fn get_post_list(db: &State<PostRepo>) -> Result<Json<Vec<Post>>, Status> {
+pub fn get_all_post(db: &State<PostRepo>) -> Result<Json<Vec<Post>>, Status> {
     match db.0.get_all() {
         Ok(posts) => Ok(Json(posts)),
         Err(_) => return Err(Status::InternalServerError),
@@ -43,7 +41,9 @@ pub fn get_post_list(db: &State<PostRepo>) -> Result<Json<Vec<Post>>, Status> {
 
 #[patch("/posts/<id>", data = "<new_post>")]
 pub fn update_post(id: String, new_post: Json<Post>, post_repo: &State<PostRepo>) -> Result<Json<UpdateResult>, Status> {
-    let new_post_data = new_post.into_inner();
+    let mut new_post_data = new_post.into_inner();
+
+    new_post_data.date_last_modified = Some(chrono::offset::Utc::now());
     
     let update_doc = match to_bson(&new_post_data) {
         Ok(mongodb::bson::Bson::Document(doc)) => doc,
@@ -60,11 +60,11 @@ pub fn update_post(id: String, new_post: Json<Post>, post_repo: &State<PostRepo>
 }
 
 
-/// Adds a new post to the database.
-/// Accepts a JSON body with the post details and returns the result of the insertion.
 #[post("/posts", data = "<new_post>")]
 pub async fn index_post(db: &State<PostRepo>, new_post: Json<Post>) -> Result<Json<InsertOneResult>, Status> {
-    let data = new_post.into_inner();
+    let mut data = new_post.into_inner();
+
+    data.date_created = Some(chrono::offset::Utc::now());
 
     match db.0.create(data) {
         Ok(user) => Ok(Json(user)),
