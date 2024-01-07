@@ -1,6 +1,7 @@
 .in-progress-block {
-    background: rgba(86, 215, 50, 0.95);
+    background: rgb(86, 215, 50, 0.95);
     position: relative;
+    z-index: 2;
     font-size: .75em;
     color: rgb(0, 43, 16);
     margin-right: 5px;

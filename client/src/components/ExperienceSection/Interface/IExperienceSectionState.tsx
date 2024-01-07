@@ -26,9 +26,8 @@ interface IExperienceSectionState<
     isLocked: boolean,
     currentElementPositionY?: number,
     timeLineLength?: number,
-    lockPosition: number | null
+    lockPosition?: number
     unlockPosition: number | null
-    fallBackLockPosition: number
 }
 
 

@@ -2,8 +2,7 @@
     background-color: rgba(150, 150, 150, 0.1);
     border-radius: 10px;
     border: 1px solid #CCC;
-    position: relative;
-    overflow: hidden;
+    position: relative
 }
 
 .card:hover::before {
@@ -131,9 +130,9 @@
     }
 
     .card-image-preview {
-        opacity: .45;
+        opacity: .75;
         width: 130%;
-        min-height: 130%;
+        min-height: 160%;
         -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
         mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 70%);
     }

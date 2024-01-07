@@ -204,6 +204,10 @@ a {
     justify-content: flex-start
 }
 
+.justify-around {
+    justify-content: space-between
+}
+
 .items-center {
     align-items: center
 }

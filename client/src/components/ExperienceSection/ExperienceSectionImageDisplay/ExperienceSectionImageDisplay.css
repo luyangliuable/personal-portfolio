@@ -1,8 +1,8 @@
-.image_display__detailed-text {
+.image-display__detailed-text {
     text-align: center;
     font-size: 13px;
     width: 80%;
-    color: #555;
+    color: #555
 }
 
 .experience-section-card__location {
@@ -24,12 +24,14 @@
     margin: 0 5px;
 }
 
-.image_display__wrapper {
+.image-display__wrapper {
     height: 80%;
 }
 
-.image_display__image {
-    max-height: 80px;
-    border-radius: 10px;
-    margin-top: 10px;
+.image-display__image {
+    max-height: 150px;
+    object-fit: cover;
+    min-width: 100%;
+    margin-bottom: 10px;
+    border-radius: 10px
 }

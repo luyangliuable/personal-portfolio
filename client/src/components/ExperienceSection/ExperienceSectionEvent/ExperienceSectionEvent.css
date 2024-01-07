@@ -1,11 +1,3 @@
-.experience-section-card {
-    width: 300px;
-    margin: 0 5px;
-    height: fit-content;
-    padding: 8px;
-    position: relative;
-}
-
 .experience-section-card__text-body {
     display: flex;
     flex-direction: column;
@@ -16,7 +8,7 @@
 .experience-section-card__date,
 .experience-section-card__job-title {
     align-self: flex-start;
-    color: #555; /* Combined color property */
+    color: #555
 }
 
 .experience-section-card__detailed-text {
@@ -72,21 +64,20 @@
 
 @media screen and (max-height: 850px) {
     .experience-section-card {
-        width: 260px;
-        height: 200px;
+        width: 260px
     }
 
     .experience-section-card h2 {
-        font-size: 12px;
+        font-size: 12px
     }
 
     .experience-section-card div {
         font-size: 10px;
         color: #333;
-        font-weight: 200;
+        font-weight: 200
     }
 
     .experience-section-card__location {
-        display: none;
+        display: none
     }
 }

@@ -20,9 +20,7 @@
     --landing-page-card-intro-animation: animate-slide-up-fade-in .1s ease-in;
     position: relative;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-right: .6vw; /* IDK what is causing this but there is a offset by .7vw to the right */
+    justify-content: start;
     background: #F9F9F9;
     box-shadow: var(--landing-page-card-box-shadow);
     -webkit-box-shadow: var(--landing-page-card-box-shadow);
