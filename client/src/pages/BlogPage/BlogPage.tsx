@@ -23,7 +23,7 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
 
         this.heroHeaderContent = Object.freeze({
             heading: "Blog Posts",
-            description: (<>Blog posts for <span className="fancy-underline"> documenting useful code</span>, mark <span className="fancy-underline">memorable moments</span> in my life and help my journey of endless <span className="fancy-underline">self-improvement</span>.</>),
+            description: (<>Blog posts for <b> documenting useful code</b>, mark <b>memorable moments</b> in my life and help my journey of endless <b>self-improvement</b>.</>),
         }); // as const
 
         this.state = {

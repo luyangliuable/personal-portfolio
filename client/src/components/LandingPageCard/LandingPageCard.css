@@ -10,7 +10,6 @@
 
 .landing-page-card {
     --landing-page-card-border-radius: 14px;
-    --landing-page-card-margin: 100px;
     --landing-page-card-large--width: 98vw;
     --landing-page-card-large--max-width: 2500px;
     --landing-page-card-large--padding: 2vh;

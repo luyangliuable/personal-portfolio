@@ -3,7 +3,7 @@
     --navbar-height: 68px;
 
     --page-bottom-margin: 120px;
-    --common-card-margin: 25vh;
+    --common-card-margin: min(25vh, 100px);
 
     --dark-mode-black: #1e1e1e;
     --dark-mode-purple: #491ed3;
@@ -21,8 +21,6 @@
     --zenburn-foreground: #DCDCCC;
 
 }
-
-.App {}
 
 .App-logo {
     height: 40vmin;
@@ -164,6 +162,10 @@ a {
 
 /* Scroll */
 
+.overflow-hidden {
+    overflow: hidden
+}
+
 .overflow-scroll {
     overflow: scroll
 }
@@ -204,7 +206,7 @@ a {
     justify-content: flex-start
 }
 
-.justify-around {
+.justify-between {
     justify-content: space-between
 }
 

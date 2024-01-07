@@ -1,4 +1,4 @@
-import { Component, createRef, RefObject } from "react";
+import React, { Component, createRef, RefObject } from "react";
 import "./Card.css";
 import { NavLink } from "react-router-dom";
 import { cardGradientEffect } from "../../components/Utility/MouseUtility";
@@ -20,9 +20,7 @@ class Card extends Component<ICardProps, ICardState> {
         this.cardItemRef = createRef();
         this.dynamicLoadQueue = DynamicLoadQueue.getInstance();
 
-        this.state = {
-            fetchedImageUrl: null,
-        };
+        this.state = {};
     }
 
     componentDidMount() {
@@ -36,11 +34,10 @@ class Card extends Component<ICardProps, ICardState> {
     }
 
     extractRouteFromURL(url: string): string | null {
-        console.log(url)
         try {
             const parsedUrl = new URL(url);
             if (parsedUrl.hostname === "llcode.tech") {
-                return parsedUrl.pathname; // Returns the path (route) of the URL
+                return parsedUrl.pathname;
             } else {
                 return null;
             }
@@ -55,17 +52,18 @@ class Card extends Component<ICardProps, ICardState> {
         const displayMinuteRead = `${minuteRead || "X"} min read`;
         const displayDateCreated = date_created ? isoDateFormatToString(new Date(date_created)) : '';
 
+        if (link === undefined || image === undefined || authorImage === undefined)
+            return (<></>);
+
         return (
             <NavLink ref={this.cardItemRef} onMouseMove={cardGradientEffect} className="card card-item" to={link}>
-                <div className="flex"><Image src={authorImage} className="user-image card-image--author-image" alt="Author" />{author}</div>
+                <TagCloud tags={tags} />
                 <div className="card-item__content">
                     <h3 className="card-item__heading">{heading}</h3>
                     <p className="card-item__label flex flex-row items-center">{`${displayMinuteRead} | ${displayDateCreated}`}{in_progress && <InProgressBlock />}</p>
-                    <TagCloud tags={tags} />
                 </div>
-                <div className="card-image-preview__wrapper">
-                    {<Image src={image} className="card-image-preview" alt="Card Preview" />}
-                </div>
+                <div className="card-image-preview__wrapper position-absolute overflow-hidden flex justify-center items-center">{<Image src={image} className="card-image-preview" alt="Card Preview" />}</div>
+                <div className="flex mt-5"><Image src={authorImage} className="user-image card-image--author-image" alt="Author" />{author}</div>
             </NavLink>
         );
     }
