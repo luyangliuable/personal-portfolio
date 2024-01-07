@@ -20,7 +20,7 @@
     --landing-page-card-intro-animation: animate-slide-up-fade-in .1s ease-in;
     position: relative;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     background: #F9F9F9;
     box-shadow: var(--landing-page-card-box-shadow);
     -webkit-box-shadow: var(--landing-page-card-box-shadow);
