@@ -36,7 +36,7 @@ pub fn get_all_local_image(db: &State<LocalImageRepo>) -> Result<Json<Vec<LocalI
 }
 
 #[get("/image/<id>")]
-pub fn get_local_image(id: String, local_image_repo:&State<LocalImageRepo>) -> Result<(ContentType, Vec<u8>), Status> {
+pub fn get_local_image(id: String, local_image_repo: &State<LocalImageRepo>) -> Result<(ContentType, Vec<u8>), Status> {
     let object_id = ObjectId::from_str(&id).expect("Failed to convert id to ObjectId");
 
     let local_image_result = match local_image_repo.0.get(object_id) {
@@ -44,17 +44,24 @@ pub fn get_local_image(id: String, local_image_repo:&State<LocalImageRepo>) -> R
         Err(_) => return Err(Status::NotFound),
     };
 
+    let content_type = match local_image_result.image_type.as_str() {
+        "png" => ContentType::PNG,
+        "jpg" | "jpeg" => ContentType::JPEG,
+        "gif" => ContentType::GIF,
+        "pdf" => ContentType::PDF,
+        _ => return Err(Status::UnsupportedMediaType),
+    };
+
     let local_image_path = match local_image_util::image_store_location() {
         Ok(local_image_location) => util::path_combiner(local_image_location, local_image_result.file_name, Some( local_image_result.image_type )),
         Err(_) => return Err(Status::NotFound)
     };
 
-    let image_bytes = std::fs::read(local_image_path).map_err(|e| {
-        println!("Failed to read the file: {:?}", e);
+    let image_bytes = std::fs::read(local_image_path).map_err(|_| {
         Status::InternalServerError
     })?;
 
-    Ok(( ContentType::PNG, image_bytes))
+    Ok((content_type, image_bytes))
 }
 
 
@@ -73,7 +80,7 @@ pub fn update_local_image(id: String, new_image: Json<LocalImage>, local_image_r
     
     let update = doc! { "$set": update_doc };
     
-    match local_image_repo.0.update_one(id, update, None) {
+    match local_image_repo.0.update(id, update, None) {
         Ok(update_result) => {
             Ok(Json( update_result ))
         },

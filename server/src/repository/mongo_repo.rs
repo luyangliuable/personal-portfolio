@@ -34,7 +34,7 @@ impl<T: MongoModel> MongoRepo<T> {
     }
 
 
-    pub fn update_one(&self, id: String, update: Document, options: Option<UpdateOptions>) -> Result<UpdateResult, Error> {
+    pub fn update(&self, id: String, update: Document, options: Option<UpdateOptions>) -> Result<UpdateResult, Error> {
         let filter = ObjectId::from_str(&id)
             .map(|object_id| doc! {"_id": object_id})
             .map_err(|_| Error::new(std::io::ErrorKind::Other, "Invalid user ID"))?;

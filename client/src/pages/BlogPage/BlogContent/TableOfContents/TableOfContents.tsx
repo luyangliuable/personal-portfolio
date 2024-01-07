@@ -19,9 +19,7 @@ const TableOfContents: React.FC<ItableOfContentsProps> = (props) => {
     }
 
     const handleClick = (event: React.MouseEvent<HTMLDivElement>, id: string) => {
-
         const targetElement = document.getElementById(id);
-
         document.documentElement.style.scrollBehavior = "smooth";
 
         if (targetElement) {

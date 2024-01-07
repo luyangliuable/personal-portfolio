@@ -13,6 +13,7 @@ import JsonToMarkdown from "./Utilities/JsonToMarkdown";
 import BlogPostResponse from "../../../repositories/Response/BlogPostResponse";
 import ImageRepository from "../../../repositories/ImageRepository";
 import TableOfContent from "./TableOfContents/TableOfContents";
+import AuthorDetails from "./AuthorDetails/AuthorDetails";
 import Image from "../../../components/Image/Image";
 import OpenGraphWrapper from "../../../wrappers/OpenGraphWrapper/OpenGraphWrapper";
 import "./BlogContent.css";
@@ -105,36 +106,6 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
 
     }
 
-    renderTableOfContents(): React.ReactNode {
-        function getTextColor(level: number): string {
-            const lightness = level * 20;
-            return `hsl(0, 0%, ${lightness}%)`;
-        }
-
-        const subheadings = this.state.headings?.filter(
-            ({ title, level }) => level !== 0
-        );
-
-        return subheadings?.map(({ title, level }, idx: number) => {
-            const indentation = `${level * 20}px`;
-            const marginBottom = `${12 - 4.5 * level}px`;
-            const color = getTextColor(level);
-
-            return (
-                <span
-                    key={idx}
-                    style={{
-                        color: color,
-                        marginLeft: indentation,
-                        marginBottom: marginBottom,
-                    }}
-                >
-                    {title}
-                </span>
-            );
-        });
-    }
-
     renderBlogContent(): React.ReactNode {
         if (this.state.content === undefined) {
             return (<SkeletonBlogContent />);
@@ -149,10 +120,7 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
                 <div className="blog-content__header">
                     <h1>{heading}</h1>
                     <div className="flex">
-                        <Image
-                            className="user-image blog-content--author-image"
-                            src={this.defaultAuthorImage}
-                        />
+                        <Image className="user-image blog-content--author-image" src={this.defaultAuthorImage} />
                         <div className="flex-vertical">
                             <span>{author}</span>
                             <span>{displayDateCreated}</span>
@@ -168,31 +136,6 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
                 </div>
             </div>
         );
-    }
-
-    renderAuthorDetails(): React.ReactNode {
-        if (this.state.content === undefined) {
-            return (<SkeletonBlogContent />);
-        }
-
-        const { date_created, author } = this.state.content!;
-        const displayDateCreated = isoDateFormatToString(new Date(date_created));
-
-        return (
-            <>
-                <h3>Posted by</h3>
-                <div className="flex">
-                    <Image
-                        className="user-image blog-content--author-image"
-                        src={this.defaultAuthorImage}
-                    />
-                    <div className="flex-vertical">
-                        <b>{author}</b>
-                        <span>{displayDateCreated}</span>
-                    </div>
-                </div>
-            </>
-        )
     }
 
     renderRelatedPosts(): React.ReactNode {
@@ -251,7 +194,7 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
                         <div className="blog-content__side-components flex flex-col items-start mt-10">
                             <br />
                             <hr />
-                            {this.renderAuthorDetails()}
+                            <AuthorDetails content={this.state.content} />
                             <br />
                             <hr />
                             {this.renderRelatedPosts()}
@@ -264,7 +207,6 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
                                 <img height="36" style={{ border: "0px", height: "36px" }} src="https://storage.ko-fi.com/cdn/kofi2.png?v=3" alt="Buy Me a Coffee at ko-fi.com" />
                             </a>
                         </div>
-                        <div></div>
                         {this.renderBlogContent()}
                         <div className="blog-content__side-components position-sticky  mt-20vh">
                             <div>
