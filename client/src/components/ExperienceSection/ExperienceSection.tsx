@@ -318,7 +318,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
         const scrolled = this.props.scrolled! ?? 0;
         const currentPosition = this.experienceSectionParentRef.current!.parentElement!.getBoundingClientRect().top + scrolled;
 
-        if (this.state.lockPosition !== currentPosition) {
+        if (!this.state.isLocked && this.state.lockPosition !== currentPosition) {
             this.setState({ lockPosition: currentPosition });
         }
     }
