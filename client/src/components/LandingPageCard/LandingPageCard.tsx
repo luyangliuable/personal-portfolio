@@ -18,6 +18,8 @@ class LandingPageCard extends Component<ILandingPageCardProps, any> {
             });
         });
 
+        document.documentElement.scrollTo(0, 0);
+
         setInterval(() => {
             if (this.state.scrolling) {
                 this.setState({

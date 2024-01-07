@@ -335,7 +335,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
             <NavLink
                 to={targetPath}
                 className={({ isActive }) => {
-                    let classes = ["navbar-item"];
+                    let classes = ["navbar-item", "flex", "justify-center", "items-center"];
                     if (isActive && targetPath) {
                         const currentSearchParams = new URLSearchParams(window.location.search);
                         const targetSearchParams = new URLSearchParams(new URL(targetPath, window.location.href).search);
@@ -363,16 +363,16 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                     className="navbar"
                     onMouseLeave={() => this.hideDropdownMenu()}
                     ref={this.navbar}>
-                    <div className="navbar-content">
+                    <div className="navbar-content flex items-center">
                         <NavLink to="/" style={{ textDecoration: "none" }}>
                             <h1 className="logo">{name}</h1>
                         </NavLink>
-                        <nav ref={this.navbarLeft} className="navbar-left">
+                        <nav ref={this.navbarLeft} className="navbar-left flex flex-row">
                             {links.map(this.renderNavLink)}
                             <LoginButton
                                 onMouseOver={this.renderDropdownMenu}
                             />
-                            <div ref={this.selectedNavlinkWindow} className="selected-navlink-window">
+                            <div ref={this.selectedNavlinkWindow} className="selected-navlink-window flex items-center">
                                 <div ref={this.navbarSubmenu} className="navbar-item__dropdown ">
                                     {this.state.dropdownMenuLinkDisplay}
                                 </div>

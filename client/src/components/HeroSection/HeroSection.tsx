@@ -133,7 +133,7 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
               <CodingCat showAnimtion={this.props.scrolling} />
             </div>
           </div>
-          <div className="hero-section-badge__container">
+          <div className="hero-section-badge__container flex justify-center items-center w-full">
             {heroSectionState.linkToMyOtherSocialMedia.map(
               (item: any, index: number) => (
                 <a key={index} href={item.link} className="hero-section-badge__link" target="_blank" rel="noopener noreferrer" >

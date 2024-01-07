@@ -1,72 +1,27 @@
 .experience-section-card__text-body {
     display: flex;
     flex-direction: column;
-    align-items: center;
-}
-
-.experience-section-card__text-body > h2,
-.experience-section-card__date,
-.experience-section-card__job-title {
-    align-self: flex-start;
-    color: #555
-}
-
-.experience-section-card__detailed-text {
-    text-align: center;
-    font-size: 13px;
-    width: 80%;
-    color: #555; /* Moved color property here to avoid repetition */
-}
-
-.experience-section-card__location {
-    display: flex;
-    font-size: 9px;
-    text-align: left;
-    margin-top: min(10px, 1vh);
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-.experience-section-card__location > svg {
-    color: #000;
-    font-size: 25px;
-}
-
-.experience-section-card__location > * {
-    margin: 0 5px;
+    width: 70%;
+    font-size: .8em;
+    color: #888
 }
 
 .experience-section-card__image-wrapper {
-    display: flex;
-    justify-content: center;
-}
-
-.experience-section-card__image-wrapper--image,
-.experience-section-card__image-wrapper--experience {
-    display: flex;
-}
-
-.experience-section-card__image-wrapper--image {
-    height: 80%;
-}
-
-.experience-section-card__image-wrapper--experience {
+    display: flex; justify-content: center;
+    position: absolute;
+    overflow: hidden;
+    width: 30%;
     height: 50%;
     align-items: center;
-}
-
-.experience-section-card__image {
-    max-height: 80px;
     border-radius: 10px;
-    margin-top: 10px;
+    right: 0;
 }
-
-@media screen and (max-height: 850px) {
-    .experience-section-card {
-        width: 260px
+    .experience-section-card__image-wrapper>img {
+        height: 100%;
+        width: 100%
     }
 
+@media screen and (max-height: 850px) {
     .experience-section-card h2 {
         font-size: 12px
     }

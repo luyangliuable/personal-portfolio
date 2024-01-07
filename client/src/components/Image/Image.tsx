@@ -55,14 +55,12 @@ class Image extends Component<IImageProps, IImageState> {
         let { className, alt } = this.props;
         alt ??= this.defaultImageAlt;
 
+        if (fetchedImageUrl === undefined) {
+            return (<SkeletonImage class={this.props.className} />)
+        }
+
         return (
-            <>
-                {
-                    fetchedImageUrl ?
-                        <img className={className} src={fetchedImageUrl} alt={alt} />
-                        : <SkeletonImage class={this.props.className} />
-                }
-            </>
+            <img className={className} src={fetchedImageUrl} alt={alt} />
         )
     }
 }

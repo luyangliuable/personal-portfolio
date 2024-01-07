@@ -1,4 +1,4 @@
-import { Component, ReactNode } from "react";
+import React, { Component, ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 import { CiLogin } from 'react-icons/ci';
 import { AiFillCaretDown } from 'react-icons/ai';
@@ -80,7 +80,7 @@ class LoginButton extends Component<ILoginButtonProps, ILoginButtonState> {
             <NavLink
                 to={this.loginButtonTo}
                 onMouseOver={() => this.props.onMouseOver(this.sublinks)}
-                className={({ isActive }) => ["navbar-item", isActive ? "navbar-item active-link" : null].filter(Boolean).join(" ")}>
+                className={({ isActive }) => ["navbar-item flex justify-center", isActive ? "navbar-item active-link" : null].filter(Boolean).join(" ")}>
                 {loginButtonInnerHTML}
                 <div className="navbar-item__dropdown"></div>
             </NavLink >

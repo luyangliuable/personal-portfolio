@@ -349,7 +349,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
         });
 
         return (
-            <div className="landing-page-card flex flex-col justify-start experience-section-parent-container" ref={this.experienceSectionParentRef}>
+            <div className="landing-page-card flex flex-col justify-start overflow-hidden experience-section-parent-container" ref={this.experienceSectionParentRef}>
                 <h1 style={{ marginLeft: "2vw" }}>Retrospective</h1>
                 <div ref={this.experienceSectionRef} className="experience-section" >
                     <div ref={this.experienceSectionScrollRef} className="experience-section--content">
@@ -358,7 +358,7 @@ class ExperienceSection extends Component<IExperienceSectionProps, IExperienceSe
                             sortedItems.map((item, idx) => {
                                 if (item.display !== undefined) {
                                     return (
-                                        <ExperienceSectionImageDisplay timeLineRef={this.timeLineRef} key={idx} item={item} index={idx} />
+                                        <ExperienceSectionImageDisplay key={idx} item={item} index={idx} />
                                     );
                                 }
                                 return (

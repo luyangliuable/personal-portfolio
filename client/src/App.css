@@ -20,6 +20,12 @@
     --zenburn-background: #3F3F3F;
     --zenburn-foreground: #DCDCCC;
 
+    --bg: #1a1e2d;
+    --green: #a5ea9b;
+    --pink: #ff61d8;
+    --blue: #569cfa;
+    --orange: #ffcc81;
+    --cyan: #7ed1e2;
 }
 
 .App-logo {
@@ -180,6 +186,19 @@ a {
     width: 100%
 }
 
+.w-80 {
+    width: 80%
+}
+
+.w-70 {
+    width: 70%
+}
+
+.w-half {
+    width: 50%
+}
+
+
 .w-30 {
     width: 30%
 }
@@ -248,6 +267,12 @@ a {
     -moz-border-radius: var(-border-radius);
     -ms-border-radius: var(-border-radius);
     -o-border-radius: var(-border-radius);
+}
+
+/* Image */
+
+.object-cover {
+    object-fit: cover
 }
 
 /* Animation */
@@ -349,18 +374,6 @@ a {
 
 .border-1-solid-black {
     border: 1px solid black
-}
-
-.w-full {
-    width: 100%;
-}
-
-.w-80 {
-    width: 80%;
-}
-
-.w-half {
-    width: 50%;
 }
 
 /* Override Styles (!important only allowed here) */
