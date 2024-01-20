@@ -18,6 +18,8 @@ use repository::mongo_repo::MongoRepo;
 use repository::local_image_repo::LocalImageRepo;
 use config::cors::CORS;
 
+use controller::{ post_controller::PostController, local_image_controller::LocalImageController };
+
 use database::db_singleton::DB;
 use mongodb::bson::doc;
 use models::post_model::Post;
@@ -40,16 +42,18 @@ async fn rocket() -> _ {
     let user_repo = UserRepo(MongoRepo::<User>::init("User", &*DB).await);
     let local_image_repo = LocalImageRepo(MongoRepo::<LocalImage>::init("LocalImage", &*DB).await);
 
+    let post_controller = PostController::new(post_repo);
+    let local_image_controller = LocalImageController::new(local_image_repo);
+
     // TODO: Convert this into a toml file and load it
     rocket::build()
         .manage(blog_repo)
-        .manage(post_repo)
+        .manage(post_controller)
         .manage(user_repo)
-        .manage(local_image_repo)
-        .manage(DB.clone())
+        .manage(local_image_controller)
 
         .mount("/api/", routes![index])
-        .mount("/api/", routes![api::blogs::get_blog_post])
+        .mount("/api/", routes![api::blogs::get_all_blog_post])
         .mount("/api/", routes![api::blogs::create_blog])
         .mount("/api/", routes![api::blogs::get_blog])
 

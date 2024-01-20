@@ -4,23 +4,11 @@ use mongodb::bson::{oid::ObjectId};
 use rocket::{http::Status, State};
 use crate::{models::blog_model::BlogPost, repository::blog_repo::BlogRepo};
 use mongodb::results::InsertOneResult;
-use chrono::{Utc};
+use chrono::Utc;
 
-#[get("/blogs/test")]
-pub fn get_blog_posts() -> Json<BlogPost> {
-    let blog_post = BlogPost {
-        id: Some(ObjectId::new()),
-        author: String::from("John Doe"),
-        heading: "Hello World".to_string(),
-        date_created: Utc::now().format("%Y-%m-%d %H:%M:%S").to_string(),
-        body: vec!["This is a blog post".to_string()]
-    };
-
-    Json(blog_post)
-}
 
 #[get("/blogs/<id>")]
-pub async fn get_blog_post(db: &State<BlogRepo>, id: String) -> Result<Json<BlogPost>, Status> {
+pub async fn get_all_blog_post(db: &State<BlogRepo>, id: String) -> Result<Json<BlogPost>, Status> {
 
     match ObjectId::from_str(&id) {
         Ok(object_id) => {
