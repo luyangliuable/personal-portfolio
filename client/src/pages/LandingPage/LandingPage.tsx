@@ -14,14 +14,14 @@ class LandingPage extends Component<ILandingPageProps, ILandingPagestate> {
 
   render(): React.ReactElement<any, any> {
     return (
-      <div className="landing-page-content">
+      <main className="landing-page-content">
         <HeroSection scrolling={this.props.scrolling} />
         <FeaturedContentSection scrolled={this.props.scrolled} />
         <div className="experience-section-wrapper"><Experiences scrolled={this.props.scrolled} /></div>
         <LandingPageCard landingPageCardType="fitContent" className="blend-with-background" heading="Digital Chronicles of the Real World">
-          <div className="flex-column-centered-centered"><BlogPage /></div>
+          <section className="flex-column-centered-centered"><BlogPage /></section>
         </LandingPageCard>
-      </div>
+      </main>
     )
   }
 }

@@ -65,20 +65,22 @@ class LogInPage extends Component<any, any> {
 
     render(): React.ReactElement<any, any> {
         return (
-            <form className="login-form__wrapper" >
-                <h1>Sign in to ~/llcode.tech</h1>
-                <div className="login-form">
-                    {
-                        this.state.loginStatus !== "Pending" && (
-                            <div className={this.getFlashClassNames()}>{this.state.flashMessage}</div>
-                        )
-                    }
-                    <input ref={this.userNameRef} type="text" placeholder="🙋‍♂️🙋‍♀️ username" />
-                    <p>Forgot Password?</p>
-                    <input ref={this.passwordRef} type="password" placeholder="🔒🔑️ password" />
-                    <input type="submit" className="button" onClick={(e) => this.login(e)} />
-                </div>
-            </form>
+            <main>
+                <form className="login-form__wrapper" >
+                    <h1>Sign in to ~/llcode.tech</h1>
+                    <div className="login-form">
+                        {
+                            this.state.loginStatus !== "Pending" && (
+                                <div className={this.getFlashClassNames()}>{this.state.flashMessage}</div>
+                            )
+                        }
+                        <input ref={this.userNameRef} type="text" placeholder="🙋‍♂️🙋‍♀️ username" />
+                        <p>Forgot Password?</p>
+                        <input ref={this.passwordRef} type="password" placeholder="🔒🔑️ password" />
+                        <input type="submit" className="button" onClick={(e) => this.login(e)} />
+                    </div>
+                </form>
+            </main>
         )
     }
 }

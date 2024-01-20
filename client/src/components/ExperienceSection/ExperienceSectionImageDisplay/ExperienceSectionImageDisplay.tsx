@@ -15,7 +15,7 @@ const ExperienceSectionImageDisplay: React.FC<IExperienceSectionImageDisplayProp
     const experienceSectionCardTextImageBody = (): React.ReactElement => (
         <div className="w-full">
             <p className="image-display__detailed-text">{item.cardDetailedText}</p>
-            <div className="experience-section-card__location flex items-center justify-center">
+            <div className="experience-section-card__location flex items-center justify-center font-fira-code">
                 {item.location && (<PiMapPinLineThin />)}
                 <div>{item.location}</div>
             </div>

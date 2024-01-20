@@ -72,7 +72,19 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                         name: "🌸 BloomChain ",
                         isLocked: true,
                         to: "/tools/bloomchain"
-                    }, {
+                    },
+                    {
+                        name: "📝 PonderPad",
+                        isLocked: true,
+                        to: "/tools/ponderpad"
+                    },
+                    {
+                        name: "🗣️ MangaSpeak",
+                        isLocked: true,
+                        to: "/tools/mangaspeak"
+
+                    },
+                    {
                         name: "⌛ TimeCapsule Letters",
                         isLocked: true,
                         to: "/tools/time_capsule_letters"
@@ -308,7 +320,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
         this.selectedNavlinkWindow.current?.classList.add("show-navbar-dropdown");
     }
 
-    renderDropdownMenu = (links: Link[]): ReactNode | void => {
+    renderDropdownMenu = (links: Link[] | undefined): ReactNode | void => {
         if (links !== undefined) {
             this.showDropdownMenu();
             this.setState({ dropdownMenuLinkDisplay: links.map(this.renderNavLink) });
@@ -359,32 +371,25 @@ class NavBar extends Component<INavbarProps, INavbarState> {
 
         return (
             <>
-                <div
+                <article
                     className="navbar"
                     onMouseLeave={() => this.hideDropdownMenu()}
                     ref={this.navbar}>
-                    <div className="navbar-content flex items-center">
-                        <NavLink to="/" style={{ textDecoration: "none" }}>
-                            <h1 className="logo">{name}</h1>
-                        </NavLink>
+                    <section className="navbar-content flex items-center">
+                        <NavLink to="/"><h1 className="logo">{name}</h1></NavLink>
                         <nav ref={this.navbarLeft} className="navbar-left flex flex-row">
                             {links.map(this.renderNavLink)}
-                            <LoginButton
-                                onMouseOver={this.renderDropdownMenu}
-                            />
-                            <div ref={this.selectedNavlinkWindow} className="selected-navlink-window flex items-center">
+                            <LoginButton onMouseOver={this.renderDropdownMenu} />
+                            <section ref={this.selectedNavlinkWindow} className="selected-navlink-window flex items-center">
                                 <div ref={this.navbarSubmenu} className="navbar-item__dropdown ">
                                     {this.state.dropdownMenuLinkDisplay}
                                 </div>
-                            </div>
+                            </section>
                         </nav>
-                        <div ref={this.burgerButton} className="nav-burger" onClick={this.toggleBurgerMenu}>
-                            <BurgerMenuIcon />
-                        </div>
-                    </div>
-                    <div id="scroll-progress" ref={this.scrollProgress} />
-                </div>
-
+                        <div ref={this.burgerButton} className="nav-burger" onClick={this.toggleBurgerMenu}><BurgerMenuIcon /></div>
+                    </section>
+                    <aside id="scroll-progress" ref={this.scrollProgress} />
+                </article>
                 <NavBurgerPanel links={links} burgerPanel={this.burgerPanel} />
             </>
         );

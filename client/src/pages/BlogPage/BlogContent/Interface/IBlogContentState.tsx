@@ -9,7 +9,6 @@ export interface IBlogContentState {
     content?: BlogPostResponse,
     relatedPosts?: BlogPostResponse[],
     headings: IBlogHeading[],
-    activeSection: string[],
     cache: {
         fetchedImageUrl?: string,
         fetchedAuthorImageUrl?: string

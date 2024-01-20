@@ -83,7 +83,6 @@ function App() {
             window.clearTimeout(scrollTimeout);
             window.clearInterval(deltaScrollCalculationInterval);
         };
-
     }, []);
 
     const deltaScrolled = appState.deltaScrollCalculation?.deltaScrolled;
@@ -93,7 +92,6 @@ function App() {
             <AppContextProvider>
                 <BrowserRouter>
                     <NavBar scrollStatus={{ scrolled: appState.scrollY, deltaScrolled: deltaScrolled }} />
-                    <div className="page-body">
                         <Routes>
                             <Route path="/" element={
                                 <LandingPage scrolled={appState.scrollY} scrolling={appState.scrolling} />
@@ -116,7 +114,6 @@ function App() {
                             <Route path="/tools" element={<RedirectToRoot link="/tools/mood_tracker" />} />
                             <Route path="/about" element={<RedirectToRoot link="/about/teddie" />} />
                         </Routes>
-                    </div>
                 </BrowserRouter>
             </AppContextProvider>
         </div>

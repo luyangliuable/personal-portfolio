@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import "./HardwareProjectsPage.css";
 import Gallery from "../../components/Gallery/Gallery";
 import IHardwareProjectsPageState from "./Interface/IHardwareProjectsPageState";
@@ -51,10 +51,10 @@ class HardwareProjectsPage extends Component<{}, IHardwareProjectsPageState> {
         const { heading, description } = this.heroHeaderContent;
 
         return (
-            <>
+            <main>
                 <HeroHeader heading={heading} description={description} />
                 <Gallery heading="3D Hardware that I Use for My Projects" content={this.state.content} />
-            </>
+            </main>
         );
     }
 }

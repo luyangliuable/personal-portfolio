@@ -41,10 +41,10 @@ class ThreeDPrintingGallery extends Component<{}, IThreeDPrintingGalleryState> {
         const { heading, description } = this.heroHeaderContent;
 
         return (
-            <>
+            <main>
                 <HeroHeader heading={heading} description={description} />
                 <Gallery content={this.state.content} heading="3D Printing Gallery" />
-            </>
+            </main>
         );
     }
 }

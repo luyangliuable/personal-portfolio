@@ -15,24 +15,19 @@
 }
 
 .table-of-contents div {
-        text-align: left;
-        border-bottom: .1px dashed #DEDEDE;
-        cursor: pointer;
-        border-radius: 7px;
-	font-weight: bold;
-        border: 1px solid transparent;
-        transition: all .2s ease-in;
-        word-wrap: break-word;
-    }
-
-    .table-of-contents>div:hover {
-        color: #333;
-        border: 1px solid #333;
-    }
+    text-align: left;
+    border-bottom: .1px dashed #DEDEDE;
+    cursor: pointer;
+    border-radius: 7px;
+	  font-weight: bold;
+    border: 1px solid transparent;
+    transition: all .2s ease-in;
+    word-wrap: break-word;
+}
 
 @media screen and (max-width: 1000px) {
     .table-of-contents {
-	height: fit-content;
+	      height: fit-content;
     }
 }
 

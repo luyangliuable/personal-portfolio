@@ -100,7 +100,7 @@
 
 @media screen and (max-width: 900px) {
     .navbar-left {
-        display: none;
+        display: none !important
     }
 
     .navbar-content svg {

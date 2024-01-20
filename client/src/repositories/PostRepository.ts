@@ -45,15 +45,15 @@ class PostRepository {
     try {
       const allPosts = await this.getPostList();
 
-      const postsWithCommonTags = allPosts.map(( post: BlogPostResponse ) => ({
+      const postsWithCommonTags = allPosts.map((post: BlogPostResponse) => ({
         post,
-        commonTags: post.tags.filter(( tag: string ) => tags.includes(tag)).length,
+        commonTags: post.tags.filter((tag: string) => tags.includes(tag)).length,
       }));
 
       postsWithCommonTags.sort((a: any, b: any) => b.commonTags - a.commonTags);
 
       // +1 because excluded self
-      return postsWithCommonTags.slice(0, numberOfResults + 1).map(( item: any ) => item.post).filter((post: BlogPostResponse) => post._id.$oid !== currentPostId);
+      return postsWithCommonTags.slice(0, numberOfResults + 1).map((item: any) => item.post).filter((post: BlogPostResponse) => post._id.$oid !== currentPostId);
     } catch (error) {
       console.error('Error:', error);
       return [];

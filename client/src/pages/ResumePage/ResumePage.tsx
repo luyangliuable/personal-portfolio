@@ -4,10 +4,9 @@ import "./ResumePage.css";
 
 const ResumePage: React.FC<IResumePageProps> = (props) => {
     return (
-        <div className="resume-page-content">
-            <iframe className="browser" src="http://llcode.tech/api/image/6599eebc58701a6b8fe5908a" title="Resume">
-            </iframe>
-        </div>
+        <main className="resume-page-content">
+            <iframe className="browser" src="http://llcode.tech/api/image/6599eebc58701a6b8fe5908a" title="Resume" />
+        </main>
     )
 }
 

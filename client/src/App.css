@@ -39,6 +39,19 @@
     }
 }
 
+/* I replaced a lot of divs with ul and it messed up some styles so i reset up style */
+/* ul { */
+/*     margin-block-start: 0; */
+/*     padding-inline-start: 0px; */
+/*     margin-block-end: 0; */
+/* } */
+
+h1 {
+    margin-block-start: 0.67em;
+    font-size: 2em;
+    margin-block-end: 0.67em;
+}
+
 .App-header {
     background-color: #282c34;
     min-height: 100vh;
@@ -113,7 +126,7 @@ a {
     color: #888;
 }
 
-.page-body {
+.page-body, main {
     margin-top: var(--page-top-margin);
     margin-bottom: var(--page-bottom-margin);
     width: 100vw;
@@ -157,6 +170,10 @@ a {
 /* Common CSS Without Tailwind */
 
 /* Colors */
+
+.color-white {
+    color: #FFF
+}
 
 .bg-red {
     background: red
@@ -203,6 +220,10 @@ a {
     width: 30%
 }
 
+.w-15 {
+    width: 15%
+}
+
 /* Flex */
 
 .flex {
@@ -242,6 +263,14 @@ a {
 }
 
 /* Position */
+
+.right-0 {
+    right: 0
+}
+
+.top-10 {
+    top: 10px
+}
 
 .position-relative {
     position: relative
@@ -307,12 +336,29 @@ a {
     margin-top: 50px
 }
 
-.my-5 {
-    margin: 100px 0
+.my-2.5 {
+    margin: 10px 0
+}
+
+.ml-2vw {
+    margin-left: 2vw;
+}
+
+.child-mb-50 > * {
+    margin-bottom: 50px;
+}
+
+.child-mb-10 > * {
+    margin-bottom: 10px;
 }
 
 .opacity-0 {
     opacity: 0
+}
+
+/* Font */
+.font-fira-code {
+    font-family: 'Fira Code', Courier, monospace;
 }
 
 /* Text */
@@ -331,24 +377,36 @@ a {
 }
 
 /* Padding  */
-.p-25 {
-    padding: 100px
+.py-5 {
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+}
+
+.p-24, .p-25 {
+    padding: 6rem; /* 96px */
 }
 
 .pb-5 {
-    padding-bottom: 10px
+    padding-bottom: 1.25rem; /* 20px */
 }
 
 .pl-5 {
-    padding-left: 10px
+    padding-left: 1.25rem; /* 20px */
+}
+
+.px-1 {
+    padding-left: 2px;
+    padding-right: 2px
 }
 
 .px-5 {
-    padding: 0 10px
+    padding-left: 1.25rem; /* 20px */
+    padding-right: 1.25rem; /* 20px */
 }
 
 .py-20 {
-    padding: 40px 0
+    padding-top: 5rem; /* 80px */
+    padding-bottom: 5rem; /* 80px */
 }
 
 .pl-3vw {
@@ -471,7 +529,7 @@ a {
 
 
 @keyframes fade-in--width {
-    0% {
+   0% {
         width: 0;
     }
     100% {

@@ -15,8 +15,7 @@ const AuthorDetails: React.FC<{ content?: BlogPostResponse }> = ({ content }) =>
     const displayDateCreated = isoDateFormatToString(new Date(date_created));
 
     return (
-        <>
-            <h3>Posted by</h3>
+        <section>
             <div className="flex">
                 <Image
                     className="user-image blog-content--author-image"
@@ -27,7 +26,7 @@ const AuthorDetails: React.FC<{ content?: BlogPostResponse }> = ({ content }) =>
                     <span>{displayDateCreated}</span>
                 </div>
             </div>
-        </>
+        </section>
     )
 }
 

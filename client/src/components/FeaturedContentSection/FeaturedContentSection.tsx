@@ -69,7 +69,7 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
                         type="blog"
                         dateCreated={content.date_created}
                         minuteRead={content.reading_time_minutes}
-                        style={{ margin: "2px 20px" }}
+                        className="my-2.5"
                         link={`/digital_chronicles/blog?id=${content._id.$oid}`}
                         image={imageURL} />
                 </div>
@@ -95,26 +95,28 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
     }
 
     getFeaturedToolHeading() {
-        return "Featured Tool: " + this.state.featuredTool.name;
+        return "Featured Tool: " + this.state.featuredTool?.name;
     }
 
     render() {
         return (
             <LandingPageCard heading="Featured Content" landingPageCardType="fitContent" blendWithBackground={true}>
-                <div ref={this.currentComponentRef} className="featured-content__wrapper">
+                <section ref={this.currentComponentRef} className="featured-content__wrapper">
                     <div className="featured-section w-full">
                         <GalleryItem
                             name={this.getFeaturedToolHeading()}
                             type="tool"
-                            style={{ margin: "5px 20px" }}
+                            className="my-2.5"
                             image="http://llcode.tech/api/image/65596ad4ad7cc31ee9263e32"
-                            description={truncateTextBody(this.state.featuredTool.description)}
-                            link={this.state.featuredTool.link} />
+                            description={truncateTextBody(this.state.featuredTool?.description)}
+                            link={this.state.featuredTool?.link} />
                         {this.renderTopPickedPostsSortedByDateDescending()}
+
                         <div ref={this.showMoreButtonRef}><Button onClick={this.showAllElements}>Show More...</Button></div>
                     </div>
+
                     <TwinCandle ref={this.twinCandleComponentRef} />
-                </div>
+                </section>
             </LandingPageCard>
         );
     }

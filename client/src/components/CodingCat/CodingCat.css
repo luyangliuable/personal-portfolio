@@ -5,7 +5,7 @@
     align-items: center;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1000px) {
     .coding-cat-container {
         margin: 10px 0 10px;
         width: 45%; height: 45%;

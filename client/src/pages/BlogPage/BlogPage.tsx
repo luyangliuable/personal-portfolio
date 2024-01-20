@@ -35,6 +35,7 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
     }
 
     componentDidMount() {
+        document.documentElement.scrollTo(0, 0);
         this.fetchPostList();
     }
 
@@ -112,24 +113,24 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
             <React.Fragment key={year}>
                 <div className="blog__year"><span>{year}</span></div>
                 {
-                    groupedPosts[year].map(( content: BlogPostResponse ) => {
-                        const {_id, in_progress, heading, author, date_created, date_last_modified, body, reading_time_minutes, tags, image} = content;
+                    groupedPosts[year].map((content: BlogPostResponse) => {
+                        const { _id, in_progress, heading, author, date_created, date_last_modified, body, reading_time_minutes, tags, image } = content;
                         const link = `/digital_chronicles/blog?id=${_id.$oid}`;
 
                         return (
                             <Card
-                            key={_id.$oid}
-                            heading={heading}
-                            authorImage={authorImage}
-                            author={author}
-                            date_created={date_created}
-                            date_updated={date_last_modified}
-                            body={body}
-                            minuteRead={reading_time_minutes}
-                            in_progress={in_progress}
-                            tags={tags}
-                            image={image && image.$oid}
-                            link={link} />
+                                key={_id.$oid}
+                                heading={heading}
+                                authorImage={authorImage}
+                                author={author}
+                                date_created={date_created}
+                                date_updated={date_last_modified}
+                                body={body}
+                                minuteRead={reading_time_minutes}
+                                in_progress={in_progress}
+                                tags={tags}
+                                image={image && image.$oid}
+                                link={link} />
                         )
                     })
                 }
@@ -146,15 +147,15 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
                         const imageURL = `http://llcode.tech/api/image/${post.image.$oid}`
                         return (
                             <div key={post._id.$oid}>
-                            <GalleryItem
-                            name={post.heading}
-                            tags={post.tags}
-                            type="blog"
-                            dateCreated={post.date_created}
-                            minuteRead={post.reading_time_minutes}
-                            link={`/digital_chronicles/blog?id=${post._id.$oid}`}
-                            image={imageURL} />
-                                </div>
+                                <GalleryItem
+                                    name={post.heading}
+                                    tags={post.tags}
+                                    type="blog"
+                                    dateCreated={post.date_created}
+                                    minuteRead={post.reading_time_minutes}
+                                    link={`/digital_chronicles/blog?id=${post._id.$oid}`}
+                                    image={imageURL} />
+                            </div>
                         )
                     })
                 }
@@ -222,17 +223,17 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
         ].join(' ');
 
         return (
-            <>
+            <main>
                 <HeroHeader heading={heroHeading} description={heroDescription} graphics={<BlogPostGraphics />} />
-                <div className="blog-container flex w-full cursor-pointer">
-                <div className="blog-list flex flex-col w-full items-center">
-                {this.currentSelectedTags.length > 0 && (<div className={tagContainerClasses}>{this.renderSelectedTags()}</div>)}
-                <div className="blog__tag-container w-full flex justify-center flex-wrap">{this.renderUnSelectedTags()}</div>
-                <div className="w-full flex flex-col items-center">{this.renderPostsSortedByDateDescending()}</div>
-                </div>
-                {this.renderTopPickedBlogPost()}
-                </div>
-            </>
+                <article className="blog-container flex w-full cursor-pointer">
+                    <section className="blog-list flex flex-col w-full items-center">
+                        {this.currentSelectedTags.length > 0 && (<ul className={tagContainerClasses}>{this.renderSelectedTags()}</ul>)}
+                        <ul className="blog__tag-container w-full flex justify-center flex-wrap">{this.renderUnSelectedTags()}</ul>
+                        <div className="w-full flex flex-col items-center">{this.renderPostsSortedByDateDescending()}</div>
+                    </section>
+                    {this.renderTopPickedBlogPost()}
+                </article>
+            </main>
         );
     }
 }

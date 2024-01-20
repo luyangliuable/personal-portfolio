@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import "./CodingProjectsPage.css";
 import Gallery from "../../components/Gallery/Gallery";
 import IHeroHeaderProps from "../../components/HeroHeader/Interface/IHeroHeaderProps";
@@ -76,11 +76,11 @@ class CodingProjectsPage extends Component<{}, ICodingCatState> {
         const { heading, description } = this.heroHeaderContent;
 
         return (
-            <>
+            <main>
                 <HeroHeader heading={heading} description={description} />
                 <Gallery heading="Noteworthy Coding Projects" content={this.state.projectsICreated} />
                 <Gallery heading="Coding Projects that I Have Contributed to" content={this.state.projectsWithContributions} />
-                </>
+            </main>
         );
     }
 }

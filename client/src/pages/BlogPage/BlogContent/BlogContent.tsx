@@ -1,70 +1,77 @@
-import React, { Component} from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { marked } from "marked";
-import PostRepository from "../../../repositories/PostRepository";
+import { useLocation } from 'react-router-dom';
 import { IoMdArrowBack } from "react-icons/io";
 import { IBlogContentState } from "./Interface/IBlogContentState";
 import { isoDateFormatToString } from "../../../components/Utility/StringUtility";
+import PostRepository from "../../../repositories/PostRepository";
 import MarkdownRenderer from "./MarkdownRenderer/MarkdownRenderer";
 import SkeletonBlogContent from "./SkeletonBlogContent/SkeletonBlogContent";
-import TagCloud from "../../../components/TagCloud/TagCloud";
 import IBlogContentProps from "./Interface/IBlogContentProps";
-import JsonToMarkdown from "./Utilities/JsonToMarkdown";
 import BlogPostResponse from "../../../repositories/Response/BlogPostResponse";
-import ImageRepository from "../../../repositories/ImageRepository";
 import TableOfContent from "./TableOfContents/TableOfContents";
-import AuthorDetails from "./AuthorDetails/AuthorDetails";
 import Image from "../../../components/Image/Image";
 import OpenGraphWrapper from "../../../wrappers/OpenGraphWrapper/OpenGraphWrapper";
+import PostDetailsPanel from "./PostDetailsPanel/PostDetailsPanel";
+import AuthorDetails from "./AuthorDetails/AuthorDetails";
 import "./BlogContent.css";
 
-class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
-    jsonToMarkdown: JsonToMarkdown;
-    defaultAuthorImage: string =
-        "http://llcode.tech/api/image/65817ae96c73ceb16ba51731";
-    postRepository: PostRepository;
-    imageRepository: ImageRepository;
+const BlogContent: React.FC<IBlogContentProps> = ({}) => {
+    const defaultAuthorImage: string = "http://llcode.tech/api/image/65817ae96c73ceb16ba51731";
+    const postRepository = useMemo(() => PostRepository.getInstance(), []);
 
-    constructor(props: IBlogContentProps) {
-        super(props);
-        this.jsonToMarkdown = new JsonToMarkdown();
-        this.postRepository = PostRepository.getInstance();
-        this.imageRepository = ImageRepository.getInstance();
+    let location = useLocation();
 
-        this.state = {
-            headings: [],
-            activeSection: [],
-            cache: {
-                fetchedImageUrl: "",
-                fetchedAuthorImageUrl: "",
-            }
-        };
+    const [state, setState] = useState<IBlogContentState>({
+        headings: [],
+        cache: {
+            fetchedImageUrl: "",
+            fetchedAuthorImageUrl: "",
+        }
+    });
+
+    useEffect(() => {
+        document.documentElement.scrollTo(0, 0);
+        setState(( prev ) => ({
+            ...prev,
+            content: undefined
+        }));
+        getBlogContentFromQuery();
+    }, [location]);
+
+    useEffect(() => {
+        updatedRelatedPosts();
+        updateBlogContentHeadings();
+    }, [state.content]);
+
+    const updateContentToDisplay = (content: BlogPostResponse): void => {
+        setState((prev) => ({ ...prev, content: content }));
     }
 
-    updateContentToDisplay(content: BlogPostResponse): void {
-        this.setState({
-            ...this.state,
-            content: content,
-        });
+    const updateBlogContentHeadings = (): void => {
+        if (state.content !== undefined) {
+            const renderer = new marked.Renderer();
+
+            const originalHeadingRenderer = renderer.heading.bind(renderer);
+
+            let headings: { title: string; level: number }[] = [];
+
+            renderer.heading = (text, level) => {
+                headings.push({ title: text, level: level });
+                return originalHeadingRenderer(text, level);
+            };
+
+            marked(state.content?.body, { renderer });
+
+            if (!headings)
+                return;
+
+            setState((prev) => ({ ...prev, headings: headings }));
+        }
     }
 
-    updateBlogContentHeadings() {
-        const renderer = new marked.Renderer();
-        const originalHeadingRenderer = renderer.heading.bind(renderer);
-
-        let headings: { title: string; level: number }[] = [];
-
-        renderer.heading = (text, level) => {
-            headings.push({ title: text, level: level });
-            return originalHeadingRenderer(text, level);
-        };
-
-        marked(this.state.content?.body, { renderer });
-
-        this.setState({ headings: headings });
-    }
-
-    async getBlogContentFromQuery(): Promise<void> {
+    async function getBlogContentFromQuery(): Promise<void> {
         const searchParams: any = new URLSearchParams(window.location.search);
 
         const queryObj: any = {};
@@ -72,153 +79,65 @@ class BlogContent extends Component<IBlogContentProps, IBlogContentState> {
             queryObj[key] = value;
         }
 
-        this.postRepository
+        postRepository
             .getPost(queryObj.id)
             .then((response: BlogPostResponse) => {
-                this.updateContentToDisplay(response);
+                updateContentToDisplay(response);
             });
     }
 
-    componentDidMount() {
-        this.getBlogContentFromQuery();
+    async function updatedRelatedPosts(): Promise<void> {
+        const { tags, _id } = state.content!;
+        const relatedPosts = await postRepository.getRelatedPosts(tags, _id.$oid, 3);
+        setState(prev => ({ ...prev, relatedPosts }));
     }
 
-    componentDidUpdate(
-        prevProps: Readonly<IBlogContentProps>,
-        prevState: Readonly<IBlogContentState>,
-        snapshot?: any
-    ): void {
-        if (this.state.content && this.state.content !== prevState.content) {
-            const { body } = this.state.content;
-            this.updatedRelatedPosts();
-            if (body !== prevState.content?.body) {
-                this.updateBlogContentHeadings();
-            }
-        }
-    }
-
-    async updatedRelatedPosts(): Promise<void> {
-        const { tags, _id } = this.state.content!;
-
-        this.setState({
-            relatedPosts: await this.postRepository.getRelatedPosts(tags, _id.$oid, 3)
-        });
-
-    }
-
-    renderBlogContent(): React.ReactNode {
-        if (this.state.content === undefined) {
+    function renderBlogContent(): React.ReactNode {
+        if (state.content === undefined) {
             return (<SkeletonBlogContent />);
         }
 
-        const { heading, date_created, tags, image, body, author } = this.state.content;
-        const displayDateCreated = isoDateFormatToString(new Date(date_created));
+        const { heading, image, body, _id } = state.content;
         const imageId = image?.$oid;
 
         return (
-            <div className="blog-content box-shadow">
-                <div className="blog-content__header">
+            <article className="blog-content box-shadow">
+                <header className="blog-content__header">
                     <h1>{heading}</h1>
-                    <div className="flex">
-                        <Image className="user-image blog-content--author-image" src={this.defaultAuthorImage} />
-                        <div className="flex-vertical">
-                            <span>{author}</span>
-                            <span>{displayDateCreated}</span>
-                        </div>
-                    </div>
-                </div>
+                    <AuthorDetails content={state.content} />
+                </header>
                 <Image className="blog-content__image" src={imageId} />
-                <div className="w-full flex-col justify-center items-center translucent-white table-of-content--small-screen">
-                    <TableOfContent className="w-80" headings={this.state.headings} />
-                </div>
-                <div className="blog-content-body">
-                    <MarkdownRenderer markdown={body} />
-                </div>
-            </div>
+                <section className="w-full flex-col justify-center items-center translucent-white table-of-content--small-screen">
+                    <TableOfContent className="w-80" headings={state.headings} />
+                </section>
+
+                <section className="blog-content-body">
+                    <MarkdownRenderer key={_id.$oid} markdown={body} />
+                </section>
+            </article>
         );
     }
 
-    renderRelatedPosts(): React.ReactNode {
-        if (this.state.relatedPosts === undefined) {
-            return (<></>);
-        }
+    const { relatedPosts, headings, content } = state;
 
-        try {
-            const relatedPosts = this.state.relatedPosts;
-
-            return (
-                <div>
-                    <h3>Related Posts</h3>
-                    {
-                        relatedPosts.map((post: BlogPostResponse, idx: number) => {
-                            const { heading, author } = post;
-                            return (
-                                <Link className="w-80" to={null} key={idx}>
-                                    <h4 className="mb-0">{heading}</h4>
-                                    <p className="m-0">{author}</p>
-                                </Link>
-                            )
-                        })}
-                </div>
-            );
-        } catch (error) {
-            console.error('Error fetching related posts:', error);
-            return <p>Error loading related posts.</p>;
-        }
-    }
-
-    renderBlogTags(): React.ReactNode {
-        if (this.state.content === undefined) {
-            return (<SkeletonBlogContent />);
-        }
-
-        const { tags } = this.state.content;
-
-        return (
-            <div>
-                <h3>Tags</h3>
-                <TagCloud tags={tags} />
-            </div>
-        );
-    }
-
-    render() {
-        return (
-            <OpenGraphWrapper
-                heading="Luyang's Blogs"
-                body="Blog posts for documenting useful code, mark memorable moments in my life and help my journey of endless self-improvement."
-                imageUrl="https://w.wallhaven.cc/full/o5/wallhaven-o5wlp9.png"
-            >
-                <div className="page-container">
-                    <div className="blog-content__wrapper">
-                        <div className="blog-content__side-components flex flex-col items-start mt-10">
-                            <br />
-                            <hr />
-                            <AuthorDetails content={this.state.content} />
-                            <br />
-                            <hr />
-                            {this.renderRelatedPosts()}
-                            <br />
-                            <hr />
-                            <div className="w-80">{this.renderBlogTags()}</div>
-                            <br />
-                            <hr />
-                            <a href="https://ko-fi.com/D1D1PFTTH" target="_blank" rel="noopener noreferrer">
-                                <img height="36" style={{ border: "0px", height: "36px" }} src="https://storage.ko-fi.com/cdn/kofi2.png?v=3" alt="Buy Me a Coffee at ko-fi.com" />
-                            </a>
-                        </div>
-                        {this.renderBlogContent()}
-                        <div className="blog-content__side-components position-sticky  mt-20vh">
-                            <div>
-                                <Link to="/digital_chronicles/blogs" className="flex items-center"><IoMdArrowBack /> Back to Blogs</Link>
-                            </div>
-                            <TableOfContent headings={this.state.headings} />
-                        </div>
-                    </div>
-                </div>
-            </OpenGraphWrapper>
-        );
-    }
+    return (
+        <OpenGraphWrapper
+            heading="Luyang's Blogs"
+            body="Blog posts for documenting useful code, mark memorable moments in my life and help my journey of endless self-improvement."
+            imageUrl="https://w.wallhaven.cc/full/o5/wallhaven-o5wlp9.png"
+        >
+            <main className="page-container">
+                <section className="blog-content__wrapper">
+                    <PostDetailsPanel content={content} relatedPosts={relatedPosts} />
+                    {renderBlogContent()}
+                    <aside className="blog-content__side-components position-sticky mt-20vh">
+                        <Link to="/digital_chronicles/blogs" className="flex items-center"><IoMdArrowBack />Back to Blogs</Link>
+                        <TableOfContent headings={headings} />
+                    </aside>
+                </section>
+            </main>
+        </OpenGraphWrapper>
+    );
 }
 
 export default BlogContent;
