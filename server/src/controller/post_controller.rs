@@ -22,15 +22,30 @@ impl PostController  {
         ObjectId::from_str(&id)
             .map_err(|_| Status::BadRequest)
             .and_then(|object_id| self.repo.0.get(object_id).map_err(|_| Status::InternalServerError))
+            .and_then(|blog_post| {
+                match blog_post.active {
+                    Some(false) => Err(Status::NotFound),
+                    _ => Ok(blog_post)
+                }
+            })
             .and_then(|blog_post| markdown_util::get_post_content_for_post(blog_post).map_err(|_| Status::NotFound))
             .map(Json)
     }
 
     pub fn get_all(&self) -> Result<Json<Vec<Post>>, Status> {
-        match self.repo.0.get_all() {
-            Ok(posts) => Ok(Json(posts)),
-            Err(_) => Err(Status::InternalServerError),
-        }
+        let posts = match self.repo.0.get_all() {
+            Ok(posts) => posts.into_iter().filter(|post| {
+                match post.active {
+                    Some(false) => false,
+                    _ => true
+                }
+            }).collect(),
+            Err(_) => {
+                return Err(Status::InternalServerError);
+            },
+        };
+
+        Ok(Json(posts))
     }
 
     pub fn update(&self, id: String, new_post_data: Post) -> Result<Json<UpdateResult>, Status> {
