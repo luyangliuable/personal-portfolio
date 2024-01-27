@@ -2,11 +2,12 @@ import React, { useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { marked } from "marked";
 import { useLocation } from 'react-router-dom';
+import { isCenterAlignedWithViewport } from "../../../components/Utility/ScrollUtility";
 import { IoMdArrowBack } from "react-icons/io";
 import { IBlogContentState } from "./Interface/IBlogContentState";
-import { isoDateFormatToString } from "../../../components/Utility/StringUtility";
+import { EventEmitter } from 'events';
 import PostRepository from "../../../repositories/PostRepository";
-import MarkdownRenderer from "./MarkdownRenderer/MarkdownRenderer";
+import MarkdownRendererV2 from "./MarkdownRendererV2/MarkdownRendererV2";
 import SkeletonBlogContent from "./SkeletonBlogContent/SkeletonBlogContent";
 import IBlogContentProps from "./Interface/IBlogContentProps";
 import BlogPostResponse from "../../../repositories/Response/BlogPostResponse";
@@ -17,12 +18,10 @@ import PostDetailsPanel from "./PostDetailsPanel/PostDetailsPanel";
 import AuthorDetails from "./AuthorDetails/AuthorDetails";
 import "./BlogContent.css";
 
-const BlogContent: React.FC<IBlogContentProps> = ({}) => {
-    const defaultAuthorImage: string = "http://llcode.tech/api/image/65817ae96c73ceb16ba51731";
+const BlogContent: React.FC<IBlogContentProps> = ({ scrolled }) => {
     const postRepository = useMemo(() => PostRepository.getInstance(), []);
-
+    const emitter = useMemo(() => new EventEmitter(), []);
     let location = useLocation();
-
     const [state, setState] = useState<IBlogContentState>({
         headings: [],
         cache: {
@@ -31,42 +30,56 @@ const BlogContent: React.FC<IBlogContentProps> = ({}) => {
         }
     });
 
+
     useEffect(() => {
         document.documentElement.scrollTo(0, 0);
-        setState(( prev ) => ({
+        setState((prev) => ({
             ...prev,
             content: undefined
         }));
         getBlogContentFromQuery();
     }, [location]);
 
+
     useEffect(() => {
         updatedRelatedPosts();
         updateBlogContentHeadings();
     }, [state.content]);
 
+
+    useEffect(() => {
+        observeSections();
+    }, [scrolled]);
+
+
+    function observeSections(): void {
+        const sections = Array.from(document.querySelectorAll('.blog-section'));
+        const intersectingSections = sections.filter(section => {
+            const offset = isCenterAlignedWithViewport(section);
+            return offset < window.innerHeight && offset > -window.innerHeight / 2;
+        }).map(section => section.id);
+        if (intersectingSections.length > 0) {
+            emitter.emit('intersectingSections', intersectingSections);
+        }
+    }
+
+
     const updateContentToDisplay = (content: BlogPostResponse): void => {
         setState((prev) => ({ ...prev, content: content }));
     }
 
+
     const updateBlogContentHeadings = (): void => {
         if (state.content !== undefined) {
             const renderer = new marked.Renderer();
-
             const originalHeadingRenderer = renderer.heading.bind(renderer);
-
             let headings: { title: string; level: number }[] = [];
-
             renderer.heading = (text, level) => {
                 headings.push({ title: text, level: level });
                 return originalHeadingRenderer(text, level);
             };
-
             marked(state.content?.body, { renderer });
-
-            if (!headings)
-                return;
-
+            if (!headings) return;
             setState((prev) => ({ ...prev, headings: headings }));
         }
     }
@@ -86,11 +99,13 @@ const BlogContent: React.FC<IBlogContentProps> = ({}) => {
             });
     }
 
+
     async function updatedRelatedPosts(): Promise<void> {
         const { tags, _id } = state.content!;
         const relatedPosts = await postRepository.getRelatedPosts(tags, _id.$oid, 3);
         setState(prev => ({ ...prev, relatedPosts }));
     }
+
 
     function renderBlogContent(): React.ReactNode {
         if (state.content === undefined) {
@@ -110,15 +125,16 @@ const BlogContent: React.FC<IBlogContentProps> = ({}) => {
                 <section className="w-full flex-col justify-center items-center translucent-white table-of-content--small-screen">
                     <TableOfContent className="w-80" headings={state.headings} />
                 </section>
-
                 <section className="blog-content-body">
-                    <MarkdownRenderer key={_id.$oid} markdown={body} />
+                    <MarkdownRendererV2 key={_id.$oid} markdown={body} />
                 </section>
             </article>
         );
     }
 
+
     const { relatedPosts, headings, content } = state;
+
 
     return (
         <OpenGraphWrapper
@@ -132,7 +148,7 @@ const BlogContent: React.FC<IBlogContentProps> = ({}) => {
                     {renderBlogContent()}
                     <aside className="blog-content__side-components position-sticky mt-20vh">
                         <Link to="/digital_chronicles/blogs" className="flex items-center"><IoMdArrowBack />Back to Blogs</Link>
-                        <TableOfContent headings={headings} />
+                        <TableOfContent emitter={emitter} headings={headings} />
                     </aside>
                 </section>
             </main>

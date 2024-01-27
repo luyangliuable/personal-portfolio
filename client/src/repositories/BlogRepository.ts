@@ -1,6 +1,5 @@
 class BlogRepository {
-    // static BASE_URL: string = "http://localhost:8000/api/blogs";
-    static BASE_URL: string = "http://170.64.250.107/api/blogs";
+    static BASE_URL: string = "https://llcode.tech/api/blogs";
 
     static options(method: 'GET' | 'DELETE' | 'POST' | 'PUT', body?: { [category: string]: any }): any {
         return {

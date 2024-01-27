@@ -10,7 +10,6 @@ class Gallery extends Component<IGalleryProps, IGalleryState> {
 
     constructor(props: IGalleryProps) {
         super(props);
-
         this.galleryContainerRef = createRef();
         this.state = {
             shouldAddDummy: false
@@ -20,7 +19,6 @@ class Gallery extends Component<IGalleryProps, IGalleryState> {
     componentDidMount(): void {
         const container = this.galleryContainerRef.current!;
         const itemCount = container.querySelectorAll(':scope > *').length;
-
         if (itemCount === 1) {
             this.setState({ shouldAddDummy: true });
         } else {
@@ -40,6 +38,7 @@ class Gallery extends Component<IGalleryProps, IGalleryState> {
                 <div className="heading__wrapper"><h2>{this.props.heading}</h2></div>
                 <div ref={this.galleryContainerRef} className="gallery-item__container">
                     {this.renderGalleryItems()}
+                    {this.state.shouldAddDummy && <GalleryItem style={{ visibility: "hidden" }} />}
                     {this.state.shouldAddDummy && <GalleryItem style={{ visibility: "hidden" }} />}
                 </div>
             </>

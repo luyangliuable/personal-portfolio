@@ -39,13 +39,6 @@
     }
 }
 
-/* I replaced a lot of divs with ul and it messed up some styles so i reset up style */
-/* ul { */
-/*     margin-block-start: 0; */
-/*     padding-inline-start: 0px; */
-/*     margin-block-end: 0; */
-/* } */
-
 h1 {
     margin-block-start: 0.67em;
     font-size: 2em;
@@ -314,6 +307,11 @@ a {
     -ms-transition: var(--transition)
 }
 
+/* Filter Effects */
+.backdrop-blur-md {
+    backdrop-filter: blur(12px);
+}
+
 /* Margin */
 
 .m-0 {
@@ -329,11 +327,11 @@ a {
 }
 
 .mt-5 {
-    margin-top: 10px
+    margin-top: 10px !important
 }
 
 .mt-10 {
-    margin-top: 50px
+    margin-top: 50px !important
 }
 
 .my-2.5 {
@@ -367,6 +365,17 @@ a {
     white-space: nowrap
 }
 
+.text-center {
+    text-align: center
+}
+
+.text-left {
+    text-align: left
+}
+
+.text-right {
+    text-align: right
+}
 
 .text-medium {
     font-size: .95rem

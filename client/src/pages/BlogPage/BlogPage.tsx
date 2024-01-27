@@ -1,19 +1,19 @@
 import React, { Component } from "react";
-import "./BlogPage.css";
+import { Link } from 'react-router-dom';
+import { IBlogPageState } from "./Interface/IBlogPageState";
 import HeroHeader from "../../components/HeroHeader/HeroHeader";
 import PostRepository from "../../repositories/PostRepository";
-import { IBlogPageState } from "./Interface/IBlogPageState";
 import IHeroHeaderProps from "../../components/HeroHeader/Interface/IHeroHeaderProps";
 import BlogPostResponse from "../../repositories/Response/BlogPostResponse";
 import IBlogPageProps from "./Interface/IBlogPageProps";
 import Card from "../../components/Card/Card";
 import GalleryItem from "../../components/Gallery/GalleryItem/GalleryItem";
 import BlogPostGraphics from "../../components/BlogPostGraphics/BlogPostGraphics";
-import { Link } from 'react-router-dom';
+
+import "./BlogPage.css";
 
 class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
     // Put any for props because for some reaosn i can't import `RouteComponentProps` for location
-
     postRepository: PostRepository;
     heroHeaderContent: IHeroHeaderProps;
 
@@ -106,17 +106,16 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
             return array1.every(item => array2.includes(item));
         };
         // TODO: Backend send user image id and card gets it
-        const authorImage = "http://llcode.tech/api/image/65817ae96c73ceb16ba51731";
+        const authorImage = "https://llcode.tech/api/image/65817ae96c73ceb16ba51731";
         const groupedPosts = this.groupPostsByYear(this.sortPostsByDate(this.state.content).filter(({ tags }) => isSubset(selectedTags, tags) || !selectedTags));
 
         return Object.keys(groupedPosts).sort((a, b) => parseInt(b) - parseInt(a)).map(year => (
             <React.Fragment key={year}>
-                <div className="blog__year"><span>{year}</span></div>
+                <div className="blog__year position-relative"><span>{year}</span></div>
                 {
                     groupedPosts[year].map((content: BlogPostResponse) => {
                         const { _id, in_progress, heading, author, date_created, date_last_modified, body, reading_time_minutes, tags, image } = content;
                         const link = `/digital_chronicles/blog?id=${_id.$oid}`;
-
                         return (
                             <Card
                                 key={_id.$oid}
@@ -144,7 +143,6 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
                 <h3>Top Picks</h3>
                 {
                     this.state.topPickedPosts.map((post) => {
-                        const imageURL = `http://llcode.tech/api/image/${post.image.$oid}`
                         return (
                             <div key={post._id.$oid}>
                                 <GalleryItem
@@ -154,7 +152,7 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
                                     dateCreated={post.date_created}
                                     minuteRead={post.reading_time_minutes}
                                     link={`/digital_chronicles/blog?id=${post._id.$oid}`}
-                                    image={imageURL} />
+                                    image={post.image.$oid} />
                             </div>
                         )
                     })
@@ -192,21 +190,14 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
     renderUnSelectedTags = (): React.ReactNode | null => {
         const baseUrlLink = "/digital_chronicles/blogs";
         return [...this.state.allTags]
-            .filter(tagName => {
-                const tagAlreadySelected = this.currentSelectedTags.includes(tagName);
-                return !tagAlreadySelected;
-            })
+            .filter(tagName => !this.currentSelectedTags.includes(tagName))
             .map((tagName) => {
                 let selectedTagsString: string[] = [];
                 selectedTagsString = this.currentSelectedTags.concat(tagName);
-                const tagClassName = ['blog__tag', 'noselect'].join(" ");
                 const to = `${baseUrlLink}?tag=${encodeURIComponent(selectedTagsString.join(","))}`;
-                return (
-                    <Link to={to} key={tagName} className={tagClassName}>#{tagName}</Link>
-                );
+                return (<Link to={to} key={tagName} className="blog__tag flex items-center justify-center noselect cursor-pointer">#{tagName}</Link>);
             });
     };
-
 
     render() {
         const heroHeading = this.heroHeaderContent.heading;
@@ -219,6 +210,8 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
             'justify-center',
             'blog__tag-container',
             'blog__tag-container--selected',
+            "backdrop-blur-md",
+            'w-80',
             'transition'
         ].join(' ');
 

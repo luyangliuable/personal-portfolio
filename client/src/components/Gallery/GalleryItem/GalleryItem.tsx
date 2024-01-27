@@ -38,14 +38,16 @@ class GalleryItem extends Component<IGalleryItemProps, IGalleryItemState> {
                     <span>BLOG</span>
                 </div>
             )
+        } else if (type === "tool") {
+            return (
+                <div className="gallery-item__type font-fira-code">
+                    <TbToolsOff />
+                    <span>TOOL</span>
+                </div>
+            )
         }
 
-        return (
-            <div className="gallery-item__type font-fira-code">
-                <TbToolsOff />
-                <span>TOOL</span>
-            </div>
-        )
+        return (<></>)
     }
 
     render() {

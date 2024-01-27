@@ -122,7 +122,6 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ markdown }) => {
         return attrs;
     };
 
-    // Define whitelist as React nodes
     const allowedPlaceholders: { [key: string]: any } = {
         'blogpostgraphics': BlogPostGraphics,
         'img': Image,
@@ -160,7 +159,6 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ markdown }) => {
             <>
                 {
                     elements.map((el, index) => {
-                        // Use a combination of the element's type and its index as a key
                         const key = typeof el + index;
                         return typeof el === 'string'
                             ? React.createElement('div', { dangerouslySetInnerHTML: { __html: el }, key: key })

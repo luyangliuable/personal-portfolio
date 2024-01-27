@@ -31,4 +31,17 @@ const isoDateFormatToString = (date: Date): string => {
   return getOrdinalSuffix(day) + ' ' + month + ' ' + year;
 }
 
-export { truncateTextBody, stripAwayHashSymbols, isoDateFormatToString };
+
+const stringToHash = (str: string): number => {
+    let hash = 0;
+
+    for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash |= 0; // Convert to 32bit integer
+    }
+
+    return hash;
+}
+
+export { truncateTextBody, stripAwayHashSymbols, isoDateFormatToString, stringToHash };

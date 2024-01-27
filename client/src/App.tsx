@@ -102,7 +102,7 @@ function App() {
                             <Route path="/projects/hardware" element={<HardwareProjectsPage />} />
                             <Route path="/projects/code" element={<CodingProjectsPage />} />
                             <Route path="/projects" element={<CodingProjectsPage />} />
-                            <Route path="/digital_chronicles/blog" element={<BlogContent />} />
+                            <Route path="/digital_chronicles/blog" element={<BlogContent scrolled={appState.scrollY} />} />
                             <Route path="/user/login" element={<LogInPage />} />
                             <Route path="/user/register" element={<RegisterPage />} />
 

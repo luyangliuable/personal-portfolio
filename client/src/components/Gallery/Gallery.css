@@ -1,24 +1,20 @@
 .heading__wrapper {
-    width: 70vw;
-    text-align: left;
+    width: 70vw
 }
-
 
 .gallery-item__container {
     display: grid;
     grid-template-columns: auto auto;
     width: 80vw;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-around;
 }
 
-
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 668px) {
     .gallery-item__container {
         grid-template-columns: auto;
         justify-items: center; 
-        align-items: center;
-        width: 100vw;
+        width: 100vw
     }
 }
 

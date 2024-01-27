@@ -3,7 +3,12 @@
     transform: translateX(30px);
     width: 400px; height: fit-content; min-height: 320px;
     margin: 20px 20px;
-    overflow: hidden
+    border-radius: 4px !important;
+    overflow: hidden;
+    padding-bottom: 5px
+}
+
+.gallery-item>h3 {
 }
 
 .initially-hidden {
@@ -47,9 +52,7 @@
     width: 100%;
     height: min( 40vw, 200px );
     object-fit: cover;
-    border-radius: 12px;
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 12px;
+    border-radius: 2px; -webkit-border-radius: 2px; -moz-border-radius: 2px;
 	  display: block;
 	  transition: width 200ms ease-out;
 }
@@ -73,12 +76,10 @@
 .gallery-item__type {
     height: 60px;
     width: 120px;
-    /* border-bottom: .2px solid #888; */
     background-color: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(12px);
     position: absolute;
-    left: 0;
-    top: 0;
+    left: -1px; top: -1px;
     transform: rotate(-45deg) translateX(-50%);
     transform-origin: 0 0;
     display: flex;

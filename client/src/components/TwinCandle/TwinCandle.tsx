@@ -21,7 +21,6 @@ class TwinCandles extends Component<ITwinCandleProps, ITwinCandleState> {
     constructor(props: ITwinCandleProps) {
         super(props);
 
-
         this.candleOneRef = createRef();
         this.candleOneEyesOneRef = createRef();
         this.candleOneEyesTwoRef = createRef();
