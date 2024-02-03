@@ -74,7 +74,7 @@ const SequentialRiseSpan: React.FC<ISequentialRiseSpanProps> = ({ children, elem
                 elementType || 'p',
                 {
                     key: index,
-                    className: [className].join(" ")
+                    className: ["visible-hidden", className].join(" ")
                 },
                 line
             );
