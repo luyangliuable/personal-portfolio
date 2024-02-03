@@ -23,5 +23,3 @@ const NavBurgerPanel: React.FC<INavBurgerPanelProps> = ({ burgerPanel, links }) 
 
 
 export default NavBurgerPanel;
-
-
