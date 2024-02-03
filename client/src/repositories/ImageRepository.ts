@@ -1,17 +1,15 @@
-class ImageRepository {
+import Repository from "./Repository";
+
+class ImageRepository extends Repository {
     private static instance: ImageRepository | null = null;
     private cache = new Map<string, string>();
     private ongoingRequests = new Map<string, Promise<string>>();
-
     private static BASE_URL: string = `${process.env.REACT_APP_SERVER_BASE_URI}/api/image/` || "https://llcode.tech/api/image/";
 
-    private constructor() {
-    }
+    private constructor() { super(); }
 
     static getInstance(): ImageRepository {
-        if (!ImageRepository.instance) {
-            ImageRepository.instance = new ImageRepository();
-        }
+        if (!ImageRepository.instance) ImageRepository.instance = new ImageRepository();
         return ImageRepository.instance;
     }
 
@@ -41,7 +39,7 @@ class ImageRepository {
         const fetchPromise = fetchImage();
         this.ongoingRequests.set(url, fetchPromise);
         return fetchPromise;
-    } catch(error: any) {
+    } catch(error: Error) {
         console.error('Error fetching image:', error);
         throw error;
     }

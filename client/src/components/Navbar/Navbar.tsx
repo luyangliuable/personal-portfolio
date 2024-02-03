@@ -1,13 +1,13 @@
 import React, { Context, Component, createRef, ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 import { INavbarState, Link, NavbarItem } from "./Interface/INavbarState";
+import { AiOutlineDown } from "react-icons/ai";
+import { CiLock } from "react-icons/ci";
 import INavbarProps from "./Interface/INavbarProps";
 import NavBurgerPanel from "./NavBurgerPanel/NavBurgerPanel";
 import BurgerMenuIcon from "./BurgerMenuIcon/BurgerMenuIcon";
-import { AiOutlineDown } from "react-icons/ai";
 import LoginButton from "./LoginButton/LoginButton";
 import { AppContext, IAppContextProvider } from "../../stores/AppContext";
-import { CiLock } from "react-icons/ci";
 import "./Navbar.css";
 
 class NavBar extends Component<INavbarProps, INavbarState> {
@@ -238,27 +238,20 @@ class NavBar extends Component<INavbarProps, INavbarState> {
         }
     }
 
-    private initializeNavBar() {
+    initializeNavBar() {
         this.listenContinuousScrolled();
         this.updateScrolledProgress(0);
         this.addBurgerClickOutEventLister();
     }
 
     componentDidUpdate(prevProps: INavbarProps) {
-        if (prevProps !== this.props)
-            this.updateScrollingBehavior(prevProps);
+        if (prevProps !== this.props) this.updateScrollingBehavior(prevProps);
     }
 
-    private updateScrollingBehavior(prevProps: INavbarProps) {
+    updateScrollingBehavior(prevProps: INavbarProps) {
         const { scrollStatus } = this.props;
-
-        if (scrollStatus.deltaScrolled !== 0) {
-            this.listenDeltaScrolled();
-        }
-
-        if (scrollStatus.scrolled !== prevProps.scrollStatus.scrolled) {
-            this.listenContinuousScrolled();
-        }
+        if (scrollStatus.deltaScrolled !== 0) this.listenDeltaScrolled();
+        if (scrollStatus.scrolled !== prevProps.scrollStatus.scrolled) this.listenContinuousScrolled();
     }
 
     attachNavBar = () => {
@@ -283,7 +276,6 @@ class NavBar extends Component<INavbarProps, INavbarState> {
         // If the navbar is not already hidden, hide it and set the navbar height to 0px
         this.navbar.current?.classList.add("hidden");
         document.documentElement.style.setProperty('--navbar-height', '0px');
-
         this.setState({
             ...this.state,
             isNavbarHidden: true
@@ -323,26 +315,24 @@ class NavBar extends Component<INavbarProps, INavbarState> {
     renderDropdownMenu = (links: Link[] | undefined): ReactNode | void => {
         if (links !== undefined) {
             this.showDropdownMenu();
-            this.setState({ dropdownMenuLinkDisplay: links.map(this.renderNavLink) });
+            this.setState({ dropdownMenuLinkDisplay: links.map((item, _) => this.renderNavLink(item)) });
+            if (this.state.dropdownMenuLinkDisplay.length === 0) this.hideDropdownMenu();
         } else {
             this.hideDropdownMenu();
         }
     }
 
-    renderNavLink = (link: NavbarItem) => {
+    renderNavLink = (link: NavbarItem, isSubLink: boolean = true) => {
+        if (this.state.links === undefined) return (<></>);
+        // https://mikebifulco.com/posts/javascript-filter-boolean
         const navLinkContent = [
             link.name,
             link.icon,
             link.sublinks && <AiOutlineDown key="down-icon" />,
             link.isLocked && <CiLock key="lock-icon" />
         ].filter(Boolean);
-
-        if (this.state.links === undefined) {
-            return (<></>);
-        }
-
         const targetPath = link.isLocked ? null : link.to;
-
+        const onMouseOverAction = isSubLink ? () => {} : () => this.renderDropdownMenu(this.state.links!.filter(item => item.name === link.name)[0].sublinks);
         return (
             <NavLink
                 to={targetPath}
@@ -360,7 +350,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                     return classes.filter(Boolean).join(" ");
                 }}
                 key={link.name}
-                onMouseOver={() => this.renderDropdownMenu(this.state.links!.filter(item => item.name === link.name)[0].sublinks)}>
+                onMouseOver={onMouseOverAction}>
                 {navLinkContent}
             </NavLink>
         );
@@ -378,7 +368,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                     <section className="navbar-content flex items-center">
                         <NavLink to="/"><h1 className="logo">{name}</h1></NavLink>
                         <nav ref={this.navbarLeft} className="navbar-left flex flex-row">
-                            {links.map(this.renderNavLink)}
+                            {links.map((item, _) => this.renderNavLink(item, false))}
                             <LoginButton onMouseOver={this.renderDropdownMenu} />
                             <section ref={this.selectedNavlinkWindow} className="selected-navlink-window flex items-center">
                                 <div ref={this.navbarSubmenu} className="navbar-item__dropdown ">

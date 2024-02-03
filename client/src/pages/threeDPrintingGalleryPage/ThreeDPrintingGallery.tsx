@@ -13,7 +13,7 @@ class ThreeDPrintingGallery extends Component<{}, IThreeDPrintingGalleryState> {
 
         this.heroHeaderContent = Object.freeze({
             heading: "3D Printing Projects",
-            description: (<>I fabricated these items using a 2016-model 3D printer, acquired in 2017. I plan to resume printing with a new printer once funds allow, as my current one is non-operational. I also designed several of the models myself.</>)
+            description: "I fabricated these items using a 2016-model 3D printer, acquired in 2017. I plan to resume printing with a new printer once funds allow, as my current one is non-operational. I also designed several of the models myself."
         }); // as const
 
         this.state = {
@@ -21,17 +21,17 @@ class ThreeDPrintingGallery extends Component<{}, IThreeDPrintingGalleryState> {
                 {
                     name: "3d Printed Maneki Neko",
                     description: "With a wink and a beckon printing using Creality 3D printer, this Maneki Neko promises high-tech fortune and whimsy in every layer.",
-                    image: "http://llcode.tech/api/image/650502c8f9b642fb30be5999"
+                    image: "https://llcode.tech/api/image/650502c8f9b642fb30be5999"
                 },
                 {
                     name: "3d Printed Swivel Arm",
                     description: "Precision-engineered, 3D-printed arm I designed using solidworks that can swivel around: it was used on a robot as the ultimate payload handler",
-                    image: "http://llcode.tech/api/image/650516c6f9b642fb30be599a"
+                    image: "https://llcode.tech/api/image/650516c6f9b642fb30be599a"
                 },
                 {
                     name: "3d Printed Dino",
                     description: "A 3D-printed dinosaur with a rhythmic rattle exoskeleton",
-                    image: "http://llcode.tech/api/image/65051a3ef9b642fb30be599c"
+                    image: "https://llcode.tech/api/image/65051a3ef9b642fb30be599c"
                 },
             ]
         };

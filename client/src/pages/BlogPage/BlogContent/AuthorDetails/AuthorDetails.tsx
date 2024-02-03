@@ -4,8 +4,7 @@ import BlogPostResponse from "../../../../repositories/Response/BlogPostResponse
 import { isoDateFormatToString } from "../../../../components/Utility/StringUtility";
 
 const AuthorDetails: React.FC<{ content?: BlogPostResponse }> = ({ content }) => {
-    const defaultAuthorImage: string =
-        "http://llcode.tech/api/image/65817ae96c73ceb16ba51731";
+    const defaultAuthorImage: string = "https://llcode.tech/api/image/65817ae96c73ceb16ba51731";
 
     if (content === undefined)
         return (<></>)

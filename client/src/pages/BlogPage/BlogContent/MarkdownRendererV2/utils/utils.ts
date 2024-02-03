@@ -5,20 +5,30 @@ export const getFirstTagName = (html: string): string | null => {
     return matches ? matches[1].toLowerCase() : null;
 };
 
-export const extractAttributesFromHtmlElement = (html: string): Attributes => {
-    const element = (new DOMParser()).parseFromString(html, "text/html").body.firstChild as HTMLElement | null;
-    const attrs: Attributes = {};
+export function extractAttributesFromHtmlElement(node: Element): { [key: string]: any } {
+    const attributes: { [key: string]: any } = {};
     const attributeNameMap: { [key: string]: string } = {
         "class": "className"
     };
+    Array.from(node.attributes).forEach(attr => {
+        const attrName = attributeNameMap[attr.name] || attr.name;
+        if (attr.name === 'style') {
+            attributes[attrName] = styleStringToObject(attr.value);
+        } else {
+            attributes[attrName] = attr.value;
+        }
+    });
+    return attributes;
+}
 
-    if (element && element.attributes) {
-        Array.from(element.attributes).forEach((attribute) => {
-            const attributeName = attributeNameMap[attribute.name] || attribute.name;
-            attrs[attributeName] = attribute.value;
-        });
-    }
-
-    return attrs;
-};
-
+function styleStringToObject(styleString: string): { [key: string]: string } {
+    const styleObject: { [key: string]: string } = {};
+    styleString.split(';').forEach(styleProperty => {
+        const [key, value] = styleProperty.split(':');
+        if (key && value) {
+            const formattedKey = key.trim().replace(/-(.)/g, (match, group) => group.toUpperCase());
+            styleObject[formattedKey] = value.trim();
+        }
+    });
+    return styleObject;
+}

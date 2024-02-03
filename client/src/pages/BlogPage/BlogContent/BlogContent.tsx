@@ -17,6 +17,7 @@ import OpenGraphWrapper from "../../../wrappers/OpenGraphWrapper/OpenGraphWrappe
 import PostDetailsPanel from "./PostDetailsPanel/PostDetailsPanel";
 import AuthorDetails from "./AuthorDetails/AuthorDetails";
 import "./BlogContent.css";
+import "./CodeBlock/CodeBlock.css";
 
 const BlogContent: React.FC<IBlogContentProps> = ({ scrolled }) => {
     const postRepository = useMemo(() => PostRepository.getInstance(), []);
@@ -29,7 +30,6 @@ const BlogContent: React.FC<IBlogContentProps> = ({ scrolled }) => {
             fetchedAuthorImageUrl: "",
         }
     });
-
 
     useEffect(() => {
         document.documentElement.scrollTo(0, 0);
@@ -101,6 +101,7 @@ const BlogContent: React.FC<IBlogContentProps> = ({ scrolled }) => {
 
 
     async function updatedRelatedPosts(): Promise<void> {
+        if (state.content === undefined) return;
         const { tags, _id } = state.content!;
         const relatedPosts = await postRepository.getRelatedPosts(tags, _id.$oid, 3);
         setState(prev => ({ ...prev, relatedPosts }));

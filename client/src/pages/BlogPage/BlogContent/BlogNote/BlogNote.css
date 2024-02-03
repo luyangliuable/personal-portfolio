@@ -1,0 +1,28 @@
+.blog-note {
+    background: rgba(220, 255, 150, 0.5);
+    color: #444;
+    padding: 30px 12px 12px 35px;
+    margin: 30px 0;
+    border: .1px solid rgb(20, 150, 50);
+    border-left: 2px solid rgb(20, 150, 50);
+}
+
+.blog-note::after {
+    content: '';
+    border-right: 2px solid rgb(20, 150, 50);
+    border-bottom: 2px solid rgb(20, 150, 50);
+    position: absolute;
+    top: -2px; left: -2px;
+    width: 32px; height: 30px;
+    border-radius: 0 0 100% 0;
+    background: #EEE;
+    z-index: 0;
+}
+
+.blog-note h4 {
+    top: -13px; left: -13px;
+    margin: 0 0 10px;
+    z-index: 1;
+    font-size: 2.3rem;
+    color: green
+}

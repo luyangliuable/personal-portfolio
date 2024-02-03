@@ -20,6 +20,7 @@
     .hero-section__content {
         margin-bottom: 8vh;
         display: flex;
+        padding: 3vh 0;
         justify-content: center;
         flex-direction: row;
     }
@@ -100,9 +101,18 @@
 }
 
 .hero-section__content__left__text {
+    z-index: 3;
     color: #888;
     max-width: 550px;
     font-size: .95rem;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Spartan:wght@700&display=swap");
+.hero-section__heading {
+    font-family: 'Spartan', sans-serif;
+    color: #2d2d2d; 
+    font-size: clamp(2em, 2vw, 3em) !important;
+    font-weight: 700;
 }
 
 @media (min-width: 768px) {

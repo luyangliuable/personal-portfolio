@@ -19,12 +19,10 @@ pub fn get_user(
     match cookie_jar.get("user_id") {
         Some(user_id_cookie) => {
             let user_id = user_id_cookie.value().to_string();
-
             info!("{}", user_id);
             match ObjectId::from_str(&user_id) {
                 Ok(object_id) => {
                     let user = user_repo.0.get(object_id);
-
                     match(user) {
                         Ok(valid_user) => {
                             let simple_user_details = json!({
@@ -95,11 +93,9 @@ pub fn logout(cookies: &CookieJar<'_>) -> Status {
 
 fn add_cookie(cookies: &CookieJar<'_>, name: String, value: String) {
     let cookie_string = format!("{}={}; Path={}", name, value, "/api");
-
     let cookie = Cookie::parse_encoded(cookie_string)
         .expect("Failed to parse cookie")
         .into_owned();
-
     cookies.add(cookie);
 }
 

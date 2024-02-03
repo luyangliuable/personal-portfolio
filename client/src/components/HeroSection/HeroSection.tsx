@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, createRef, RefObject } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import IHeroState from "./Interface/IHeroState";
 import IHeroProps from "./Interface/IHeroProps";
@@ -6,26 +6,23 @@ import CodingCat from "../CodingCat/CodingCat";
 import Button from "../Button/Button";
 import LandingPageCard from "../LandingPageCard/LandingPageCard";
 import Waves from "../Waves/Waves";
+import SequentialRiseSpan from "../Atoms/SequentialRiseSpan/SequentialRiseSpan";
 
 import "./HeroSection.css";
 
 class HeroSection extends Component<IHeroProps, IHeroState> {
+    heroSectionText: React.RefObject<HTMLDivElement>;
     contentInterval: any;
 
     constructor(props: IHeroProps) {
         super(props);
+        this.heroSectionText = createRef();
         this.state = {
             backgrounds: [],
             introduction: (
-                <>
-                    I am a motivated software engineering grad with a{" "}
-                    <span className="fancy-underline">diverse array of skills</span> and
-                    experiences, ranging from web and mobile app development to machine
-                    learning research. I pride myself on my efficient{" "}
-                    <span className="fancy-underline">time management abilities</span> and
-                    my aptitude for{" "}
-                    <span className="fancy-underline">continuous learning.</span>
-                </>
+                <SequentialRiseSpan numberOfLettersPerLine={47}>
+                    I am a motivated software engineering grad with a diverse array of skills and experiences, ranging from web and mobile app development to machine learning research. I pride myself on my efficient time management abilities and my aptitude for continuous learning.
+                </SequentialRiseSpan>
             ),
             mainContent: {
                 heading: "Hi There 👋. I am Luyang!",
@@ -91,11 +88,39 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
                 clearInterval(this.contentInterval);
             }
         }, 100);
+
     }
 
     componentWillUnmount() {
         clearInterval(this.contentInterval);
     }
+
+    wrapTextLinesInSpans(element: HTMLElement): void {
+        if (!element) return;
+        Array.from(element.childNodes).forEach(child => {
+            if (child.nodeType !== Node.TEXT_NODE) {
+                element.removeChild(child);
+            }
+        });
+        const words = element.textContent?.split(' ') || [];
+        element.textContent = ''; // Clear the element
+        let currentLine = document.createElement('span');
+        element.appendChild(currentLine);
+        words.forEach(word => {
+            const testLine = currentLine.cloneNode(true) as HTMLSpanElement;
+            testLine.textContent += `${word} `;
+            element.appendChild(testLine);
+            if (testLine.offsetWidth > element.offsetWidth) {
+                currentLine = document.createElement('span');
+                currentLine.textContent = `${word} `;
+                element.appendChild(currentLine);
+            } else {
+                currentLine.textContent = testLine.textContent;
+            }
+            element.removeChild(testLine);
+        });
+    }
+
 
     render(): any {
         const heroSectionState = this.state;
@@ -106,16 +131,12 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
                     <Waves />
                     <section className="hero-section__content">
                         <section className="hero-section__content__left">
-                            <header><h1>{heroSectionState.mainContent.heading}</h1></header>
-                            <p className="hero-section__content__left__text">{heroSectionState.introduction}</p>
-
-                            {heroSectionState.mainContent.items.map(
-                                (item: string, index: number) => (
-                                    <p key={index} className="hero-section__content__left__text hero-section__text_small" style={{ margin: "2px" }} >
-                                        {item}
-                                    </p>
-                                )
-                            )}
+                            <header>
+                                <SequentialRiseSpan elementType="h1" className="hero-section__heading">
+                                    {heroSectionState.mainContent.heading}
+                                </SequentialRiseSpan>
+                            </header>
+                            <p ref={this.heroSectionText} className="hero-section__content__left__text position-relative">{heroSectionState.introduction}</p>
                             <div className="flex flex-row mt-5 justify-start">
                                 <Button to="/digital_chronicles/blogs">See my Blogs <AiOutlineArrowRight /></Button>
                                 <Button to="/projects/code">See my Projects <AiOutlineArrowRight /></Button>
@@ -126,13 +147,13 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
                         </section>
                     </section>
                     <footer className="hero-section-badge__container flex justify-center items-center w-full">
-                            {heroSectionState.linkToMyOtherSocialMedia.map(
-                                (item: any, index: number) => (
-                                    <a key={index} href={item.link} className="hero-section-badge__link" target="_blank" rel="noopener noreferrer" >
-                                        <img src={item.imageSrc} alt={item.name} />
-                                    </a>
-                                )
-                            )}
+                        {heroSectionState.linkToMyOtherSocialMedia.map(
+                            (item: any, index: number) => (
+                                <a key={index} href={item.link} className="hero-section-badge__link" target="_blank" rel="noopener noreferrer" >
+                                    <img src={item.imageSrc} alt={item.name} />
+                                </a>
+                            )
+                        )}
                     </footer>
                 </LandingPageCard>
             </section>

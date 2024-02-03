@@ -38,13 +38,16 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
     componentDidMount() {
         this.calculateElementsToShow();
         this.fetchPostList();
+        const candleLightUpMargin = 150;
+
         const checkCandleStatus = (): void => {
-            if (Math.abs(isCenterAlignedWithViewport(this.currentComponentRef?.current)) <= 100) {
+            if (Math.abs(isCenterAlignedWithViewport(this.currentComponentRef?.current)) <= candleLightUpMargin) {
                 this.twinCandleComponentRef?.current?.transitionCandleFireToOn();
-            } else if (Math.abs(isCenterAlignedWithViewport(this.currentComponentRef?.current)) > 100) {
+            } else if (Math.abs(isCenterAlignedWithViewport(this.currentComponentRef?.current)) > candleLightUpMargin * 1.5) {
                 this.twinCandleComponentRef?.current?.transitionCandleFireToOff();
             }
         }
+
         setInterval(checkCandleStatus, 200);
     }
 

@@ -1,8 +1,9 @@
 import React from "react";
 import IHeroHeaderProps from "./Interface/IHeroHeaderProps";
+import SequentialRiseSpan from "../Atoms/SequentialRiseSpan/SequentialRiseSpan";
 import "./HeroHeader.css";
 
-const HeroHeader: React.FC<IHeroHeaderProps> = ({heading, description, graphics}) => {
+const HeroHeader: React.FC<IHeroHeaderProps> = ({ heading, description, graphics }) => {
     return (
         <div className="hero-header flex flex-row justify-start items-center">
             {
@@ -11,8 +12,12 @@ const HeroHeader: React.FC<IHeroHeaderProps> = ({heading, description, graphics}
                 )
             }
             <div className="w-full">
-                <h1>{heading}</h1>
-                <p>{description}</p>
+                <SequentialRiseSpan elementType="h1" minNumberOfLettersPerLine={23}>
+                    {heading}
+                </SequentialRiseSpan>
+                <SequentialRiseSpan className="hero-header--description" minNumberOfLettersPerLine={23}>
+                    {description}
+                </SequentialRiseSpan>
             </div>
         </div>
     );

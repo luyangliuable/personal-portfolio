@@ -14,12 +14,13 @@ type IPostDetailsPanelProps = {
 }
 
 const PostDetailsPanel: React.FC<IPostDetailsPanelProps> = ({ content, relatedPosts }) => {
+    if (relatedPosts === undefined || content === undefined) {
+        return (
+            <></>
+        );
+    }
 
     const renderRelatedPosts = (): React.ReactNode => {
-        if (relatedPosts === undefined) {
-            return (<></>);
-        }
-
         try {
             return (
                 <div>
@@ -47,12 +48,7 @@ const PostDetailsPanel: React.FC<IPostDetailsPanelProps> = ({ content, relatedPo
 
 
     const renderBlogTags = (): React.ReactNode => {
-        if (content === undefined) {
-            return (<SkeletonBlogContent />);
-        }
-
         const { tags } = content;
-
         return (
             <div>
                 <h3>Tags</h3>

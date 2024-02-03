@@ -1,8 +1,8 @@
 import React from "react";
 
 interface IHeroHeaderProps {
-    heading: string | JSX.Element;
-    description: string | JSX.Element;
+    heading: string;
+    description: string;
     graphics?: JSX.Element
 }
 
