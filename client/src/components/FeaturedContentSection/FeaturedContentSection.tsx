@@ -38,6 +38,17 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
     componentDidMount() {
         this.calculateElementsToShow();
         this.fetchPostList();
+        const candleLightUpMargin = 150;
+
+        const checkCandleStatus = (): void => {
+            if (Math.abs(isCenterAlignedWithViewport(this.currentComponentRef?.current)) <= candleLightUpMargin) {
+                this.twinCandleComponentRef?.current?.transitionCandleFireToOn();
+            } else if (Math.abs(isCenterAlignedWithViewport(this.currentComponentRef?.current)) > candleLightUpMargin * 1.5) {
+                this.twinCandleComponentRef?.current?.transitionCandleFireToOff();
+            }
+        }
+
+        setInterval(checkCandleStatus, 200);
     }
 
     calculateElementsToShow = () => {
@@ -51,16 +62,14 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
 
 
     showAllElements = () => {
-        this.setState({ numOfElementsToShow: this.state.featuredPosts.length + 2 });
-        this.showMoreButtonRef.current.style.display = 'none';
+        const featuredPostsLength = this.state.featuredPosts?.length ?? 0;
+        this.setState({ numOfElementsToShow: featuredPostsLength + 2 });
+        if (this.showMoreButtonRef.current) this.showMoreButtonRef.current.style.display = 'none';
     }
 
     renderTopPickedPostsSortedByDateDescending = (): React.ReactNode => {
         const sliceEnd = this.state.numOfElementsToShow - 2;
-        return this.state.featuredPosts.slice(0, sliceEnd).map((content, idx) => {
-
-            const imageURL = `http://llcode.tech/api/image/${content.image.$oid}`
-
+        return this.state.featuredPosts?.slice(0, sliceEnd).map((content, idx) => {
             return (
                 <div key={content._id.$oid}>
                     <GalleryItem
@@ -69,9 +78,9 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
                         type="blog"
                         dateCreated={content.date_created}
                         minuteRead={content.reading_time_minutes}
-                        style={{ margin: "2px 20px" }}
+                        className="my-2.5"
                         link={`/digital_chronicles/blog?id=${content._id.$oid}`}
-                        image={imageURL} />
+                        image={content.image.$oid} />
                 </div>
             )
         });
@@ -84,37 +93,31 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
         });
     }
 
-    componentDidUpdate(prevProps: Readonly<IFeaturedContentSectionProps>): void {
-        if (prevProps.scrolled !== this.props.scrolled) {
-            if (Math.abs(isCenterAlignedWithViewport(this.currentComponentRef?.current)) <= 100) {
-                this.twinCandleComponentRef?.current?.transitionCandleFireToOn();
-            } else if (Math.abs(isCenterAlignedWithViewport(this.currentComponentRef?.current)) > 200) {
-                this.twinCandleComponentRef?.current?.transitionCandleFireToOff();
-            }
-        }
-    }
 
     getFeaturedToolHeading() {
-        return "Featured Tool: " + this.state.featuredTool.name;
+        return "Featured Tool: " + this.state.featuredTool?.name;
     }
+
 
     render() {
         return (
             <LandingPageCard heading="Featured Content" landingPageCardType="fitContent" blendWithBackground={true}>
-                <div ref={this.currentComponentRef} className="featured-content__wrapper">
-                    <div className="featured-section w-full">
+                <section ref={this.currentComponentRef}>
+                    <div className="featured-section w-full flex flex-row justify-center items-start">
                         <GalleryItem
                             name={this.getFeaturedToolHeading()}
                             type="tool"
-                            style={{ margin: "5px 20px" }}
-                            image="http://llcode.tech/api/image/65596ad4ad7cc31ee9263e32"
-                            description={truncateTextBody(this.state.featuredTool.description)}
-                            link={this.state.featuredTool.link} />
+                            className="my-2.5"
+                            image="65596ad4ad7cc31ee9263e32"
+                            description={truncateTextBody(this.state.featuredTool?.description)}
+                            link={this.state.featuredTool?.link} />
                         {this.renderTopPickedPostsSortedByDateDescending()}
+
                         <div ref={this.showMoreButtonRef}><Button onClick={this.showAllElements}>Show More...</Button></div>
                     </div>
+
                     <TwinCandle ref={this.twinCandleComponentRef} />
-                </div>
+                </section>
             </LandingPageCard>
         );
     }

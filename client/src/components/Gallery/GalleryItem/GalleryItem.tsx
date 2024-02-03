@@ -1,4 +1,4 @@
-import { Component, CSSProperties,createRef, RefObject  } from "react";
+import React, { Component, CSSProperties, createRef, RefObject } from "react";
 import { isoDateFormatToString } from "../../../components/Utility/StringUtility";
 import { NavLink } from "react-router-dom";
 import { cardGradientEffect } from "../../../components/Utility/MouseUtility";
@@ -33,27 +33,29 @@ class GalleryItem extends Component<IGalleryItemProps, IGalleryItemState> {
 
         if (type === "blog") {
             return (
-                <div className="gallery-item__type">
+                <div className="gallery-item__type font-fira-code">
                     <CgWebsite />
-                    <span>Blog</span>
+                    <span>BLOG</span>
+                </div>
+            )
+        } else if (type === "tool") {
+            return (
+                <div className="gallery-item__type font-fira-code">
+                    <TbToolsOff />
+                    <span>TOOL</span>
                 </div>
             )
         }
 
-        return (
-            <div className="gallery-item__type">
-                <TbToolsOff />
-                <span>Tool</span>
-            </div>
-        )
+        return (<></>)
     }
 
     render() {
         const style: CSSProperties = this.props.style || {};
-        const { image } = this.props;
+        const { image, className } = this.props;
 
         return (
-            <NavLink to={this.props.link ?? ""}>
+            <NavLink className={className} to={this.props.link ?? ""}>
                 <div
                     ref={this.galleryItemRef}
                     style={style}
@@ -61,6 +63,7 @@ class GalleryItem extends Component<IGalleryItemProps, IGalleryItemState> {
                     onMouseMove={cardGradientEffect}
                     className="gallery-item flex flex-col justify-start items-center opacity-0 pb-10 blur-boundary card">
                     {this.GalleryItemTypeSegment}
+                    <div className="position-absolute color-white right-0 w-15 top-10 font-fira-code">READ</div>
                     <Image className="gallery-item__image" src={image} />
                     <h3>{this.props.name}</h3>
                     {

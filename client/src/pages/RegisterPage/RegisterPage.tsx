@@ -76,23 +76,25 @@ class RegisterPage extends Component<any, any> {
 
     render(): React.ReactElement<any, any> {
         return (
-            <form className="register-form__wrapper" >
-                <h1>Sign up to ~/llcode.tech</h1>
-                <div className="register-form">
-                    {
-                        this.state.registerStatus !== "Pending" && (
-                            <div className={this.getFlashClassNames()}>{this.state.flashMessage}</div>
-                        )
-                    }
-                    <input ref={this.userNameRef} type="text" placeholder="🙋‍♂️🙋‍♀️ username" />
-                    <input ref={this.emailRef} type="text" placeholder="📧✉️ email" />
-                    <input ref={this.firstnameRef} type="text" placeholder="🌟 firstname" />
-                    <input ref={this.lastnameRef} type="text" placeholder="🌟 lastname" />
-                    <input ref={this.passwordRef} type="password" placeholder="🔒🔑️ password" />
-                    <input ref={this.confirmPasswordRef} type="password" placeholder="🔒🔑️ confirm password" />
-                    <input type="submit" className="button" onClick={(e) => this.register(e)} />
-                </div>
-            </form>
+            <main>
+                <form className="register-form__wrapper" >
+                    <h1>Sign up to ~/llcode.tech</h1>
+                    <div className="register-form">
+                        {
+                            this.state.registerStatus !== "Pending" && (
+                                <div className={this.getFlashClassNames()}>{this.state.flashMessage}</div>
+                            )
+                        }
+                        <input ref={this.userNameRef} type="text" placeholder="🙋‍♂️🙋‍♀️ username" />
+                        <input ref={this.emailRef} type="text" placeholder="📧✉️ email" />
+                        <input ref={this.firstnameRef} type="text" placeholder="🌟 firstname" />
+                        <input ref={this.lastnameRef} type="text" placeholder="🌟 lastname" />
+                        <input ref={this.passwordRef} type="password" placeholder="🔒🔑️ password" />
+                        <input ref={this.confirmPasswordRef} type="password" placeholder="🔒🔑️ confirm password" />
+                        <input type="submit" className="button" onClick={(e) => this.register(e)} />
+                    </div>
+                </form>
+            </main>
         )
     }
 }

@@ -1,5 +1,5 @@
 .selected-navlink-window {
-    --selected-navlink-window-color: #AAA;
+    --selected-navlink-window-color: #DDD;
     opacity: 0;
     transform: translateX(var(--dynamic-translate));
     width: var(--navbar-item-width);
@@ -8,20 +8,44 @@
     color: var(--selected-navlink-window-color);
     border-radius: var(--navbar-item-border-radius);
     background: var(--selected-navlink-window-color);
-    transition: all 0.2s ease-in-out;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    transition: transform 0.2s ease-in-out;
 }
 
-.navbar-left a:hover ~ .selected-navlink-window {
-    opacity: 1;
+
+.navbar {
+    --navbar-width: 100%;
+    --navbar-height: 61px; /* Fallback value, real value determined inside Navbar.tsx */
+    --navbar-submenu-height: 120px;
+    --navbar-max-height: 93px;
+    --progress-height: 3.5px;
+    --navbar-item-border-radius: 4px;
+    --navbar-item-width: 8.5vw;
+    --navbar-item-max-width: 180px;
+    --navbar-item-margin: 0.1vw;
+    --navbar-item-padding: 10px 0 10px;
+    --navbar-transition: background .2s ease-in-out, box-shadow .1s ease-in-out, transform .1s ease-in-out;
+    top: 0;
+    z-index: 10;
+    position: absolute;
+    background: transparent;
+    transition: var(--navbar-transition);
+    -webkit-transition: var(--navbar-transition);
+    -moz-transition: var(--navbar-transition);
+    width: var(--navbar-width);
+    box-sizing: border-box;
 }
+
+.navbar-left {
+    padding: 10px 0;
+    width: 85vw
+}
+
+    .navbar-left>a:hover ~ .selected-navlink-window {
+        opacity: 1;
+    }
+
 
 .navbar-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     text-decoration: none;
     cursor: pointer;
     color: #000;
@@ -35,102 +59,48 @@
     transition: all .2s ease-in;
 }
 
-.navbar-item:active {
-    transform: translateY(5px);
-}
-
-.navbar-submenu-item:hover {
-    background: var(--zenburn-foreground);
-}
-
-.navbar {
-    --navbar-width: 100%;
-    --navbar-height: 61px; /* Default value, real value determined inside Navbar.tsx */
-    --navbar-submenu-height: 120px;
-    --navbar-max-height: 93px;
-    --progress-height: 3.5px;
-    --navbar-item-border-radius: 4px;
-    --navbar-item-width: 8.5vw;
-    --navbar-item-max-width: 180px;
-    --navbar-item-margin: 0.1vw;
-    --navbar-item-padding: 10px 0 10px;
-    --navbar-transition: background .2s ease-in-out, box-shadow .1s ease-in-out, transform .1s ease-in-out;
-    top: 0;
-    border-radius: 0 0 4px 4px;
-    z-index: 10;
-    position: absolute;
-    background: var(--zenburn-mode-navbar-color);
-    background: transparent;
-    transition: var(--navbar-transition);
-    -webkit-transition: var(--navbar-transition);
-    -moz-transition: var(--navbar-transition);
-    width: var(--navbar-width);
-    box-sizing: border-box;
-}
-
-.navbar-content {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-@media screen and (min-width: 900px) {
-    .navbar-left {
-        padding: 10px;
-        display: flex;
-        margin-left: 0vw;
-        width: 85vw;
-        overflow-x: hidden;
-        justify-content: flex-start;
-        flex-direction: row;
+    .navbar-item:active {
+        transform: translateY(5px);
     }
-}
 
-.navbar * {
-    overflow: visible; /* TODO temporary solution figure out exactly which one */
-}
+    .navbar-item__dropdown {
+        --dropdown-top-offset: 12px;
+        position: fixed;
+        border: .1px solid #CCC;
+        opacity: 0; display: none;
+        align-items: center;
+        top: calc( var(--navbar-height) - var(--dropdown-top-offset));
+        width: 200px;
+        padding: 10px;
+        border-radius: 12px;
+        background: rgb(250,250,250);
+        backdrop-filter: blur(28px);
+    }
 
-.navbar-item__dropdown {
-    --dropdown-top-offset: 12px;
-    --transition: background .2s ease-in-out;
-    border: .1px solid #CCC;
-    opacity: 0;
-    display: none;
-    align-items: center;
-    top: calc( var(--navbar-height) - var(--dropdown-top-offset));
-    position: fixed;
-    width: 200px;
-    height: fit-content;
-    padding: 10px;
-    border-radius: 0 0 12px 12px;
-    background: rgba(250,250,250,0.8);
-    backdrop-filter: blur(28px);
-    transition: var(--transition);
-    -moz-transition: var(--transition);
-    -webkit-transition: var(--transition);
-    backdrop-filter: blur(28px);
-}
+        .navbar-item__dropdown > .navbar-item {
+            padding: var(--navbar-item-padding) 5px;
+            width: 180px;
+            justify-content: space-between;
+            margin-bottom: 1px;
+            text-shadow: none
+        }
 
-.navbar-item__dropdown > .navbar-item {
-    padding: var(--navbar-item-padding) 5px;
-    width: 180px;
-    justify-content: space-between;
-    margin-bottom: 1px;
-}
+        .navbar-item__dropdown > .navbar-item:hover {
+            color: #FEFEFE !important;
+            background: var(--dark-mode-blue);
+            text-shadow: none
+        }
 
-.navbar-item__dropdown > .navbar-item:hover {
-    color: #FEFEFE !important;
-    background: var(--dark-mode-blue);
+.show-navbar-dropdown {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 1
 }
-
-.detached .navbar-item__dropdown {
-    background: rgba(240,240,240,0.9);
-}
-
 
 @media screen and (max-width: 900px) {
     .navbar-left {
-        display: none;
+        display: none !important
     }
 
     .navbar-content svg {
@@ -147,20 +117,39 @@
 .detached {
     position: fixed;
     backdrop-filter: blur(12px);
-    background: rgba(200,200,200, .4);
+    background: rgba(220,220,220, .4);
     box-shadow: .1px .1px 1px #888;
 }
 
-.detached .navbar-content .navbar-left .navbar-item {
-    color: #000;
-    font-weight: 700;
-    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5), -1px -1px 3px rgba(255, 255, 255, 0.5); /* Subtle text shadow for contrast */
-}
+    .detached .navbar-content .navbar-left .navbar-item {
+        color: #000;
+        font-weight: 700
+    }
 
+    .detached .navbar-item {
+        text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.5), -1px -1px 3px rgba(255, 255, 255, 0.5);
+    }
+
+    .detached .logo {
+        background: linear-gradient(
+            90deg,
+            #1e90ff 0%,
+            #491ed3 50%,
+            #1e90ff 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-text-stroke-width: .1px;
+        -webkit-text-stroke-color: #1E1E1E;
+        background-clip: text;
+        text-fill-color: transparent;
+        background-size: 200% auto;
+        animation: animateBg 3s linear infinite;
+    }
 
 
 .logo {
-    --font-weight-bold: 800;
+    --font-weight-bold: 400;
     --font-size-large: 20px;
     display: inline-block;
     font-family: 'Proxima Nova Bold',Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
@@ -192,22 +181,6 @@
     -webkit-text-stroke-color: #1E1E1E;
 }
 
-.detached .navbar-content .logo {
-    background: linear-gradient(
-        90deg,
-        #1e90ff 0%,
-        #491ed3 50%,
-        #1e90ff 100%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-text-stroke-width: .1px;
-    -webkit-text-stroke-color: #1E1E1E;
-    background-clip: text;
-    text-fill-color: transparent;
-    background-size: 200% auto;
-    animation: animateBg 3s linear infinite;
-}
 
 @keyframes animateBg {
     0% {
@@ -221,7 +194,6 @@
 #scroll-progress {
     position: absolute;
     background: #00bfff;
-    /* box-shadow: 0px 0px min( 5px, .5vh ) #00bfff; */
     height: var(--progress-height);
     z-index: 11;
     width: 100vw;
@@ -230,16 +202,5 @@
 .active-link {
     background: var(--dark-mode-purple-2);
     color: #FEFEFE !important;
-    text-shadow: none !important; /* No need to have text shadow when background is opaque duh */
-}
-
-/*****************************************************************************/
-/*                                  Submenu                                  */
-/*****************************************************************************/
-
-.show-navbar-dropdown {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    opacity: 1;
+    text-shadow: none !important;
 }

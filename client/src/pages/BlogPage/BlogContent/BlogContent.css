@@ -1,11 +1,11 @@
 .blog-content__side-components {
     left: 0;
-    margin-top: 20vh;
+    padding: 20px 0 5px 10px;
     top: calc(var(--navbar-height) + 2px);
 
     backdrop-filter: blur(2px);
 
-    font-size: min(max(12px, .5vw), 18px);
+    font-size: clamp(12px, .5vw, 18px);
     transition: color 1s ease-in;
 
     height: fit-content;
@@ -14,6 +14,7 @@
     min-width: 200px;
 
     transition: .15s top ease-in;
+    background: #EEE;
 }
 
 .blog-content__header {
@@ -31,7 +32,7 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    background: rgba(238, 238, 238, .1);
+    background: rgb(238, 238, 238);
     backdrop-filter: blur(2px);
     border-radius: 12px;
     border: .1px solid #CCC
@@ -41,7 +42,7 @@
     border-bottom: 1px #CCC solid;
     width: 100%;
     border-radius: .5vh;
-    font-size: 1rem;
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
     text-decoration: none;
     color: #000;
     transition: background .3s ease-in;
@@ -97,7 +98,7 @@
     }
 
     .table-of-content--small-screen {
-	display: flex
+	      display: flex
     }
 
     .blog-content {
@@ -105,25 +106,53 @@
     }
 }
 
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto
+}
 
-/* Default Code block wrapped inside ````` rendered by markdown renderer from Markdown */
-.code-block--native__container {
-    --header-height: 20px;
+table {
+    font-size: .95rem;
+    border-collapse: collapse;
+    z-index: 2;
+    border: .1px solid #CCC;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(220,200,190,0.1);
+}
+
+th, td {
+    padding: 15px;
+    background-color: rgba(255,255,255,0.2);
+    color: #000;
+}
+
+th {
+    text-align: left;
+}
+
+td, tr, th {
+    transition: background-color .3s ease-in-out;
+}
+
+thead th {
+    background: var(--dark-mode-purple-2);
+    color: #FFF
+}
+
+tbody tr:hover {
+    background-color: rgba(190,200,255,0.5)
+}
+
+tbody td {
     position: relative;
-    width: 95%;
-    font-size: max(min(14px, 1.8vw), 10px);
-    padding: 10px;
-    background: #DDD;
-    margin-top: calc(var(--header-height) * 2);
-    border-radius: 0 0 6px 6px;
 }
 
-.code-block--native {
-    margin: 0;
-    overflow-x: auto;
-    padding-bottom: .25em; /* Extra space for scrollbar */
-    box-sizing: border-box; /* Ensure padding doesn't make it wider than parent */
-}
-
-.code-block--native>code {
+tbody td:hover:before {
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    top: -9999px;
+    bottom: -9999px;
+    background-color: rgba(180,200,255,0.2);
+    z-index: -1
 }

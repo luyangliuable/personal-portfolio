@@ -2,10 +2,6 @@ use mongodb::sync::{Client, Database};
 use std::env;
 use once_cell::sync::Lazy;
 
-pub struct DbSingleton {
-    db: Database,
-}
-
 pub static DB: Lazy<Database> = Lazy::new(|| {
     dotenv::dotenv().ok();
 

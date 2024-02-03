@@ -1,73 +1,28 @@
-use rocket::{http::Status, State};
-use std::str::FromStr;
-use crate::{utils::markdown_util, models::post_model::Post, repository::post_repo::PostRepo};
-use mongodb::{
-    bson::{doc, to_bson, oid::ObjectId },
-    results::UpdateResult
-};
-use rocket::serde::json::Json;
-use mongodb::results::InsertOneResult;
+use rocket::{http::Status, State, serde::json::Json};
+use crate::{models::post_model::Post, controller::post_controller::PostController};
+use mongodb::{bson::doc, results::{ UpdateResult, InsertOneResult, DeleteResult }};
 
-/// Fetches a post based on its ObjectId.
-/// Returns the post content as a `Post` object wrapped in JSON.
 #[get("/posts/<id>")]
-pub async fn get_post(db: &State<PostRepo>, id: String) -> Result<Json<Post>, Status> {
-    match ObjectId::from_str(&id) {
-        Ok(object_id) => {
-
-            let blog_post = db.0.get(object_id);
-
-            match blog_post {
-                Ok(blog_post) => {
-                    match markdown_util::get_post_content_for_post(blog_post) {
-                        Ok(updated_post) => Ok(Json( updated_post )),
-                        Err(_) => Err(Status::NotFound),
-                    }
-                },
-                Err(_) => Err(Status::InternalServerError),
-            }
-        },
-        Err(_) => Err(Status::BadRequest), // Respond with a bad request status if the hex string is invalid
-    }
+pub async fn get_post(controller: &State<PostController>, id: String) -> Result<Json<Post>, Status> {
+    controller.inner().get(id)
 }
-
 
 #[get("/posts")]
-pub fn get_post_list(db: &State<PostRepo>) -> Result<Json<Vec<Post>>, Status> {
-    match db.0.get_all() {
-        Ok(posts) => Ok(Json(posts)),
-        Err(_) => return Err(Status::InternalServerError),
-    }
+pub fn get_all_post(controller: &State<PostController>) -> Result<Json<Vec<Post>>, Status> {
+    controller.inner().get_all()
 }
-
 
 #[patch("/posts/<id>", data = "<new_post>")]
-pub fn update_post(id: String, new_post: Json<Post>, post_repo: &State<PostRepo>) -> Result<Json<UpdateResult>, Status> {
-    let new_post_data = new_post.into_inner();
-    
-    let update_doc = match to_bson(&new_post_data) {
-        Ok(mongodb::bson::Bson::Document(doc)) => doc,
-        Ok(_other) => return Err(Status::InternalServerError),
-        Err(_) => return Err(Status::BadRequest),
-    };
-    
-    let update = doc! { "$set": update_doc };
-    
-    match post_repo.0.update_one(id, update, None) {
-        Ok(update_result) => Ok(Json( update_result )),
-        Err(_) => Err(Status::BadRequest),
-    }
+pub fn update_post(id: String, new_post: Json<Post>, controller: &State<PostController>) -> Result<Json<UpdateResult>, Status> {
+    controller.inner().update(id, new_post.into_inner())
 }
 
-
-/// Adds a new post to the database.
-/// Accepts a JSON body with the post details and returns the result of the insertion.
 #[post("/posts", data = "<new_post>")]
-pub async fn index_post(db: &State<PostRepo>, new_post: Json<Post>) -> Result<Json<InsertOneResult>, Status> {
-    let data = new_post.into_inner();
+pub async fn index_post(controller: &State<PostController>, new_post: Json<Post>) -> Result<Json<InsertOneResult>, Status> {
+    controller.inner().insert(new_post.into_inner())
+}
 
-    match db.0.create(data) {
-        Ok(user) => Ok(Json(user)),
-        Err(_) => Err(Status::BadRequest),
-    }
+#[post("/delete")]
+pub async fn delete(controller: &State<PostController>) -> Result<Json<DeleteResult>, Status> {
+    todo!()
 }

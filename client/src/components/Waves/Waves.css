@@ -1,5 +1,6 @@
 .wave__container {
   position: absolute;
+  display: none;
   width: 200%;
   height: 50px;
   left: 0;
@@ -20,12 +21,6 @@
     .wave__container {
         transform: translate(-25%, 40%);
         top: 90%;
-    }
-}
-
-@media (prefers-reduced-motion) {
-    .wave__container {
-        display: none
     }
 }
 

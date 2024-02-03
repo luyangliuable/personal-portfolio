@@ -156,7 +156,7 @@ impl UserRepo {
 
         let update = doc! { "$set": { "session_token": new_token.to_string() } };
 
-        match self.0.update_one(userid.clone(), update, None) {
+        match self.0.update(userid.clone(), update, None) {
             Ok(_) => Ok(UserSessionToken { session_token: new_token.to_string(), userid: userid.clone() }),
             Err(error) => Err(error),
         }

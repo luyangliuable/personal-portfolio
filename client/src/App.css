@@ -3,7 +3,7 @@
     --navbar-height: 68px;
 
     --page-bottom-margin: 120px;
-    --common-card-margin: 25vh;
+    --common-card-margin: min(25vh, 100px);
 
     --dark-mode-black: #1e1e1e;
     --dark-mode-purple: #491ed3;
@@ -20,9 +20,13 @@
     --zenburn-background: #3F3F3F;
     --zenburn-foreground: #DCDCCC;
 
+    --bg: #1a1e2d;
+    --green: #a5ea9b;
+    --pink: #ff61d8;
+    --blue: #569cfa;
+    --orange: #ffcc81;
+    --cyan: #7ed1e2;
 }
-
-.App {}
 
 .App-logo {
     height: 40vmin;
@@ -33,6 +37,12 @@
     .App-logo {
         animation: App-logo-spin infinite 20s linear;
     }
+}
+
+h1 {
+    margin-block-start: 0.67em;
+    font-size: 2em;
+    margin-block-end: 0.67em;
 }
 
 .App-header {
@@ -109,7 +119,7 @@ a {
     color: #888;
 }
 
-.page-body {
+.page-body, main {
     margin-top: var(--page-top-margin);
     margin-bottom: var(--page-bottom-margin);
     width: 100vw;
@@ -118,10 +128,6 @@ a {
     justify-content: flex-start;
     align-items: center;
     position: relative;
-    background-image: radial-gradient(rgba(194, 194, 194, 1) 1px, rgba(194, 194, 194, 0) 0);
-    background-size: 8px 8px;
-    background-position: -19px -19px;
-    animation: background-scroll 8s linear infinite;
 }
 
 @keyframes background-scroll {
@@ -158,6 +164,10 @@ a {
 
 /* Colors */
 
+.color-white {
+    color: #FFF
+}
+
 .bg-red {
     background: red
 }
@@ -167,6 +177,10 @@ a {
 }
 
 /* Scroll */
+
+.overflow-hidden {
+    overflow: hidden
+}
 
 .overflow-scroll {
     overflow: scroll
@@ -182,8 +196,25 @@ a {
     width: 100%
 }
 
+.w-80 {
+    width: 80%
+}
+
+.w-70 {
+    width: 70%
+}
+
+.w-half {
+    width: 50%
+}
+
+
 .w-30 {
     width: 30%
+}
+
+.w-15 {
+    width: 15%
 }
 
 /* Flex */
@@ -208,6 +239,10 @@ a {
     justify-content: flex-start
 }
 
+.justify-between {
+    justify-content: space-between
+}
+
 .items-center {
     align-items: center
 }
@@ -221,6 +256,14 @@ a {
 }
 
 /* Position */
+
+.right-0 {
+    right: 0
+}
+
+.top-10 {
+    top: 10px
+}
 
 .position-relative {
     position: relative
@@ -248,6 +291,12 @@ a {
     -o-border-radius: var(-border-radius);
 }
 
+/* Image */
+
+.object-cover {
+    object-fit: cover
+}
+
 /* Animation */
 
 .transition {
@@ -258,19 +307,65 @@ a {
     -ms-transition: var(--transition)
 }
 
-/* Margin */
-
-.mt-5 {
-    margin-top: 10px
+/* Filter Effects */
+.backdrop-blur-md {
+    backdrop-filter: blur(12px);
 }
 
+/* Margin */
 
-.my-5 {
-    margin: 100px 0
+.m-0 {
+    margin: 0
+}
+
+.mb-0 {
+    margin-bottom: 0
+}
+
+.mt-20vh {
+    margin-top: 20vh
+}
+
+.mt-5 {
+    margin-top: 10px !important
+}
+
+.mt-10 {
+    margin-top: 50px !important
+}
+
+.my-2.5 {
+    margin: 10px 0
+}
+
+.ml-2vw {
+    margin-left: 2vw;
+}
+
+.child-mb-50 > * {
+    margin-bottom: 50px;
+}
+
+.child-mb-10 > * {
+    margin-bottom: 10px;
 }
 
 .opacity-0 {
     opacity: 0
+}
+
+/* Font */
+.font-fira-code {
+    font-family: 'Fira Code', Courier, monospace;
+}
+
+.font-bold {
+    font-weight: bold
+}
+
+/* Cursor */
+.cursor-pointer {
+    cursor: pointer
 }
 
 /* Text */
@@ -279,6 +374,17 @@ a {
     white-space: nowrap
 }
 
+.text-center {
+    text-align: center
+}
+
+.text-left {
+    text-align: left
+}
+
+.text-right {
+    text-align: right
+}
 
 .text-medium {
     font-size: .95rem
@@ -289,12 +395,36 @@ a {
 }
 
 /* Padding  */
+.py-5 {
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+}
+
+.p-24, .p-25 {
+    padding: 6rem; /* 96px */
+}
+
 .pb-5 {
-    padding-bottom: 10px
+    padding-bottom: 1.25rem; /* 20px */
 }
 
 .pl-5 {
-    padding-left: 10px
+    padding-left: 1.25rem; /* 20px */
+}
+
+.px-1 {
+    padding-left: 2px;
+    padding-right: 2px
+}
+
+.px-5 {
+    padding-left: 1.25rem; /* 20px */
+    padding-right: 1.25rem; /* 20px */
+}
+
+.py-20 {
+    padding-top: 5rem; /* 80px */
+    padding-bottom: 5rem; /* 80px */
 }
 
 .pl-3vw {
@@ -320,18 +450,6 @@ a {
 
 .border-1-solid-black {
     border: 1px solid black
-}
-
-.w-full {
-    width: 100%;
-}
-
-.w-80 {
-    width: 80%;
-}
-
-.w-half {
-    width: 50%;
 }
 
 /* Override Styles (!important only allowed here) */
@@ -371,50 +489,25 @@ a {
     object-fit: cover
 }
 
-/* .fancy-underline { */
-/*     --deco-height: 0.3125em;  /\* Initial height of the underline *\/ */
-/*     position: relative; */
-/*     white-space: nowrap; */
-/*     display: inline-block; /\* Ensures the container fits the content *\/ */
-/*     color: #000; */
-/* } */
-
-/* .fancy-underline:hover { */
-/*     --deco-height: 1em; /\* Height of the underline on hover *\/ */
-/* } */
-
-/* .fancy-underline::after { */
-/*     content: ""; */
-/*     position: absolute; */
-/*     left: 0; */
-/*     right: 0; */
-/*     bottom: 0; /\* Align the bottom of the underline with the bottom of the text *\/ */
-/*     background: var(--dark-mode-pink); */
-/*     height: var(--deco-height); */
-/*     transform-origin: bottom; /\* Ensures the scaling is upwards *\/ */
-/*     transition: height .5s ease-in-out, transform 0.5s ease-in-out; */
-/*     z-index: -1; */
-/* } */
-
-
 .fancy-underline {
 	  position: relative;
-	  white-space: nowrap;
+    display: inline;
+    word-spacing: -0.09em;
+	  white-space: nowrap
 }
 
 .fancy-underline:after {
 	  --deco-height: 0.3125em;
 	  content: "";
 	  position: absolute;
-	  left: 0;
-	  right: 0;
-	  bottom: calc(var(--deco-height) * -0.625);
+	  left: 0; right: 0;
+	  bottom: calc(var(--deco-height) * -0.325);
 	  height: var(--deco-height);
-	  background-image: url("data:image/svg+xml,%3Csvg width='100' height='64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23a)'%3E%3Cpath d='M-17 30.5 C-1 22 72 -4 54 13 37.9 28.2 -2.5 57.5 16 55.5 s 72 -29 104 -40' stroke='%230050E2' stroke-width='6'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h100v64H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E%0A");
+	  background-image: url("data:image/svg+xml,%3Csvg width='100' height='64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23a)'%3E%3Cpath d='M-17 30.5 C-1 22 72 -4 54 13 37.9 28.2 -2.5 57.5 16 55.5 s 72 -29 104 -40' stroke='%230090E2' stroke-width='6'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h100v64H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E%0A");
 	  background-size: auto 100%;
 	  background-repeat: round;
 	  background-position: 0em;
-    animation: fade-in 1s ease-in-out;
+    animation: fade-in 1s ease-in-out
 }
 
 
@@ -454,7 +547,7 @@ a {
 
 
 @keyframes fade-in--width {
-    0% {
+   0% {
         width: 0;
     }
     100% {

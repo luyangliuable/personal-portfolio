@@ -1,6 +1,6 @@
 interface ILandingPageProps {
-  scrolled: number,
-  scrolling: boolean
+  scrolled: number | undefined,
+  scrolling: boolean | undefined
 }
 
 export default ILandingPageProps;

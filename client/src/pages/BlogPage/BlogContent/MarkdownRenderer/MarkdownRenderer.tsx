@@ -3,6 +3,12 @@ import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import Prism from "prismjs";
 
+import { unified } from 'unified'
+import remarkParse from 'remark-parse'
+import remarkRehype from 'remark-rehype'
+/* import rehypeSanitize from 'rehype-sanitize'
+* import rehypeStringify from 'rehype-stringify' */
+
 import Image from "../../../../components/Image/Image"
 
 import 'prismjs/components/prism-javascript';
@@ -54,8 +60,9 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ markdown }) => {
         return `<blockquote class="blockquote">${quote}</blockquote>`;
     };
 
-    // Override the code method to return a React component
     renderer.code = (code, language) => {
+        const escapedCode = code.replace(/{/g, '&#123;').replace(/}/g, '&#125;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
         if (language === "sh") {
             language = "bash";
         } else if (language === "rs") {
@@ -66,7 +73,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ markdown }) => {
             language = "python";
         }
 
-        return `<div class="code-block--native__container"><pre class="code-block--native"><code class="language-${language}">${code}</code></pre></div>`;
+        return `<div class="code-block--native__container"><pre class="code-block--native"><code class="language-${language}">${escapedCode}</code></pre></div>`;
     };
 
     renderer.strong = (text) => {
@@ -81,6 +88,10 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ markdown }) => {
         const titleAttr = title ? ` title="${title}"` : '';
         return `<a href="${href}" class="markdown-link"${titleAttr}>${text}</a>`;
     };
+
+    renderer.paragraph = (text) => {
+        return `<section>${text}</section>`;
+    }
 
     renderer.list = (body, ordered) => {
         const type = ordered ? 'ol' : 'ul';
@@ -111,8 +122,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ markdown }) => {
         return attrs;
     };
 
-    // Define whitelist as React nodes
-    const allowedPlaceholders: {[key: string]: any} = {
+    const allowedPlaceholders: { [key: string]: any } = {
         'blogpostgraphics': BlogPostGraphics,
         'img': Image,
     };
@@ -136,7 +146,6 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ markdown }) => {
                 if (firstTag && Object.keys(allowedPlaceholders).includes(firstTag)) {
                     const Component = allowedPlaceholders[firstTag];
                     const attributes = extractAttributes(node.innerHTML);
-                    console.log(attributes);
                     return React.createElement(Component, attributes);
                 }
             }
@@ -148,13 +157,14 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ markdown }) => {
 
         return (
             <>
-                {elements.map((el, index) => {
-                    // Use a combination of the element's type and its index as a key
-                    const key = typeof el + index;
-                    return typeof el === 'string'
-                        ? React.createElement('div', { dangerouslySetInnerHTML: { __html: el }, key: key })
-                        : React.cloneElement(el, { key: key });
-                })}
+                {
+                    elements.map((el, index) => {
+                        const key = typeof el + index;
+                        return typeof el === 'string'
+                            ? React.createElement('div', { dangerouslySetInnerHTML: { __html: el }, key: key })
+                            : React.cloneElement(el, { key: key });
+                    })
+                }
             </>
         );
     };
@@ -166,9 +176,7 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ markdown }) => {
             setContent(convertHtmlToReact(renderedHtml));
         } catch (error) {
             console.error('Error parsing markdown:', error);
-            return null;
         }
-
     }, []);
 
     useEffect(() => {

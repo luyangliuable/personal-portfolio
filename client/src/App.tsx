@@ -19,16 +19,15 @@ const RegisterPage = loadable(() => import("./pages/RegisterPage/RegisterPage"))
 const BlogPage = loadable(() => import('./pages/BlogPage/BlogPage'));
 
 interface IAppStateInterface {
-    scrollY: number | null,
-    scrolling: boolean | null,
-    deltaScrollCalculation: {
-        lastRecordedScrollY: number | null,
-        deltaScrolled: number | null,
-        timeIntervalCheckMiliseconds: number | null
+    scrollY?: number,
+    scrolling?: boolean,
+    deltaScrollCalculation?: {
+        lastRecordedScrollY: number,
+        deltaScrolled: number,
     }
 }
 
-const RedirectToRoot = (props: { link: string }): React.ReactElement<{ link: string }> => {
+const RedirectToRoot = (props: { link: string }): React.ReactElement<{ link: string }> | null => {
     let navigate = useNavigate();
 
     React.useEffect(() => {
@@ -40,18 +39,11 @@ const RedirectToRoot = (props: { link: string }): React.ReactElement<{ link: str
 
 function App() {
     const [appState, setAppState] = useState<IAppStateInterface>({
-        scrollY: null,
-        scrolling: null,
-        deltaScrollCalculation: {
-            lastRecordedScrollY: null,
-            deltaScrolled: null,
-            timeIntervalCheckMiliseconds: 10
-        }
     });
 
     useEffect(() => {
-        let scrollTimeout: NodeJS.Timeout = null;
-        const timeToCheckScrollingHasStoppedMiliseconds =  50;
+        let scrollTimeout: NodeJS.Timeout;
+        const timeToCheckScrollingHasStoppedMiliseconds = 50;
 
         const handleScroll = () => {
             clearTimeout(scrollTimeout); // Clear the timeout to reset the end-of-scroll detection
@@ -81,52 +73,50 @@ function App() {
                 deltaScrollCalculation: {
                     ...prevState.deltaScrollCalculation,
                     lastRecordedScrollY: window.scrollY,
-                    deltaScrolled: window.scrollY - Math.max(0, prevState.deltaScrollCalculation.lastRecordedScrollY)
+                    deltaScrolled: window.scrollY - Math.max(0, prevState.deltaScrollCalculation?.lastRecordedScrollY ?? 0)
                 }
             }));
-        }, appState.deltaScrollCalculation.timeIntervalCheckMiliseconds);
+        }, 10);
 
         return () => {
             window.removeEventListener("scroll", handleScroll);
             window.clearTimeout(scrollTimeout);
             window.clearInterval(deltaScrollCalculationInterval);
         };
+    }, []);
 
-    }, [appState.deltaScrollCalculation.timeIntervalCheckMiliseconds]);
-
-    const deltaScrolled = appState.deltaScrollCalculation.deltaScrolled;
+    const deltaScrolled = appState.deltaScrollCalculation?.deltaScrolled;
 
     return (
         <div className="App">
             <AppContextProvider>
-            <BrowserRouter>
-            <NavBar scrollStatus={{ scrolled: appState.scrollY, deltaScrolled: deltaScrolled }} />
-            <div className="page-body">
-            <Routes>
-            <Route path="/" element={
-                <LandingPage scrolled={appState.scrollY} scrolling={appState.scrolling} />
-            } />
-            <Route path="/digital_chronicles/blogs" element={<BlogPage showTopPicks={true} />} />
-            <Route path="/resume" element={<ResumePage />} />
-            <Route path="/projects/3d_printing" element={<ThreeDPrintingGallery />} />
-            <Route path="/projects/hardware" element={<HardwareProjectsPage />} />
-            <Route path="/projects/code" element={<CodingProjectsPage />} />
-            <Route path="/digital_chronicles/blog" element={<BlogContent />} />
-            <Route path="/user/login" element={<LogInPage />} />
-            <Route path="/user/register" element={<RegisterPage />} />
+                <BrowserRouter>
+                    <NavBar scrollStatus={{ scrolled: appState.scrollY, deltaScrolled: deltaScrolled }} />
+                        <Routes>
+                            <Route path="/" element={
+                                <LandingPage scrolled={appState.scrollY} scrolling={appState.scrolling} />
+                            } />
+                            <Route path="/digital_chronicles/blogs" element={<BlogPage showTopPicks={true} />} />
+                            <Route path="/resume" element={<ResumePage />} />
+                            <Route path="/projects/3d_printing" element={<ThreeDPrintingGallery />} />
+                            <Route path="/projects/hardware" element={<HardwareProjectsPage />} />
+                            <Route path="/projects/code" element={<CodingProjectsPage />} />
+                            <Route path="/projects" element={<CodingProjectsPage />} />
+                            <Route path="/digital_chronicles/blog" element={<BlogContent scrolled={appState.scrollY} />} />
+                            <Route path="/user/login" element={<LogInPage />} />
+                            <Route path="/user/register" element={<RegisterPage />} />
 
-            {/* Catch-all route */}
-            <Route path="*" element={<UnderConstruction />} />
+                            {/* Catch-all route */}
+                            <Route path="*" element={<UnderConstruction />} />
 
-            {/* Redirections */}
-            <Route path="/digital_chronicles" element={<RedirectToRoot link="/digital_chronicles/blogs" />} />
-            <Route path="/tools" element={<RedirectToRoot link="/tools/mood_tracker" />} />
-            <Route path="/about" element={<RedirectToRoot link="/about/teddie" />} />
-            </Routes>
-            </div>
-            </BrowserRouter>
+                            {/* Redirections */}
+                            <Route path="/digital_chronicles" element={<RedirectToRoot link="/digital_chronicles/blogs" />} />
+                            <Route path="/tools" element={<RedirectToRoot link="/tools/mood_tracker" />} />
+                            <Route path="/about" element={<RedirectToRoot link="/about/teddie" />} />
+                        </Routes>
+                </BrowserRouter>
             </AppContextProvider>
-            </div>
+        </div>
     );
 }
 

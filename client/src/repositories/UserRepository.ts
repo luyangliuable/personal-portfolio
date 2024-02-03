@@ -1,52 +1,52 @@
 import UserNameResponse from "../repositories/Response/UserNameResponse";
+import Repository from "./Repository";
 
-// TODO remove all anys
-class PostRepository {
+class UserRepository extends Repository {
     static BASE_URL: string = process.env.REACT_APP_WEATHER_API_BASE_URL || "https://llcode.tech/api";
-    // static BASE_URL: string = process.env.REACT_APP_WEATHER_API_BASE_URL || "http://localhost:8000/api";
+
+    private constructor() { super(); }
+
 
     static options(method: 'GET' | 'DELETE' | 'POST' | 'PUT', body?: { [category: string]: any }): any {
         return {
             method: method,
             cache: "no-cache",
             credentials: 'include',
-            headers: {
-                // 'Content-Type': 'application/json',
-            },
+            headers: {},
             body: JSON.stringify(body)
         }
     };
 
     static async getUserName(): Promise<UserNameResponse> {
-        const url = `${PostRepository.BASE_URL}/user`;
-        const options = PostRepository.options("GET");
+        const url = `${UserRepository.BASE_URL}/user`;
+        const options = UserRepository.options("GET");
         return fetch(url, options)
             .then(response => response.json())
             .catch(error => { throw Error(error) });
     }
 
     static async login(logindetails: any): Promise<any> {
-        const url = `${PostRepository.BASE_URL}/login`;
-        const options = PostRepository.options("POST", logindetails);
+        const url = `${UserRepository.BASE_URL}/login`;
+        const options = UserRepository.options("POST", logindetails);
         return fetch(url, options)
             .then(response => response.json())
             .catch(error => { throw error(error) });
     }
 
     static async register(registerdetails: any): Promise<any> {
-        const url = `${PostRepository.BASE_URL}/register`;
-        const options = PostRepository.options("POST", registerdetails);
+        const url = `${UserRepository.BASE_URL}/register`;
+        const options = UserRepository.options("POST", registerdetails);
         return fetch(url, options)
             .then(response => response.json())
             .catch(error => { throw error(error) });
     }
 
     static async logout(): Promise<any> {
-        const url = `${PostRepository.BASE_URL}/logout`;
-        const options = PostRepository.options("POST");
+        const url = `${UserRepository.BASE_URL}/logout`;
+        const options = UserRepository.options("POST");
         return fetch(url, options)
     }
 
 }
 
-export default PostRepository;
+export default UserRepository;

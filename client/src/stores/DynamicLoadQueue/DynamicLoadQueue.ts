@@ -18,10 +18,7 @@ class DynamicLoadQueue {
     }
 
     static getInstance(): DynamicLoadQueue {
-        if (!DynamicLoadQueue.instance) {
-            DynamicLoadQueue.instance = new DynamicLoadQueue();
-        }
-
+        if (!DynamicLoadQueue.instance) DynamicLoadQueue.instance = new DynamicLoadQueue();
         return DynamicLoadQueue.instance;
     }
 
@@ -30,7 +27,9 @@ class DynamicLoadQueue {
     };
 
     processQueueStart() {
-        if (this.isLocked === false) {
+        const queueMaxSize = 2;
+        if (this.queue.length >= queueMaxSize && this.isLocked === true) this.isLocked = false;
+        if (this.isLocked === false && this.queue.length < queueMaxSize) {
             this.isLocked = true;
             this.processQueue();
         }
@@ -41,20 +40,18 @@ class DynamicLoadQueue {
             this.isLocked = false;
             return;
         };
-
         const element = this.queue.shift();
-
         if (element) {
             this.fadeInElement(element);
             setTimeout(() => {
-                this.processQueue(); // Use an arrow function to preserve 'this'
-            }, 100);
-       }
+                this.processQueue();
+            }, 50);
+        }
     };
 
     fadeInElement(element: Element) {
         (element as HTMLElement).style.opacity = '1';
-        (element as HTMLElement).style.transform = 'translateX(0)';
+        (element as HTMLElement).style.transform = 'translate(0, 0)';
     };
 }
 

@@ -1,7 +1,8 @@
 use mongodb::bson::oid::ObjectId;
-use rocket::serde::{Deserialize, Serialize};
+use rocket::serde::{Serialize, Deserialize};
+use chrono::{Utc, DateTime};
+use crate::models::utils::date_format::date_format;
 
-/// A blog post.
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Post {
     #[serde(rename = "_id", skip_serializing_if = "Option::is_none")]
@@ -12,8 +13,10 @@ pub struct Post {
     pub post_type: String,
     pub year: i32,
     pub month: i32,
-    pub date_created: Option<String>,
-    pub date_updated: Option<String>,
+    #[serde(with = "date_format", default)]
+    pub date_created: Option<DateTime<Utc>>,
+    #[serde(with = "date_format", default)]
+    pub date_last_modified: Option<DateTime<Utc>>,
     pub file_name: String,
     pub tags: Option<Vec<String>>,
     pub reading_time_minutes: Option<i32>,

@@ -1,5 +1,5 @@
 interface IFeaturedContentSectionProps {
-  scrolled: number
+  scrolled?: number
 }
 
 export default IFeaturedContentSectionProps;

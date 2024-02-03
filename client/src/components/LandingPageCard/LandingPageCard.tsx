@@ -18,6 +18,8 @@ class LandingPageCard extends Component<ILandingPageCardProps, any> {
             });
         });
 
+        document.documentElement.scrollTo(0, 0);
+
         setInterval(() => {
             if (this.state.scrolling) {
                 this.setState({
@@ -53,8 +55,8 @@ class LandingPageCard extends Component<ILandingPageCardProps, any> {
         return (
             <div className={classArray.join(' ')}>
                 <div className="landing-page-card__content">
-                <h1 className="landing-page-card__heading">{landingPageCardHeading}</h1>
-                {this.props.children}
+                    <header className="landing-page-card__heading"><h1>{landingPageCardHeading}</h1></header>
+                    {this.props.children}
                 </div>
             </div>
         );

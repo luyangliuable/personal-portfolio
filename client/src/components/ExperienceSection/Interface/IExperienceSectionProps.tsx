@@ -1,5 +1,5 @@
 interface IExperienceSectionProps {
-  scrolled: number
+  scrolled?: number
 }
 
 export default IExperienceSectionProps;

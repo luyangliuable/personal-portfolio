@@ -9,9 +9,9 @@ class Image extends Component<IImageProps, IImageState> {
     imageRepository: ImageRepository;
 
     static defaultProps = {
-        defaultImage: "http://llcode.tech/api/image/651942aaf9b642fb30be59ae",
+        defaultImage: "https://llcode.tech/api/image/651942aaf9b642fb30be59ae",
         defaultImageId: "651942aaf9b642fb30be59ae",
-        defaultAuthorImage: "http://llcode.tech/api/image/65194be0f9b642fb30be59af",
+        defaultAuthorImage: "https://llcode.tech/api/image/65194be0f9b642fb30be59af",
         defaultAuthorImageId: "65194be0f9b642fb30be59af"
     };
 
@@ -55,14 +55,12 @@ class Image extends Component<IImageProps, IImageState> {
         let { className, alt } = this.props;
         alt ??= this.defaultImageAlt;
 
+        if (fetchedImageUrl === undefined) {
+            return (<SkeletonImage class={this.props.className} />)
+        }
+
         return (
-            <>
-                {
-                    fetchedImageUrl ?
-                        <img className={className} src={fetchedImageUrl} alt={alt} />
-                        : <SkeletonImage class={this.props.className} />
-                }
-            </>
+            <img className={className} src={fetchedImageUrl} alt={alt} />
         )
     }
 }
