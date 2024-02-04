@@ -21,11 +21,11 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
             backgrounds: [],
             introduction: (
                 <SequentialRiseSpan minNumberOfLettersPerLine={48} maxNumberOfLettersPerLine={70}>
-                    I am a motivated software engineering grad with a diverse array of skills and experiences, ranging from web and mobile app development to machine learning research. I pride myself on my efficient time management abilities and my aptitude for continuous learning. I am extremely proficient with both frontend, devops and backend.
+                    Passionate software engineering grad with expertise in web/mobile development, machine learning, and efficient time management. Frontend enthusiast with 2 years of work experience in machine learning and backend.
                 </SequentialRiseSpan>
             ),
             mainContent: {
-                heading: "Hi There 👋. I am Luyang!",
+                heading: "Hi There. I am Luyang",
                 itemsToShow: [],
                 items: [
                     "🔭 I’m currently working on a personal profile website.",
@@ -140,7 +140,7 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
                                 </SequentialRiseSpan>
                             </header>
                             <div ref={this.heroSectionText} className="hero-section__content__left__text position-relative">{heroSectionState.introduction}</div>
-                            <div className="flex flex-row mt-5 justify-start self-start">
+                            <div className="flex flex-row mt-10 justify-start self-start">
                                 <Button to="/digital_chronicles/blogs">See my Blogs <AiOutlineArrowRight /></Button>
                                 <Button to="/projects/code">See my Projects <AiOutlineArrowRight /></Button>
                             </div>

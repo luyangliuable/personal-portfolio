@@ -1,18 +1,11 @@
 .blog-content__side-components {
-    left: 0;
+    left: 0; top: calc(var(--navbar-height) + 2px);
     padding: 20px 0 5px 10px;
-    top: calc(var(--navbar-height) + 2px);
-
     backdrop-filter: blur(2px);
-
     font-size: clamp(12px, .5vw, 18px);
     transition: color 1s ease-in;
-
-    height: fit-content;
-    max-height: 80vh;
-    max-width: 200px;
-    min-width: 200px;
-
+    height: fit-content; max-height: 80vh;
+    width: 200px;
     transition: .15s top ease-in;
     background: #EEE;
 }
@@ -26,7 +19,7 @@
     --padding-left-right: min( 5vw, 500px );
     --padding-top-bottom: min( 3vh, 200px );
     --margin-top: min(2vh, 200px);
-    width: 500px;
+    width: 600px;
     padding: var(--padding-top-bottom) var(--padding-left-right);
     margin-top: var( --margin-top );
     display: flex;
@@ -53,7 +46,7 @@
 }
 
 .blog-content-body>h1 {
-    display: none; /* Hide the title inside the markdown file itself because it already exists from request */
+    display: none
 }
 
 
@@ -92,10 +85,14 @@
     display: none
 }
 
-@media screen and (max-width: 1000px) {
+
+@media screen and (max-width: 1100px) {
     .blog-content__side-components {
         display: none
     }
+}
+
+@media screen and (max-width: 1000px) {
 
     .table-of-content--small-screen {
 	      display: flex

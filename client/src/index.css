@@ -3,6 +3,13 @@ code {
                  monospace;
 }
 
+
+@font-face {
+    font-family: 'Spartan';
+    src: url("https://fonts.googleapis.com/css2?family=Spartan:wght@700&display=swap");
+}
+
+
 @font-face {
     font-family: 'Fira Code';
     src: url('fonts/FiraCode/FiraCode-Regular.ttf') format('woff2');

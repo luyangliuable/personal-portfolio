@@ -115,6 +115,7 @@
 .hero-section__heading {
     font-family: 'Spartan', sans-serif;
     color: #2d2d2d; 
+    margin-bottom: .8rem;
     font-size: clamp(2em, 2.58vw, 4em) !important;
     font-weight: 700;
 }

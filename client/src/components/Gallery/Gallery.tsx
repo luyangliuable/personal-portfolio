@@ -2,6 +2,7 @@ import React, { Component, createRef } from "react";
 import { IGalleryProps } from "./Interface/IGalleryProps";
 import IGalleryState from "./Interface/IGalleryState";
 import GalleryItem from "./GalleryItem/GalleryItem";
+import "../Utility/MouseUtility";
 import "./Gallery.css";
 
 

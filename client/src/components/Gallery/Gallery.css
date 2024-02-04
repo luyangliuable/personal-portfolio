@@ -6,7 +6,7 @@
     display: grid;
     grid-template-columns: auto auto;
     width: 80vw;
-    align-items: flex-end;
+    align-items: flex-start;
     justify-content: space-around;
 }
 

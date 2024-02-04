@@ -71,11 +71,13 @@ class GalleryItem extends Component<IGalleryItemProps, IGalleryItemState> {
                         (<p className="gallery-item__metadata">{this.props.minuteRead} min read | {isoDateFormatToString(new Date(this.props.dateCreated))} </p>)
                     }
                     <p>{this.props.subheading}</p>
-                    <div className="mt-5 w-full box-border p-4">
-                        <SequentialRiseSpan>
-                            {this.props.description ?? ""}
-                        </SequentialRiseSpan>
-                    </div>
+                    {this.props.description &&
+                        <div className="w-full box-border p-4">
+                            <SequentialRiseSpan>
+                                {this.props.description}
+                            </SequentialRiseSpan>
+                        </div>
+                    }
                     <TagCloud tags={this.props.tags} />
                 </div>
             </NavLink>
