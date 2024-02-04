@@ -20,8 +20,8 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
         this.state = {
             backgrounds: [],
             introduction: (
-                <SequentialRiseSpan numberOfLettersPerLine={47}>
-                    I am a motivated software engineering grad with a diverse array of skills and experiences, ranging from web and mobile app development to machine learning research. I pride myself on my efficient time management abilities and my aptitude for continuous learning.
+                <SequentialRiseSpan minNumberOfLettersPerLine={48} maxNumberOfLettersPerLine={70}>
+                    I am a motivated software engineering grad with a diverse array of skills and experiences, ranging from web and mobile app development to machine learning research. I pride myself on my efficient time management abilities and my aptitude for continuous learning. I am extremely proficient with both frontend, devops and backend.
                 </SequentialRiseSpan>
             ),
             mainContent: {
@@ -130,20 +130,20 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
                 <LandingPageCard className="hero-section" landingPageCardType="fitContent" >
                     <Waves />
                     <section className="hero-section__content">
+                        <section className="hero-section__content__right">
+                            <CodingCat showAnimtion={this.props.scrolling} />
+                        </section>
                         <section className="hero-section__content__left">
-                            <header>
-                                <SequentialRiseSpan elementType="h1" className="hero-section__heading">
+                            <header className="self-start">
+                                <SequentialRiseSpan elementType="h1" className="hero-section__heading" minNumberOfLettersPerLine={40}>
                                     {heroSectionState.mainContent.heading}
                                 </SequentialRiseSpan>
                             </header>
-                            <p ref={this.heroSectionText} className="hero-section__content__left__text position-relative">{heroSectionState.introduction}</p>
-                            <div className="flex flex-row mt-5 justify-start">
+                            <div ref={this.heroSectionText} className="hero-section__content__left__text position-relative">{heroSectionState.introduction}</div>
+                            <div className="flex flex-row mt-5 justify-start self-start">
                                 <Button to="/digital_chronicles/blogs">See my Blogs <AiOutlineArrowRight /></Button>
                                 <Button to="/projects/code">See my Projects <AiOutlineArrowRight /></Button>
                             </div>
-                        </section>
-                        <section className="hero-section__content__right">
-                            <CodingCat showAnimtion={this.props.scrolling} />
                         </section>
                     </section>
                     <footer className="hero-section-badge__container flex justify-center items-center w-full">

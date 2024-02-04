@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './LandingPageCard.css';
 import { ILandingPageCardProps, LandingPageCardType } from "./Interface/ILandingPageCardProps";
+import SequentialRiseSpan from '../Atoms/SequentialRiseSpan/SequentialRiseSpan';
 
 
 class LandingPageCard extends Component<ILandingPageCardProps, any> {
@@ -55,7 +56,11 @@ class LandingPageCard extends Component<ILandingPageCardProps, any> {
         return (
             <div className={classArray.join(' ')}>
                 <div className="landing-page-card__content">
-                    <header className="landing-page-card__heading"><h1>{landingPageCardHeading}</h1></header>
+                    <header className="landing-page-card__heading">
+                        <SequentialRiseSpan elementType="h2">
+                            {landingPageCardHeading ?? ""}
+                        </SequentialRiseSpan>
+                    </header>
                     {this.props.children}
                 </div>
             </div>

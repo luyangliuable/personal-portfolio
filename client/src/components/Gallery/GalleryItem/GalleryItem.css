@@ -33,11 +33,10 @@
     }
 }
 
-.gallery-item>p {
+.gallery-item p {
     width: 90%;
     text-align: left;
     color: #555;
-    margin: 0;
     font-size: 14px;
 }
 

@@ -3,6 +3,7 @@ import IExperienceSectionProps from "./Interface/IExperienceSectionProps";
 import { IExperienceSectionState, ExperienceSectionItem } from './Interface/IExperienceSectionState';
 import { isCenterAlignedWithViewport } from "../Utility/ScrollUtility";
 import ExperienceSectionEvent from "./ExperienceSectionEvent/ExperienceSectionEvent";
+import SequentialRiseSpan from '../Atoms/SequentialRiseSpan/SequentialRiseSpan';
 import ExperienceSectionImageDisplay from "./ExperienceSectionImageDisplay/ExperienceSectionImageDisplay";
 
 import "./ExperienceSection.css";
@@ -268,37 +269,17 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
 
     useEffect(() => {
         const proximityYToLockPosition = 110;
-
-        if (experienceSectionParentRef.current!)
-            setLockPosition();
-
-        if (isCenterAlignedWithViewport(experienceSectionParentRef.current!) < proximityYToLockPosition) {
-            lockPosition();
-        }
-
-        if (state.isLocked && state.lockPosition !== undefined) {
-            scrollTimeline(state.lockPosition - scrolled);
-        }
-
-        if (isBeforeLockPosition()) {
-            unlockPosition();
-        }
-
-        /* if (isAfterFinishScrolling()) {
-*     unlockPosition();
-* } */
-
+        if (experienceSectionParentRef.current!) setLockPosition();
+        if (isCenterAlignedWithViewport(experienceSectionParentRef.current!) < proximityYToLockPosition) lockPosition();
+        if (state.isLocked && state.lockPosition !== undefined) scrollTimeline(state.lockPosition - ( scrolled ?? 0 ));
+        if (isBeforeLockPosition()) unlockPosition();
     }, [scrolled]);
 
     const updateTimelineLength = (): void => {
         const offset = 10;
         const timeLineLength = experienceSectionScrollRef.current!.getBoundingClientRect().width + offset;
         const targetElement = experienceSectionParentRef.current?.parentElement;
-
-        if (targetElement) {
-            targetElement.style.height = `${timeLineLength + timeLineLength / 8}px`;
-        }
-
+        if (targetElement) targetElement.style.height = `${timeLineLength + timeLineLength / 8}px`;
         setState({
             ...state,
             timeLineLength: timeLineLength
@@ -319,8 +300,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
     }
 
     const setLockPosition = () => {
-        const currentPosition = experienceSectionParentRef.current!.parentElement!.getBoundingClientRect().top + scrolled;
-
+        const currentPosition = experienceSectionParentRef.current!.parentElement!.getBoundingClientRect().top + ( scrolled ?? 0);
         if (!state.isLocked && state.lockPosition !== currentPosition) {
             setState({
                 ...state,
@@ -359,7 +339,11 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
     if (isMounted)
         return (
             <article className="landing-page-card flex flex-col justify-start overflow-hidden experience-section-parent-container" ref={experienceSectionParentRef}>
-                <header className="ml-2vw"><h2>Retrospective</h2></header>
+                <header className="ml-2vw">
+                    <SequentialRiseSpan elementType="h2">
+                        Retrospective
+                    </SequentialRiseSpan>
+                </header>
                 <section ref={experienceSectionRef} className="experience-section" >
 
                     {/* Scrolling timeline within the section */}
@@ -383,6 +367,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
                 </section>
             </article>
         );
+    else return (<></>)
 }
 
 export default ExperienceSection;

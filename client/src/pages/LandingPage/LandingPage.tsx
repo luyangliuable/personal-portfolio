@@ -18,7 +18,7 @@ class LandingPage extends Component<ILandingPageProps, ILandingPagestate> {
         <HeroSection scrolling={this.props.scrolling} />
         <FeaturedContentSection scrolled={this.props.scrolled} />
         <div className="experience-section-wrapper"><Experiences scrolled={this.props.scrolled} /></div>
-        <LandingPageCard landingPageCardType="fitContent" className="blend-with-background" heading="Digital Chronicles of the Real World">
+        <LandingPageCard landingPageCardType="fitContent" className="blend-with-background">
           <section className="flex-column-centered-centered"><BlogPage /></section>
         </LandingPageCard>
       </main>

@@ -10,6 +10,7 @@ import { CgWebsite } from "react-icons/cg";
 import TagCloud from "../../TagCloud/TagCloud";
 import DynamicLoadQueue from "../../../stores/DynamicLoadQueue/DynamicLoadQueue";
 import Image from "../../Image/Image";
+import SequentialRiseSpan from "../../Atoms/SequentialRiseSpan/SequentialRiseSpan";
 
 class GalleryItem extends Component<IGalleryItemProps, IGalleryItemState> {
     galleryItemRef: RefObject<HTMLDivElement>;
@@ -53,7 +54,6 @@ class GalleryItem extends Component<IGalleryItemProps, IGalleryItemState> {
     render() {
         const style: CSSProperties = this.props.style || {};
         const { image, className } = this.props;
-
         return (
             <NavLink className={className} to={this.props.link ?? ""}>
                 <div
@@ -71,7 +71,11 @@ class GalleryItem extends Component<IGalleryItemProps, IGalleryItemState> {
                         (<p className="gallery-item__metadata">{this.props.minuteRead} min read | {isoDateFormatToString(new Date(this.props.dateCreated))} </p>)
                     }
                     <p>{this.props.subheading}</p>
-                    <p className="mt-5">{this.props.description}</p>
+                    <div className="mt-5 w-full box-border p-4">
+                        <SequentialRiseSpan>
+                            {this.props.description ?? ""}
+                        </SequentialRiseSpan>
+                    </div>
                     <TagCloud tags={this.props.tags} />
                 </div>
             </NavLink>

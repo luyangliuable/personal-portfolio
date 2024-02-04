@@ -86,7 +86,7 @@
     background-color: var(--dark-mode-pink)
 }
 
-@media screen and (max-height: 850px) {
+@media screen and (max-height: 750px) {
     .experience-section-card {
         width: 150px;
     }
@@ -97,7 +97,12 @@
         font-weight: 200;
     }
 
+    .experience-section-card h2 {
+        font-size: 12px
+    }
+
     .experience-section-card__location {
-        display: none;
+        display: none
     }
 }
+
