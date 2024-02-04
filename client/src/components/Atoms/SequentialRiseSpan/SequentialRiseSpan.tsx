@@ -87,6 +87,7 @@ const SequentialRiseSpan: React.FC<ISequentialRiseSpanProps> = ({ children, elem
     return (
         <div className="sequential-rise-span" ref={spanItemRef}>
             {
+                measuredLettersPerLine !== 0 &&
                 wrappedLines.map((line, index) => {
                     const lineElement = React.cloneElement(line, {
                         style: { animationDelay: `${index * 100}ms` },

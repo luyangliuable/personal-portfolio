@@ -100,12 +100,16 @@ const MarkdownRendererV2: React.FC<MarkdownRendererProps> = ({ markdown }) => {
     };
 
     useEffect(() => {
+        const filteredMarkdown = markdown.split('\n')
+            .filter(line => !/^#[^#]/.test(line))
+            .join('\n');
+
         remark()
             .use(remarkTableToHtml as any)
             .use(customCodeBlockPlugin)
             .use(html, { sanitize: false })
             .use(sectionise)
-            .process(markdown, processCallback)
+            .process(filteredMarkdown, processCallback)
     }, [markdown]);
 
 
