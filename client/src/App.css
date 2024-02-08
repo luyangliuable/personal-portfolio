@@ -256,6 +256,10 @@ a {
     justify-content: space-between
 }
 
+.justify-around {
+    justify-content: space-around
+}
+
 .items-center {
     align-items: center
 }
@@ -536,6 +540,13 @@ a {
     animation: fade-in 1s ease-in-out
 }
 
+.skeleton-component {
+    --loader-background-color: #EEEEEE;
+    --loader-highlight-color: #DEDEDE;
+    background: linear-gradient(90deg, var(--loader-background-color) 25%, var(--loader-highlight-color) 50%, var(--loader-background-color) 75%);
+    animation: loading 2s infinite ease-in-out;
+    background-size: 200% 100%;
+}
 
 /*****************************************************************************/
 /*                         Global Animation Keyframes                        */

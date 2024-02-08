@@ -73,7 +73,7 @@ class GalleryItem extends Component<IGalleryItemProps, IGalleryItemState> {
                     <p>{this.props.subheading}</p>
                     {this.props.description &&
                         <div className="w-full box-border p-4">
-                            <SequentialRiseSpan>
+                            <SequentialRiseSpan minNumberOfLettersPerLine={42}>
                                 {this.props.description}
                             </SequentialRiseSpan>
                         </div>

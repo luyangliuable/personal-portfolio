@@ -6,11 +6,12 @@ interface ISequentialRiseSpanProps {
     className?: string;
     elementType?: keyof JSX.IntrinsicElements;
     numberOfLettersPerLine?: number,
+    calculationAdjustment?: number,
     minNumberOfLettersPerLine?: number,
     maxNumberOfLettersPerLine?: number
 }
 
-const SequentialRiseSpan: React.FC<ISequentialRiseSpanProps> = ({ children, elementType, className, numberOfLettersPerLine, minNumberOfLettersPerLine, maxNumberOfLettersPerLine }) => {
+const SequentialRiseSpan: React.FC<ISequentialRiseSpanProps> = ({ calculationAdjustment, children, elementType, className, numberOfLettersPerLine, minNumberOfLettersPerLine, maxNumberOfLettersPerLine }) => {
     const spanItemRef = useRef<HTMLDivElement>(null);
     const [wrappedLines, setWrappedLines] = useState([]);
     const [lineRefs, setLineRefs] = useState<RefObject<any>[]>([]);
@@ -30,7 +31,8 @@ const SequentialRiseSpan: React.FC<ISequentialRiseSpanProps> = ({ children, elem
             const elementStyle = window.getComputedStyle(element);
             const elementPadding = parseFloat(elementStyle.paddingLeft) + parseFloat(elementStyle.paddingRight);
             const elementWidth = element.offsetWidth - elementPadding;
-            setMeasuredLettersPerLine(Math.floor(elementWidth / charWidth));
+            calculationAdjustment = calculationAdjustment ?? 1.12;
+            setMeasuredLettersPerLine(Math.floor(elementWidth*calculationAdjustment / charWidth));
         }
     }
 

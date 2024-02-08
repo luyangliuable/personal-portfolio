@@ -1,0 +1,14 @@
+.skeleton-page__header {
+    height: 20vh;
+    min-height: 200px
+}
+
+.skeleton-page__content {
+    height: 70vh;
+    width: 50vw
+}
+
+.skeleton-page__content--2 {
+    width: 20vw;
+    height: 70vh
+}

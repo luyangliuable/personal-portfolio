@@ -34,6 +34,7 @@ const TableOfContents: React.FC<ItableOfContentsProps> = (props) => {
         };
         const subheadings = props.headings?.filter(({ level }) => level !== 0);
         const renderedSubHeadings = subheadings?.map(({ title, level }, idx: number) => {
+            if (level === 1) title = "introduction";
             const indentation = `${Math.max((level - 1), 0) * 20}px`;
 
             const marginBottom = `${(22 - 4.5 * level) / 2}px`;
@@ -75,6 +76,10 @@ const TableOfContents: React.FC<ItableOfContentsProps> = (props) => {
                 startHeight += parseInt(computedStyle.height) + 15;
             }
         });
+
+        if (startIdx === 1) {
+            startHeight = 120;
+        }
 
         if (startIdx === -1) {
             startHeight = 0;

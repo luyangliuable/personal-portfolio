@@ -21,7 +21,7 @@
 .image-display__image__wrapper {
     overflow: hidden;
     border-radius: 10px;
-    height: 15vh;
+    height: 19vh;
     min-height: 100px; max-height: 200px
 }
 

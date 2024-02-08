@@ -1,0 +1,36 @@
+.black-hole canvas {
+    position: absolute;
+    top: 0;
+    left: -247px;
+    width: 800px; /* Ensure it covers the whole area of the parent */
+    height: 500px; /* Ensure it covers the whole area of the parent */
+    animation: rotate 25s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.black-hole {
+    position: relative;
+    z-index: -1;
+    background: #F9F9F9;
+    width: 100px;
+    height: 500px;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    33% {
+        transform: rotate(-20deg);
+    }
+    66% {
+        transform: rotate(20deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.back,
+.front {
+    filter: blur(0px);
+}

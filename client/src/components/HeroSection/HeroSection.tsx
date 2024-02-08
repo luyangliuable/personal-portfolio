@@ -20,12 +20,12 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
         this.state = {
             backgrounds: [],
             introduction: (
-                <SequentialRiseSpan minNumberOfLettersPerLine={48} maxNumberOfLettersPerLine={70}>
+                <SequentialRiseSpan calculationAdjustment={1.05} minNumberOfLettersPerLine={48} maxNumberOfLettersPerLine={70}>
                     Passionate software engineering grad with expertise in web/mobile development, machine learning, and efficient time management. Frontend enthusiast with 2 years of work experience in machine learning and backend.
                 </SequentialRiseSpan>
             ),
             mainContent: {
-                heading: "Hi There. I am Luyang",
+                heading: "Hi There, I am Luyang.",
                 itemsToShow: [],
                 items: [
                     "🔭 I’m currently working on a personal profile website.",
