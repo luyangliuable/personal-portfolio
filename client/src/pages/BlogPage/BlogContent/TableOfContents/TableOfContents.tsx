@@ -3,11 +3,16 @@ import ItableOfContentsProps from "./Interface/ItableOfContentsProps"
 import { useEffect, useState, useRef, RefObject } from "react";
 import { stringToHash } from "../../../../components/Utility/StringUtility";
 import "./TableOfContents.css";
+import gsap from "gsap";
 
 const TableOfContents: React.FC<ItableOfContentsProps> = (props) => {
     const [tocEntries, setTocEntries] = useState<JSX.Element[] | null>(null);
     const [tocEntryRef, setTocEntryRef] = useState<RefObject<HTMLElement>[]>([]);
     const [listenTocItems, setlistenTocItems] = useState<Set<string>>(new Set());
+    const [lastPathInfo, setLastPathInfo] = useState<{lastPathStart: number, lastPathEnd: number}>({
+        lastPathStart: 0,
+        lastPathEnd: 0
+    });
     const tocMarkerPathRef: RefObject<SVGPathElement> = useRef(null);
 
     useEffect(() => {
@@ -34,15 +39,14 @@ const TableOfContents: React.FC<ItableOfContentsProps> = (props) => {
         };
         const subheadings = props.headings?.filter(({ level }) => level !== 0);
         const renderedSubHeadings = subheadings?.map(({ title, level }, idx: number) => {
-            if (level === 1) title = "introduction";
+            if (level === 1) title = "";
             const indentation = `${Math.max((level - 1), 0) * 20}px`;
-
             const marginBottom = `${(22 - 4.5 * level) / 2}px`;
             const color = getTextColor(level);
             const id = stringToHash(title);
-
+            const className = `level-${level - 2} section-toc-entry`;
             return (
-                <div key={idx} id={id.toString()} className="section-toc-entry" style={{ color, margin: `${marginBottom} ${indentation}` }} onClick={(e) => handleClick(e, id.toString())}>
+                <div key={idx} id={id.toString()} className={className} style={{ color, margin: `${marginBottom} ${indentation}` }} onClick={(e) => handleClick(e, id.toString())}>
                     {title}
                 </div>
             );
@@ -53,41 +57,74 @@ const TableOfContents: React.FC<ItableOfContentsProps> = (props) => {
         }
     }
 
+    /* function sync(pathLength) {
+* } */
 
     const drawPath = () => {
-        var tocPath = tocMarkerPathRef.current;
-        var path = [];
-        let height = 0;
-        let startHeight = 70;
-        let startIdx = -1;
+        const tocPath = tocMarkerPathRef.current,
+            path: any[] = [];
+
+        let height = 0,
+            indent = 40,
+            startHeight = 90,
+            startIdx = -1,
+            endIdx = -1,
+            pathStart = 0,
+            pathEnd = 0;
 
         tocEntries!.forEach((entry, idx) => {
             if (entry.props.className.includes('active')) {
                 if (startIdx === -1) startIdx = idx;
-                const computedStyle = window.getComputedStyle(tocEntryRef[idx].current!);
-                height += parseInt(computedStyle.height) + 15;
+                endIdx = idx;
             }
         });
 
-
-        tocEntries!.forEach((entry, idx) => {
+        tocEntries!.forEach((_, idx) => {
             if (idx < startIdx) {
                 const computedStyle = window.getComputedStyle(tocEntryRef[idx].current!);
-                startHeight += parseInt(computedStyle.height) + 15;
+                const extra = parseFloat(computedStyle.height) + parseFloat(computedStyle.marginBottom) * 2;
+                pathStart += extra;
+                pathEnd += extra;
             }
         });
 
-        if (startIdx === 1) {
-            startHeight = 120;
-        }
+        path.push("M", indent, startHeight);
+        height = startHeight;
 
-        if (startIdx === -1) {
-            startHeight = 0;
-            height = 0;
-        }
+        tocEntries!.forEach((entry, idx) => {
+            if (idx <= endIdx) {
+                const computedStyle = window.getComputedStyle(tocEntryRef[idx].current!);
+                const extra = parseFloat(computedStyle.height) + parseFloat(computedStyle.marginBottom) * 2;
 
-        path.push('M', 40, startHeight, 'L', 40, startHeight + height);
-        tocPath!.setAttribute('d', path.join(' '));
+                if (indent == 40 && entry.props.className.includes('level-1')) {
+                    path.push("L", 60, height);
+                    indent = 60;
+                    pathEnd += 20;
+                } else if (indent == 60 && entry.props.className.includes('level-0')) {
+                    path.push("L", 40, height);
+                    indent = 40;
+                    pathEnd += 20;
+                }
+
+                pathEnd += extra;
+                path.push("L", indent, height + extra);
+                height += extra;
+            }
+        });
+        const { lastPathStart, lastPathEnd } = lastPathInfo;
+        if (pathStart !== lastPathStart && pathEnd !== lastPathEnd) {
+            if (startIdx === -1) tocPath!.setAttribute('opacity', '0');
+            const pathString = path.join(' ');
+            const pathLength = tocPath!.getTotalLength();
+            tocPath!.setAttribute('d', pathString);
+            tocPath!.setAttribute('stroke-dashoffset', '1');
+            tocPath!.setAttribute('stroke-dasharray', `1, ${pathStart}, ${pathEnd - pathStart}, ${pathLength}`);
+            tocPath!.setAttribute('opacity', '1');
+            setLastPathInfo({
+                lastPathStart: pathStart,
+                lastPathEnd: pathEnd
+            });
+        }
     }
 
     useEffect(() => {
@@ -101,10 +138,11 @@ const TableOfContents: React.FC<ItableOfContentsProps> = (props) => {
         props.emitter.on('intersectingSections', (intersectingIds) => {
             setTocEntries((prev) => {
                 return prev!.map((tocEntry) => {
+                    const prevClassName = tocEntry.props.className.replace('active', '');
                     if (intersectingIds.includes(tocEntry.props.id)) {
-                        return React.cloneElement(tocEntry, { className: "section-toc-entry active" });
+                        return React.cloneElement(tocEntry, { className: `${prevClassName} active` });
                     }
-                    return React.cloneElement(tocEntry, { className: "section-toc-entry" });
+                    return React.cloneElement(tocEntry, { className: prevClassName });
                 });
             });
         });
@@ -130,8 +168,9 @@ const TableOfContents: React.FC<ItableOfContentsProps> = (props) => {
                     ref={tocMarkerPathRef}
                     stroke="#444"
                     strokeWidth="3"
-                    fill="#000"
+                    fill="transparent"
                     strokeLinecap="round"
+                    troke-dasharray="0, 0, 0, 1000"
                     strokeLinejoin="round"
                     transform="translate(-0.5, -0.5)"
                 />
@@ -141,3 +180,4 @@ const TableOfContents: React.FC<ItableOfContentsProps> = (props) => {
 }
 
 export default TableOfContents;
+

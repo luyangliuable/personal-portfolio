@@ -109,10 +109,7 @@ const BlogContent: React.FC<IBlogContentProps> = ({ scrolled }) => {
 
 
     function renderBlogContent(): React.ReactNode {
-        if (state.content === undefined) {
-            return (<SkeletonBlogContent />);
-        }
-
+        if (state.content === undefined) return (<SkeletonBlogContent />);
         const { heading, image, body, _id } = state.content;
         const imageId = image?.$oid;
 
