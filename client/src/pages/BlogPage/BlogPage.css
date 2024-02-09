@@ -12,10 +12,6 @@
     border-left: .1px solid #888;
 }
 
-    .blog__featured>* {
-        margin-bottom: 50px;
-    }
-
 .blog__tag-container {
     padding: 0;
     margin-bottom: 5vh;

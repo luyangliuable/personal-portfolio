@@ -2,7 +2,7 @@
     transition: transform .1s ease-in, opacity .1s ease-in;
     transform: translateX(30px);
     width: 400px; height: fit-content; min-height: 320px;
-    margin: 20px 10px; /* When not showing on grid */
+    margin: 15px 10px; /* When not showing on grid */
     background-color: rgba(220, 220, 220, 0.3) !important;
     min-height: 360px;
     border-radius: 4px !important;

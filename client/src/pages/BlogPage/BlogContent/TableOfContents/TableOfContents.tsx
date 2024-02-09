@@ -79,46 +79,40 @@ const TableOfContents: React.FC<ItableOfContentsProps> = (props) => {
             }
         });
 
-        tocEntries!.forEach((_, idx) => {
-            if (idx < startIdx) {
-                const computedStyle = window.getComputedStyle(tocEntryRef[idx].current!);
-                const extra = parseFloat(computedStyle.height) + parseFloat(computedStyle.marginBottom) * 2;
-                pathStart += extra;
-                pathEnd += extra;
-            }
-        });
-
         path.push("M", indent, startHeight);
         height = startHeight;
 
         tocEntries!.forEach((entry, idx) => {
-            if (idx <= endIdx) {
-                const computedStyle = window.getComputedStyle(tocEntryRef[idx].current!);
-                const extra = parseFloat(computedStyle.height) + parseFloat(computedStyle.marginBottom) * 2;
+            const computedStyle = window.getComputedStyle(tocEntryRef[idx].current!);
+            const extra = parseFloat(computedStyle.height) + parseFloat(computedStyle.marginBottom) * 2;
 
-                if (indent == 40 && entry.props.className.includes('level-1')) {
-                    path.push("L", 60, height);
-                    indent = 60;
-                    pathEnd += 20;
-                } else if (indent == 60 && entry.props.className.includes('level-0')) {
-                    path.push("L", 40, height);
-                    indent = 40;
-                    pathEnd += 20;
-                }
+            if (idx < startIdx) pathStart += extra;
 
-                pathEnd += extra;
-                path.push("L", indent, height + extra);
-                height += extra;
+            if (indent == 40 && entry.props.className.includes('level-1')) {
+                path.push("L", 60, height);
+                indent = 60;
+                if (idx <= endIdx) pathEnd += 20;
+                if (idx < startIdx) pathStart += 20;
+            } else if (indent == 60 && entry.props.className.includes('level-0')) {
+                path.push("L", 40, height);
+                indent = 40;
+                if (idx <= endIdx) pathEnd += 20;
+                if (idx < startIdx) pathStart += 20;
             }
+
+            if (idx <= endIdx) pathEnd += extra;
+            path.push("L", indent, height + extra);
+            height += extra;
         });
         const { lastPathStart, lastPathEnd } = lastPathInfo;
-        if (pathStart !== lastPathStart && pathEnd !== lastPathEnd) {
+
+        if (pathStart !== lastPathStart || pathEnd !== lastPathEnd) {
             if (startIdx === -1) tocPath!.setAttribute('opacity', '0');
             const pathString = path.join(' ');
             const pathLength = tocPath!.getTotalLength();
             tocPath!.setAttribute('d', pathString);
             tocPath!.setAttribute('stroke-dashoffset', '1');
-            tocPath!.setAttribute('stroke-dasharray', `1, ${pathStart}, ${pathEnd - pathStart}, ${pathLength}`);
+            tocPath!.setAttribute('stroke-dasharray', `1, ${pathStart}, ${pathEnd - pathStart}, ${pathLength === 0 ? 1000 : pathLength}`);
             tocPath!.setAttribute('opacity', '1');
             setLastPathInfo({
                 lastPathStart: pathStart,
