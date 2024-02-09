@@ -34,7 +34,7 @@
     }
 
     .experience-section-card {
-        width: 280px;
+        width: 300px;
         margin: 0 5px;
         padding: 10px;
         height: fit-content;
@@ -66,13 +66,13 @@
     left: 50%;
     top: 100%;
     width: .5px;
-    background-color: #aeaeae;
+    background-color: #000;
 }
 
 .timeline__line {
     position: relative;
     height: 2px;
-    background-color: #aeaeae;
+    background-color: #000;
 }
 
 .connecting-line:after {
@@ -86,9 +86,9 @@
     background-color: var(--dark-mode-pink)
 }
 
-@media screen and (max-height: 850px) {
+@media screen and (max-height: 750px) {
     .experience-section-card {
-        width: 150px;
+        width: 220px;
     }
 
     .experience-section-card div {
@@ -97,7 +97,12 @@
         font-weight: 200;
     }
 
+    .experience-section-card h2 {
+        font-size: 12px
+    }
+
     .experience-section-card__location {
-        display: none;
+        display: none
     }
 }
+

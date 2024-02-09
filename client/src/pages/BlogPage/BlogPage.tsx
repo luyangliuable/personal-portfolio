@@ -144,16 +144,15 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
                 {
                     this.state.topPickedPosts.map((post) => {
                         return (
-                            <div key={post._id.$oid}>
-                                <GalleryItem
-                                    name={post.heading}
-                                    tags={post.tags}
-                                    type="blog"
-                                    dateCreated={post.date_created}
-                                    minuteRead={post.reading_time_minutes}
-                                    link={`/digital_chronicles/blog?id=${post._id.$oid}`}
-                                    image={post.image.$oid} />
-                            </div>
+                            <GalleryItem
+                                key={post._id.$oid}
+                                name={post.heading}
+                                tags={post.tags}
+                                type="blog"
+                                dateCreated={post.date_created}
+                                minuteRead={post.reading_time_minutes}
+                                link={`/digital_chronicles/blog?id=${post._id.$oid}`}
+                                image={post.image.$oid} />
                         )
                     })
                 }

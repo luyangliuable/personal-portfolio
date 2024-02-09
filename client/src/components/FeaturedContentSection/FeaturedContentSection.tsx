@@ -41,9 +41,9 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
         const candleLightUpMargin = 150;
 
         const checkCandleStatus = (): void => {
-            if (Math.abs(isCenterAlignedWithViewport(this.currentComponentRef?.current)) <= candleLightUpMargin) {
+            if (isCenterAlignedWithViewport(this.currentComponentRef?.current) < 0) {
                 this.twinCandleComponentRef?.current?.transitionCandleFireToOn();
-            } else if (Math.abs(isCenterAlignedWithViewport(this.currentComponentRef?.current)) > candleLightUpMargin * 1.5) {
+            } else if (isCenterAlignedWithViewport(this.currentComponentRef?.current) > candleLightUpMargin) {
                 this.twinCandleComponentRef?.current?.transitionCandleFireToOff();
             }
         }
@@ -57,7 +57,7 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
         const wrapperWidth = 1900; // Connascence of value with FeaturedContentSection.css:10
 
         let numOfElementsToShow = Math.floor(Math.min(windowWidth, wrapperWidth) / elementWidth);
-        this.setState({ numOfElementsToShow: Math.max(numOfElementsToShow, 2) });
+        this.setState({ numOfElementsToShow: Math.max(numOfElementsToShow, 1) });
     }
 
 
@@ -68,7 +68,7 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
     }
 
     renderTopPickedPostsSortedByDateDescending = (): React.ReactNode => {
-        const sliceEnd = this.state.numOfElementsToShow - 2;
+        const sliceEnd = this.state.numOfElementsToShow - 1;
         return this.state.featuredPosts?.slice(0, sliceEnd).map((content, idx) => {
             return (
                 <div key={content._id.$oid}>
@@ -87,7 +87,7 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
     }
 
     async fetchPostList() {
-        const response = await this.postRepository.getPostList();
+        const response = await this.postRepository.getFeaturedPostList();
         this.setState({
             featuredPosts: response
         });
@@ -102,7 +102,7 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
     render() {
         return (
             <LandingPageCard heading="Featured Content" landingPageCardType="fitContent" blendWithBackground={true}>
-                <section ref={this.currentComponentRef}>
+                <section ref={this.currentComponentRef} className="flex flex-col items-center">
                     <div className="featured-section w-full flex flex-row justify-center items-start">
                         <GalleryItem
                             name={this.getFeaturedToolHeading()}
@@ -112,10 +112,8 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
                             description={truncateTextBody(this.state.featuredTool?.description)}
                             link={this.state.featuredTool?.link} />
                         {this.renderTopPickedPostsSortedByDateDescending()}
-
-                        <div ref={this.showMoreButtonRef}><Button onClick={this.showAllElements}>Show More...</Button></div>
                     </div>
-
+                    <div className="show-more-button-wrapper" ref={this.showMoreButtonRef}><Button onClick={this.showAllElements}>Show More...</Button></div>
                     <TwinCandle ref={this.twinCandleComponentRef} />
                 </section>
             </LandingPageCard>

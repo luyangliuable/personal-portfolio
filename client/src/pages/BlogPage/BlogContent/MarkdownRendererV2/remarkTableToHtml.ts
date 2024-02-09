@@ -43,7 +43,7 @@ function markdownTableToHtml(markdown: string): string {
         });
     }
     let bodyRows = lines.slice(2);
-    let html = '<table>\n<thead>\n<tr>';
+    let html = '<div class="table-wrapper"><table>\n<thead>\n<tr>';
     headers.forEach((header, index) => {
         const alignmentStyle = alignments.length > index ? alignments[index] : ' style="text-align:left;"';
         html += `<th${alignmentStyle}>${header.trim()}</th>`;
@@ -58,7 +58,7 @@ function markdownTableToHtml(markdown: string): string {
         });
         html += '</tr>';
     });
-    html += '</tbody></table>';
+    html += '</tbody></table></div>';
     return html.replace(/\n/g, '').replace(/>\s+</g, '><');
 }
 

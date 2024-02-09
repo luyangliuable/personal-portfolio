@@ -12,10 +12,10 @@ const HeroHeader: React.FC<IHeroHeaderProps> = ({ heading, description, graphics
                 )
             }
             <div className="w-full">
-                <SequentialRiseSpan elementType="h1" minNumberOfLettersPerLine={23}>
+                <SequentialRiseSpan elementType="h1">
                     {heading}
                 </SequentialRiseSpan>
-                <SequentialRiseSpan className="hero-header--description" minNumberOfLettersPerLine={23}>
+                <SequentialRiseSpan className="hero-header--description" maxNumberOfLettersPerLine={100}>
                     {description}
                 </SequentialRiseSpan>
             </div>

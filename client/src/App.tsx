@@ -4,19 +4,24 @@ import NavBar from './components/Navbar/Navbar';
 import { AppContextProvider } from "./stores/AppContext";
 import loadable from '@loadable/component'
 import './App.css';
+import SkeletonPage from './pages/SkeletonPage/SkeletonPage';
 
-// import BlogPage from './pages/BlogPage/BlogPage';
+const createLoadableWithFallback: any = (importFunction: any) => {
+    return loadable(importFunction, {
+        fallback: <SkeletonPage />
+    });
+}
 
-const LandingPage = loadable(() => import('./pages/LandingPage/LandingPage'));
-const ResumePage = loadable(() => import('./pages/ResumePage/ResumePage'));
-const UnderConstruction = loadable(() => import('./pages/UnderConstructionPage/UnderConstruction'));
-const BlogContent = loadable(() => import("./pages/BlogPage/BlogContent/BlogContent"));
-const ThreeDPrintingGallery = loadable(() => import("./pages/threeDPrintingGalleryPage/ThreeDPrintingGallery"));
-const HardwareProjectsPage = loadable(() => import("./pages/HardwareProjectsPage/HardwareProjectsPage"));
-const CodingProjectsPage = loadable(() => import("./pages/CodingProjectsPage/CodingProjectsPage"));
-const LogInPage = loadable(() => import("./pages/LogInPage/LogInPage"));
-const RegisterPage = loadable(() => import("./pages/RegisterPage/RegisterPage"));
-const BlogPage = loadable(() => import('./pages/BlogPage/BlogPage'));
+const LandingPage = createLoadableWithFallback(() => import('./pages/LandingPage/LandingPage'));
+const ResumePage = createLoadableWithFallback(() => import('./pages/ResumePage/ResumePage'));
+const UnderConstruction = createLoadableWithFallback(() => import('./pages/UnderConstructionPage/UnderConstruction'));
+const BlogContent = createLoadableWithFallback(() => import("./pages/BlogPage/BlogContent/BlogContent"));
+const ThreeDPrintingGallery = createLoadableWithFallback(() => import("./pages/threeDPrintingGalleryPage/ThreeDPrintingGallery"));
+const HardwareProjectsPage = createLoadableWithFallback(() => import("./pages/HardwareProjectsPage/HardwareProjectsPage"));
+const CodingProjectsPage = createLoadableWithFallback(() => import("./pages/CodingProjectsPage/CodingProjectsPage"));
+const LogInPage = createLoadableWithFallback(() => import("./pages/LogInPage/LogInPage"));
+const RegisterPage = createLoadableWithFallback(() => import("./pages/RegisterPage/RegisterPage"));
+const BlogPage = createLoadableWithFallback(() => import('./pages/BlogPage/BlogPage'));
 
 interface IAppStateInterface {
     scrollY?: number,
@@ -92,28 +97,28 @@ function App() {
             <AppContextProvider>
                 <BrowserRouter>
                     <NavBar scrollStatus={{ scrolled: appState.scrollY, deltaScrolled: deltaScrolled }} />
-                        <Routes>
-                            <Route path="/" element={
-                                <LandingPage scrolled={appState.scrollY} scrolling={appState.scrolling} />
-                            } />
-                            <Route path="/digital_chronicles/blogs" element={<BlogPage showTopPicks={true} />} />
-                            <Route path="/resume" element={<ResumePage />} />
-                            <Route path="/projects/3d_printing" element={<ThreeDPrintingGallery />} />
-                            <Route path="/projects/hardware" element={<HardwareProjectsPage />} />
-                            <Route path="/projects/code" element={<CodingProjectsPage />} />
-                            <Route path="/projects" element={<CodingProjectsPage />} />
-                            <Route path="/digital_chronicles/blog" element={<BlogContent scrolled={appState.scrollY} />} />
-                            <Route path="/user/login" element={<LogInPage />} />
-                            <Route path="/user/register" element={<RegisterPage />} />
+                    <Routes>
+                        <Route path="/" element={
+                            <LandingPage scrolled={appState.scrollY} scrolling={appState.scrolling} />
+                        } />
+                        <Route path="/digital_chronicles/blogs" element={<BlogPage showTopPicks={true} />} />
+                        <Route path="/resume" element={<ResumePage />} />
+                        <Route path="/projects/3d_printing" element={<ThreeDPrintingGallery />} />
+                        <Route path="/projects/hardware" element={<HardwareProjectsPage />} />
+                        <Route path="/projects/code" element={<CodingProjectsPage />} />
+                        <Route path="/projects" element={<CodingProjectsPage />} />
+                        <Route path="/digital_chronicles/blog" element={<BlogContent scrolled={appState.scrollY} />} />
+                        <Route path="/user/login" element={<LogInPage />} />
+                        <Route path="/user/register" element={<RegisterPage />} />
 
-                            {/* Catch-all route */}
-                            <Route path="*" element={<UnderConstruction />} />
+                        {/* Catch-all route */}
+                        <Route path="*" element={<UnderConstruction />} />
 
-                            {/* Redirections */}
-                            <Route path="/digital_chronicles" element={<RedirectToRoot link="/digital_chronicles/blogs" />} />
-                            <Route path="/tools" element={<RedirectToRoot link="/tools/mood_tracker" />} />
-                            <Route path="/about" element={<RedirectToRoot link="/about/teddie" />} />
-                        </Routes>
+                        {/* Redirections */}
+                        <Route path="/digital_chronicles" element={<RedirectToRoot link="/digital_chronicles/blogs" />} />
+                        <Route path="/tools" element={<RedirectToRoot link="/tools/mood_tracker" />} />
+                        <Route path="/about" element={<RedirectToRoot link="/about/teddie" />} />
+                    </Routes>
                 </BrowserRouter>
             </AppContextProvider>
         </div>

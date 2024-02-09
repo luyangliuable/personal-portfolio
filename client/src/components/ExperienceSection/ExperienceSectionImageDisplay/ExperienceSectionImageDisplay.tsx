@@ -2,6 +2,7 @@ import React from 'react';
 import { cardGradientEffect } from "../../Utility/MouseUtility";
 import { ExperienceSectionItem } from "../Interface/IExperienceSectionState";
 import "./ExperienceSectionImageDisplay.css";
+import SequentialRiseSpan from '../../Atoms/SequentialRiseSpan/SequentialRiseSpan';
 import { PiMapPinLineThin } from "react-icons/pi";
 
 interface IExperienceSectionImageDisplayProps {
@@ -13,8 +14,10 @@ interface IExperienceSectionImageDisplayProps {
 const ExperienceSectionImageDisplay: React.FC<IExperienceSectionImageDisplayProps> = ({ item, index, alt }) => {
     const experienceSectionCardIndexIsEvenNumber = index % 2 === 0;
     const experienceSectionCardTextImageBody = (): React.ReactElement => (
-        <div className="w-full">
-            <p className="image-display__detailed-text">{item.cardDetailedText}</p>
+        <div className="w-full flex flex-col items-center mt-5">
+            <SequentialRiseSpan className="image-display__detailed-text" minNumberOfLettersPerLine={50}>
+                {item.cardDetailedText}
+            </SequentialRiseSpan>
             <div className="experience-section-card__location flex items-center justify-center font-fira-code">
                 {item.location && (<PiMapPinLineThin />)}
                 <div>{item.location}</div>

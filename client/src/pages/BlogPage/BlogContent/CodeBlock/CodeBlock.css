@@ -12,7 +12,7 @@
 .code-block--native__container {
     --header-height: 10px;
     position: relative;
-    width: 95%;
+    width: 100%;
     font-size: clamp(14px, 1.8vw, 15px);
     background: #DDD;
     margin: calc(var(--header-height) * 2) 0;

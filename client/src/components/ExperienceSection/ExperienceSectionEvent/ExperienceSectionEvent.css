@@ -21,18 +21,3 @@
         width: 100%
     }
 
-@media screen and (max-height: 850px) {
-    .experience-section-card h2 {
-        font-size: 12px
-    }
-
-    .experience-section-card div {
-        font-size: 10px;
-        color: #333;
-        font-weight: 200
-    }
-
-    .experience-section-card__location {
-        display: none
-    }
-}

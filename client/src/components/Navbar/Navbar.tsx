@@ -366,7 +366,9 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                     onMouseLeave={() => this.hideDropdownMenu()}
                     ref={this.navbar}>
                     <section className="navbar-content flex items-center">
-                        <NavLink to="/"><h1 className="logo">{name}</h1></NavLink>
+                        <div className="logo__wrapper">
+                            <NavLink to="/"><h1 className="logo">{name}</h1></NavLink>
+                        </div>
                         <nav ref={this.navbarLeft} className="navbar-left flex flex-row">
                             {links.map((item, _) => this.renderNavLink(item, false))}
                             <LoginButton onMouseOver={this.renderDropdownMenu} />

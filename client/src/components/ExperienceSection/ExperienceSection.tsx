@@ -3,7 +3,9 @@ import IExperienceSectionProps from "./Interface/IExperienceSectionProps";
 import { IExperienceSectionState, ExperienceSectionItem } from './Interface/IExperienceSectionState';
 import { isCenterAlignedWithViewport } from "../Utility/ScrollUtility";
 import ExperienceSectionEvent from "./ExperienceSectionEvent/ExperienceSectionEvent";
+import SequentialRiseSpan from '../Atoms/SequentialRiseSpan/SequentialRiseSpan';
 import ExperienceSectionImageDisplay from "./ExperienceSectionImageDisplay/ExperienceSectionImageDisplay";
+import BlackHole from '../Organisms/BlackHole/BlackHole';
 
 import "./ExperienceSection.css";
 
@@ -11,7 +13,6 @@ import madPattiesSunset from "../../assets/photos/scenicMemories/madPattiesSunse
 import teddieTheDog from "../../assets/photos/scenicMemories/teddieTheDog.jpg";
 import camberwellSunset from "../../assets/photos/scenicMemories/camberwellSunset.jpg";
 import enrouteToCamberwell from "../../assets/photos/scenicMemories/enrouteToCamberwell.jpg";
-import sunsetAtThePark from "../../assets/photos/scenicMemories/sunsetAtThePark.jpg";
 import beachMyFamilyVistsOften from "../../assets/photos/scenicMemories/beachMyFamilyVistsOften.jpg";
 
 
@@ -39,7 +40,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
                 media: {
                     type: "IMAGE",
                     source: {
-                        url: "http://llcode.tech/api/image/65920a4af1f0fe657dc4683b"
+                        url: "https://llcode.tech/api/image/65920a4af1f0fe657dc4683b"
                     }
                 }
             },
@@ -66,7 +67,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
                 media: {
                     type: "IMAGE",
                     source: {
-                        url: "http://llcode.tech/api/image/65920366f1f0fe657dc46839"
+                        url: "https://llcode.tech/api/image/65920366f1f0fe657dc46839"
                     }
                 }
             }, {
@@ -81,7 +82,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
                 media: {
                     type: "IMAGE",
                     source: {
-                        url: "http://llcode.tech/api/image/65920b85f1f0fe657dc4683c"
+                        url: "https://llcode.tech/api/image/65920b85f1f0fe657dc4683c"
                     }
                 }
             }, {
@@ -112,7 +113,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
                 media: {
                     type: "IMAGE",
                     source: {
-                        url: sunsetAtThePark
+                        url: "https://llcode.tech/api/image/65c3629e98a82efb52729772"
                     }
                 }
             },
@@ -121,7 +122,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
                 cardTitle: "",
                 url: "",
                 cardSubtitle: "",
-                cardDetailedText: "This photo was captured on 2020.",
+                cardDetailedText: "",
                 importance: 1,
                 display: "IMAGE",
                 media: {
@@ -267,38 +268,22 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
     }, []);
 
     useEffect(() => {
-        const proximityYToLockPosition = 110;
-
-        if (experienceSectionParentRef.current!)
-            setLockPosition();
-
-        if (isCenterAlignedWithViewport(experienceSectionParentRef.current!) < proximityYToLockPosition) {
-            lockPosition();
-        }
-
+        const proximityYToLockPosition = window.innerHeight/3;
+        if (experienceSectionParentRef.current!) setLockPosition();
+        if (isCenterAlignedWithViewport(experienceSectionParentRef.current!) < proximityYToLockPosition) lockPosition();
         if (state.isLocked && state.lockPosition !== undefined) {
-            scrollTimeline(state.lockPosition - scrolled);
+            scrolled = scrolled ?? 0;
+            const scrollAmount = (state.lockPosition - proximityYToLockPosition) - scrolled;
+            scrollTimeline(scrollAmount);
         }
-
-        if (isBeforeLockPosition()) {
-            unlockPosition();
-        }
-
-        /* if (isAfterFinishScrolling()) {
-*     unlockPosition();
-* } */
-
+        if (isBeforeLockPosition(proximityYToLockPosition)) unlockPosition();
     }, [scrolled]);
 
     const updateTimelineLength = (): void => {
         const offset = 10;
         const timeLineLength = experienceSectionScrollRef.current!.getBoundingClientRect().width + offset;
         const targetElement = experienceSectionParentRef.current?.parentElement;
-
-        if (targetElement) {
-            targetElement.style.height = `${timeLineLength + timeLineLength / 8}px`;
-        }
-
+        if (targetElement) targetElement.style.height = `${timeLineLength + timeLineLength / 8}px`;
         setState({
             ...state,
             timeLineLength: timeLineLength
@@ -319,8 +304,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
     }
 
     const setLockPosition = () => {
-        const currentPosition = experienceSectionParentRef.current!.parentElement!.getBoundingClientRect().top + scrolled;
-
+        const currentPosition = experienceSectionParentRef.current!.parentElement!.getBoundingClientRect().top + ( scrolled ?? 0);
         if (!state.isLocked && state.lockPosition !== currentPosition) {
             setState({
                 ...state,
@@ -346,9 +330,9 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
         }
     }
 
-    const isBeforeLockPosition = (): boolean => {
+    const isBeforeLockPosition = (proximityYToLockPosition: number=0): boolean => {
         const { lockPosition } = state;
-        const isBeforeLockPosition = scrolled !== undefined && lockPosition !== undefined && scrolled < lockPosition;
+        const isBeforeLockPosition = scrolled !== undefined && lockPosition !== undefined && scrolled + proximityYToLockPosition < lockPosition;
         return isBeforeLockPosition;
     }
 
@@ -359,7 +343,11 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
     if (isMounted)
         return (
             <article className="landing-page-card flex flex-col justify-start overflow-hidden experience-section-parent-container" ref={experienceSectionParentRef}>
-                <header className="ml-2vw"><h2>Retrospective</h2></header>
+                <header className="ml-2vw">
+                    <SequentialRiseSpan elementType="h2">
+                        Retrospective
+                    </SequentialRiseSpan>
+                </header>
                 <section ref={experienceSectionRef} className="experience-section" >
 
                     {/* Scrolling timeline within the section */}
@@ -377,12 +365,14 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
                                     );
                                 })
                             }
+                            <BlackHole />
                         </div>
                     </div>
 
                 </section>
             </article>
         );
+    else return (<></>)
 }
 
 export default ExperienceSection;

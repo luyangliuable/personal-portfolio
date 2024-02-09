@@ -119,6 +119,7 @@ cargo run
 * [x] Login system: users can login or continue as guests when using some tooks
 
 ### Upcoming Features:
+* [ ] Website Footer
 * [ ] Mood tracker: track what made user happy or sad and give statiscs on what things most likely going to make user sad/happy
 * [ ] Fitness Tracker: Monitor your gym advancements and create personalized workout routines. Additionally, earn scores based on a unique formula I developed.
 * [ ] Meet sleek: Essentially when2meet, but offering a superior UI/UX experience.

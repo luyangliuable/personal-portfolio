@@ -23,7 +23,8 @@ class PostRepository extends Repository {
 
     async getFeaturedPostList(): Promise<BlogPostResponse[]> {
         const postList = await this.getPostList();
-        return this.sortPostsByDate(postList);
+        const featuredPosts = postList.filter((post: BlogPostResponse) => post.is_featured);
+        return this.sortPostsByDate(featuredPosts);
     }
 
     async getRelatedPosts(tags: string[], currentPostId: string, numberOfResults: number = 3): Promise<BlogPostResponse[]> {
