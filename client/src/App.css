@@ -574,7 +574,7 @@ a {
 
 @keyframes slide-up {
     0% {
-        transform: translateY(100px); 
+        transform: translateY(100px);
     }
     100% {
         transform: translateY(0);

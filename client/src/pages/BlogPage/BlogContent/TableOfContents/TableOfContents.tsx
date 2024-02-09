@@ -174,4 +174,3 @@ const TableOfContents: React.FC<ItableOfContentsProps> = (props) => {
 }
 
 export default TableOfContents;
-

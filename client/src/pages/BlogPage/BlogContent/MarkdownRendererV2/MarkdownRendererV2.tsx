@@ -60,8 +60,8 @@ const processNodes = (node: any): any => {
             return React.createElement(Component, attributes, ...children);
         }
         return React.createElement(
-            tagName, 
-            attributes, 
+            tagName,
+            attributes,
             ...Array.from(node.childNodes).map(processNodes)
         );
     }
