@@ -105,10 +105,8 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
         const isSubset = (array1: string[], array2: string[]): boolean => {
             return array1.every(item => array2.includes(item));
         };
-        // TODO: Backend send user image id and card gets it
         const authorImage = "https://llcode.tech/api/image/65817ae96c73ceb16ba51731";
         const groupedPosts = this.groupPostsByYear(this.sortPostsByDate(this.state.content).filter(({ tags }) => isSubset(selectedTags, tags) || !selectedTags));
-
         return Object.keys(groupedPosts).sort((a, b) => parseInt(b) - parseInt(a)).map(year => (
             <React.Fragment key={year}>
                 <div className="blog__year position-relative"><span>{year}</span></div>

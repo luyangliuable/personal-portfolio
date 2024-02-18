@@ -10,8 +10,8 @@
     display: flex; justify-content: center;
     position: absolute;
     overflow: hidden;
-    width: 30%;
-    height: 50%;
+    max-width: 30%;
+    max-height: 80%;
     align-items: center;
     border-radius: 10px;
     right: 0;

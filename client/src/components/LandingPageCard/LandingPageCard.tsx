@@ -46,21 +46,18 @@ class LandingPageCard extends Component<ILandingPageCardProps, any> {
             this.determineWhatTypeOfLandingPageCardToUse(this.props.landingPageCardType),
             this.props.className
         ];
-
-        if (this.props.blendWithBackground) {
-            classArray.push('blend-with-background');
-        }
-
+        if (this.props.blendWithBackground) classArray.push('blend-with-background');
         const landingPageCardHeading = this.props.heading;
-
         return (
             <div className={classArray.join(' ')}>
                 <div className="landing-page-card__content">
-                    <header className="landing-page-card__heading">
-                        <SequentialRiseSpan elementType="h2">
-                            {landingPageCardHeading ?? ""}
-                        </SequentialRiseSpan>
-                    </header>
+                    {landingPageCardHeading && (
+                        <header className="landing-page-card__heading important-text">
+                            <SequentialRiseSpan elementType="h2" className="landing-page-card__header" >
+                                {landingPageCardHeading ?? ""}
+                            </SequentialRiseSpan>
+                        </header>
+                    )}
                     {this.props.children}
                 </div>
             </div>

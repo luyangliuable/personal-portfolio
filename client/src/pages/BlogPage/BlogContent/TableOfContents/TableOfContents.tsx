@@ -112,7 +112,7 @@ const TableOfContents: React.FC<ItableOfContentsProps> = (props) => {
             const pathLength = tocPath!.getTotalLength();
             tocPath!.setAttribute('d', pathString);
             tocPath!.setAttribute('stroke-dashoffset', '1');
-            tocPath!.setAttribute('stroke-dasharray', `1, ${pathStart}, ${pathEnd - pathStart}, ${pathLength === 0 ? 1000 : pathLength}`);
+            tocPath!.setAttribute('stroke-dasharray', `0, ${pathStart}, ${pathEnd - pathStart}, ${pathLength === 0 ? 1000 : pathLength}`);
             tocPath!.setAttribute('opacity', '1');
             setLastPathInfo({
                 lastPathStart: pathStart,

@@ -23,7 +23,8 @@
     --bg: #1a1e2d;
     --green: #a5ea9b;
     --pink: #ff61d8;
-    --blue: #569cfa;
+    --blue: #1e90ff;
+    /* --orange: #ffaa81; */
     --orange: #ffcc81;
     --cyan: #7ed1e2;
 }
@@ -348,9 +349,19 @@ a {
     margin-bottom: 0
 }
 
+.mb-20 {
+    margin-bottom: 5rem
+}
+
+
+.h-28 {
+    height: 7rem
+}
+
 .mt-20vh {
     margin-top: 20vh
 }
+
 
 .mt-5 {
     margin-top: 10px !important
@@ -395,6 +406,10 @@ a {
 }
 
 /* Text */
+
+.important-text {
+    font-family: 'TT Norms Pro', Spartan, 'Poppins', sans-serif;
+}
 
 .whitespace-nowrap {
     white-space: nowrap

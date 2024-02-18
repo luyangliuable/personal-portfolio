@@ -1,5 +1,6 @@
 import React, { Component, createRef, RefObject } from 'react';
 import { isCenterAlignedWithViewport } from "../Utility/ScrollUtility";
+import { FaAngleDown } from "react-icons/fa";
 import { truncateTextBody } from "../Utility/StringUtility";
 import IFeaturedContentSectionState from "./Interface/IFeaturedContentSectionState";
 import IFeaturedContentSectionProps from "./Interface/IFeaturedContentSectionProps";
@@ -113,7 +114,15 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
                             link={this.state.featuredTool?.link} />
                         {this.renderTopPickedPostsSortedByDateDescending()}
                     </div>
-                    <div className="show-more-button-wrapper" ref={this.showMoreButtonRef}><Button onClick={this.showAllElements}>Show More...</Button></div>
+                    <div className="show-more-button-wrapper" ref={this.showMoreButtonRef}>
+                        <Button
+                            style={{ "--border-radius": "20px", zIndex: 10, border: "2px solid #F3F3F3" } as React.CSSProperties}
+                            onClick={this.showAllElements}
+                            showButtonLine>
+                            Show More <FaAngleDown />
+                        </Button>
+                    </div>
+                    <div className="divider h-28"></div>
                     <TwinCandle ref={this.twinCandleComponentRef} />
                 </section>
             </LandingPageCard>

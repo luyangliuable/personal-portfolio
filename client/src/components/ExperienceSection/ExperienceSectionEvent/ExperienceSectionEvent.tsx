@@ -2,7 +2,7 @@ import { cardGradientEffect } from "../../Utility/MouseUtility";
 import React, { RefObject, useRef, useEffect } from 'react';
 import { ExperienceSectionItem } from "../Interface/IExperienceSectionState";
 import "./ExperienceSectionEvent.css";
-import { PiMapPinLineThin } from "react-icons/pi";
+import Image from "../../Image/Image";
 
 interface ExperienceSectionEventProps {
     timeLineRef: RefObject<HTMLDivElement>,

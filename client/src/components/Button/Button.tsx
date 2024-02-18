@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { NavLink } from "react-router-dom";
 import './Button.css';
 import IButtonProps, { IButtonPropsWithTo, IButtonPropsWithOnClick } from "./Interface/IButtonProps";
@@ -15,9 +15,14 @@ class HeroSection extends Component<IButtonProps, {}> {
 
     renderButton() {
         return (
-            <div className="t-button button no-select" onMouseMove={(e) => cardGradientEffect(e, false, 1, 38, 20)}>
-                <span>{this.props.children}</span>
-            </div>
+            <>
+                <div style={this.props.style} className="t-button button no-select" onMouseMove={(e) => cardGradientEffect(e, false, 1, 38, 20)}>
+                    <span>{this.props.children}</span>
+                </div>
+                {
+                    this.props.showButtonLine && (<div className="button-line"></div>)
+                }
+            </>
         );
     }
 

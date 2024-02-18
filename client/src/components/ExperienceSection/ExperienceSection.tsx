@@ -30,6 +30,20 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
         items: [
             {
                 dateTime: "2023",
+                cardTitle: "Monash University",
+                url: "",
+                cardSubtitle: "Graduated",
+                cardDetailedText: "",
+                importance: 1,
+                media: {
+                    type: "IMAGE",
+                    source: {
+                        url: "https://amsi.org.au/wp-content/uploads/2014/05/logo-monash.png"
+                    }
+                }
+            },
+            {
+                dateTime: "2023",
                 cardTitle: "",
                 location: "-24.997805, 172.478887",
                 url: "",
@@ -330,7 +344,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
         }
     }
 
-    const isBeforeLockPosition = (proximityYToLockPosition: number=0): boolean => {
+    const isBeforeLockPosition = (proximityYToLockPosition: number = 0): boolean => {
         const { lockPosition } = state;
         const isBeforeLockPosition = scrolled !== undefined && lockPosition !== undefined && scrolled + proximityYToLockPosition < lockPosition;
         return isBeforeLockPosition;
@@ -340,10 +354,48 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
         return parseInt(b.dateTime) - parseInt(a.dateTime)
     });
 
+
+    const groupExperienceSectionItems = (events: any): any => {
+        return events.reduce((groupedEvents: any, event: any) => {
+            const year = new Date(event.dateTime).getFullYear().toString();
+            if (!groupedEvents[year]) groupedEvents[year] = [];
+            groupedEvents[year].push(event);
+            return groupedEvents;
+        }, {});
+    }
+
+    const mapExperienceSectionItems = () => {
+        const groupedItems = groupExperienceSectionItems(sortedItems);
+        let accumulatedIdx = 0;
+        return Object.keys(groupedItems).sort((a, b) => parseInt(b) - parseInt(a)).map(year => {
+            const currentYearItems = groupedItems[year];
+            const fragment = (
+                <React.Fragment key={year}>
+                    {
+                        currentYearItems.map((item: any, idx: number) => {
+                            const currentIndex = accumulatedIdx + idx;
+                            if (item.display !== undefined) {
+                                return (
+                                    <ExperienceSectionImageDisplay key={currentIndex} item={item} index={currentIndex} />
+                                );
+                            }
+                            return (
+                                <ExperienceSectionEvent timeLineRef={timeLineRef} key={currentIndex} item={item} index={currentIndex} />
+                            );
+                        })
+                    }
+                    <div className="experience-section__year">{year}</div>
+                </React.Fragment>
+            );
+            accumulatedIdx += currentYearItems.length;
+            return fragment;
+        });
+    };
+
     if (isMounted)
         return (
             <article className="landing-page-card flex flex-col justify-start overflow-hidden experience-section-parent-container" ref={experienceSectionParentRef}>
-                <header className="ml-2vw">
+                <header className="ml-2vw important-text">
                     <SequentialRiseSpan elementType="h2">
                         Retrospective
                     </SequentialRiseSpan>
@@ -352,19 +404,12 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
 
                     {/* Scrolling timeline within the section */}
                     <div ref={experienceSectionScrollRef} className="experience-section--content">
-                        <div className="timeline__line flex flex-row items-center" ref={timeLineRef} >
-                            {
-                                sortedItems.map((item, idx) => {
-                                    if (item.display !== undefined) {
-                                        return (
-                                            <ExperienceSectionImageDisplay key={idx} item={item} index={idx} />
-                                        );
-                                    }
-                                    return (
-                                        <ExperienceSectionEvent timeLineRef={timeLineRef} key={idx} item={item} index={idx} />
-                                    );
-                                })
-                            }
+                        <div className="timeline__line flex flex-row items-center" ref={timeLineRef}>
+                            <>
+                                {
+                                    mapExperienceSectionItems()
+                                }
+                            </>
                             <BlackHole />
                         </div>
                     </div>

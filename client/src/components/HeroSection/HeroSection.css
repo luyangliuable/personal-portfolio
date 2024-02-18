@@ -113,10 +113,10 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Spartan:wght@700&display=swap");
 .hero-section__heading {
-    font-family: 'Spartan', sans-serif;
+    font-family: 'TT Norms Pro', 'Spartan', sans-serif;
     color: #2d2d2d; 
     margin-bottom: .8rem;
-    font-size: clamp(2em, 2.58vw, 4em) !important;
+    font-size: clamp(2em, 3vw, 4em) !important;
     font-weight: 700;
 }
 
@@ -134,10 +134,6 @@
 
 .hero-section {
     overflow: hidden;
-}
-
-.hero-section__content__left h1 {
-    font-size: 2.4rem;
 }
 
 .hero-section__text_small {

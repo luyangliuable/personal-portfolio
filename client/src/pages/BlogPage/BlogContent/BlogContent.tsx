@@ -54,10 +54,12 @@ const BlogContent: React.FC<IBlogContentProps> = ({ scrolled }) => {
 
     function observeSections(): void {
         const sections = Array.from(document.querySelectorAll('.blog-section'));
+
         const intersectingSections = sections.filter(section => {
             const offset = isCenterAlignedWithViewport(section);
-            return offset < window.innerHeight && offset > -window.innerHeight / 2;
+            return offset <= window.innerHeight && offset >= -window.innerHeight;
         }).map(section => section.id);
+
         if (intersectingSections.length > 0) {
             emitter.emit('intersectingSections', intersectingSections);
         }

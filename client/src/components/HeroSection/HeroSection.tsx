@@ -5,7 +5,6 @@ import IHeroProps from "./Interface/IHeroProps";
 import CodingCat from "../CodingCat/CodingCat";
 import Button from "../Button/Button";
 import LandingPageCard from "../LandingPageCard/LandingPageCard";
-import Waves from "../Waves/Waves";
 import SequentialRiseSpan from "../Atoms/SequentialRiseSpan/SequentialRiseSpan";
 
 import "./HeroSection.css";
@@ -20,8 +19,8 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
         this.state = {
             backgrounds: [],
             introduction: (
-                <SequentialRiseSpan calculationAdjustment={1.05} minNumberOfLettersPerLine={48} maxNumberOfLettersPerLine={70}>
-                    Passionate software engineering grad with expertise in web/mobile development, machine learning, and efficient time management. Frontend enthusiast with 2 years of work experience in machine learning and backend.
+                <SequentialRiseSpan calculationAdjustment={1.07} minNumberOfLettersPerLine={48} maxNumberOfLettersPerLine={70}>
+                    Passionate software engineer with expertise in web/mobile development, machine learning, and efficient time management with over 2 years of full-time industry experience.
                 </SequentialRiseSpan>
             ),
             mainContent: {
@@ -128,7 +127,7 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
         return (
             <section className="hero-section__wrapper">
                 <LandingPageCard className="hero-section" landingPageCardType="fitContent" >
-                    <Waves />
+                    <div className="space h-28"></div>
                     <section className="hero-section__content">
                         <section className="hero-section__content__right">
                             <CodingCat showAnimtion={this.props.scrolling} />

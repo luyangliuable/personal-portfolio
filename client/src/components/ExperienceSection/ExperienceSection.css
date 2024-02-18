@@ -22,7 +22,7 @@
 }
     .experience-section--content {
         padding-left: 40vw;
-        height: 70vh;
+        height: 80vh;
         width: min-content;
         display: inline-flex;
         flex-direction: row;
@@ -40,25 +40,37 @@
         height: fit-content;
     }
 
-        .experience-section-card.above {
-            margin-bottom: 100px;
-            transform: translateY(-50%)
-        }
+    .experience-section-card.above {
+        margin-bottom: 100px;
+        transform: translateY(-50%)
+    }
 
-        .experience-section-card.below {
-            margin-top: 100px;
-            transform: translateY(50%)
-        }
+    .experience-section-card.below {
+        margin-top: 100px;
+        transform: translateY(50%)
+    }
 
-            .experience-section-card.below .connecting-line {
-                transform: translateY(-100%);
-                top: 0;
-            }
+    .experience-section-card.below .connecting-line {
+        transform: translateY(-100%);
+        top: 0;
+    }
 
-                .experience-section-card.below .connecting-line:after {
-                    transform: translateX(-50%) translateY(-50%);
-                    top: 0;
-                }
+    .experience-section-card.below .connecting-line:after {
+        transform: translateX(-50%) translateY(-50%);
+        top: 0;
+    }
+
+.experience-section__year {
+    z-index: 2;
+    box-shadow: .6px .5px 2.8px #A5A58C;
+    margin: 0 8.5vw;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--dark-mode-pink);
+    color: var(--dark-mode-pink);
+    font-weight: 600;
+    background: #FFF
+}
 
 .connecting-line {
     position: absolute;

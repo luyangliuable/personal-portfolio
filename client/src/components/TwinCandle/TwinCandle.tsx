@@ -328,7 +328,7 @@ class TwinCandles extends Component<ITwinCandleProps, ITwinCandleState> {
 
     render() {
         return (
-            <div className="wrapper" onClick={() => this.transitionCandleFireToOff()}>
+            <div className="wrapper" onClick={() => this.transitionCandleFireToOff()} style={this.props.style}>
                 <div className="candles">
                     <div ref={this.candleOneLightWaveRef} className="light__wave"></div>
                     <div className="candle1" ref={this.candleOneRef}>
