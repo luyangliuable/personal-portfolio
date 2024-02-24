@@ -200,11 +200,27 @@
 
 #scroll-progress {
     position: absolute;
-    background: #00bfff;
     height: var(--progress-height);
     z-index: 11;
     width: 100vw;
+    background: linear-gradient(to right,  var(--dark-mode-purple-2), 90%, #00bfff);
+    transition: background .3s ease-in, color .3s ease-in;
+    color: transparent;
 }
+
+    .scroll-progress-complete {
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer;
+        font-size: 3rem;
+        color: #FFF !important;
+        position: fixed !important;
+        width: 100px !important;
+        height: 100px !important;
+        border-radius: 50%;
+        right: 10px;
+        top: 100vh;
+        transform: translateY(-50%);
+    }
 
 .active-link {
     background: var(--dark-mode-purple-2);

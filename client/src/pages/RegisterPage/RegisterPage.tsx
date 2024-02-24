@@ -77,7 +77,7 @@ class RegisterPage extends Component<any, any> {
     render(): React.ReactElement<any, any> {
         return (
             <main>
-                <form className="register-form__wrapper" >
+                <form className="register-form__wrapper position-relative flex flex-col justify-center items-center w-full" >
                     <h1>Sign up to ~/llcode.tech</h1>
                     <div className="register-form">
                         {

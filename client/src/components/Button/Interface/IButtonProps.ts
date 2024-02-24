@@ -1,17 +1,27 @@
 import React from 'react';
 
 export interface IButtonPropsWithTo {
-    children: React.ReactNode;
-    style?: React.CSSProperties;
-    showButtonLine?: boolean;
+    children?: React.ReactNode;
     to: string;
+    showButtonLine?: boolean;
+    className?: string;
+    style?: React.CSSProperties;
+    disabled?: boolean;
+    logoName?: string; // For IconButton
+    buttonColor?: string; // For IconButton
+    type?: "button" | "submit" | "reset";
 }
 
 export interface IButtonPropsWithOnClick {
-    children: React.ReactNode;
-    style?: React.CSSProperties;
+    children?: React.ReactNode;
     showButtonLine?: boolean;
-    onClick: () => void;
+    onClick: (e?: any) => void;
+    className?: string;
+    style?: React.CSSProperties;
+    logoName?: string; // For IconButton
+    disabled?: boolean;
+    buttonColor?: string; // For IconButton
+    type?: "button" | "submit" | "reset";
 }
 
 type IButtonProps = IButtonPropsWithTo | IButtonPropsWithOnClick;

@@ -66,7 +66,7 @@ class LogInPage extends Component<any, any> {
     render(): React.ReactElement<any, any> {
         return (
             <main>
-                <form className="login-form__wrapper" >
+                <form className="login-form__wrapper position-relative flex flex-col justify-center items-center w-full" >
                     <h1>Sign in to ~/llcode.tech</h1>
                     <div className="login-form">
                         {

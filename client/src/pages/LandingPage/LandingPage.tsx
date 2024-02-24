@@ -5,6 +5,7 @@ import ILandingPageProps from "./Interface/ILandingPageProps";
 import Experiences from "../../components/ExperienceSection/ExperienceSection";
 import FeaturedContentSection from "../../components/FeaturedContentSection/FeaturedContentSection";
 import LandingPageCard from "../../components/LandingPageCard/LandingPageCard";
+import ConnectWithMeSection from "../../components/ConnectWithMeSection/ConnectWithMeSection";
 import BlogPage from "../BlogPage/BlogPage";
 
 class LandingPage extends Component<ILandingPageProps, ILandingPagestate> {

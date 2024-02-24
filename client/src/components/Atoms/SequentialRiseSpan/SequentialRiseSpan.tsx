@@ -32,14 +32,19 @@ const SequentialRiseSpan: React.FC<ISequentialRiseSpanProps> = ({ calculationAdj
             const elementPadding = parseFloat(elementStyle.paddingLeft) + parseFloat(elementStyle.paddingRight);
             const elementWidth = element.offsetWidth - elementPadding;
             calculationAdjustment = calculationAdjustment ?? 1.12;
-            setMeasuredLettersPerLine(Math.floor(elementWidth*calculationAdjustment / charWidth));
+            setMeasuredLettersPerLine(Math.floor(elementWidth * calculationAdjustment / charWidth));
         }
+    }
+
+    const slideUp = (target: Element, observer: any): void => {
+        target.classList.add('slide-up');
+        observer.unobserve(target);
     }
 
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('slide-up');
+                if (entry.isIntersecting) slideUp(entry.target, observer)
             });
         }, { threshold: [0.1, 0.5, 1] });
         lineRefs.forEach(ref => {
@@ -82,7 +87,6 @@ const SequentialRiseSpan: React.FC<ISequentialRiseSpanProps> = ({ calculationAdj
             );
             return LineElement;
         });
-
         setWrappedLines(linesElements);
     }, [children, elementType, className, measuredLettersPerLine, minNumberOfLettersPerLine]);
 

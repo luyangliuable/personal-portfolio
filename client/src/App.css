@@ -29,6 +29,10 @@
     --cyan: #7ed1e2;
 }
 
+.App {
+    position: absolute;
+}
+
 .App-logo {
     height: 40vmin;
     pointer-events: none;

@@ -1,12 +1,14 @@
 import React, { Context, Component, createRef, ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 import { INavbarState, Link, NavbarItem } from "./Interface/INavbarState";
+import { FaArrowCircleUp } from "react-icons/fa";
 import { AiOutlineDown } from "react-icons/ai";
 import { CiLock } from "react-icons/ci";
 import INavbarProps from "./Interface/INavbarProps";
 import NavBurgerPanel from "./NavBurgerPanel/NavBurgerPanel";
 import BurgerMenuIcon from "./BurgerMenuIcon/BurgerMenuIcon";
 import LoginButton from "./LoginButton/LoginButton";
+import linksData from "../../configs/links.json";
 import { AppContext, IAppContextProvider } from "../../stores/AppContext";
 import "./Navbar.css";
 
@@ -24,144 +26,7 @@ class NavBar extends Component<INavbarProps, INavbarState> {
     constructor(props: INavbarProps) {
         super(props);
         this.state = {
-            links: [
-                { name: "Home", to: "/" },
-                {
-                    name: "Blogs",
-                    to: "/digital_chronicles",
-                    sublinks: [{
-                        name: "💻 Posts",
-                        to: "/digital_chronicles/blogs",
-                    }, {
-                        name: "🧑‍💻 Coding Notes",
-                        isLocked: true,
-                        to: "/digital_chronicles/coding_notes",
-                    }, {
-                        name: "🏞 Scenic Memories",
-                        isLocked: true,
-                        to: "/digital_chronicles/scenic_memories",
-                    }, {
-                        name: "🧩 My Daily Leetcode",
-                        to: "/digital_chronicles/blogs?tag=daily-leetcode",
-                    },
-                    ]
-                },
-                {
-                    name: "Projects",
-                    to: "/projects",
-                    sublinks: [{
-                        name: "🏗︎ Coding Projects",
-                        to: "/projects/code",
-                    }, {
-                        name: "🖨️ 3D Printing",
-                        to: "/projects/3d_printing",
-                    }, {
-                        name: "🤖 Hardware",
-                        to: "/projects/hardware",
-                    }
-                    ]
-                },
-                {
-                    name: "Tools",
-                    to: null,
-                    sublinks: [{
-                        name: "🌉 HexaBridger",
-                        isLocked: true,
-                        to: "/tools/hex_to_rgb"
-                    }, {
-                        name: "🌸 BloomChain ",
-                        isLocked: true,
-                        to: "/tools/bloomchain"
-                    },
-                    {
-                        name: "📝 PonderPad",
-                        isLocked: true,
-                        to: "/tools/ponderpad"
-                    },
-                    {
-                        name: "🗣️ MangaSpeak",
-                        isLocked: true,
-                        to: "/tools/mangaspeak"
-
-                    },
-                    {
-                        name: "⌛ TimeCapsule Letters",
-                        isLocked: true,
-                        to: "/tools/time_capsule_letters"
-                    }, {
-                        name: "🌐 CssCrossBrowser",
-                        isLocked: true,
-                        to: "/tools/css_cross_browser"
-                    }, {
-                        name: "✉️ AnonyLetters",
-                        isLocked: true,
-                        to: "/tools/anony_letters"
-                    }, {
-                        name: "😯 Mood Diaries",
-                        isLocked: true,
-                        to: "/tools/mood_tracker",
-                    },
-                    {
-                        name: "⚛️ AtomicHabits",
-                        isLocked: true,
-                        to: "/tools/atomic_habits",
-                    }, {
-                        name: "🏋️‍♂️ Gym Log",
-                        isLocked: true,
-                        to: "/tools/gym_log",
-                    }, {
-                        name: "🤝 MeetSleek",
-                        isLocked: true,
-                        to: "/tools/meet_sleek",
-                    }]
-                },
-                {
-                    name: "Resume",
-                    to: "/resume"
-                },
-                {
-                    name: "About",
-                    to: null,
-                    sublinks: [
-                        {
-                            name: "🐩 Teddie the Dog",
-                            to: "/about/teddie",
-                            isLocked: true
-                        }, {
-                            name: "😃 About Me",
-                            to: "/about/me",
-                            isLocked: true
-                        }
-                    ]
-                }, {
-                    name: "Misc.",
-                    to: null,
-                    sublinks: [
-                        {
-                            name: "🎵 Music Playlist",
-                            to: "/misc/music_playlist",
-                            isLocked: true
-                        },
-                        {
-                            name: "🎥 Youtube Playlist",
-                            to: "/misc/youtube_playlist",
-                            isLocked: true
-                        }, {
-                            name: "⌨️ Man of the Day",
-                            to: "/misc/man_of_the_Day",
-                            isLocked: true
-                        }, {
-                            name: "📐 Algorithm of the Day",
-                            to: "/misc/algorithm_of_the_Day",
-                            isLocked: true
-                        }, {
-                            name: "🙏 Wall of Gratefulness",
-                            to: "/misc/wall_of_gratefulness",
-                            isLocked: true
-                        },
-                    ]
-                }
-            ],
+            links: linksData.links,
             lastScrollY: 0,
             navBarDetached: false,
             currentlyHoveredNavbarLinkName: null,
@@ -180,7 +45,18 @@ class NavBar extends Component<INavbarProps, INavbarState> {
     }
 
     updateScrolledProgress = (progress: number) => {
-        if (this.scrollProgress) this.scrollProgress.current!.style.width = `${progress * 100}vw`;
+        if (this.scrollProgress) {
+            this.scrollProgress.current!.style.width = `${progress * 100}vw`;
+            const blueEnd = 95 + progress * 4.5;
+            this.scrollProgress.current!.style.background = `linear-gradient(to right,  var(--dark-mode-purple-2), ${blueEnd}%, #00bfff)`;
+
+            if (progress === 1) {
+                this.scrollProgress.current!.classList.add("scroll-progress-complete");
+                this.scrollProgress.current!.style.background = "orange";
+            } else {
+                this.scrollProgress.current!.classList.remove("scroll-progress-complete");
+            }
+        }
     };
 
     listenDeltaScrolled = () => {
@@ -380,7 +256,9 @@ class NavBar extends Component<INavbarProps, INavbarState> {
                         </nav>
                         <div ref={this.burgerButton} className="nav-burger" onClick={this.toggleBurgerMenu}><BurgerMenuIcon /></div>
                     </section>
-                    <aside id="scroll-progress" ref={this.scrollProgress} />
+                    <aside id="scroll-progress" ref={this.scrollProgress}>
+                        <FaArrowCircleUp />
+                    </aside>
                 </article>
                 <NavBurgerPanel links={links} burgerPanel={this.burgerPanel} />
             </>

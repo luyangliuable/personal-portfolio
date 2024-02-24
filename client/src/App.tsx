@@ -5,6 +5,7 @@ import { AppContextProvider } from "./stores/AppContext";
 import loadable from '@loadable/component'
 import './App.css';
 import SkeletonPage from './pages/SkeletonPage/SkeletonPage';
+import Footer from './components/Footer/Footer';
 
 const createLoadableWithFallback: any = (importFunction: any) => {
     return loadable(importFunction, {
@@ -119,6 +120,7 @@ function App() {
                         <Route path="/tools" element={<RedirectToRoot link="/tools/mood_tracker" />} />
                         <Route path="/about" element={<RedirectToRoot link="/about/teddie" />} />
                     </Routes>
+                    <Footer />
                 </BrowserRouter>
             </AppContextProvider>
         </div>

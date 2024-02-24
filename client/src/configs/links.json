@@ -1,0 +1,162 @@
+{
+    "links": [
+        {
+            "name": "Home",
+            "to": "/"
+        },
+        {
+            "name": "Blogs",
+            "to": "/digital_chronicles",
+            "sublinks": [
+                {
+                    "name": "💻 Posts",
+                    "to": "/digital_chronicles/blogs"
+                },
+                {
+                    "name": "🧑‍💻 Coding Notes",
+                    "isLocked": true,
+                    "to": "/digital_chronicles/coding_notes"
+                },
+                {
+                    "name": "🏞 Scenic Memories",
+                    "isLocked": true,
+                    "to": "/digital_chronicles/scenic_memories"
+                },
+                {
+                    "name": "🧩 My Daily Leetcode",
+                    "to": "/digital_chronicles/blogs?tag=daily-leetcode"
+                }
+            ]
+        },
+        {
+            "name": "Projects",
+            "to": "/projects",
+            "sublinks": [
+                {
+                    "name": "🏗︎ Coding Projects",
+                    "to": "/projects/code"
+                },
+                {
+                    "name": "🖨️ 3D Printing",
+                    "to": "/projects/3d_printing"
+                },
+                {
+                    "name": "🤖 Hardware",
+                    "to": "/projects/hardware"
+                }
+            ]
+        },
+        {
+            "name": "Tools",
+            "to": null,
+            "sublinks": [
+                {
+                    "name": "🌉 HexaBridger",
+                    "isLocked": true,
+                    "to": "/tools/hex_to_rgb"
+                },
+                {
+                    "name": "🌸 BloomChain ",
+                    "isLocked": true,
+                    "to": "/tools/bloomchain"
+                },
+                {
+                    "name": "📝 PonderPad",
+                    "isLocked": true,
+                    "to": "/tools/ponderpad"
+                },
+                {
+                    "name": "🗣️ MangaSpeak",
+                    "isLocked": true,
+                    "to": "/tools/mangaspeak"
+                },
+                {
+                    "name": "⌛ TimeCapsule Letters",
+                    "isLocked": true,
+                    "to": "/tools/time_capsule_letters"
+                },
+                {
+                    "name": "🌐 CssCrossBrowser",
+                    "isLocked": true,
+                    "to": "/tools/css_cross_browser"
+                },
+                {
+                    "name": "✉️ AnonyLetters",
+                    "isLocked": true,
+                    "to": "/tools/anony_letters"
+                },
+                {
+                    "name": "😯 Mood Diaries",
+                    "isLocked": true,
+                    "to": "/tools/mood_tracker"
+                },
+                {
+                    "name": "⚛️ AtomicHabits",
+                    "isLocked": true,
+                    "to": "/tools/atomic_habits"
+                },
+                {
+                    "name": "🏋️‍♂️ Gym Log",
+                    "isLocked": true,
+                    "to": "/tools/gym_log"
+                },
+                {
+                    "name": "🤝 MeetSleek",
+                    "isLocked": true,
+                    "to": "/tools/meet_sleek"
+                }
+            ]
+        },
+        {
+            "name": "Resume",
+            "to": "/resume"
+        },
+        {
+            "name": "About",
+            "to": null,
+            "sublinks": [
+                {
+                    "name": "🐩 Teddie the Dog",
+                    "to": "/about/teddie",
+                    "isLocked": true
+                },
+                {
+                    "name": "😃 About Me",
+                    "to": "/about/me",
+                    "isLocked": true
+                }
+            ]
+        },
+        {
+            "name": "Misc.",
+            "to": null,
+            "sublinks": [
+                {
+                    "name": "🎵 Music Playlist",
+                    "to": "/misc/music_playlist",
+                    "isLocked": true
+                },
+                {
+                    "name": "🎥 Youtube Playlist",
+                    "to": "/misc/youtube_playlist",
+                    "isLocked": true
+                },
+                {
+                    "name": "⌨️ Man of the Day",
+                    "to": "/misc/man_of_the_Day",
+                    "isLocked": true
+                },
+                {
+                    "name": "📐 Algorithm of the Day",
+                    "to": "/misc/algorithm_of_the_Day",
+                    "isLocked": true
+                },
+                {
+                    "name": "🙏 Wall of Gratefulness",
+                    "to": "/misc/wall_of_gratefulness",
+                    "isLocked": true
+                }
+            ]
+        }
+    ]
+}
