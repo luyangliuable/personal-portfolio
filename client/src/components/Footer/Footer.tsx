@@ -50,7 +50,7 @@ const Footer: React.FC = () => {
 
     return (
         <footer className="footer flex flex-col">
-            <div className="flex flex-row space-between w-full justify-center">
+            <div className="footer__main flex flex-row space-between w-full justify-center">
                 <form className="footer__get-in-touch flex flex-col items-start">
                     <h3>Get In Touch</h3>
                     <input ref={messageEmailRef} className="box-border" type="text" placeholder="Email" />
