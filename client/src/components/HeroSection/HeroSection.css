@@ -116,7 +116,7 @@
     font-family: 'TT Norms Pro', 'Spartan', sans-serif;
     color: #2d2d2d; 
     margin-bottom: .8rem;
-    font-size: clamp(2em, 3vw, 4em) !important;
+    font-size: clamp(2em, 3vw, 5em) !important;
     font-weight: 700;
 }
 

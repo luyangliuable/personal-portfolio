@@ -9,6 +9,7 @@ export interface IButtonPropsWithTo {
     disabled?: boolean;
     logoName?: string; // For IconButton
     buttonColor?: string; // For IconButton
+    target?: string;
     type?: "button" | "submit" | "reset";
 }
 
@@ -21,6 +22,7 @@ export interface IButtonPropsWithOnClick {
     logoName?: string; // For IconButton
     disabled?: boolean;
     buttonColor?: string; // For IconButton
+    target?: string;
     type?: "button" | "submit" | "reset";
 }
 

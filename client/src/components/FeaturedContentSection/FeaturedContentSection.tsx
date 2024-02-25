@@ -40,7 +40,6 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
         this.calculateElementsToShow();
         this.fetchPostList();
         const candleLightUpMargin = 150;
-
         const checkCandleStatus = (): void => {
             if (isCenterAlignedWithViewport(this.currentComponentRef?.current) < 0) {
                 this.twinCandleComponentRef?.current?.transitionCandleFireToOn();
@@ -48,7 +47,6 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
                 this.twinCandleComponentRef?.current?.transitionCandleFireToOff();
             }
         }
-
         setInterval(checkCandleStatus, 200);
     }
 
@@ -56,7 +54,6 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
         const windowWidth = window.innerWidth;
         const elementWidth = 400;
         const wrapperWidth = 1900; // Connascence of value with FeaturedContentSection.css:10
-
         let numOfElementsToShow = Math.floor(Math.min(windowWidth, wrapperWidth) / elementWidth);
         this.setState({ numOfElementsToShow: Math.max(numOfElementsToShow, 1) });
     }
@@ -70,7 +67,7 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
 
     renderTopPickedPostsSortedByDateDescending = (): React.ReactNode => {
         const sliceEnd = this.state.numOfElementsToShow - 1;
-        return this.state.featuredPosts?.slice(0, sliceEnd).map((content, idx) => {
+        return this.state.featuredPosts?.slice(0, sliceEnd).map((content) => {
             return (
                 <div key={content._id.$oid}>
                     <GalleryItem

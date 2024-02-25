@@ -25,7 +25,7 @@ class InlineLink extends Component<IButtonProps, {}> {
     render(): React.ReactNode {
         if (this.isLinkProps(this.props)) {
             return (
-                <NavLink to={this.props.to} className={this.props.className}>
+                <NavLink target={this.props.target} to={this.props.to} className={this.props.className}>
                     {this.renderButton()}
                 </NavLink>
             );

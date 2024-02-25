@@ -133,6 +133,7 @@ a {
     justify-content: flex-start;
     align-items: center;
     position: relative;
+    background-image: linear-gradient(to right, rgba(245,245,245,0.7),20%, rgba(245,245,245,0.5),80%, rgba(245,245,245,0.7)), url(https://grainy-gradients.vercel.app/noise.svg);
 }
 
 @keyframes background-scroll {

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { NavLink } from "react-router-dom";
-import IButtonProps, { IButtonPropsWithTo, IButtonPropsWithOnClick } from "../../Button/Interface/IButtonProps";
+import IButtonProps, { IButtonPropsWithTo } from "../../Button/Interface/IButtonProps";
 import './IconButton.css';
 
 const IconButton: React.FC<IButtonProps> = (props: IButtonProps) => {
@@ -28,22 +28,14 @@ const IconButton: React.FC<IButtonProps> = (props: IButtonProps) => {
         return (props as IButtonPropsWithTo).to !== undefined;
     }
 
-    const isButtonProps = (props: IButtonProps): props is IButtonPropsWithOnClick => {
-        return (props as IButtonPropsWithOnClick).onClick !== undefined;
-    }
-
     if (isLinkProps(props)) {
         return (
-            <NavLink to={props.to} className={props.className}>
-                {renderButton()}
-            </NavLink>
+            <NavLink target={props.target} to={props.to} className={props.className}>{renderButton()}</NavLink>
         );
     }
 
     return (
-        <div onClick={props.onClick} className={props.className}>
-            {renderButton()}
-        </div>
+        <div onClick={props.onClick} className={props.className}>{renderButton()}</div>
     );
 }
 

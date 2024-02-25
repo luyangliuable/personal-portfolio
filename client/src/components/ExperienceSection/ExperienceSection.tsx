@@ -22,7 +22,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
     const experienceSectionScrollRef = useRef<HTMLDivElement | null>(null);
     const timeLineRef = useRef<HTMLDivElement | null>(null);
 
-    const [isMounted, toggle] = useReducer((p) => !p, true);
+    /* const [isMounted, toggle] = useReducer((p) => !p, false); */
 
     const [state, setState] = useState<IExperienceSectionState>({
         unlockPosition: null,
@@ -279,6 +279,10 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
 
     useEffect(() => {
         updateTimelineLength();
+        window.addEventListener('resize', updateTimelineLength);
+        return () => {
+            window.removeEventListener('resize', updateTimelineLength);
+        }
     }, []);
 
     useEffect(() => {
@@ -295,9 +299,10 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
 
     const updateTimelineLength = (): void => {
         const offset = 10;
+        if (experienceSectionParentRef.current === null) return;
         const timeLineLength = experienceSectionScrollRef.current!.getBoundingClientRect().width + offset;
         const targetElement = experienceSectionParentRef.current?.parentElement;
-        if (targetElement) targetElement.style.height = `${timeLineLength + timeLineLength / 8}px`;
+        if (targetElement) targetElement.style.height = `${timeLineLength + 200}px`;
         setState({
             ...state,
             timeLineLength: timeLineLength
@@ -318,6 +323,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
     }
 
     const setLockPosition = () => {
+        if (experienceSectionParentRef.current === null) return;
         const currentPosition = experienceSectionParentRef.current!.parentElement!.getBoundingClientRect().top + ( scrolled ?? 0);
         if (!state.isLocked && state.lockPosition !== currentPosition) {
             setState({
@@ -392,32 +398,26 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
         });
     };
 
-    if (isMounted)
-        return (
-            <article className="landing-page-card flex flex-col justify-start overflow-hidden experience-section-parent-container" ref={experienceSectionParentRef}>
-                <header className="ml-2vw important-text">
-                    <SequentialRiseSpan elementType="h2">
-                        Retrospective
-                    </SequentialRiseSpan>
-                </header>
-                <section ref={experienceSectionRef} className="experience-section" >
+    return (
+        <article className="landing-page-card flex flex-col justify-start overflow-hidden experience-section-parent-container" ref={experienceSectionParentRef}>
+            <header className="ml-2vw important-text">
+                <SequentialRiseSpan elementType="h2">
+                    Retrospective
+                </SequentialRiseSpan>
+            </header>
+            <section ref={experienceSectionRef} className="experience-section" >
 
-                    {/* Scrolling timeline within the section */}
-                    <div ref={experienceSectionScrollRef} className="experience-section--content">
-                        <div className="timeline__line flex flex-row items-center" ref={timeLineRef}>
-                            <>
-                                {
-                                    mapExperienceSectionItems()
-                                }
-                            </>
-                            <BlackHole />
-                        </div>
+                {/* Scrolling timeline within the section */}
+                <div ref={experienceSectionScrollRef} className="experience-section--content">
+                    <div className="timeline__line flex flex-row items-center" ref={timeLineRef}>
+                        {mapExperienceSectionItems()}
+                        <BlackHole />
                     </div>
+                </div>
 
-                </section>
-            </article>
-        );
-    else return (<></>)
+            </section>
+        </article>
+    );
 }
 
 export default ExperienceSection;

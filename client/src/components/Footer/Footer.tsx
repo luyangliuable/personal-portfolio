@@ -29,7 +29,7 @@ const Footer: React.FC = () => {
     const tools = useMemo(() => getSectionData("Tools"), [linksData]);
     const resume = useMemo(() => getSectionData("Resume"), [linksData]);
 
-    const renderFooterSection = (section: any, className: string) => {
+    const renderFooterSection = (section: any, className: string, target?: string) => {
         return (
             <section className={className}>
                 <h3>{section.name}</h3>
@@ -37,7 +37,7 @@ const Footer: React.FC = () => {
                     section.sublinks?.map(
                         (item: any, index: number) => {
                             return (
-                                <InlineLink key={index} to={item.isLocked ? null : item.to} className="mt-5">
+                                <InlineLink target={target} key={index} to={item.isLocked ? null : item.to} className="mt-5">
                                     {item.name} {item.isLocked && <CiLock className="ml-2" />}
                                 </InlineLink>
                             )
@@ -54,7 +54,7 @@ const Footer: React.FC = () => {
                 <form className="footer__get-in-touch flex flex-col items-start">
                     <h3>Get In Touch</h3>
                     <input ref={messageEmailRef} className="box-border" type="text" placeholder="Email" />
-                    <textarea ref={messageDescriptionRef} className="box-border" placeholder="Messaged" />
+                    <textarea ref={messageDescriptionRef} className="box-border" placeholder="Message" />
                     <Button
                         ref={messageSendButtonRef}
                         type="submit"
@@ -92,7 +92,7 @@ const Footer: React.FC = () => {
                         {
                             linksToMyOtherSocialMedia.map(
                                 (item: any, index: number) => (
-                                    <IconButton key={index} to={item.link} className="mt-5" logoName={item.name} buttonColor="%23eaeaea"></IconButton>
+                                    <IconButton target="_blank" key={index} to={item.link} className="mt-5" logoName={item.name} buttonColor="%23eaeaea"></IconButton>
                                 )
                             )
                         }
@@ -102,7 +102,7 @@ const Footer: React.FC = () => {
                 {renderFooterSection(about, "footer__about")}
                 <section className="footer__sponser">
                     <h3>Sponser Me</h3>
-                    <InlineLink to="https://ko-fi.com/D1D1PFTTH" className="mt-5">Kofi</InlineLink>
+                    <InlineLink target="_blank" to="https://ko-fi.com/D1D1PFTTH" className="mt-5">Kofi</InlineLink>
                 </section>
                 {renderFooterSection(tools, "footer__about")}
 

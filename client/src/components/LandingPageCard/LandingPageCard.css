@@ -36,6 +36,8 @@
     -o-animation: var(--landing-page-card-intro-animation);
     -ms-animation: var(--landing-page-card-intro-animation);
     padding: var(--landing-page-card-large--padding) 0;
+    background-image: linear-gradient(to right, rgba(255,255,255,0.9), 30%, rgba(238,240,255,0.5), 70%, rgba(255,255,255,0.8)), url(https://grainy-gradients.vercel.app/noise.svg);
+    background-image: linear-gradient(to right, rgba(255,255,255,0.9), 30%, rgba(252,252,255,0.5), 70%, rgba(255,255,255,0.8)), url(https://grainy-gradients.vercel.app/noise.svg);
 }
 
 /* Specialized Classes */
