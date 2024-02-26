@@ -279,10 +279,6 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
 
     useEffect(() => {
         updateTimelineLength();
-        window.addEventListener('resize', updateTimelineLength);
-        return () => {
-            window.removeEventListener('resize', updateTimelineLength);
-        }
     }, []);
 
     useEffect(() => {
