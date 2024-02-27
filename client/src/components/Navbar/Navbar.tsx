@@ -21,6 +21,8 @@ const NavBar: React.FC<INavbarProps> = ({scrollStatus}) => {
     const scrollProgress = useRef<HTMLDivElement>();
     const navbarSubmenu = useRef<HTMLDivElement>();
 
+    const [navBarHeight, setNavBarHeight] = useState(0);
+
     const links = useMemo(() => {
         return linksData.links
     }, [])
@@ -36,10 +38,10 @@ const NavBar: React.FC<INavbarProps> = ({scrollStatus}) => {
         dropdownMenuLinkDisplay: []
     });
 
-    const navBarHeight = useMemo(() => {
+    useEffect(() => {
         const element = navbar.current!;
         const height = element?.getBoundingClientRect().height || 0;
-        return height;
+        setNavBarHeight(height);
     }, [])
 
     const updateScrolledProgress = (progress: number) => {
