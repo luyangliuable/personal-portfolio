@@ -25,6 +25,7 @@ jobs:
           echo '*' >> .eslintignore
           npm install typescript@4.x.x --save-dev  # Force TypeScript to a compatible version
           npm install
+          npm install gsap
           npm run build
 
 
