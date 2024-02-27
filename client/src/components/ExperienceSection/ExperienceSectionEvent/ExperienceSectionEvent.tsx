@@ -1,5 +1,5 @@
-import { cardGradientEffect } from "../../Utility/MouseUtility";
 import React, { RefObject, useRef, useEffect } from 'react';
+import { cardGradientEffect } from "../../Utility/MouseUtility";
 import { ExperienceSectionItem } from "../Interface/IExperienceSectionState";
 import "./ExperienceSectionEvent.css";
 import Image from "../../Image/Image";
@@ -49,4 +49,4 @@ const ExperienceSectionEvent: React.FC<ExperienceSectionEventProps> = ({ item, i
     );
 }
 
-export default ExperienceSectionEvent;
+export default React.memo(ExperienceSectionEvent);

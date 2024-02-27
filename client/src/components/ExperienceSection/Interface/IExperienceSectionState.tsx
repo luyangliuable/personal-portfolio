@@ -22,7 +22,6 @@ interface IExperienceSectionState<
     W extends string | JSXElementConstructor<any> = string | JSXElementConstructor<any>
 > {
     render?: () => React.ReactElement<P, W>,
-    items: ExperienceSectionItem[],
     isLocked: boolean,
     currentElementPositionY?: number,
     timeLineLength?: number,

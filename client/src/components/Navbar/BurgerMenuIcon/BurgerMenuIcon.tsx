@@ -19,4 +19,4 @@ const BurgerMenuIcon: React.FC = () => {
     )
 }
 
-export default BurgerMenuIcon;
+export default React.memo(BurgerMenuIcon);

@@ -228,4 +228,4 @@ class BlogPage extends Component<IBlogPageProps | any, IBlogPageState> {
     }
 }
 
-export default BlogPage;
+export default React.memo(BlogPage);

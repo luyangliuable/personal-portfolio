@@ -3,14 +3,14 @@ import { useNavigate, BrowserRouter, Route, Routes } from 'react-router-dom';
 import NavBar from './components/Navbar/Navbar';
 import { AppContextProvider } from "./stores/AppContext";
 import loadable from '@loadable/component'
-import './App.css';
 import SkeletonPage from './pages/SkeletonPage/SkeletonPage';
 import Footer from './components/Footer/Footer';
+import { throttle } from './components/Utility/AnimationUtility';
+
+import './App.css';
 
 const createLoadableWithFallback: any = (importFunction: any) => {
-    return loadable(importFunction, {
-        fallback: <SkeletonPage />
-    });
+    return loadable(importFunction, {fallback: <SkeletonPage />});
 }
 
 const LandingPage = createLoadableWithFallback(() => import('./pages/LandingPage/LandingPage'));
@@ -45,27 +45,6 @@ const RedirectToRoot = (props: { link: string }): React.ReactElement<{ link: str
 
 function App() {
     const [appState, setAppState] = useState<IAppStateInterface>({});
-
-    function throttle<T extends (...args: any[]) => void>(func: T, limit: number): (...args: Parameters<T>) => void {
-        let lastFunc: number;
-        let lastRan: number;
-
-        return function (...args: Parameters<T>) {
-            const context = this;
-            if (!lastRan) {
-                func.apply(context, args);
-                lastRan = Date.now();
-            } else {
-                clearTimeout(lastFunc);
-                lastFunc = window.setTimeout(function () {
-                    if ((Date.now() - lastRan) >= limit) {
-                        func.apply(context, args);
-                        lastRan = Date.now();
-                    }
-                }, limit - (Date.now() - lastRan));
-            }
-        };
-    }
 
     useEffect(() => {
         let scrollTimeout: NodeJS.Timeout;

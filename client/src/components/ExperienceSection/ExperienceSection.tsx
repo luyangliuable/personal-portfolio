@@ -1,4 +1,4 @@
-import React, { Component, createRef, useReducer, useCallback, useRef, useState, useEffect } from 'react';
+import React, { createRef, useReducer, useCallback, useRef, useState, useEffect, useMemo } from 'react';
 import IExperienceSectionProps from "./Interface/IExperienceSectionProps";
 import { IExperienceSectionState, ExperienceSectionItem } from './Interface/IExperienceSectionState';
 import { isCenterAlignedWithViewport } from "../Utility/ScrollUtility";
@@ -22,12 +22,8 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
     const experienceSectionScrollRef = useRef<HTMLDivElement | null>(null);
     const timeLineRef = useRef<HTMLDivElement | null>(null);
 
-    /* const [isMounted, toggle] = useReducer((p) => !p, false); */
-
-    const [state, setState] = useState<IExperienceSectionState>({
-        unlockPosition: null,
-        isLocked: false,
-        items: [
+    const items: ExperienceSectionItem[] = useMemo(() : ExperienceSectionItem[] => {
+        return [
             {
                 dateTime: "2023",
                 cardTitle: "Monash University",
@@ -275,6 +271,11 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
                 }
             }
         ]
+    }, []);
+
+    const [state, setState] = useState<IExperienceSectionState>({
+        unlockPosition: null,
+        isLocked: false
     });
 
     useEffect(() => {
@@ -352,7 +353,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
         return isBeforeLockPosition;
     }
 
-    const sortedItems = state.items.sort((a: ExperienceSectionItem, b: ExperienceSectionItem) => {
+    const sortedItems = items.sort((a: ExperienceSectionItem, b: ExperienceSectionItem) => {
         return parseInt(b.dateTime) - parseInt(a.dateTime)
     });
 
@@ -366,7 +367,8 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
         }, {});
     }
 
-    const mapExperienceSectionItems = () => {
+    const mapExperienceSectionItems = useCallback(() => {
+        // TODO: https://stackoverflow.com/questions/70169152/how-to-memoize-each-element-in-an-array-map-in-react-with-usememo
         const groupedItems = groupExperienceSectionItems(sortedItems);
         let accumulatedIdx = 0;
         return Object.keys(groupedItems).sort((a, b) => parseInt(b) - parseInt(a)).map(year => {
@@ -392,7 +394,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
             accumulatedIdx += currentYearItems.length;
             return fragment;
         });
-    };
+    }, []);
 
     return (
         <article className="landing-page-card flex flex-col justify-start overflow-hidden experience-section-parent-container" ref={experienceSectionParentRef}>

@@ -3,7 +3,8 @@ type GalleryItem = {
     description: string,
     image: string,
     link?: string,
-    isLogo?: boolean
+    isLogo?: boolean,
+    tags?: string[]
 }
 
 interface IGalleryProps {

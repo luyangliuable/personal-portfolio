@@ -43,4 +43,4 @@ const ExperienceSectionImageDisplay: React.FC<IExperienceSectionImageDisplayProp
     );
 }
 
-export default ExperienceSectionImageDisplay;
+export default React.memo(ExperienceSectionImageDisplay);

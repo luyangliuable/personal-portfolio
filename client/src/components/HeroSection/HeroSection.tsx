@@ -8,14 +8,16 @@ import LandingPageCard from "../LandingPageCard/LandingPageCard";
 import SequentialRiseSpan from "../Atoms/SequentialRiseSpan/SequentialRiseSpan";
 import "./HeroSection.css";
 
-class HeroSection extends Component<IHeroProps, IHeroState> {
-    mainHeading: string = "Hi There, I am Luyang.";
-    introduction: JSX.Element = (
+const HeroSection: React.FC<IHeroProps> = ({ scrolling }) => {
+    const mainHeading: string = "Hi There, I am Luyang.";
+
+    const introduction: JSX.Element = (
         <SequentialRiseSpan calculationAdjustment={1.07} minNumberOfLettersPerLine={48} maxNumberOfLettersPerLine={70}>
             Passionate software engineer with expertise in web/mobile development, machine learning, and efficient time management with over 2 years of full-time industry experience.
         </SequentialRiseSpan>
     );
-    connections: any = [{
+
+    const connections: any = [{
         name: "Notion",
         link: "https://luyangl.notion.site/luyangl/71be1ff365c44fd2b4f6f8dce14b7536?v=f1e55d08878e4bfda1b744e76b9480c7",
         imageSrc:
@@ -44,48 +46,39 @@ class HeroSection extends Component<IHeroProps, IHeroState> {
         link: "https://www.codecademy.com/profiles/luyangliuable",
         imageSrc:
             "https://img.shields.io/badge/codecademy-%2312100E.svg?&style=for-the-badge&logo=codecademy&logoColor=white&color=black",
-    },
-    ]
+    }]
 
-    constructor(props: IHeroProps) {
-        super(props);
-    }
-
-    render(): any {
-        return (
-            <section className="hero-section__wrapper">
-                <LandingPageCard className="hero-section" landingPageCardType="fitContent" >
-                    <div className="space h-28"></div>
-                    <section className="hero-section__content">
-                        <section className="hero-section__content__right">
-                            <CodingCat showAnimtion={this.props.scrolling} />
-                        </section>
-                        <section className="hero-section__content__left">
-                            <header className="self-start">
-                                <SequentialRiseSpan elementType="h1" className="hero-section__heading" minNumberOfLettersPerLine={40}>
-                                    {this.mainHeading}
-                                </SequentialRiseSpan>
-                            </header>
-                            <div className="hero-section__content__left__text position-relative">{this.introduction}</div>
-                            <div className="flex flex-row mt-10 justify-start self-start">
-                                <Button to="/digital_chronicles/blogs">See my Blogs <AiOutlineArrowRight /></Button>
-                                <Button to="/projects/code">See my Projects <AiOutlineArrowRight /></Button>
-                            </div>
-                        </section>
+    return (
+        <section className="hero-section__wrapper">
+            <LandingPageCard className="hero-section" landingPageCardType="fitContent" >
+                <div className="space h-28"></div>
+                <section className="hero-section__content">
+                    <section className="hero-section__content__right"><CodingCat showAnimtion={scrolling} /></section>
+                    <section className="hero-section__content__left">
+                        <header className="self-start">
+                            <SequentialRiseSpan elementType="h1" className="hero-section__heading" minNumberOfLettersPerLine={40}>
+                                {mainHeading}
+                            </SequentialRiseSpan>
+                        </header>
+                        <div className="hero-section__content__left__text position-relative">{introduction}</div>
+                        <div className="flex flex-row mt-10 justify-start self-start">
+                            <Button to="/digital_chronicles/blogs">See my Blogs <AiOutlineArrowRight /></Button>
+                            <Button to="/projects/code">See my Projects <AiOutlineArrowRight /></Button>
+                        </div>
                     </section>
-                    <footer className="hero-section-badge__container flex justify-center items-center w-full">
-                        {this.connections.map(
-                            (item: any, index: number) => (
-                                <a key={index} href={item.link} className="hero-section-badge__link" target="_blank" rel="noopener noreferrer" >
-                                    <img src={item.imageSrc} alt={item.name} />
-                                </a>
-                            )
-                        )}
-                    </footer>
-                </LandingPageCard>
-            </section>
-        );
-    }
+                </section>
+                <footer className="hero-section-badge__container flex justify-center items-center w-full">
+                    {connections.map(
+                        (item: any, index: number) => (
+                            <a key={index} href={item.link} className="hero-section-badge__link" target="_blank" rel="noopener noreferrer" >
+                                <img src={item.imageSrc} alt={item.name} />
+                            </a>
+                        )
+                    )}
+                </footer>
+            </LandingPageCard>
+        </section>
+    );
 }
 
 export default HeroSection;

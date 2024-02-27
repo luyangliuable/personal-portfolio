@@ -13,8 +13,6 @@ interface NavbarItem extends Link {
 }
 
 interface INavbarState {
-    name: string;
-    links: NavbarItem[];
     currentlyHoveredNavbarLinkName: string | null;
     lastScrollY: number;
     isNavbarHidden: boolean;

@@ -153,4 +153,4 @@ const BlackHole: React.FC = () => {
     );
 };
 
-export default BlackHole;
+export default React.memo(BlackHole);
