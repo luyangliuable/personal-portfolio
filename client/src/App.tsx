@@ -69,19 +69,23 @@ function App() {
         };
 
         // Add the event listener
-        window.addEventListener("scroll", throttle(handleScroll, 50));
+        window.addEventListener("scroll", throttle(handleScroll, 20));
 
         // Interval for calculating the delta scroll every timeIntervalCheckMiliseconds.
         const deltaScrollCalculationInterval: NodeJS.Timeout = setInterval(() => {
-            setAppState(prevState => ({
-                ...prevState,
-                deltaScrollCalculation: {
-                    ...prevState.deltaScrollCalculation,
-                    lastRecordedScrollY: window.scrollY,
-                    deltaScrolled: window.scrollY - Math.max(0, prevState.deltaScrollCalculation?.lastRecordedScrollY ?? 0)
+            setAppState(prevState => {
+                const deltaScrolled = window.scrollY - Math.max(0, prevState.deltaScrollCalculation?.lastRecordedScrollY ?? 0);
+                if (prevState.deltaScrollCalculation?.deltaScrolled === deltaScrolled) return prevState;
+                return {
+                    ...prevState,
+                    deltaScrollCalculation: {
+                        ...prevState.deltaScrollCalculation,
+                        lastRecordedScrollY: window.scrollY,
+                        deltaScrolled: deltaScrolled
+                    }
                 }
-            }));
-        }, 20);
+            });
+        }, 400);
 
         return () => {
             window.removeEventListener("scroll", handleScroll);

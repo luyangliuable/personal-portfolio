@@ -47,7 +47,7 @@ class DynamicLoadQueue {
             this.fadeInElement(element);
             setTimeout(() => {
                 this.processQueue();
-            }, 50);
+            }, 10);
         }
     };
 

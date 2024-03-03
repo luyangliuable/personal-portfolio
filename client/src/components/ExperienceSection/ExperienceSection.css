@@ -37,7 +37,7 @@
         width: 300px;
         margin: 0 5px;
         padding: 10px;
-        height: fit-content;
+        height: fit-content
     }
 
     .experience-section-card.above {
@@ -78,12 +78,14 @@
     left: 50%;
     top: 100%;
     width: .5px;
+    box-shadow: var(--landing-page-card-box-shadow);
     background-color: #000;
 }
 
 .timeline__line {
     position: relative;
     height: 2px;
+    box-shadow: 1px 1px 1px 0 black;
     background-color: #000;
 }
 

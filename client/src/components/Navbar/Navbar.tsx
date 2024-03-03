@@ -1,4 +1,4 @@
-import React, { Context, Component, useMemo, useState, useCallback, createRef, ReactNode, useEffect, useRef } from "react";
+import React, { useMemo, useState, useCallback, createRef, ReactNode, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { INavbarState, Link, NavbarItem } from "./Interface/INavbarState";
 import { FaArrowCircleUp } from "react-icons/fa";
@@ -9,10 +9,12 @@ import NavBurgerPanel from "./NavBurgerPanel/NavBurgerPanel";
 import BurgerMenuIcon from "./BurgerMenuIcon/BurgerMenuIcon";
 import LoginButton from "./LoginButton/LoginButton";
 import linksData from "../../configs/links.json";
-import { AppContext, IAppContextProvider } from "../../stores/AppContext";
+import { useTraceUpdate } from "../Utility/DebugUtility";
 import "./Navbar.css";
 
-const NavBar: React.FC<INavbarProps> = ({scrollStatus}) => {
+const NavBar: React.FC<INavbarProps> = (props) => {
+    const { scrollStatus } = props;
+
     const navbar = useRef<HTMLDivElement>();
     const navbarLeft = useRef<HTMLDivElement>();
     const selectedNavlinkWindow = useRef<HTMLDivElement>();
@@ -119,7 +121,7 @@ const NavBar: React.FC<INavbarProps> = ({scrollStatus}) => {
 
     useEffect(() => {
         updateScrollingBehavior();
-    }, [scrollStatus])
+    }, [scrollStatus.deltaScrolled]);
 
     useEffect(() => {
         listenContinuousScrolled()
@@ -245,10 +247,7 @@ const NavBar: React.FC<INavbarProps> = ({scrollStatus}) => {
 
     return (
         <>
-            <article
-                className="navbar"
-                onMouseLeave={() => hideDropdownMenu()}
-                ref={navbar}>
+            <article className="navbar" onMouseLeave={() => hideDropdownMenu()} ref={navbar}>
                 <section className="navbar-content flex items-center">
                     <div className="logo__wrapper">
                         <NavLink to="/"><h1 className="logo">{websiteName}</h1></NavLink>
