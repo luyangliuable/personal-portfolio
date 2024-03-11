@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { IBlogPageState } from "./Interface/IBlogPageState";
 import HeroHeader from "../../components/HeroHeader/HeroHeader";
 import PostRepository from "../../repositories/PostRepository";
-import IHeroHeaderProps from "../../components/HeroHeader/Interface/IHeroHeaderProps";
 import BlogPostResponse from "../../repositories/Response/BlogPostResponse";
 import IBlogPageProps from "./Interface/IBlogPageProps";
 import Card from "../../components/Card/Card";
 import GalleryItem from "../../components/Gallery/GalleryItem/GalleryItem";
 import BlogPostGraphics from "../../components/BlogPostGraphics/BlogPostGraphics";
+import SmallCard from "../../components/Atoms/SmallCard/SmallCard";
 import "./BlogPage.css";
 
 const BlogPage: React.FC<IBlogPageProps> = (props) => {
@@ -122,21 +122,22 @@ const BlogPage: React.FC<IBlogPageProps> = (props) => {
     }
 
     const renderTopPickedBlogPost = (): React.ReactNode | null => {
+        const authorImage = "https://llcode.tech/api/image/65817ae96c73ceb16ba51731";
         return props.showTopPicks && (
             <div className="w-half flex-col items-start pl-3vw blog__featured">
                 <h3>Top Picks</h3>
                 {
                     state.topPickedPosts.map((post) => {
+                        const link = `/digital_chronicles/blog?id=${post._id.$oid}`;
                         return (
-                            <GalleryItem
-                                key={post._id.$oid}
-                                name={post.heading}
-                                tags={post.tags}
-                                type="blog"
-                                dateCreated={post.date_created}
-                                minuteRead={post.reading_time_minutes}
-                                link={`/digital_chronicles/blog?id=${post._id.$oid}`}
-                                image={post.image.$oid} />
+                            <SmallCard
+                                authorImage={authorImage}
+                                author={post.author}
+                                link={link}
+                                heading={post.heading}
+                                image={post.image.$oid}
+                                body=""
+                            />
                         )
                     })
                 }
@@ -171,7 +172,7 @@ const BlogPage: React.FC<IBlogPageProps> = (props) => {
                     }} to={to} key={tagName} className="blog__tag noselect blog__tag--selected">#{tagName}</Link>);
                 }
 
-                if (state.content.filter(({ tags }) => isSubset([ ...selectedTags, tagName ], tags) || ![ ...selectedTags, tagName ]).length === 0) {
+                if (state.content.filter(({ tags }) => isSubset([...selectedTags, tagName], tags) || ![...selectedTags, tagName]).length === 0) {
                     selectedTagsString = getCurrentSelectedTagsFromUrl();
                     to = `${baseUrlLink}?tag=${encodeURIComponent(selectedTagsString.join(","))}`;
                     return (<Link to={to} key={tagName} className="blog__tag noselect blog__tag--disabled">#{tagName}</Link>);

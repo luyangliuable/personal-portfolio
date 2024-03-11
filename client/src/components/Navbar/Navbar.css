@@ -66,6 +66,7 @@
 
 .navbar-item__dropdown {
     --dropdown-top-offset: 12px;
+    box-sizing: content-box;
     position: fixed;
     border: .1px solid #CCC;
     opacity: 0; display: none;
@@ -203,6 +204,7 @@
     height: var(--progress-height);
     z-index: 11;
     width: 100vw;
+    border-radius: 0 0 20px 0;
     background: linear-gradient(to right,  var(--dark-mode-purple-2), 90%, #00bfff);
     transition: background .3s ease-in, color .3s ease-in;
     color: transparent;

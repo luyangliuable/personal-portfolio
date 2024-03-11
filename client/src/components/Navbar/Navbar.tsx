@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback, createRef, ReactNode, useEffect, useRef } from "react";
+import React, { useMemo, useState, ReactNode, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { INavbarState, Link, NavbarItem } from "./Interface/INavbarState";
 import { FaArrowCircleUp } from "react-icons/fa";
@@ -9,7 +9,6 @@ import NavBurgerPanel from "./NavBurgerPanel/NavBurgerPanel";
 import BurgerMenuIcon from "./BurgerMenuIcon/BurgerMenuIcon";
 import LoginButton from "./LoginButton/LoginButton";
 import linksData from "../../configs/links.json";
-import { useTraceUpdate } from "../Utility/DebugUtility";
 import "./Navbar.css";
 
 const NavBar: React.FC<INavbarProps> = (props) => {
@@ -198,14 +197,12 @@ const NavBar: React.FC<INavbarProps> = (props) => {
     const renderDropdownMenu = (links: Link[] | undefined): ReactNode | void => {
         if (links !== undefined) {
             showDropdownMenu();
-
             setState(( prev ) => {
                 return {
                     ...prev,
                     dropdownMenuLinkDisplay: links.map((item, _) => renderNavLink(item))
                 }
             });
-
             if (state.dropdownMenuLinkDisplay.length === 0) hideDropdownMenu();
         } else {
             hideDropdownMenu();
@@ -245,29 +242,37 @@ const NavBar: React.FC<INavbarProps> = (props) => {
         );
     };
 
+    const navBarMainSection = useMemo(() => (
+        <section className="navbar-content flex items-center">
+            <div className="logo__wrapper">
+                <NavLink to="/"><h1 className="logo">{websiteName}</h1></NavLink>
+            </div>
+            <nav ref={navbarLeft} className="navbar-left flex flex-row">
+                {links.map((item, _) => renderNavLink(item, false))}
+                <LoginButton onMouseOver={renderDropdownMenu} />
+                <section ref={selectedNavlinkWindow} className="selected-navlink-window flex items-center">
+                    <div ref={navbarSubmenu} className="navbar-item__dropdown ">
+                        {state.dropdownMenuLinkDisplay}
+                    </div>
+                </section>
+            </nav>
+            <div ref={burgerButton} className="nav-burger" onClick={toggleBurgerMenu}><BurgerMenuIcon /></div>
+        </section>
+    ), [state.dropdownMenuLinkDisplay]);
+
+    const navbarBurgerPanel = useMemo(() => (
+        <NavBurgerPanel links={links} burgerPanel={burgerPanel} />
+    ), [state.dropdownMenuLinkDisplay]);
+
     return (
         <>
             <article className="navbar" onMouseLeave={() => hideDropdownMenu()} ref={navbar}>
-                <section className="navbar-content flex items-center">
-                    <div className="logo__wrapper">
-                        <NavLink to="/"><h1 className="logo">{websiteName}</h1></NavLink>
-                    </div>
-                    <nav ref={navbarLeft} className="navbar-left flex flex-row">
-                        {links.map((item, _) => renderNavLink(item, false))}
-                        <LoginButton onMouseOver={renderDropdownMenu} />
-                        <section ref={selectedNavlinkWindow} className="selected-navlink-window flex items-center">
-                            <div ref={navbarSubmenu} className="navbar-item__dropdown ">
-                                {state.dropdownMenuLinkDisplay}
-                            </div>
-                        </section>
-                    </nav>
-                    <div ref={burgerButton} className="nav-burger" onClick={toggleBurgerMenu}><BurgerMenuIcon /></div>
-                </section>
+                {navBarMainSection}
                 <aside id="scroll-progress" ref={scrollProgress}>
                     <FaArrowCircleUp />
                 </aside>
             </article>
-            <NavBurgerPanel links={links} burgerPanel={burgerPanel} />
+            {navbarBurgerPanel}
         </>
     );
 }

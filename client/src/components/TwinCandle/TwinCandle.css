@@ -4,6 +4,10 @@
     transform: scale(.8, .8)
 }
 
+.wrapper * {
+    box-sizing: content-box;
+}
+
 @media (min-width: 10px) and (max-width: 700px) {
     .wrapper {
         transform: scale(.3, .3);

@@ -1,4 +1,4 @@
-import React, { createRef, useReducer, useCallback, useRef, useState, useEffect, useMemo } from 'react';
+import React, { useCallback, useRef, useState, useEffect, useMemo } from 'react';
 import IExperienceSectionProps from "./Interface/IExperienceSectionProps";
 import { IExperienceSectionState, ExperienceSectionItem } from './Interface/IExperienceSectionState';
 import { isCenterAlignedWithViewport } from "../Utility/ScrollUtility";
@@ -22,7 +22,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
     const experienceSectionScrollRef = useRef<HTMLDivElement | null>(null);
     const timeLineRef = useRef<HTMLDivElement | null>(null);
 
-    const items: ExperienceSectionItem[] = useMemo(() : ExperienceSectionItem[] => {
+    const items: ExperienceSectionItem[] = useMemo((): ExperienceSectionItem[] => {
         return [
             {
                 dateTime: "2023",
@@ -283,7 +283,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
     }, []);
 
     useEffect(() => {
-        const proximityYToLockPosition = window.innerHeight/3;
+        const proximityYToLockPosition = window.innerHeight / 3;
         if (experienceSectionParentRef.current!) setLockPosition();
         if (isCenterAlignedWithViewport(experienceSectionParentRef.current!) < proximityYToLockPosition) lockPosition();
         if (state.isLocked && state.lockPosition !== undefined) {
@@ -321,7 +321,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
 
     const setLockPosition = () => {
         if (experienceSectionParentRef.current === null) return;
-        const currentPosition = experienceSectionParentRef.current!.parentElement!.getBoundingClientRect().top + ( scrolled ?? 0);
+        const currentPosition = experienceSectionParentRef.current!.parentElement!.getBoundingClientRect().top + (scrolled ?? 0);
         if (!state.isLocked && state.lockPosition !== currentPosition) {
             setState({
                 ...state,
@@ -396,6 +396,13 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
         });
     }, []);
 
+    const experienceSectionContent = useMemo(() => (
+        <div className="timeline__line flex flex-row items-center" ref={timeLineRef}>
+            {mapExperienceSectionItems()}
+            <BlackHole />
+        </div>
+    ), [mapExperienceSectionItems]);
+
     return (
         <article className="landing-page-card flex flex-col justify-start overflow-hidden experience-section-parent-container" ref={experienceSectionParentRef}>
             <header className="ml-2vw important-text">
@@ -404,15 +411,10 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
                 </SequentialRiseSpan>
             </header>
             <section ref={experienceSectionRef} className="experience-section" >
-
                 {/* Scrolling timeline within the section */}
                 <div ref={experienceSectionScrollRef} className="experience-section--content">
-                    <div className="timeline__line flex flex-row items-center" ref={timeLineRef}>
-                        {mapExperienceSectionItems()}
-                        <BlackHole />
-                    </div>
+                    {experienceSectionContent}
                 </div>
-
             </section>
         </article>
     );

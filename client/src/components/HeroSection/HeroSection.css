@@ -4,7 +4,6 @@
 
 @media screen and (min-width: 1000px) {
     .hero-section__content__left {
-        padding: 0 5vw 0 5vw;
         z-index: 1;
         width: 50%;
         max-width: 600px;
@@ -20,7 +19,7 @@
     .hero-section__content {
         margin-bottom: 8vh;
         display: flex;
-        padding: 3vh 0;
+        padding: 4vh 0;
         justify-content: center;
         flex-direction: row;
     }
@@ -116,7 +115,7 @@
     font-family: 'TT Norms Pro', 'Spartan', sans-serif;
     color: #2d2d2d; 
     margin-bottom: .8rem;
-    font-size: clamp(2em, 3vw, 5em) !important;
+    font-size: clamp(2em, 3.4vw, 5em) !important;
     font-weight: 700;
 }
 

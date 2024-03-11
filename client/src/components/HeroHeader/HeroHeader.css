@@ -1,5 +1,6 @@
 .hero-header {
-    width: 90vw;
+    width: 100vw;
+    min-height: 38vh;
     padding: 2vh 5vw;
     margin-bottom: 5vh;
     background: rgb(235, 235, 235);

@@ -32,7 +32,7 @@ const Footer: React.FC = () => {
     const renderFooterSection = (section: any, className: string, target?: string) => {
         return (
             <section className={className}>
-                <h3>{section.name}</h3>
+                <h3 className="mb-0">{section.name}</h3>
                 {
                     section.sublinks?.map(
                         (item: any, index: number) => {
@@ -86,30 +86,37 @@ const Footer: React.FC = () => {
                         }}>{buttonChildren}</Button>
                 </form>
 
-                <section className="footer__connect-with-me">
-                    <h3>Connect with Me</h3>
-                    <div className="flex flex-row flex-wrap">
-                        {
-                            linksToMyOtherSocialMedia.map(
-                                (item: any, index: number) => (
-                                    <IconButton target="_blank" key={index} to={item.link} className="mt-5" logoName={item.name} buttonColor="%23eaeaea"></IconButton>
+                <div className="flex flex-col">
+                    <section className="footer__connect-with-me mb-20">
+                        <h3 className="mb-0">Connect with Me</h3>
+                        <div className="flex flex-row flex-wrap">
+                            {
+                                linksToMyOtherSocialMedia.map(
+                                    (item: any, index: number) => (
+                                        <IconButton target="_blank" key={index} to={item.link} className="mt-5" logoName={item.name} buttonColor="%23eaeaea"></IconButton>
+                                    )
                                 )
-                            )
-                        }
-                    </div>
-                </section>
+                            }
+                        </div>
+                    </section>
 
-                {renderFooterSection(about, "footer__about")}
-                <section className="footer__sponser">
-                    <h3>Sponser Me</h3>
-                    <InlineLink target="_blank" to="https://ko-fi.com/D1D1PFTTH" className="mt-5">Kofi</InlineLink>
-                </section>
-                {renderFooterSection(tools, "footer__about")}
+                    <section className="footer__sponser mb-20">
+                        <h3 className="mb-0">Sponser Me</h3>
+                        <InlineLink target="_blank" to="https://ko-fi.com/D1D1PFTTH" className="mt-5">Kofi</InlineLink>
+                    </section>
+                </div>
 
-                <section className="footer__resources">
-                    <h3>Resources</h3>
-                    <InlineLink to={resume.to} className="mt-5">{resume.name}</InlineLink>
-                </section>
+                <div className="flex flex-col">
+                    {renderFooterSection(about, "footer__about")}
+
+                    <section className="footer__resources">
+                        <h3 className="mb-0">Resources</h3>
+                        <InlineLink to={resume.to} className="mt-5">{resume.name}</InlineLink>
+                    </section>
+                </div>
+
+                {renderFooterSection(tools, "footer__tools")}
+
             </div>
             <div className="footer__bottom position-relative w-full flex justify-around">
                 <p>LLcode.tech © 2024 All Rights Reserved</p>

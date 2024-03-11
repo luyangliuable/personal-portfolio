@@ -1,14 +1,17 @@
 .blog-container {
     max-width: 1500px;
+    justify-content: flex-start;
 }
 
 .blog-list {
+    flex-grow: 1;
     padding-top: 4vh;
 
 }
 
 .blog__featured {
     display: flex; /* Define here instead of class .flex because need to override display: none later */
+    flex-grow: 1;
     border-left: .1px solid #888;
 }
 

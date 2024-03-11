@@ -1,6 +1,5 @@
-import React, { Component } from "react";
+import React, { useMemo } from "react";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import IHeroState from "./Interface/IHeroState";
 import IHeroProps from "./Interface/IHeroProps";
 import CodingCat from "../CodingCat/CodingCat";
 import Button from "../Button/Button";
@@ -48,34 +47,48 @@ const HeroSection: React.FC<IHeroProps> = ({ scrolling }) => {
             "https://img.shields.io/badge/codecademy-%2312100E.svg?&style=for-the-badge&logo=codecademy&logoColor=white&color=black",
     }]
 
+    const footer = useMemo(() => {
+        return (
+            <footer className="hero-section-badge__container flex justify-center items-center w-full">
+                {connections.map(
+                    (item: any, index: number) => (
+                        <a key={index} href={item.link} className="hero-section-badge__link" target="_blank" rel="noopener noreferrer" >
+                            <img src={item.imageSrc} alt={item.name} />
+                        </a>
+                    )
+                )}
+            </footer>
+        );
+    }, [connections]);
+
+    const heroSectionContentLeft = useMemo(() => {
+        return (
+            <section className="hero-section__content__left">
+                <header className="self-start">
+                    <SequentialRiseSpan elementType="h1" className="hero-section__heading" minNumberOfLettersPerLine={40}>
+                        {mainHeading}
+                    </SequentialRiseSpan>
+                </header>
+                <div className="hero-section__content__left__text position-relative">{introduction}</div>
+                <div className="flex flex-row mt-10 justify-start self-start">
+                    <Button to="/digital_chronicles/blogs">See my Blogs <AiOutlineArrowRight /></Button>
+                    <Button to="/projects/code">See my Projects <AiOutlineArrowRight /></Button>
+                </div>
+            </section>
+        );
+    }, [mainHeading, introduction]);
+
     return (
         <section className="hero-section__wrapper">
             <LandingPageCard className="hero-section" landingPageCardType="fitContent" >
                 <div className="space h-28"></div>
                 <section className="hero-section__content">
-                    <section className="hero-section__content__right"><CodingCat showAnimtion={scrolling} /></section>
-                    <section className="hero-section__content__left">
-                        <header className="self-start">
-                            <SequentialRiseSpan elementType="h1" className="hero-section__heading" minNumberOfLettersPerLine={40}>
-                                {mainHeading}
-                            </SequentialRiseSpan>
-                        </header>
-                        <div className="hero-section__content__left__text position-relative">{introduction}</div>
-                        <div className="flex flex-row mt-10 justify-start self-start">
-                            <Button to="/digital_chronicles/blogs">See my Blogs <AiOutlineArrowRight /></Button>
-                            <Button to="/projects/code">See my Projects <AiOutlineArrowRight /></Button>
-                        </div>
+                    <section className="hero-section__content__right">
+                        <CodingCat showAnimtion={scrolling} />
                     </section>
+                    {heroSectionContentLeft}
                 </section>
-                <footer className="hero-section-badge__container flex justify-center items-center w-full">
-                    {connections.map(
-                        (item: any, index: number) => (
-                            <a key={index} href={item.link} className="hero-section-badge__link" target="_blank" rel="noopener noreferrer" >
-                                <img src={item.imageSrc} alt={item.name} />
-                            </a>
-                        )
-                    )}
-                </footer>
+                {footer}
             </LandingPageCard>
         </section>
     );

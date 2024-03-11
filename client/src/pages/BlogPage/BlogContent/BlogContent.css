@@ -19,7 +19,7 @@
     --padding-left-right: min( 5vw, 500px );
     --padding-top-bottom: min( 3vh, 200px );
     --margin-top: min(2vh, 200px);
-    width: 600px;
+    width: 800px;
     padding: var(--padding-top-bottom) var(--padding-left-right);
     margin-top: var( --margin-top );
     display: flex;
@@ -86,20 +86,19 @@
 }
 
 
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: 1200px) {
     .blog-content__side-components {
         display: none
     }
 }
 
 @media screen and (max-width: 1000px) {
-
     .table-of-content--small-screen {
 	      display: flex
     }
 
     .blog-content {
-        width: 80%
+        width: 100%
     }
 }
 

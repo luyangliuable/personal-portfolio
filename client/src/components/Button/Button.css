@@ -3,6 +3,7 @@
     position: relative;
     background: rgba(220, 220, 220, .3);
     backdrop-filter: blur(2px);
+    box-sizing: content-box;
     border-radius: var(--border-radius);
     cursor: pointer;
     width: fit-content;

@@ -1,0 +1,26 @@
+.small-card {
+    width: 300px;
+    max-width: 80%;
+    min-height: 120px;
+    background-color: rgba(150, 150, 150, 0.1);
+    margin-bottom: 8px;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.small-card h3 {
+    font-size: .9rem;
+}
+
+.small-card__image {
+    width: 300%;
+    max-height: 150%;
+}
+
+.small-card__image__wrapper {
+    width: 100px;
+    overflow: hidden;
+    object-fit: cover;
+    max-height: 100px;
+    border-radius: 8px;
+}
