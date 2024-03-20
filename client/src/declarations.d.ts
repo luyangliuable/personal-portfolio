@@ -10,3 +10,6 @@ declare module 'dompurify';
 declare module '@mdx-js/runtime' {
     export function mdx(component: string, props?: any): any;
 }
+
+declare module 'ollama-chat-client';
+declare module 'uuid';

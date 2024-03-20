@@ -61,6 +61,10 @@ async fn rocket() -> _ {
         .mount("/api/", routes![api::blogs::create_blog])
         .mount("/api/", routes![api::blogs::get_blog])
 
+        .mount("/api/", routes![api::proxy::proxy])
+        .mount("/api/", routes![api::proxy::proxy_post])
+        .mount("/api/", routes![api::proxy::handle_data])
+
         .mount("/api/", routes![api::health::check_health])
         .mount("/api/", routes![api::health::check_env_variable])
         .mount("/api/", routes![api::health::check_mongodb_uri])

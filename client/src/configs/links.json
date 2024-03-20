@@ -48,8 +48,12 @@
         },
         {
             "name": "Tools",
-            "to": null,
+            "to": "/tools",
             "sublinks": [
+                {
+                    "name": "🤖 Chatgpt 5",
+                    "to": "/tools/chatbot"
+                },
                 {
                     "name": "🌉 HexaBridger",
                     "isLocked": true,

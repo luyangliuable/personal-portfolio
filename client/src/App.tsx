@@ -5,6 +5,7 @@ import { AppContextProvider } from "./stores/AppContext";
 import loadable from '@loadable/component'
 import SkeletonPage from './pages/SkeletonPage/SkeletonPage';
 import Footer from './components/Footer/Footer';
+import LlChatbot from './pages/Chatbot/Chatbot';
 import { throttle } from './components/Utility/AnimationUtility';
 
 import './App.css';
@@ -107,11 +108,17 @@ function App() {
                         } />
                         <Route path="/digital_chronicles/blogs" element={<BlogPage showTopPicks={true} />} />
                         <Route path="/resume" element={<ResumePage />} />
+
                         <Route path="/projects/3d_printing" element={<ThreeDPrintingGallery />} />
                         <Route path="/projects/hardware" element={<HardwareProjectsPage />} />
                         <Route path="/projects/code" element={<CodingProjectsPage />} />
                         <Route path="/projects" element={<CodingProjectsPage />} />
+
+                        <Route path="/tools/chatbot" element={<LlChatbot />} />
+                        <Route path="/tools" element={<LlChatbot />} />
+
                         <Route path="/digital_chronicles/blog" element={<BlogContent scrolled={appState.scrollY} />} />
+
                         <Route path="/user/login" element={<LogInPage />} />
                         <Route path="/user/register" element={<RegisterPage />} />
 

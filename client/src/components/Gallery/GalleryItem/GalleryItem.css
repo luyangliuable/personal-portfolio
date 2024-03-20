@@ -5,11 +5,9 @@
     background-color: rgba(220, 220, 220, 0.3);
     min-height: 360px;
     border-radius: 20px !important;
+    border: 1px solid #FFF !important;
     overflow: hidden;
-    padding-bottom: 5px
-}
-
-.gallery-item>h3 {
+    padding-bottom: 10px
 }
 
 .initially-hidden {
@@ -45,8 +43,8 @@
 
 .gallery-item h3 {
     width: 90%;
-    font-size: clamp(1.2rem, 1.3vw, 2rem);
-    margin-bottom: 2px;
+    font-size: clamp(1.1rem, 1.1vw, 2rem);
+    margin: 8px 0;
     text-align: left;
 }
 
