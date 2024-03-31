@@ -2,7 +2,8 @@
     --page-top-margin: 68px;
     --navbar-height: 68px;
 
-    --page-bottom-margin: 120px;
+    --page-bottom-margin: 0;
+    --page-bottom-padding: 120px;
     --common-card-margin: min(25vh, 100px);
 
     --dark-mode-black: #1e1e1e;
@@ -23,37 +24,20 @@
     --bg: #1a1e2d;
     --green: #a5ea9b;
     --pink: #ff61d8;
-    --blue: #569cfa;
+    --blue: #1e90ff;
+    /* --orange: #ffaa81; */
     --orange: #ffcc81;
     --cyan: #7ed1e2;
 }
 
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+.App {
+    position: absolute;
 }
 
 h1 {
     margin-block-start: 0.67em;
     font-size: 2em;
     margin-block-end: 0.67em;
-}
-
-.App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
 }
 
 .flex-vertical {
@@ -122,12 +106,15 @@ a {
 .page-body, main {
     margin-top: var(--page-top-margin);
     margin-bottom: var(--page-bottom-margin);
+    /* margin-bottom: var(--page-bottom-padding); */
+    padding-bottom: var(--page-bottom-padding);
     width: 100vw;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     position: relative;
+    background-image: linear-gradient(to right, rgba(245,245,245,0.7),20%, rgba(245,245,245,0.5),80%, rgba(245,245,245,0.7)), url(https://grainy-gradients.vercel.app/noise.svg);
 }
 
 @keyframes background-scroll {
@@ -348,9 +335,19 @@ a {
     margin-bottom: 0
 }
 
+.mb-20 {
+    margin-bottom: 5rem
+}
+
+
+.h-28 {
+    height: 7rem
+}
+
 .mt-20vh {
     margin-top: 20vh
 }
+
 
 .mt-5 {
     margin-top: 10px !important
@@ -395,6 +392,10 @@ a {
 }
 
 /* Text */
+
+.important-text {
+    font-family: 'TT Norms Pro', Spartan, 'Poppins', sans-serif;
+}
 
 .whitespace-nowrap {
     white-space: nowrap

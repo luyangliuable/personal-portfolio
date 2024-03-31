@@ -1,4 +1,4 @@
-import React, { Component, createRef, useReducer, useCallback, useRef, useState, useEffect } from 'react';
+import React, { useCallback, useRef, useState, useEffect, useMemo } from 'react';
 import IExperienceSectionProps from "./Interface/IExperienceSectionProps";
 import { IExperienceSectionState, ExperienceSectionItem } from './Interface/IExperienceSectionState';
 import { isCenterAlignedWithViewport } from "../Utility/ScrollUtility";
@@ -22,12 +22,22 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
     const experienceSectionScrollRef = useRef<HTMLDivElement | null>(null);
     const timeLineRef = useRef<HTMLDivElement | null>(null);
 
-    const [isMounted, toggle] = useReducer((p) => !p, true);
-
-    const [state, setState] = useState<IExperienceSectionState>({
-        unlockPosition: null,
-        isLocked: false,
-        items: [
+    const items: ExperienceSectionItem[] = useMemo((): ExperienceSectionItem[] => {
+        return [
+            {
+                dateTime: "2023",
+                cardTitle: "Monash University",
+                url: "",
+                cardSubtitle: "Graduated",
+                cardDetailedText: "",
+                importance: 1,
+                media: {
+                    type: "IMAGE",
+                    source: {
+                        url: "https://amsi.org.au/wp-content/uploads/2014/05/logo-monash.png"
+                    }
+                }
+            },
             {
                 dateTime: "2023",
                 cardTitle: "",
@@ -261,6 +271,11 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
                 }
             }
         ]
+    }, []);
+
+    const [state, setState] = useState<IExperienceSectionState>({
+        unlockPosition: null,
+        isLocked: false
     });
 
     useEffect(() => {
@@ -268,7 +283,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
     }, []);
 
     useEffect(() => {
-        const proximityYToLockPosition = window.innerHeight/3;
+        const proximityYToLockPosition = window.innerHeight / 3;
         if (experienceSectionParentRef.current!) setLockPosition();
         if (isCenterAlignedWithViewport(experienceSectionParentRef.current!) < proximityYToLockPosition) lockPosition();
         if (state.isLocked && state.lockPosition !== undefined) {
@@ -281,9 +296,10 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
 
     const updateTimelineLength = (): void => {
         const offset = 10;
+        if (experienceSectionParentRef.current === null) return;
         const timeLineLength = experienceSectionScrollRef.current!.getBoundingClientRect().width + offset;
         const targetElement = experienceSectionParentRef.current?.parentElement;
-        if (targetElement) targetElement.style.height = `${timeLineLength + timeLineLength / 8}px`;
+        if (targetElement) targetElement.style.height = `${timeLineLength + 200}px`;
         setState({
             ...state,
             timeLineLength: timeLineLength
@@ -304,7 +320,8 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
     }
 
     const setLockPosition = () => {
-        const currentPosition = experienceSectionParentRef.current!.parentElement!.getBoundingClientRect().top + ( scrolled ?? 0);
+        if (experienceSectionParentRef.current === null) return;
+        const currentPosition = experienceSectionParentRef.current!.parentElement!.getBoundingClientRect().top + (scrolled ?? 0);
         if (!state.isLocked && state.lockPosition !== currentPosition) {
             setState({
                 ...state,
@@ -330,49 +347,77 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
         }
     }
 
-    const isBeforeLockPosition = (proximityYToLockPosition: number=0): boolean => {
+    const isBeforeLockPosition = (proximityYToLockPosition: number = 0): boolean => {
         const { lockPosition } = state;
         const isBeforeLockPosition = scrolled !== undefined && lockPosition !== undefined && scrolled + proximityYToLockPosition < lockPosition;
         return isBeforeLockPosition;
     }
 
-    const sortedItems = state.items.sort((a: ExperienceSectionItem, b: ExperienceSectionItem) => {
+    const sortedItems = items.sort((a: ExperienceSectionItem, b: ExperienceSectionItem) => {
         return parseInt(b.dateTime) - parseInt(a.dateTime)
     });
 
-    if (isMounted)
-        return (
-            <article className="landing-page-card flex flex-col justify-start overflow-hidden experience-section-parent-container" ref={experienceSectionParentRef}>
-                <header className="ml-2vw">
-                    <SequentialRiseSpan elementType="h2">
-                        Retrospective
-                    </SequentialRiseSpan>
-                </header>
-                <section ref={experienceSectionRef} className="experience-section" >
 
-                    {/* Scrolling timeline within the section */}
-                    <div ref={experienceSectionScrollRef} className="experience-section--content">
-                        <div className="timeline__line flex flex-row items-center" ref={timeLineRef} >
-                            {
-                                sortedItems.map((item, idx) => {
-                                    if (item.display !== undefined) {
-                                        return (
-                                            <ExperienceSectionImageDisplay key={idx} item={item} index={idx} />
-                                        );
-                                    }
-                                    return (
-                                        <ExperienceSectionEvent timeLineRef={timeLineRef} key={idx} item={item} index={idx} />
-                                    );
-                                })
+    const groupExperienceSectionItems = (events: any): any => {
+        return events.reduce((groupedEvents: any, event: any) => {
+            const year = new Date(event.dateTime).getFullYear().toString();
+            if (!groupedEvents[year]) groupedEvents[year] = [];
+            groupedEvents[year].push(event);
+            return groupedEvents;
+        }, {});
+    }
+
+    const mapExperienceSectionItems = useCallback(() => {
+        // TODO: https://stackoverflow.com/questions/70169152/how-to-memoize-each-element-in-an-array-map-in-react-with-usememo
+        const groupedItems = groupExperienceSectionItems(sortedItems);
+        let accumulatedIdx = 0;
+        return Object.keys(groupedItems).sort((a, b) => parseInt(b) - parseInt(a)).map(year => {
+            const currentYearItems = groupedItems[year];
+            const fragment = (
+                <React.Fragment key={year}>
+                    {
+                        currentYearItems.map((item: any, idx: number) => {
+                            const currentIndex = accumulatedIdx + idx;
+                            if (item.display !== undefined) {
+                                return (
+                                    <ExperienceSectionImageDisplay key={currentIndex} item={item} index={currentIndex} />
+                                );
                             }
-                            <BlackHole />
-                        </div>
-                    </div>
+                            return (
+                                <ExperienceSectionEvent timeLineRef={timeLineRef} key={currentIndex} item={item} index={currentIndex} />
+                            );
+                        })
+                    }
+                    <div className="experience-section__year">{year}</div>
+                </React.Fragment>
+            );
+            accumulatedIdx += currentYearItems.length;
+            return fragment;
+        });
+    }, []);
 
-                </section>
-            </article>
-        );
-    else return (<></>)
+    const experienceSectionContent = useMemo(() => (
+        <div className="timeline__line flex flex-row items-center" ref={timeLineRef}>
+            {mapExperienceSectionItems()}
+            <BlackHole />
+        </div>
+    ), [mapExperienceSectionItems]);
+
+    return (
+        <article className="landing-page-card flex flex-col justify-start overflow-hidden experience-section-parent-container" ref={experienceSectionParentRef}>
+            <header className="ml-2vw important-text">
+                <SequentialRiseSpan elementType="h2">
+                    Retrospective
+                </SequentialRiseSpan>
+            </header>
+            <section ref={experienceSectionRef} className="experience-section" >
+                {/* Scrolling timeline within the section */}
+                <div ref={experienceSectionScrollRef} className="experience-section--content">
+                    {experienceSectionContent}
+                </div>
+            </section>
+        </article>
+    );
 }
 
 export default ExperienceSection;

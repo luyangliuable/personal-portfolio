@@ -39,8 +39,6 @@ class Gallery extends Component<IGalleryProps, IGalleryState> {
                 <div className="heading__wrapper"><h2>{this.props.heading}</h2></div>
                 <div ref={this.galleryContainerRef} className="gallery-item__container">
                     {this.renderGalleryItems()}
-                    {this.state.shouldAddDummy && <GalleryItem style={{ visibility: "hidden" }} />}
-                    {this.state.shouldAddDummy && <GalleryItem style={{ visibility: "hidden" }} />}
                 </div>
             </>
         );

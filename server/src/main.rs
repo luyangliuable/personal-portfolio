@@ -16,6 +16,7 @@ use repository::post_repo::PostRepo;
 use repository::user_repo::UserRepo;
 use repository::mongo_repo::MongoRepo;
 use repository::local_image_repo::LocalImageRepo;
+use repository::message_repo::MessageRepo;
 use config::cors::CORS;
 
 use controller::{ post_controller::PostController, local_image_controller::LocalImageController };
@@ -25,6 +26,7 @@ use mongodb::bson::doc;
 use models::post_model::Post;
 use models::user_model::User;
 use models::local_image_model::LocalImage;
+use models::message_model::Message;
 
 #[get("/")]
 fn index() -> &'static str {
@@ -41,6 +43,7 @@ async fn rocket() -> _ {
     let post_repo = PostRepo(MongoRepo::<Post>::init("Post", &*DB).await);
     let user_repo = UserRepo(MongoRepo::<User>::init("User", &*DB).await);
     let local_image_repo = LocalImageRepo(MongoRepo::<LocalImage>::init("LocalImage", &*DB).await);
+    let message_repo = MessageRepo(MongoRepo::<Message>::init("Message", &*DB).await);
 
     let post_controller = PostController::new(post_repo);
     let local_image_controller = LocalImageController::new(local_image_repo);
@@ -48,14 +51,19 @@ async fn rocket() -> _ {
     // TODO: Convert this into a toml file and load it
     rocket::build()
         .manage(blog_repo)
-        .manage(post_controller)
         .manage(user_repo)
+        .manage(message_repo)
+        .manage(post_controller)
         .manage(local_image_controller)
 
         .mount("/api/", routes![index])
         .mount("/api/", routes![api::blogs::get_all_blog_post])
         .mount("/api/", routes![api::blogs::create_blog])
         .mount("/api/", routes![api::blogs::get_blog])
+
+        .mount("/api/", routes![api::proxy::proxy])
+        .mount("/api/", routes![api::proxy::proxy_post])
+        .mount("/api/", routes![api::proxy::handle_data])
 
         .mount("/api/", routes![api::health::check_health])
         .mount("/api/", routes![api::health::check_env_variable])
@@ -76,6 +84,8 @@ async fn rocket() -> _ {
         .mount("/api/", routes![api::local_image::get_local_image])
         .mount("/api/", routes![api::local_image::get_all_local_image])
         .mount("/api/", routes![api::local_image::update_local_image])
+
+        .mount("/api/", routes![api::message::insert_message])
 
         .attach(CORS)
 }

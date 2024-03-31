@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { NavLink } from "react-router-dom";
 import './Button.css';
 import IButtonProps, { IButtonPropsWithTo, IButtonPropsWithOnClick } from "./Interface/IButtonProps";
@@ -15,9 +15,14 @@ class HeroSection extends Component<IButtonProps, {}> {
 
     renderButton() {
         return (
-            <div className="t-button button no-select" onMouseMove={(e) => cardGradientEffect(e, false, 1, 38, 20)}>
-                <span>{this.props.children}</span>
-            </div>
+            <>
+                <div style={this.props.style} className={["t-button button no-select", this.props.className].join(" ")} onMouseMove={(e) => cardGradientEffect(e, false, 1, 38, 20)}>
+                    <span>{this.props.children}</span>
+                </div>
+                {
+                    this.props.showButtonLine && (<div className="button-line"></div>)
+                }
+            </>
         );
     }
 
@@ -32,15 +37,20 @@ class HeroSection extends Component<IButtonProps, {}> {
     render(): React.ReactNode {
         if (this.isLinkProps(this.props)) {
             return (
-                <NavLink to={this.props.to}>
+                <NavLink to={this.props.disabled ? null : this.props.to}>
                     {this.renderButton()}
                 </NavLink>
             );
         } else if (this.isButtonProps(this.props)) {
             return (
-                <div onClick={this.props.onClick}>
+                <button type={this.props.type} className="override-button" onClick={(e) => {
+                    e.preventDefault();
+                    if (this.props.disabled) return;
+                    const props = this.props as IButtonPropsWithOnClick;
+                    props.onClick(e);
+                }}>
                     {this.renderButton()}
-                </div>
+                </button>
             );
         }
 

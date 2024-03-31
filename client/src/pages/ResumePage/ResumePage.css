@@ -1,10 +1,7 @@
 .browser {
     border: none;
     width: 100vw;
-    height: 92vh;
-    position: fixed;
-    left:0;
-    top: 70px;
+    height: calc(100vh - 30px);
 }
 
 @media screen and (max-width: 100px) {

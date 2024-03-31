@@ -2,7 +2,7 @@
     overflow-x: hidden;
     position: sticky;
     top: var(--navbar-height);
-    height: calc(95.5vh - var(--navbar-height));
+    height: calc(99vh - var(--navbar-height));
     transition: all .1s ease-in;
 }
 
@@ -22,7 +22,7 @@
 }
     .experience-section--content {
         padding-left: 40vw;
-        height: 70vh;
+        height: 80vh;
         width: min-content;
         display: inline-flex;
         flex-direction: row;
@@ -35,30 +35,42 @@
 
     .experience-section-card {
         width: 300px;
-        margin: 0 5px;
+        margin: 0 -25px;
         padding: 10px;
-        height: fit-content;
+        height: fit-content
     }
 
-        .experience-section-card.above {
-            margin-bottom: 100px;
-            transform: translateY(-50%)
-        }
+    .experience-section-card.above {
+        margin-bottom: 100px;
+        transform: translateY(-50%)
+    }
 
-        .experience-section-card.below {
-            margin-top: 100px;
-            transform: translateY(50%)
-        }
+    .experience-section-card.below {
+        margin-top: 100px;
+        transform: translateY(50%)
+    }
 
-            .experience-section-card.below .connecting-line {
-                transform: translateY(-100%);
-                top: 0;
-            }
+    .experience-section-card.below .connecting-line {
+        transform: translateY(-100%);
+        top: 0;
+    }
 
-                .experience-section-card.below .connecting-line:after {
-                    transform: translateX(-50%) translateY(-50%);
-                    top: 0;
-                }
+    .experience-section-card.below .connecting-line:after {
+        transform: translateX(-50%) translateY(-50%);
+        top: 0;
+    }
+
+.experience-section__year {
+    z-index: 2;
+    box-shadow: .6px .5px 2.8px #A5A58C;
+    margin: 0 8.5vw;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--dark-mode-pink);
+    color: var(--dark-mode-pink);
+    font-weight: 600;
+    background: #FFF
+}
 
 .connecting-line {
     position: absolute;
@@ -66,12 +78,14 @@
     left: 50%;
     top: 100%;
     width: .5px;
+    box-shadow: var(--landing-page-card-box-shadow);
     background-color: #000;
 }
 
 .timeline__line {
     position: relative;
     height: 2px;
+    box-shadow: 1px 1px 1px 0 black;
     background-color: #000;
 }
 

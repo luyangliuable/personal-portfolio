@@ -1,11 +1,9 @@
 use std::str::FromStr;
 use rocket::serde::json::Json;
-use mongodb::bson::{oid::ObjectId};
+use mongodb::bson::oid::ObjectId;
 use rocket::{http::Status, State};
 use crate::{models::blog_model::BlogPost, repository::blog_repo::BlogRepo};
 use mongodb::results::InsertOneResult;
-use chrono::Utc;
-
 
 #[get("/blogs/<id>")]
 pub async fn get_all_blog_post(db: &State<BlogRepo>, id: String) -> Result<Json<BlogPost>, Status> {

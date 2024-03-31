@@ -12,13 +12,11 @@ const useFadeInOnView = () => {
                     observer.unobserve(entry.target);
                 }
             });
-
             processQueue();
         }, { threshold: 0.1 });
 
         const observedElements = document.querySelectorAll('.gallery-item');
         setElements(Array.from(observedElements));
-
         observedElements.forEach(el => observer.observe(el));
 
         function processQueue() {

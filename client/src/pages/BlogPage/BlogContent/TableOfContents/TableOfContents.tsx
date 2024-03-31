@@ -3,7 +3,6 @@ import ItableOfContentsProps from "./Interface/ItableOfContentsProps"
 import { useEffect, useState, useRef, RefObject } from "react";
 import { stringToHash } from "../../../../components/Utility/StringUtility";
 import "./TableOfContents.css";
-import gsap from "gsap";
 
 const TableOfContents: React.FC<ItableOfContentsProps> = (props) => {
     const [tocEntries, setTocEntries] = useState<JSX.Element[] | null>(null);
@@ -44,7 +43,7 @@ const TableOfContents: React.FC<ItableOfContentsProps> = (props) => {
             const marginBottom = `${(22 - 4.5 * level) / 2}px`;
             const color = getTextColor(level);
             const id = stringToHash(title);
-            const className = `level-${level - 2} section-toc-entry`;
+            const className = `level-${level - 2} section-toc-entry flex items-center`;
             return (
                 <div key={idx} id={id.toString()} className={className} style={{ color, margin: `${marginBottom} ${indentation}` }} onClick={(e) => handleClick(e, id.toString())}>
                     {title}
@@ -56,9 +55,6 @@ const TableOfContents: React.FC<ItableOfContentsProps> = (props) => {
             setTocEntryRef(renderedSubHeadings.map(() => React.createRef<any>()));
         }
     }
-
-    /* function sync(pathLength) {
-* } */
 
     const drawPath = () => {
         const tocPath = tocMarkerPathRef.current,
@@ -112,7 +108,7 @@ const TableOfContents: React.FC<ItableOfContentsProps> = (props) => {
             const pathLength = tocPath!.getTotalLength();
             tocPath!.setAttribute('d', pathString);
             tocPath!.setAttribute('stroke-dashoffset', '1');
-            tocPath!.setAttribute('stroke-dasharray', `1, ${pathStart}, ${pathEnd - pathStart}, ${pathLength === 0 ? 1000 : pathLength}`);
+            tocPath!.setAttribute('stroke-dasharray', `0, ${pathStart}, ${pathEnd - pathStart}, ${pathLength === 0 ? 1000 : pathLength}`);
             tocPath!.setAttribute('opacity', '1');
             setLastPathInfo({
                 lastPathStart: pathStart,

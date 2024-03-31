@@ -8,7 +8,7 @@
   - [Roadmap](#roadmap)
 
 <!-- markdown-toc end -->
-  
+
 
 ## Development
 
@@ -117,9 +117,9 @@ cargo run
 * [x] Set up TLS certificate and encryption
 * [x] Blog Reading page show [snake](https://lab.hakim.se/progress-nav/#dev ) like table of contents animation effect as user reads hard to explain but we'll see.
 * [x] Login system: users can login or continue as guests when using some tooks
+* [x] Website Footer
 
 ### Upcoming Features:
-* [ ] Website Footer
 * [ ] Mood tracker: track what made user happy or sad and give statiscs on what things most likely going to make user sad/happy
 * [ ] Fitness Tracker: Monitor your gym advancements and create personalized workout routines. Additionally, earn scores based on a unique formula I developed.
 * [ ] Meet sleek: Essentially when2meet, but offering a superior UI/UX experience.

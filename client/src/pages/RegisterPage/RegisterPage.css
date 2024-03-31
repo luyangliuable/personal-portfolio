@@ -1,12 +1,5 @@
 .register-form__wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
     height: calc(100vh - 30px);
-    top: 30px;
-    position: absolute;
 }
 
 .register-form{

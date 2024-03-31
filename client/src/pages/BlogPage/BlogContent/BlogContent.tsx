@@ -54,10 +54,12 @@ const BlogContent: React.FC<IBlogContentProps> = ({ scrolled }) => {
 
     function observeSections(): void {
         const sections = Array.from(document.querySelectorAll('.blog-section'));
+
         const intersectingSections = sections.filter(section => {
             const offset = isCenterAlignedWithViewport(section);
-            return offset < window.innerHeight && offset > -window.innerHeight / 2;
+            return offset <= window.innerHeight && offset >= -window.innerHeight;
         }).map(section => section.id);
+
         if (intersectingSections.length > 0) {
             emitter.emit('intersectingSections', intersectingSections);
         }
@@ -138,8 +140,7 @@ const BlogContent: React.FC<IBlogContentProps> = ({ scrolled }) => {
         <OpenGraphWrapper
             heading="Luyang's Blogs"
             body="Blog posts for documenting useful code, mark memorable moments in my life and help my journey of endless self-improvement."
-            imageUrl="https://w.wallhaven.cc/full/o5/wallhaven-o5wlp9.png"
-        >
+            imageUrl="https://w.wallhaven.cc/full/o5/wallhaven-o5wlp9.png">
             <main className="page-container">
                 <section className="blog-content__wrapper">
                     <PostDetailsPanel content={content} relatedPosts={relatedPosts} />
@@ -154,4 +155,4 @@ const BlogContent: React.FC<IBlogContentProps> = ({ scrolled }) => {
     );
 }
 
-export default BlogContent;
+export default React.memo(BlogContent);

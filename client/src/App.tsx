@@ -3,13 +3,15 @@ import { useNavigate, BrowserRouter, Route, Routes } from 'react-router-dom';
 import NavBar from './components/Navbar/Navbar';
 import { AppContextProvider } from "./stores/AppContext";
 import loadable from '@loadable/component'
-import './App.css';
 import SkeletonPage from './pages/SkeletonPage/SkeletonPage';
+import Footer from './components/Footer/Footer';
+import LlChatbot from './pages/Chatbot/Chatbot';
+import { throttle } from './components/Utility/AnimationUtility';
+
+import './App.css';
 
 const createLoadableWithFallback: any = (importFunction: any) => {
-    return loadable(importFunction, {
-        fallback: <SkeletonPage />
-    });
+    return loadable(importFunction, {fallback: <SkeletonPage />});
 }
 
 const LandingPage = createLoadableWithFallback(() => import('./pages/LandingPage/LandingPage'));
@@ -43,8 +45,7 @@ const RedirectToRoot = (props: { link: string }): React.ReactElement<{ link: str
 }
 
 function App() {
-    const [appState, setAppState] = useState<IAppStateInterface>({
-    });
+    const [appState, setAppState] = useState<IAppStateInterface>({});
 
     useEffect(() => {
         let scrollTimeout: NodeJS.Timeout;
@@ -69,19 +70,23 @@ function App() {
         };
 
         // Add the event listener
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", throttle(handleScroll, 20));
 
         // Interval for calculating the delta scroll every timeIntervalCheckMiliseconds.
         const deltaScrollCalculationInterval: NodeJS.Timeout = setInterval(() => {
-            setAppState(prevState => ({
-                ...prevState,
-                deltaScrollCalculation: {
-                    ...prevState.deltaScrollCalculation,
-                    lastRecordedScrollY: window.scrollY,
-                    deltaScrolled: window.scrollY - Math.max(0, prevState.deltaScrollCalculation?.lastRecordedScrollY ?? 0)
+            setAppState(prevState => {
+                const deltaScrolled = window.scrollY - Math.max(0, prevState.deltaScrollCalculation?.lastRecordedScrollY ?? 0);
+                if (prevState.deltaScrollCalculation?.deltaScrolled === deltaScrolled) return prevState;
+                return {
+                    ...prevState,
+                    deltaScrollCalculation: {
+                        ...prevState.deltaScrollCalculation,
+                        lastRecordedScrollY: window.scrollY,
+                        deltaScrolled: deltaScrolled
+                    }
                 }
-            }));
-        }, 10);
+            });
+        }, 400);
 
         return () => {
             window.removeEventListener("scroll", handleScroll);
@@ -103,11 +108,17 @@ function App() {
                         } />
                         <Route path="/digital_chronicles/blogs" element={<BlogPage showTopPicks={true} />} />
                         <Route path="/resume" element={<ResumePage />} />
+
                         <Route path="/projects/3d_printing" element={<ThreeDPrintingGallery />} />
                         <Route path="/projects/hardware" element={<HardwareProjectsPage />} />
                         <Route path="/projects/code" element={<CodingProjectsPage />} />
                         <Route path="/projects" element={<CodingProjectsPage />} />
+
+                        <Route path="/tools/chatbot" element={<LlChatbot />} />
+                        <Route path="/tools" element={<LlChatbot />} />
+
                         <Route path="/digital_chronicles/blog" element={<BlogContent scrolled={appState.scrollY} />} />
+
                         <Route path="/user/login" element={<LogInPage />} />
                         <Route path="/user/register" element={<RegisterPage />} />
 
@@ -119,6 +130,7 @@ function App() {
                         <Route path="/tools" element={<RedirectToRoot link="/tools/mood_tracker" />} />
                         <Route path="/about" element={<RedirectToRoot link="/about/teddie" />} />
                     </Routes>
+                    <Footer />
                 </BrowserRouter>
             </AppContextProvider>
         </div>

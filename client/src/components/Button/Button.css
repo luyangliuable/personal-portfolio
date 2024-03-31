@@ -1,68 +1,104 @@
 .button {
-	position: relative;
-	background: rgba(220, 220, 220, .3);
-  backdrop-filter: blur(2px);
-	border-radius: 12px;
-	cursor: pointer;
-	width: fit-content;
-	color: #333;
-	transition: background .5s ease-in-out;
-	-webkit-transition: background .5s ease-in-out;
-	-moz-transition: background .5s ease-in-out;
-	margin: 5px;
-	z-index: 1;
-	border: none;
+    --border-radius: 4px;
+    position: relative;
+    background: rgba(220, 220, 220, .3);
+    backdrop-filter: blur(2px);
+    box-sizing: content-box;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    width: fit-content;
+    color: #333;
+    transition: background .5s ease-in-out;
+    -webkit-transition: background .5s ease-in-out;
+    -moz-transition: background .5s ease-in-out;
+    margin: 5px;
+    z-index: 1;
+    border: none;
 }
+
+    .button__done {
+        background: rgb(86, 215, 50, 0.95) !important;
+        color: rgb(0, 43, 16);
+        cursor: not-allowed !important;
+    }
+
+    .button__error {
+        background: red !important;
+        cursor: not-allowed !important;
+    }
+
+.override-button {
+    background: transparent;
+    border: none;
+}
+
+
 .t-button {
-	--mouse-x: 0px;
-	--mouse-y: 0px;
-	--height: 30px;
-	--width: fit-content;
-	--border-radius: 4px;
-	border-radius: var(--border-radius);
-	display: flex;
-	padding: 5px 20px;
-	align-items: center;
-	justify-content: center;
-	height: var(--height);
-	width: var(--width);
-	cursor: pointer;
-	position: relative;
-	z-index: 1;
+    --mouse-x: 0px;
+    --mouse-y: 0px;
+    --height: 30px;
+    --width: fit-content;
+    border-radius: var(--border-radius);
+    display: flex;
+    padding: 5px 20px;
+    align-items: center;
+    justify-content: center;
+    height: var(--height);
+    width: var(--width);
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
 }
+
 .t-button:hover {
-	color: #FFF
+    color: #FFF
 }
+
+.button-line {
+    position: absolute;
+    height: 2px;
+    left: -10px;
+    transform: translateY(-30px);
+    width: 100vw;
+    border-radius: 100%;
+    background: #F3F3F3
+}
+
 .t-button:hover::after {
-	border-radius: var(--border-radius);
-	animation: .2s settle-position ease-in;
-	opacity: 1;
+    border-radius: var(--border-radius);
+    animation: .1s settle-position ease-in;
+    opacity: 1;
 }
-.t-button span {
-	position: relative;
-	z-index: 2;
-}
-.t-button::after {
-	background: #1e90ff;
-	opacity: 0;
-	content: "";
-	border-radius: 2px;
-	transition: .1s all ease-in;
-	height: var(--height);
-	width: 100%;
-	position: absolute;
-	z-index: 0;
-	padding: 5px 0px;
-}
+
+    .t-button span {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+    }
+
+    .t-button::after {
+        background: #1e90ff;
+        opacity: 0;
+        content: "";
+        border-radius: 2px;
+        transition: .1s all ease-in;
+        height: var(--height);
+        width: 100%;
+        position: absolute;
+        z-index: 0;
+        padding: 5px 0px;
+    }
+
 @keyframes settle-position {
-	0% {
-		opacity: 0;
-		transform: translate(var(--mouse-x), var(--mouse-y)) skew(3deg, 3deg);
-	}
-	50% {
-		opacity: 1;
-	}
-	100% {
-		transform: ;
-	}
+    0% {
+        opacity: 0;
+        transform: translate(var(--mouse-x), var(--mouse-y)) skew(3deg, 3deg);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: ;
+    }
 }

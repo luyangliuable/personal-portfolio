@@ -10,7 +10,6 @@
 .black-hole {
     position: relative;
     z-index: -1;
-    background: #F9F9F9;
     width: 100px;
     height: 500px;
 }

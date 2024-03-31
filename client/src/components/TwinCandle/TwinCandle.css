@@ -1,7 +1,11 @@
 .wrapper {
     position: relative;
     z-index: 1;
-    transform: scale(.8, .8);
+    transform: scale(.8, .8)
+}
+
+.wrapper * {
+    box-sizing: content-box;
 }
 
 @media (min-width: 10px) and (max-width: 700px) {

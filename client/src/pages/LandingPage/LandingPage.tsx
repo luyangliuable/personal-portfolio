@@ -5,6 +5,7 @@ import ILandingPageProps from "./Interface/ILandingPageProps";
 import Experiences from "../../components/ExperienceSection/ExperienceSection";
 import FeaturedContentSection from "../../components/FeaturedContentSection/FeaturedContentSection";
 import LandingPageCard from "../../components/LandingPageCard/LandingPageCard";
+import ConnectWithMeSection from "../../components/ConnectWithMeSection/ConnectWithMeSection";
 import BlogPage from "../BlogPage/BlogPage";
 
 class LandingPage extends Component<ILandingPageProps, ILandingPagestate> {
@@ -16,7 +17,7 @@ class LandingPage extends Component<ILandingPageProps, ILandingPagestate> {
     return (
       <main className="landing-page-content">
         <HeroSection scrolling={this.props.scrolling} />
-        <FeaturedContentSection scrolled={this.props.scrolled} />
+        <FeaturedContentSection />
         <div className="experience-section-wrapper"><Experiences scrolled={this.props.scrolled} /></div>
         <LandingPageCard landingPageCardType="fitContent" className="blend-with-background">
           <section className="flex-column-centered-centered"><BlogPage /></section>

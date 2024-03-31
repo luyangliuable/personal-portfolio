@@ -10,7 +10,16 @@ const NavBurgerPanel: React.FC<INavBurgerPanelProps> = ({ burgerPanel, links }) 
                 links.map(link => (
                     <NavLink
                         to={link.to}
-                        className={({ isActive }) => ["burger-item", isActive ? "burger-item active-link" : null].filter(Boolean).join(" ")}
+                        className={({ isActive }) => {
+                            let classes = ["burger-item", "flex", "justify-center", "items-center"];
+                            if (isActive && link.to) {
+                                const currentSearchParams = new URLSearchParams(window.location.search);
+                                const targetSearchParams = new URLSearchParams(new URL(link.to, window.location.href).search);
+                                const isQueryParamSame = [...targetSearchParams].every(([key, value]) => currentSearchParams.get(key) === value);
+                                if (isQueryParamSame) classes.push("active-link");
+                            }
+                            return classes.filter(Boolean).join(" ");
+                        }}
                         key={link.name}
                     >
                         {link.name}
@@ -22,4 +31,4 @@ const NavBurgerPanel: React.FC<INavBurgerPanelProps> = ({ burgerPanel, links }) 
 };
 
 
-export default NavBurgerPanel;
+export default React.memo(NavBurgerPanel);

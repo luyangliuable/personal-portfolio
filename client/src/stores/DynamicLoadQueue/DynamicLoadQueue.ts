@@ -18,7 +18,9 @@ class DynamicLoadQueue {
     }
 
     static getInstance(): DynamicLoadQueue {
-        if (!DynamicLoadQueue.instance) DynamicLoadQueue.instance = new DynamicLoadQueue();
+        if (!DynamicLoadQueue.instance) {
+            DynamicLoadQueue.instance = new DynamicLoadQueue()
+        };
         return DynamicLoadQueue.instance;
     }
 
@@ -45,13 +47,14 @@ class DynamicLoadQueue {
             this.fadeInElement(element);
             setTimeout(() => {
                 this.processQueue();
-            }, 50);
+            }, 10);
         }
     };
 
     fadeInElement(element: Element) {
         (element as HTMLElement).style.opacity = '1';
         (element as HTMLElement).style.transform = 'translate(0, 0)';
+        this.observer.unobserve(element);
     };
 }
 

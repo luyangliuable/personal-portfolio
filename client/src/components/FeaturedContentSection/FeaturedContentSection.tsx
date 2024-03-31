@@ -1,5 +1,6 @@
 import React, { Component, createRef, RefObject } from 'react';
 import { isCenterAlignedWithViewport } from "../Utility/ScrollUtility";
+import { FaAngleDown } from "react-icons/fa";
 import { truncateTextBody } from "../Utility/StringUtility";
 import IFeaturedContentSectionState from "./Interface/IFeaturedContentSectionState";
 import IFeaturedContentSectionProps from "./Interface/IFeaturedContentSectionProps";
@@ -39,7 +40,6 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
         this.calculateElementsToShow();
         this.fetchPostList();
         const candleLightUpMargin = 150;
-
         const checkCandleStatus = (): void => {
             if (isCenterAlignedWithViewport(this.currentComponentRef?.current) < 0) {
                 this.twinCandleComponentRef?.current?.transitionCandleFireToOn();
@@ -47,7 +47,6 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
                 this.twinCandleComponentRef?.current?.transitionCandleFireToOff();
             }
         }
-
         setInterval(checkCandleStatus, 200);
     }
 
@@ -55,7 +54,6 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
         const windowWidth = window.innerWidth;
         const elementWidth = 400;
         const wrapperWidth = 1900; // Connascence of value with FeaturedContentSection.css:10
-
         let numOfElementsToShow = Math.floor(Math.min(windowWidth, wrapperWidth) / elementWidth);
         this.setState({ numOfElementsToShow: Math.max(numOfElementsToShow, 1) });
     }
@@ -69,7 +67,7 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
 
     renderTopPickedPostsSortedByDateDescending = (): React.ReactNode => {
         const sliceEnd = this.state.numOfElementsToShow - 1;
-        return this.state.featuredPosts?.slice(0, sliceEnd).map((content, idx) => {
+        return this.state.featuredPosts?.slice(0, sliceEnd).map((content) => {
             return (
                 <div key={content._id.$oid}>
                     <GalleryItem
@@ -113,7 +111,15 @@ class FeaturedContentSection extends Component<IFeaturedContentSectionProps, IFe
                             link={this.state.featuredTool?.link} />
                         {this.renderTopPickedPostsSortedByDateDescending()}
                     </div>
-                    <div className="show-more-button-wrapper" ref={this.showMoreButtonRef}><Button onClick={this.showAllElements}>Show More...</Button></div>
+                    <div className="show-more-button-wrapper" ref={this.showMoreButtonRef}>
+                        <Button
+                            style={{ "--border-radius": "20px", zIndex: 10, border: "2px solid #F3F3F3" } as React.CSSProperties}
+                            onClick={this.showAllElements}
+                            showButtonLine>
+                            Show More <FaAngleDown />
+                        </Button>
+                    </div>
+                    <div className="divider h-28"></div>
                     <TwinCandle ref={this.twinCandleComponentRef} />
                 </section>
             </LandingPageCard>

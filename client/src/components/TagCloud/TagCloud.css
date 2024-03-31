@@ -6,6 +6,7 @@
     flex-wrap: wrap;
     overflow-wrap: break-word;
     line-height: 2;
+    bottom: 0
 }
 
 .card-item__tags>span {
@@ -15,5 +16,5 @@
     border: .1px solid #CCC;
     border-radius: 4px;
     font-size: .8em;
-    padding: min(3px, .5vw);
+    padding: min(3px, .5vw)
 }

@@ -40,6 +40,7 @@
 
 #coding-cat {
     fill: var(--bg);
+    cursor: pointer;
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 4;

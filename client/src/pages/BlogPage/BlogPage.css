@@ -1,14 +1,17 @@
 .blog-container {
     max-width: 1500px;
+    justify-content: flex-start;
 }
 
 .blog-list {
+    flex-grow: 1;
     padding-top: 4vh;
 
 }
 
 .blog__featured {
     display: flex; /* Define here instead of class .flex because need to override display: none later */
+    flex-grow: 1;
     border-left: .1px solid #888;
 }
 
@@ -48,10 +51,13 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     transition: all .2s ease-in;
-    background: #EEE;
+    background: #EEE; color: #555;
     border: .1px dashed #888;
-    color: #555;
 }
+
+    .blog__tag>svg {
+        margin-left: 3px;
+    }
 
     .blog__tag:hover {
         background: #1e90ff;
@@ -60,10 +66,16 @@
     }
 
     .blog__tag--selected {
-        background: #555;
+        background: var(--dark-mode-purple-2);
         color: #EEE;
         border: .1px solid #888;
         box-shadow: .2px .2px .1px #888;
+    }
+
+    .blog__tag--disabled {
+        cursor: not-allowed;
+        background: #555;
+        color: #DDD;
     }
 
 

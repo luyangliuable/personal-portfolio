@@ -1,0 +1,8 @@
+.chatbot__wrapper {
+    position: relative;
+    z-index: 2;
+    left: 0px; top: 0;
+    width: 100vw;
+    padding: 12px;
+    height: calc(100vh);
+}

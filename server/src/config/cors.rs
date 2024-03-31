@@ -18,7 +18,7 @@ impl Fairing for CORS {
     }
 
     /// Sets appropriate CORS headers to the response.
-  async fn on_response<'r>(&self, _request: &'r Request<'_>, response: &mut Response<'r>) {
+    async fn on_response<'r>(&self, _request: &'r Request<'_>, response: &mut Response<'r>) {
         let environment = env::var("ENVIRONMENT").unwrap_or_else(|_| "development".to_string());
 
         let allowed_origins = if environment == "production" {
@@ -31,6 +31,7 @@ impl Fairing for CORS {
         } else {
             vec![
                 "http://localhost:3000",
+                "http://localhost:6006",
                 "https://localhost:3000",
                 "http://localhost:3001"
             ]

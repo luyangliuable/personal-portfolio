@@ -11,6 +11,7 @@ import TagCloud from "../../TagCloud/TagCloud";
 import DynamicLoadQueue from "../../../stores/DynamicLoadQueue/DynamicLoadQueue";
 import Image from "../../Image/Image";
 import SequentialRiseSpan from "../../Atoms/SequentialRiseSpan/SequentialRiseSpan";
+import { truncateTextBody } from "../../Utility/StringUtility";
 
 class GalleryItem extends Component<IGalleryItemProps, IGalleryItemState> {
     galleryItemRef: RefObject<HTMLDivElement>;
@@ -61,10 +62,11 @@ class GalleryItem extends Component<IGalleryItemProps, IGalleryItemState> {
                     style={style}
                     key={this.props.key}
                     onMouseMove={cardGradientEffect}
-                    className="gallery-item flex flex-col justify-start items-center opacity-0 pb-10 blur-boundary card">
+                    className="gallery-item flex flex-col justify-between items-center opacity-0 pb-10 blur-boundary card">
                     {this.GalleryItemTypeSegment}
                     <div className="position-absolute color-white right-0 w-15 top-10 font-fira-code">READ</div>
                     <Image className="gallery-item__image" src={image} />
+                    <TagCloud tags={this.props.tags} />
                     <h3>{this.props.name}</h3>
                     {
                         this.props.minuteRead && this.props.dateCreated &&
@@ -74,11 +76,10 @@ class GalleryItem extends Component<IGalleryItemProps, IGalleryItemState> {
                     {this.props.description &&
                         <div className="w-full box-border p-4">
                             <SequentialRiseSpan minNumberOfLettersPerLine={42}>
-                                {this.props.description}
+                                {truncateTextBody(this.props.description, 150)}
                             </SequentialRiseSpan>
                         </div>
                     }
-                    <TagCloud tags={this.props.tags} />
                 </div>
             </NavLink>
         );

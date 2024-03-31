@@ -16,7 +16,7 @@ class ImageRepository extends Repository {
     async getImageById(idOrUrl: string): Promise<string> {
         if (idOrUrl === null) console.error("no image id provided");
         let url: string = idOrUrl;
-        if (!idOrUrl.startsWith('http://') && !idOrUrl.startsWith('https://')) url = `${ImageRepository.BASE_URL}${idOrUrl}`;
+        if (!idOrUrl.startsWith('http://') && !idOrUrl.startsWith('https://') && !idOrUrl.startsWith('/static')) url = `${ImageRepository.BASE_URL}${idOrUrl}`;
         if (this.cache.has(url)) return this.cache.get(url)!;
         if (this.ongoingRequests.has(url)) return this.ongoingRequests.get(url)!;
         const fetchImage = async () => {
@@ -31,7 +31,7 @@ class ImageRepository extends Repository {
                 this.ongoingRequests.delete(url);
                 return imageURL;
             } catch (error) {
-                console.error('Error fetching image:', error);
+                console.error('Error fetching image:', error, url);
                 this.ongoingRequests.delete(url);
                 throw error;
             }
