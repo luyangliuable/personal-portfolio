@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { IBlogPageState } from "./Interface/IBlogPageState";
+import { FaWindowClose } from "react-icons/fa";
 import HeroHeader from "../../components/HeroHeader/HeroHeader";
 import PostRepository from "../../repositories/PostRepository";
 import BlogPostResponse from "../../repositories/Response/BlogPostResponse";
 import IBlogPageProps from "./Interface/IBlogPageProps";
 import Card from "../../components/Card/Card";
-import GalleryItem from "../../components/Gallery/GalleryItem/GalleryItem";
 import BlogPostGraphics from "../../components/BlogPostGraphics/BlogPostGraphics";
 import SmallCard from "../../components/Atoms/SmallCard/SmallCard";
 import "./BlogPage.css";
@@ -163,21 +163,24 @@ const BlogPage: React.FC<IBlogPageProps> = (props) => {
                 selectedTagsString = selectedTags.concat(tagName);
                 let to = `${baseUrlLink}?tag=${encodeURIComponent(selectedTagsString.join(","))}`;
 
+                // Selected tags
                 if (state.currentSelectTags.includes(tagName)) {
                     selectedTagsString = selectedTags.filter(tag => tag !== tagName);
                     to = `${baseUrlLink}?tag=${encodeURIComponent(selectedTagsString.join(","))}`;
                     return (<Link onClick={() => {
                         const newTags = state.currentSelectTags.filter((tag) => tag !== tagName);
                         setState(prev => ({ ...prev, currentSelectTags: newTags }));
-                    }} to={to} key={tagName} className="blog__tag noselect blog__tag--selected">#{tagName}</Link>);
+                    }} to={to} key={tagName} className="blog__tag flex items-center noselect blog__tag--selected">#{tagName} <FaWindowClose /></Link>);
                 }
 
+                // Disabled tags because with selected doesn't show any content
                 if (state.content.filter(({ tags }) => isSubset([...selectedTags, tagName], tags) || ![...selectedTags, tagName]).length === 0) {
                     selectedTagsString = getCurrentSelectedTagsFromUrl();
                     to = `${baseUrlLink}?tag=${encodeURIComponent(selectedTagsString.join(","))}`;
                     return (<Link to={to} key={tagName} className="blog__tag noselect blog__tag--disabled">#{tagName}</Link>);
                 }
 
+                // Unselected tags
                 return (<Link onClick={() => {
                     const newTags = state.currentSelectTags.concat(tagName);
                     setState(prev => ({ ...prev, currentSelectTags: newTags }));

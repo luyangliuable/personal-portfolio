@@ -26,10 +26,10 @@ mod req {
 
     pub async fn post(url: &str, data: Option<Json<Value>>) -> Result<ByteStream![Bytes]> {
         let client = reqwest::Client::new();
+
         let bytes_stream = match data {
             Some(data) => {
                 let raw_value: Value = data.into_inner(); // Convert Json<serde_json::Value> into serde_json::Value
-
                 client.post(url)
                     .json(&raw_value)
                     .send()

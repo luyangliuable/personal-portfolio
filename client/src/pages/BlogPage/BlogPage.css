@@ -55,6 +55,10 @@
     border: .1px dashed #888;
 }
 
+    .blog__tag>svg {
+        margin-left: 3px;
+    }
+
     .blog__tag:hover {
         background: #1e90ff;
         border: .1px solid #888;

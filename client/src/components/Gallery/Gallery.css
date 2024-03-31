@@ -4,8 +4,9 @@
 
 .gallery-item__container {
     display: grid;
-    grid-template-columns: auto auto;
-    width: 80vw;
+    grid-template-columns: repeat(auto-fill, 400px);
+    gap: 20px;
+    width: 90vw;
     align-items: flex-start;
     justify-content: space-around;
 }
@@ -15,17 +16,5 @@
         grid-template-columns: auto;
         justify-items: center; 
         width: 100vw
-    }
-}
-
-@media screen and (min-width: 1600px) {
-    .gallery-item__container {
-        grid-template-columns: auto auto auto;
-    }
-}
-
-@media screen and (min-width: 2100px) {
-    .gallery-item__container {
-        grid-template-columns: auto auto auto auto;
     }
 }

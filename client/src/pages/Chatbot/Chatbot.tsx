@@ -8,9 +8,9 @@ const LlChatbot: React.FC = ({}) => {
     }, []);
 
     return (
-        <div className="chatbot__wrapper">
-            <Chatbot baseURI="http://localhost:8000/api/proxy_post?url=http://124.148.171.97" />
-        </div>
+        <main className="chatbot__wrapper">
+            <Chatbot baseURI="https://6dc8-101-115-129-33.ngrok-free.app" />
+        </main>
     );
 };
 

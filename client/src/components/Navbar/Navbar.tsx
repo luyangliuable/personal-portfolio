@@ -63,8 +63,7 @@ const NavBar: React.FC<INavbarProps> = (props) => {
     const listenDeltaScrolled = () => {
         const { hideNavBarScrollSensitivity, isNavbarHidden } = state;
         const deltaScrolled = scrollStatus.deltaScrolled ?? 0;
-
-        if (deltaScrolled >= hideNavBarScrollSensitivity && !isNavbarHidden) {
+        if (( deltaScrolled >= hideNavBarScrollSensitivity ) && !isNavbarHidden && state.navBarDetached) {
             hideNavBar();
         } else if (deltaScrolled <= -hideNavBarScrollSensitivity && isNavbarHidden) {
             showNavBar();
@@ -82,17 +81,18 @@ const NavBar: React.FC<INavbarProps> = (props) => {
         updateScrolledProgress(scrollStatus.scrolled! / pageHeight);
     };
 
+
     const addBurgerClickOutEventLister = () => {
-        window.addEventListener("click", (e) => {
-            if (burgerPanel.current && !burgerPanel.current.contains(e.target as Node) && !burgerButton.current!.contains(e.target as Node)) {
-                hideBurgerMenu();
-            }
-        });
+        window.addEventListener("click", hideBurgerMenu);
     }
 
     useEffect(() => {
         initializeNavBar();
         setupNavHoverEffect();
+
+        return () => {
+            window.removeEventListener("click", hideBurgerMenu);
+        };
     }, [])
 
     const setupNavHoverEffect = () => {
@@ -115,7 +115,7 @@ const NavBar: React.FC<INavbarProps> = (props) => {
     const initializeNavBar = () => {
         listenContinuousScrolled();
         updateScrolledProgress(0);
-        addBurgerClickOutEventLister();
+        if (window.innerWidth < 900) addBurgerClickOutEventLister();
     }
 
     useEffect(() => {
@@ -144,7 +144,7 @@ const NavBar: React.FC<INavbarProps> = (props) => {
     const detachNavBar = () => {
         navbar.current?.classList.add("detached");
         burgerPanel.current?.classList.remove("nav-burger-panel-move-lower");
-        setState(prev =>{
+        setState(prev => {
             return {
                 ...prev,
                 navBarDetached: true
@@ -180,8 +180,10 @@ const NavBar: React.FC<INavbarProps> = (props) => {
         burgerPanel.current?.classList.toggle("nav-burger-panel-hide");
     };
 
-    const hideBurgerMenu = () => {
-        burgerPanel.current?.classList.add("nav-burger-panel-hide");
+    const hideBurgerMenu = (e: any) => {
+        if (burgerPanel.current && !burgerPanel.current.contains(e.target as Node) && !burgerButton.current!.contains(e.target as Node)) {
+            burgerPanel.current?.classList.add("nav-burger-panel-hide");
+        }
     };
 
     const hideDropdownMenu = () => {
@@ -197,7 +199,7 @@ const NavBar: React.FC<INavbarProps> = (props) => {
     const renderDropdownMenu = (links: Link[] | undefined): ReactNode | void => {
         if (links !== undefined) {
             showDropdownMenu();
-            setState(( prev ) => {
+            setState((prev) => {
                 return {
                     ...prev,
                     dropdownMenuLinkDisplay: links.map((item, _) => renderNavLink(item))

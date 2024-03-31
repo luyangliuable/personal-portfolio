@@ -35,7 +35,7 @@
 
     .experience-section-card {
         width: 300px;
-        margin: 0 5px;
+        margin: 0 -25px;
         padding: 10px;
         height: fit-content
     }

@@ -3,6 +3,6 @@
     z-index: 2;
     left: 0px; top: 0;
     width: 100vw;
-    height: calc(100vh - 100px);
-    padding: 0px 150px 100px 100px;
+    padding: 12px;
+    height: calc(100vh);
 }
