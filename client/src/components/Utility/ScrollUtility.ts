@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 const isCenterAlignedWithViewport = (div: Element | null): number => {
     if (div === null) return Number.MAX_SAFE_INTEGER;
     const rect = div.getBoundingClientRect();
@@ -60,6 +62,20 @@ const resetElementPosition = (element: HTMLElement): void => {
     element.style.transform = '';
 }
 
+function useScrollToTopOnLoad() {
+    useEffect(() => {
+        const scrollToTop = () => {
+            window.scrollTo({
+                top: 0
+            });
+        };
 
+        scrollToTop();
 
-export { resetElementPosition, adjustElementPositionAbsoluteY as centerElementInParent, isCenterAlignedWithViewport, getHTMLElementCenterYPosition, isCloseToAnotherElement }
+        return () => {
+            scrollToTop();
+        };
+    }, []);
+}
+
+export { useScrollToTopOnLoad, resetElementPosition, adjustElementPositionAbsoluteY as centerElementInParent, isCenterAlignedWithViewport, getHTMLElementCenterYPosition, isCloseToAnotherElement }

@@ -23,6 +23,11 @@
                     "to": "/digital_chronicles/scenic_memories"
                 },
                 {
+                    "name": "🎞️ Film Reviews",
+                    "isLocked": true,
+                    "to": "/digital_chronicles/film_reviews"
+                },
+                {
                     "name": "🧩 My Daily Leetcode",
                     "to": "/digital_chronicles/blogs?tag=daily-leetcode"
                 }

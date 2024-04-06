@@ -35,7 +35,7 @@
 
     .experience-section-card {
         width: 300px;
-        margin: 0 -25px;
+        margin: 0 -30px;
         padding: 10px;
         height: fit-content
     }
@@ -63,7 +63,7 @@
 .experience-section__year {
     z-index: 2;
     box-shadow: .6px .5px 2.8px #A5A58C;
-    margin: 0 8.5vw;
+    margin: 0 clamp(80px, 5.5vw, 150px);
     padding: 10px;
     border-radius: 5px;
     border: 1px solid var(--dark-mode-pink);

@@ -13,7 +13,6 @@ import IBlogContentProps from "./Interface/IBlogContentProps";
 import BlogPostResponse from "../../../repositories/Response/BlogPostResponse";
 import TableOfContent from "./TableOfContents/TableOfContents";
 import Image from "../../../components/Image/Image";
-import OpenGraphWrapper from "../../../wrappers/OpenGraphWrapper/OpenGraphWrapper";
 import PostDetailsPanel from "./PostDetailsPanel/PostDetailsPanel";
 import AuthorDetails from "./AuthorDetails/AuthorDetails";
 import "./BlogContent.css";
@@ -137,21 +136,18 @@ const BlogContent: React.FC<IBlogContentProps> = ({ scrolled }) => {
 
 
     return (
-        <OpenGraphWrapper
-            heading="Luyang's Blogs"
-            body="Blog posts for documenting useful code, mark memorable moments in my life and help my journey of endless self-improvement."
-            imageUrl="https://w.wallhaven.cc/full/o5/wallhaven-o5wlp9.png">
-            <main className="page-container">
-                <section className="blog-content__wrapper">
-                    <PostDetailsPanel content={content} relatedPosts={relatedPosts} />
-                    {renderBlogContent()}
+        <main className="page-container">
+            <section className="blog-content__wrapper">
+                <PostDetailsPanel content={content} relatedPosts={relatedPosts} />
+                {renderBlogContent()}
+                { ( headings.length !== 0) &&
                     <aside className="blog-content__side-components position-sticky mt-20vh">
                         <Link to="/digital_chronicles/blogs" className="flex items-center"><IoMdArrowBack />Back to Blogs</Link>
                         <TableOfContent emitter={emitter} headings={headings} />
                     </aside>
-                </section>
-            </main>
-        </OpenGraphWrapper>
+                }
+            </section>
+        </main>
     );
 }
 
