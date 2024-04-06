@@ -2,11 +2,10 @@ import React from "react";
 import BlogPostResponse from "../../../../repositories/Response/BlogPostResponse";
 import BuyMeACoffeeButton from "../BuyMeACoffeeButton/BuyMeACoffeeButton";
 import { Link } from "react-router-dom";
-import '../../../../components/Card/Card.css';
 import AuthorDetails from "../AuthorDetails/AuthorDetails";
-import SkeletonBlogContent from "../SkeletonBlogContent/SkeletonBlogContent";
 import { cardGradientEffect } from "../../../../components/Utility/MouseUtility";
 import TagCloud from "../../../../components/TagCloud/TagCloud";
+import "./PostDetailsPanel.css";
 
 type IPostDetailsPanelProps = {
     content?: BlogPostResponse,
