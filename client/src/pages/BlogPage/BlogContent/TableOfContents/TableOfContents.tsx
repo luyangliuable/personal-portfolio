@@ -69,7 +69,7 @@ const TableOfContents: React.FC<ItableOfContentsProps> = (props) => {
             pathEnd = 0;
 
         tocEntries!.forEach((entry, idx) => {
-            if (entry.props.className.includes('active')) {
+            if (entry.props.className.includes('toc-active')) {
                 if (startIdx === -1) startIdx = idx;
                 endIdx = idx;
             }
@@ -128,9 +128,9 @@ const TableOfContents: React.FC<ItableOfContentsProps> = (props) => {
         props.emitter.on('intersectingSections', (intersectingIds) => {
             setTocEntries((prev) => {
                 return prev!.map((tocEntry) => {
-                    const prevClassName = tocEntry.props.className.replace('active', '');
+                    const prevClassName = tocEntry.props.className.replace('toc-active', '');
                     if (intersectingIds.includes(tocEntry.props.id)) {
-                        return React.cloneElement(tocEntry, { className: `${prevClassName} active` });
+                        return React.cloneElement(tocEntry, { className: `${prevClassName} toc-active` });
                     }
                     return React.cloneElement(tocEntry, { className: prevClassName });
                 });

@@ -37,7 +37,7 @@
     transition: transform .3s ease;
 }
 
-.active {
+.toc-active {
     color: #000 !important;
     font-weight: bold !important;
     transform: translateX(5px)

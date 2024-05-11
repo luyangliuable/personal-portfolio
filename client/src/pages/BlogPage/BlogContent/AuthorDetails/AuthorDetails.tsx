@@ -22,6 +22,7 @@ const AuthorDetails: React.FC<{ content?: BlogPostResponse }> = ({ content }) =>
                 />
                 <div className="flex-vertical">
                     <b>{author}</b>
+                    <br />
                     <span>{displayDateCreated}</span>
                 </div>
             </div>

@@ -37,7 +37,7 @@ class Gallery extends Component<IGalleryProps, IGalleryState> {
         return (
             <>
                 <div className="heading__wrapper"><h2>{this.props.heading}</h2></div>
-                <div ref={this.galleryContainerRef} className="gallery-item__container">
+                <div ref={this.galleryContainerRef} className="gallery">
                     {this.renderGalleryItems()}
                 </div>
             </>

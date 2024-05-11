@@ -17,8 +17,8 @@ const ExperienceSectionEvent: React.FC<ExperienceSectionEventProps> = ({ item, i
     const experienceSectionCardIndexIsEvenNumber = index % 2 === 0;
     const experienceSectionCardClassName = ["card experience-section-card no-boundary flex flex-row justify-between items-center"];
 
-    experienceSectionCardIndexIsEvenNumber ? experienceSectionCardClassName.push("above")
-        : experienceSectionCardClassName.push("below");
+    experienceSectionCardIndexIsEvenNumber ? experienceSectionCardClassName.push("exp-above")
+        : experienceSectionCardClassName.push("exp-below");
 
     const imageWrapperClassName = ["experience-section-card__image-wrapper"];
     const imageClassName = ["experience-section-card__image object-cover"];
@@ -39,7 +39,7 @@ const ExperienceSectionEvent: React.FC<ExperienceSectionEventProps> = ({ item, i
         <div onMouseMove={cardGradientEffect}
             className={experienceSectionCardClassName.join(" ")}>
             {defaultDisplay && experienceSectionCardTextExperienceBody()}
-            <div className="connecting-line" ref={connectingLineRef}></div>
+            <div className="connecting-line"></div>
             <div className={imageWrapperClassName.join(" ")}>
                 <img className={imageClassName.join(" ")}
                     alt={alt}

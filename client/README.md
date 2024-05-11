@@ -5,7 +5,7 @@
 ```sh
 cd ./build 
 npm run build
-rsync -avz --progress --exclude-from=<(echo "/var/www/llcode.tech/html/*") * root@170.64.250.107:/var/www/llcode.tech/html/
+rsync -avz --progress * root@170.64.250.107:/var/www/llcode.tech/html/
 ssh root@170.64.250.107 'nginx -s reload'
 ```
 

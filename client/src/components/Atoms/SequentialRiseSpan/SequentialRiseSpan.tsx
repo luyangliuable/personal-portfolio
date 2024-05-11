@@ -81,7 +81,7 @@ const SequentialRiseSpan: React.FC<ISequentialRiseSpanProps> = ({ calculationAdj
                 elementType || 'p',
                 {
                     key: index,
-                    className: ["visible-hidden", className].join(" ")
+                    className: [className].join(" ")
                 },
                 line
             );
