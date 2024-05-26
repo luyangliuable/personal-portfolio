@@ -36,11 +36,9 @@ class Image extends Component<IImageProps, IImageState> {
     async updateImage() {
         try {
             const imageId = this.props.src ?? Image.defaultProps.defaultImageId;
-
             const [imageUrl] = await Promise.all([
-                this.imageRepository.getImageById(imageId),
+                this.imageRepository.getImageById(imageId, this.props.compression),
             ]);
-
             this.setState({
                 fetchedImageUrl: imageUrl,
             });
@@ -51,7 +49,7 @@ class Image extends Component<IImageProps, IImageState> {
     }
 
     render() {
-        const { fetchedImageUrl } = this.state;
+        let { fetchedImageUrl } = this.state;
         let { className, alt } = this.props;
         alt ??= this.defaultImageAlt;
 

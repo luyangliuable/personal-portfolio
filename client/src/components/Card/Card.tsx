@@ -63,9 +63,12 @@ class Card extends Component<ICardProps, ICardState> {
                     <p className="card-item__label flex flex-row items-center">{`${displayMinuteRead} | ${displayDateCreated}`}{in_progress && <InProgressBlock />}</p>
                 </section>
                 <div className="card-image-preview__wrapper position-absolute overflow-hidden flex justify-center items-center">
-                    {<Image src={image} className="card-image-preview" alt="Card Preview" />}
+                    {<Image compression={30} src={image} className="card-image-preview" alt="Card Preview" />}
                 </div>
-                <footer className="flex mt-5"><Image src={authorImage} className="user-image card-image--author-image" alt="Author" />{author}</footer>
+                <footer className="flex mt-5">
+                    <Image compression={1} src={authorImage} className="user-image card-image--author-image" alt="Author" />
+                    {author}
+                </footer>
             </NavLink>
         );
     }

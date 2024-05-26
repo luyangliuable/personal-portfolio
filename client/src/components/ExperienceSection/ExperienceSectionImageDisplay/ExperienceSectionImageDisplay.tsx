@@ -36,7 +36,7 @@ const ExperienceSectionImageDisplay: React.FC<IExperienceSectionImageDisplayProp
             className={experienceSectionCardClassName.join(" ")}>
             <div className="connecting-line"></div>
             <div className="image-display__image__wrapper flex justify-center items-center box-shadow-large">
-                <Image alt={alt} src={item.media.source.url} />
+                <Image alt={alt} src={item.media.source.url} compression={30} />
             </div>
             {experienceSectionCardTextImageBody()}
         </div>
