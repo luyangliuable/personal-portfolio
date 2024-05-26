@@ -1,4 +1,4 @@
-use rocket::{http::{ContentType, Status}, serde::json::Json, State,};
+use rocket::{http::{ContentType, Status}, serde::json::Json, State, form::FromForm};
 use mongodb::{bson::doc, results::{InsertOneResult, UpdateResult}};
 use crate::{models::local_image_model::LocalImage, controller::local_image_controller::LocalImageController};
 
@@ -12,9 +12,14 @@ pub fn get_all_local_image(controller: &State<LocalImageController>) -> Result<J
     controller.get_all()
 }
 
-#[get("/image/<id>")]
-pub fn get_local_image(id: String, controller: &State<LocalImageController>) -> Result<(ContentType, Vec<u8>), Status> {
-    controller.get(id)
+#[derive(FromForm)]
+pub struct GetLocalImageQuery {
+    compression: Option<u8>
+}
+
+#[get("/image/<id>?<query..>")]
+pub fn get_local_image(id: String, controller: &State<LocalImageController>, query: GetLocalImageQuery) -> Result<(ContentType, Vec<u8>), Status> {
+    controller.get(id, query.compression.unwrap_or(100))
 }
 
 #[put("/image/<id>", data = "<new_image>")]
