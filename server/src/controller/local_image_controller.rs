@@ -1,11 +1,14 @@
 use rocket::{http::{ContentType, Status}, serde::json::Json};
+extern crate log;
 use mongodb::{bson::{doc, to_bson, oid::ObjectId}, results::{InsertOneResult, UpdateResult}};
 use std::str::FromStr;
+use std::io::{BufWriter, Cursor};
 use crate::{
     models::local_image_model::LocalImage,
     repository::local_image_repo::LocalImageRepo,
     utils::{local_image_util, util},
 };
+use image::{DynamicImage, ImageOutputFormat};
 
 
 pub struct LocalImageController {
@@ -51,15 +54,33 @@ impl LocalImageController  {
         };
 
         let local_image_path = match local_image_util::image_store_location() {
-            Ok(local_image_location) => util::path_combiner(local_image_location, local_image_result.file_name, Some( local_image_result.image_type )),
-            Err(_) => return Err(Status::NotFound)
+            Ok(local_image_location) => util::path_combiner(local_image_location, local_image_result.file_name, Some(local_image_result.image_type)),
+            Err(_) => return Err(Status::NotFound),
         };
 
-        let image_bytes = std::fs::read(local_image_path).map_err(|_| {
-            Status::InternalServerError
-        })?;
+        let image_bytes = std::fs::read(&local_image_path).map_err(|_| Status::InternalServerError)?;
+        let img = image::load_from_memory(&image_bytes).map_err(|_| Status::InternalServerError)?;
+        
+        let compressed_image = {
+            let mut compressed_image = Vec::new();
+            {
+                let mut writer = BufWriter::new(Cursor::new(&mut compressed_image));
+                match content_type.to_string().as_str() {
+                    "image/png" => {
+                        img.write_to(&mut writer, ImageOutputFormat::Png).map_err(|_| Status::InternalServerError)?;
+                    }
+                    "image/jpeg" => {
+                        img.write(to(&mut writer, ImageOutputFormat::Jpeg(75)).map_err(|_| Status::InternalServerError)?;
+                    }
+                    _ => {
+                        return Ok((content_type, image_bytes));
+                    }
+                }
+            }
+            compressed_image
+        };
 
-        Ok((content_type, image_bytes))
+        Ok((content_type, compressed_image))
     }
 
     pub fn update(&self, id: String, new_image: LocalImage) -> Result<Json<UpdateResult>, Status> {
