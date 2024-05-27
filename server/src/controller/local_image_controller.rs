@@ -53,9 +53,7 @@ impl LocalImageController  {
 
     fn compress_image(&self, img: DynamicImage, content_type: ContentType, compression_percentage: u8) -> Result<Vec<u8>, Status> {
         let mut compressed_image = Vec::new();
-
         let mut writer = BufWriter::new(Cursor::new(&mut compressed_image));
-
         match content_type.to_string().as_str() {
             "image/png" => {
                 img.write_to(&mut writer, ImageOutputFormat::Png).map_err(|_| Status::InternalServerError)?;
@@ -74,34 +72,33 @@ impl LocalImageController  {
 
     pub fn get(&self, id: String, compression_percentage: u8) -> Result<(ContentType, Vec<u8>), Status> {
         let object_id = ObjectId::from_str(&id).expect("Failed to convert id to ObjectId");
-
         let local_image_result = match self.repo.0.get(object_id) {
             Ok(local_image) => local_image,
             Err(_) => return Err(Status::NotFound),
         };
-
-        let content_type = match local_image_result.image_type.as_str() {
-            "png" => ContentType::PNG,
-            "jpg" | "jpeg" => ContentType::JPEG,
-            "gif" => ContentType::GIF,
-            "pdf" => ContentType::PDF,
-            _ => return Err(Status::UnsupportedMediaType),
-        };
-
         let local_image_path = match local_image_util::image_store_location() {
             Ok(local_image_location) => util::path_combiner(
                 local_image_location,
                 local_image_result.file_name,
-                Some(local_image_result.image_type)
+                Some(local_image_result.image_type.clone())
             ),
             Err(_) => return Err(Status::NotFound),
         };
-
-        let image_bytes = std::fs::read(&local_image_path).map_err(|_| Status::InternalServerError)?;
-        let img = image::load_from_memory(&image_bytes).map_err(|_| Status::InternalServerError)?;
+        let file_bytes = std::fs::read(&local_image_path).map_err(|_| Status::InternalServerError)?;
+        let content_type = match local_image_result.image_type.as_str() {
+            "png" => ContentType::PNG,
+            "jpg" | "jpeg" => ContentType::JPEG,
+            "gif" => {
+                return Ok((ContentType::GIF, file_bytes))
+            },
+            "pdf" => {
+                return Ok((ContentType::PDF, file_bytes))
+            },
+            _ => return Err(Status::UnsupportedMediaType),
+        };
+        let img = image::load_from_memory(&file_bytes).map_err(|_| Status::InternalServerError)?;
         let resized_img = self.resize_image(&img, content_type.clone(), compression_percentage);
         let compressed_image = self.compress_image(resized_img, content_type.clone(), compression_percentage)?;
-
         Ok((content_type, compressed_image))
     }
 
