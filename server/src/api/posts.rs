@@ -3,8 +3,9 @@ use crate::{models::post_model::Post, controller::post_controller::PostControlle
 use mongodb::{bson::doc, results::{ UpdateResult, InsertOneResult, DeleteResult }};
 
 #[get("/posts/<id>")]
-pub async fn get_post(controller: &State<PostController>, id: String) -> Result<Json<Post>, Status> {
-    controller.inner().get(id)
+pub async fn get_post(controller: &State<PostController>, id: String, redis: &State<redis::Client>) -> Result<Json<Post>, Status> {
+    let mut con = redis.get_connection().map_err(|_| Status::InternalServerError)?;
+    controller.inner().get(id, &mut con)
 }
 
 #[get("/posts")]

@@ -38,6 +38,8 @@ fn index() -> &'static str {
 async fn rocket() -> _ {
     println!("Starting server...");
 
+    let redis = redis::Client::open("redis://127.0.0.1/").unwrap();
+
     // Initialize database repositories.
     let blog_repo = BlogRepo::init();
     let post_repo = PostRepo(MongoRepo::<Post>::init("Post", &*DB).await);
@@ -50,6 +52,8 @@ async fn rocket() -> _ {
 
     // TODO: Convert this into a toml file and load it
     rocket::build()
+        .manage(redis)
+
         .manage(blog_repo)
         .manage(user_repo)
         .manage(message_repo)

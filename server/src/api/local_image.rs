@@ -1,6 +1,7 @@
 use rocket::{http::{ContentType, Status}, serde::json::Json, State, form::FromForm};
 use mongodb::{bson::doc, results::{InsertOneResult, UpdateResult}};
 use crate::{models::local_image_model::LocalImage, controller::local_image_controller::LocalImageController};
+use redis::{Commands, Client, RedisResult};
 
 #[post("/image", data = "<new_image>")]
 pub fn index_local_image(controller: &State<LocalImageController>, new_image: Json<LocalImage>) -> Result<Json<InsertOneResult>, Status> {
@@ -18,8 +19,14 @@ pub struct GetLocalImageQuery {
 }
 
 #[get("/image/<id>?<query..>")]
-pub fn get_local_image(id: String, controller: &State<LocalImageController>, query: GetLocalImageQuery) -> Result<(ContentType, Vec<u8>), Status> {
-    controller.get(id, query.compression.unwrap_or(100))
+pub fn get_local_image(
+    id: String,
+    redis: &State<redis::Client>,
+    controller: &State<LocalImageController>,
+    query: GetLocalImageQuery,
+) -> Result<(ContentType, Vec<u8>), Status> {
+    let mut con = redis.get_connection().map_err(|_| Status::InternalServerError)?;
+    controller.get(id.clone(), query.compression.unwrap_or(100), &mut con)
 }
 
 #[put("/image/<id>", data = "<new_image>")]

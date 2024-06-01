@@ -10,7 +10,7 @@ pub fn markdown_store_location() -> Result<String, Error> {
     util::get_env_variable(env_variable_key)
 }
 
-pub fn get_path_of_stored_markdown(mut previous_post: &Post) -> Result<String, Error> {
+pub fn get_path_of_stored_markdown(previous_post: &Post) -> Result<String, Error> {
     let store_location = markdown_store_location()?;
 
     // comment this out because I decided with with my own file names instead of uuid for ease of identification
@@ -21,21 +21,16 @@ pub fn get_path_of_stored_markdown(mut previous_post: &Post) -> Result<String, E
     // };
 
     let file_name = &previous_post.file_name;
-
     let year = &previous_post.year;
     let month = &previous_post.month;
-
     Ok(format!("{}/{}/{}/{}.md", store_location, year, month, file_name))
 }
 
 pub fn get_post_content_for_post(mut previous_post: Post) -> Result<Post, Error> {
     let path = get_path_of_stored_markdown(&previous_post)?;
-
     let mut file = File::open(path)?;
     let mut contents = String::new();
     file.read_to_string(&mut contents)?;
-
     previous_post.body = contents;
-
     Ok(previous_post)
 }

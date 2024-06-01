@@ -1,5 +1,6 @@
 use rocket::{http::{ContentType, Status}, serde::json::Json};
 extern crate log;
+use redis::{Commands, Client, RedisResult};
 use mongodb::{bson::{doc, to_bson, oid::ObjectId}, results::{InsertOneResult, UpdateResult}};
 use std::str::FromStr;
 use std::io::{BufWriter, Cursor};
@@ -70,8 +71,21 @@ impl LocalImageController  {
         Ok(compressed_image)
     }
 
-    pub fn get(&self, id: String, compression_percentage: u8) -> Result<(ContentType, Vec<u8>), Status> {
+    pub fn get(
+        &self,
+        id: String,
+        compression_percentage: u8,
+        redis_con: &mut redis::Connection
+    ) -> Result<(ContentType, Vec<u8>), Status> {
         let object_id = ObjectId::from_str(&id).expect("Failed to convert id to ObjectId");
+
+        // If already cached return cached version instead
+        let key = format!("{}_{}", id, compression_percentage);
+        let value: Option<Vec<u8>> = redis_con.get(&key).unwrap_or(None);
+        if let Some(image) = value {
+            return Ok((ContentType::JPEG, image));
+        }
+
         let local_image_result = match self.repo.0.get(object_id) {
             Ok(local_image) => local_image,
             Err(_) => return Err(Status::NotFound),
@@ -89,9 +103,11 @@ impl LocalImageController  {
             "png" => ContentType::PNG,
             "jpg" | "jpeg" => ContentType::JPEG,
             "gif" => {
+                let _: () = Self::cache_data(redis_con, &key, file_bytes.clone())?;
                 return Ok((ContentType::GIF, file_bytes))
             },
             "pdf" => {
+                let _: () = Self::cache_data(redis_con, &key, file_bytes.clone())?;
                 return Ok((ContentType::PDF, file_bytes))
             },
             _ => return Err(Status::UnsupportedMediaType),
@@ -99,7 +115,16 @@ impl LocalImageController  {
         let img = image::load_from_memory(&file_bytes).map_err(|_| Status::InternalServerError)?;
         let resized_img = self.resize_image(&img, content_type.clone(), compression_percentage);
         let compressed_image = self.compress_image(resized_img, content_type.clone(), compression_percentage)?;
+
+        // Cache data for next time
+        let _: () = Self::cache_data(redis_con, &key, compressed_image.clone())?;
+
         Ok((content_type, compressed_image))
+    }
+
+    fn cache_data(redis_con: &mut redis::Connection, key: &String, data: Vec<u8>) -> Result<(), Status> {
+        let _: () = redis_con.set(&key, data).map_err(|_| Status::InternalServerError)?;
+        Ok(())
     }
 
     pub fn update(&self, id: String, new_image: LocalImage) -> Result<Json<UpdateResult>, Status> {
