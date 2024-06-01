@@ -6,7 +6,6 @@ import InlineLink from "../Atoms/InlineLink/InlineLink";
 import connectionsData from "../../configs/connections.json";
 import linksData from "../../configs/links.json";
 import IconButton from "../Atoms/IconButton/IconButton";
-import { TbBackhoe } from "react-icons/tb";
 
 const Footer: React.FC = () => {
     const linksToMyOtherSocialMedia = connectionsData.connections;
@@ -17,9 +16,13 @@ const Footer: React.FC = () => {
     const messageDescriptionRef: RefObject<HTMLTextAreaElement> = useRef(null);
     const messageSendButtonRef: RefObject<any> = useRef(null);
 
+    const deepCopyJson = (jsonObject: any) => {
+        return JSON.parse(JSON.stringify(jsonObject));
+    }
+
     const getSectionData = (name: string): any => {
         const footerLinkCapacity = 5;
-        const result = linksData.links.filter((item: any) => item.name === name)[0];
+        const result = deepCopyJson(linksData.links.filter((item: any) => item.name === name)[0]);
         // get only footerLinkCapacity number of sublinks due to lack of space in the footer
         result.sublinks = result.sublinks?.slice(0, footerLinkCapacity);
         return result;
@@ -50,7 +53,7 @@ const Footer: React.FC = () => {
 
     return (
         <footer className="footer flex flex-col">
-            <div className="footer__main flex flex-row space-between w-full justify-center">
+            <div className="footer__main flex flex-row justify-evenly w-full">
                 <form className="footer__get-in-touch flex flex-col items-start">
                     <h3>Get In Touch</h3>
                     <input ref={messageEmailRef} className="box-border" type="text" placeholder="Email" />

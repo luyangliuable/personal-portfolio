@@ -63,7 +63,7 @@
 
 @media screen and (max-width: 1000px) {
     .hero-section-badge__container {
-        display: none;
+        display: none !important;
     }
 
     .hero-section__content__left {

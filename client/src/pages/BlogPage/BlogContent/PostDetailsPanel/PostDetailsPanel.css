@@ -1,0 +1,10 @@
+.blog-content__side-components {
+    /* When component is sticky */
+    left: 0; top: calc(var(--navbar-height) + 2px);
+
+    padding: 20px 0 5px 10px;
+    font-size: clamp(12px, .5vw, 18px);
+    max-height: 80vh;
+    flex-basis: 200px;
+    transition: .15s top ease-in
+}

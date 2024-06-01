@@ -8,13 +8,11 @@
 
 .experience-section-card__image-wrapper {
     display: flex; justify-content: center;
-    position: absolute;
     overflow: hidden;
     max-width: 30%;
     max-height: 80%;
     align-items: center;
     border-radius: 10px;
-    right: 0;
 }
     .experience-section-card__image-wrapper>img {
         height: 100%;

@@ -19,10 +19,11 @@
     max-width: calc(var(--home-container-max-width) - 3vw);
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
 }
     .experience-section--content {
         padding-left: 40vw;
-        height: 80vh;
+        flex-grow: 1; flex-basis: 80vh;
         width: min-content;
         display: inline-flex;
         flex-direction: row;
@@ -35,14 +36,19 @@
 
     .experience-section-card {
         width: 300px;
-        margin: 0 -25px;
+        margin: 0 -35px;
         padding: 10px;
         height: fit-content
     }
 
-    .experience-section-card.above {
-        margin-bottom: 100px;
+    .experience-section-card.exp-above {
+        margin-bottom: 300px;
         transform: translateY(-50%)
+    }
+
+    .experience-section-card.exp-below {
+        margin-top: 300px;
+        transform: translateY(50%)
     }
 
     .experience-section-card.below {
@@ -50,12 +56,21 @@
         transform: translateY(50%)
     }
 
-    .experience-section-card.below .connecting-line {
+    .experience-section-card.above {
+        margin-bottom: 100px;
+        transform: translateY(-50%)
+    }
+
+    .experience-section-card.below  .connecting-line, .experience-section-card.exp-below  .connecting-line{
         transform: translateY(-100%);
         top: 0;
     }
 
-    .experience-section-card.below .connecting-line:after {
+    .experience-section-card.exp-below  .connecting-line, .experience-section-card.exp-above .connecting-line{
+        height: 150px !important;
+    }
+
+    .experience-section-card.below .connecting-line:after, .experience-section-card.exp-below .connecting-line:after {
         transform: translateX(-50%) translateY(-50%);
         top: 0;
     }
@@ -63,10 +78,9 @@
 .experience-section__year {
     z-index: 2;
     box-shadow: .6px .5px 2.8px #A5A58C;
-    margin: 0 8.5vw;
+    margin: 0 clamp(80px, 5.5vw, 150px);
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid var(--dark-mode-pink);
     color: var(--dark-mode-pink);
     font-weight: 600;
     background: #FFF
@@ -116,7 +130,6 @@
     }
 
     .experience-section-card__location {
-        display: none
+        display: none !important
     }
 }
-

@@ -1,9 +1,3 @@
-code {
-    font-family: 'Fira Code', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-                 monospace;
-}
-
-
 @font-face {
     font-family: 'Spartan';
     src: url("https://fonts.googleapis.com/css2?family=Spartan:wght@700&display=swap");
@@ -166,4 +160,9 @@ html {
 
 * {
     box-sizing: border-box;
+}
+
+code {
+    font-family: 'Fira Code', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+                 monospace;
 }

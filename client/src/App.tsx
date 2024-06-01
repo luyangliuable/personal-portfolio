@@ -8,13 +8,17 @@ import Footer from './components/Footer/Footer';
 import LlChatbot from './pages/Chatbot/Chatbot';
 import { throttle } from './components/Utility/AnimationUtility';
 
+import LandingPage from './pages/LandingPage/LandingPage';
+import BlogPage from './pages/BlogPage/BlogPage';
+
 import './App.css';
 
 const createLoadableWithFallback: any = (importFunction: any) => {
-    return loadable(importFunction, {fallback: <SkeletonPage />});
+    return loadable(importFunction, { fallback: <SkeletonPage /> });
 }
 
-const LandingPage = createLoadableWithFallback(() => import('./pages/LandingPage/LandingPage'));
+/* const LandingPage = createLoadableWithFallback(() => import('./pages/LandingPage/LandingPage')); */
+/* const BlogPage = createLoadableWithFallback(() => import('./pages/BlogPage/BlogPage')); */
 const ResumePage = createLoadableWithFallback(() => import('./pages/ResumePage/ResumePage'));
 const UnderConstruction = createLoadableWithFallback(() => import('./pages/UnderConstructionPage/UnderConstruction'));
 const BlogContent = createLoadableWithFallback(() => import("./pages/BlogPage/BlogContent/BlogContent"));
@@ -23,7 +27,6 @@ const HardwareProjectsPage = createLoadableWithFallback(() => import("./pages/Ha
 const CodingProjectsPage = createLoadableWithFallback(() => import("./pages/CodingProjectsPage/CodingProjectsPage"));
 const LogInPage = createLoadableWithFallback(() => import("./pages/LogInPage/LogInPage"));
 const RegisterPage = createLoadableWithFallback(() => import("./pages/RegisterPage/RegisterPage"));
-const BlogPage = createLoadableWithFallback(() => import('./pages/BlogPage/BlogPage'));
 
 interface IAppStateInterface {
     scrollY?: number,

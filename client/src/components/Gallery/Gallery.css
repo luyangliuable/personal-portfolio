@@ -1,19 +1,19 @@
-.heading__wrapper {
-    width: 70vw
-}
-
-.gallery-item__container {
+.gallery {
     display: grid;
+    width: calc(100vw - 100px);
     grid-template-columns: repeat(auto-fill, 400px);
-    gap: 20px;
-    width: 90vw;
+    gap: .5rem;
     align-items: flex-start;
     justify-content: space-around;
 }
 
-@media screen and (max-width: 668px) {
-    .gallery-item__container {
-        grid-template-columns: auto;
+.gallery>a {
+    width: fit-content
+}
+
+@media screen and (max-width: 1300px) {
+    .gallery {
+        grid-template-columns: repeat(auto-fill, 300px);
         justify-items: center; 
         width: 100vw
     }

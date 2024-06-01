@@ -1,5 +1,5 @@
 use rocket::{http::Status, serde::json::Json, State};
-use mongodb::{bson::doc, results::{InsertOneResult, UpdateResult}};
+use mongodb::{bson::doc, results::InsertOneResult};
 use crate::models::message_model::Message;
 use crate::models::message_model::MessageType;
 use crate::repository::message_repo::MessageRepo;

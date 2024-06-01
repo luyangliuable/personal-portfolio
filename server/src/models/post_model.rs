@@ -3,7 +3,7 @@ use rocket::serde::{Serialize, Deserialize};
 use chrono::{Utc, DateTime};
 use crate::models::utils::date_format::date_format;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Post {
     #[serde(rename = "_id", skip_serializing_if = "Option::is_none")]
     pub id: Option<ObjectId>,

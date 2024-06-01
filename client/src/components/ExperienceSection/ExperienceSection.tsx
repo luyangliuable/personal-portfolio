@@ -25,6 +25,36 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
     const items: ExperienceSectionItem[] = useMemo((): ExperienceSectionItem[] => {
         return [
             {
+                dateTime: "2024",
+                cardTitle: "",
+                url: "",
+                cardSubtitle: "",
+                location: "-35.8180679, 141.192779",
+                cardDetailedText: "",
+                importance: 1,
+                display: "IMAGE",
+                media: ({
+                    type: "IMAGE",
+                    source: {
+                        url: "https://llcode.tech/api/image/663fff8a79831740b12790c1"
+                    }
+                })
+            }, {
+                dateTime: "2024",
+                cardTitle: "",
+                url: "",
+                cardSubtitle: "",
+                location: "-37.8180679, 145.192779",
+                cardDetailedText: "After work, the setting sun casts a warm glow across the platform.",
+                importance: 1,
+                display: "IMAGE",
+                media: ({
+                    type: "IMAGE",
+                    source: {
+                        url: "https://llcode.tech/api/image/663ff95a79831740b12790c0"
+                    }
+                })
+            }, {
                 dateTime: "2023",
                 cardTitle: "Monash University",
                 url: "",
@@ -241,7 +271,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
                 media: {
                     type: "IMAGE",
                     source: {
-                        url: "https://www.wexinc.com/wp-content/uploads/2020/03/social-share-logo.png"
+                        url: "https://companieslogo.com/img/orig/WEX_BIG-81b3af7d.png?t=1660033581"
                     }
                 }
             }, {
