@@ -104,6 +104,7 @@ impl LocalImageController  {
             Ok(local_image) => local_image,
             Err(_) => return Err(Status::NotFound),
         };
+
         let local_image_path = match local_image_util::image_store_location() {
             Ok(local_image_location) => util::path_combiner(
                 local_image_location,
@@ -112,33 +113,39 @@ impl LocalImageController  {
             ),
             Err(_) => return Err(Status::NotFound),
         };
+
         let file_bytes = std::fs::read(&local_image_path).map_err(|_| Status::InternalServerError)?;
+
         let content_type = match local_image_result.image_type.as_str() {
             "png" => ContentType::PNG,
             "jpg" | "jpeg" => ContentType::JPEG,
-            "gif" => ContentType::GIF,
-            "pdf" => ContentType::PDF,
-            _ => return Err(Status::UnsupportedMediaType),
+            "gif" => {
+                let content_type = ContentType::GIF;
+                let _: () = Self::cache_data(redis_con, &key, file_bytes.clone(), content_type.clone())?;
+                return Ok((content_type, file_bytes));
+            },
+            "pdf" => {
+                let content_type = ContentType::PDF;
+                let _: () = Self::cache_data(redis_con, &key, file_bytes.clone(), content_type.clone())?;
+                return Ok((content_type, file_bytes));
+            },
+            _ => return Err(Status::UnsupportedMediaType)
         };
 
         let img = image::load_from_memory(&file_bytes).map_err(|_| Status::InternalServerError)?;
         let resized_img = self.resize_image(&img, content_type.clone(), compression_percentage);
         let compressed_image = self.compress_image(resized_img, content_type.clone(), compression_percentage)?;
-
-        // Cache data for next time
-        let cached_data = CachedData {
-            mime_type: content_type.to_string(),
-            content: compressed_image.clone(),
-        };
-
-        let cached_value = serde_json::to_string(&cached_data).map_err(|_| Status::InternalServerError)?;
-        let _: () = redis_con.set(&key, cached_value).map_err(|_| Status::InternalServerError)?;
-
+        let _: () = Self::cache_data(redis_con, &key, compressed_image.clone(), content_type.clone())?;
         Ok((content_type, compressed_image))
     }
 
-    fn cache_data(redis_con: &mut redis::Connection, key: &String, data: Vec<u8>) -> Result<(), Status> {
-        let _: () = redis_con.set(&key, data).map_err(|_| Status::InternalServerError)?;
+    fn cache_data(redis_con: &mut redis::Connection, key: &String, data: Vec<u8>, content_type: ContentType) -> Result<(), Status> {
+        let cached_data = CachedData {
+            mime_type: content_type.to_string(),
+            content: data
+        };
+        let cached_value = serde_json::to_string(&cached_data).map_err(|_| Status::InternalServerError)?;
+        let _: () = redis_con.set(&key, cached_value).map_err(|_| Status::InternalServerError)?;
         Ok(())
     }
 
