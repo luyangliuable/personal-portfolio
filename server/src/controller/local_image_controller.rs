@@ -9,9 +9,15 @@ use crate::{
     repository::local_image_repo::LocalImageRepo,
     utils::{local_image_util, util},
 };
+use serde::{Deserialize, Serialize};
 
 use image::{DynamicImage, ImageOutputFormat, GenericImageView};
 
+#[derive(Serialize, Deserialize)]
+struct CachedData {
+    mime_type: String,
+    content: Vec<u8>,
+}
 
 pub struct LocalImageController {
     pub repo: LocalImageRepo
@@ -79,11 +85,19 @@ impl LocalImageController  {
     ) -> Result<(ContentType, Vec<u8>), Status> {
         let object_id = ObjectId::from_str(&id).expect("Failed to convert id to ObjectId");
 
-        // If already cached return cached version instead
+        // If already cached, return cached version instead
         let key = format!("{}_{}", id, compression_percentage);
-        let value: Option<Vec<u8>> = redis_con.get(&key).unwrap_or(None);
-        if let Some(image) = value {
-            return Ok((ContentType::JPEG, image));
+        let value: Option<String> = redis_con.get(&key).unwrap_or(None);
+        if let Some(cached_value) = value {
+            let cached_data: CachedData = serde_json::from_str(&cached_value).map_err(|_| Status::InternalServerError)?;
+            let content_type = match cached_data.mime_type.as_str() {
+                "image/png" => ContentType::PNG,
+                "image/jpeg" => ContentType::JPEG,
+                "image/gif" => ContentType::GIF,
+                "application/pdf" => ContentType::PDF,
+                _ => ContentType::Binary,
+            };
+            return Ok((content_type, cached_data.content));
         }
 
         let local_image_result = match self.repo.0.get(object_id) {
@@ -102,22 +116,23 @@ impl LocalImageController  {
         let content_type = match local_image_result.image_type.as_str() {
             "png" => ContentType::PNG,
             "jpg" | "jpeg" => ContentType::JPEG,
-            "gif" => {
-                let _: () = Self::cache_data(redis_con, &key, file_bytes.clone())?;
-                return Ok((ContentType::GIF, file_bytes))
-            },
-            "pdf" => {
-                let _: () = Self::cache_data(redis_con, &key, file_bytes.clone())?;
-                return Ok((ContentType::PDF, file_bytes))
-            },
+            "gif" => ContentType::GIF,
+            "pdf" => ContentType::PDF,
             _ => return Err(Status::UnsupportedMediaType),
         };
+
         let img = image::load_from_memory(&file_bytes).map_err(|_| Status::InternalServerError)?;
         let resized_img = self.resize_image(&img, content_type.clone(), compression_percentage);
         let compressed_image = self.compress_image(resized_img, content_type.clone(), compression_percentage)?;
 
         // Cache data for next time
-        let _: () = Self::cache_data(redis_con, &key, compressed_image.clone())?;
+        let cached_data = CachedData {
+            mime_type: content_type.to_string(),
+            content: compressed_image.clone(),
+        };
+
+        let cached_value = serde_json::to_string(&cached_data).map_err(|_| Status::InternalServerError)?;
+        let _: () = redis_con.set(&key, cached_value).map_err(|_| Status::InternalServerError)?;
 
         Ok((content_type, compressed_image))
     }
