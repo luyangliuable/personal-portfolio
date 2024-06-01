@@ -17,6 +17,7 @@ const AuthorDetails: React.FC<{ content?: BlogPostResponse }> = ({ content }) =>
         <section>
             <div className="flex">
                 <Image
+                    compression={5}
                     className="user-image blog-content--author-image"
                     src={defaultAuthorImage}
                 />
