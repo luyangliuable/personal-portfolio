@@ -52,12 +52,12 @@ const NavBar: React.FC<INavbarProps> = (props) => {
             const blueEnd = 95 + progress * 4.5;
             scrollProgress.current.style.background = `linear-gradient(to right, var(--dark-mode-purple-2), ${blueEnd}%, #00bfff)`;
 
-            if (progress === 1) {
-                scrollProgress.current.classList.add("scroll-progress-complete");
-                scrollProgress.current.style.background = "orange";
-            } else {
-                scrollProgress.current.classList.remove("scroll-progress-complete");
-            }
+            /* if (progress === 1) {
+*     scrollProgress.current.classList.add("scroll-progress-complete");
+*     scrollProgress.current.style.background = "orange";
+* } else {
+*     scrollProgress.current.classList.remove("scroll-progress-complete");
+* } */
         }
     };
 
