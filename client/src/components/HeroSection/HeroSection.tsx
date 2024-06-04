@@ -84,7 +84,7 @@ const HeroSection: React.FC<IHeroProps> = ({ scrolling }) => {
                 <div className="space h-28"></div>
                 <section className="hero-section__content">
                     <section className="hero-section__content__right">
-                        <CodingCat showAnimtion={scrolling} />
+                        <CodingCat showAnimation={scrolling} />
                     </section>
                     {heroSectionContentLeft}
                 </section>

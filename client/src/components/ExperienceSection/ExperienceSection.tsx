@@ -308,11 +308,16 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
         isLocked: false
     });
 
-    useEffect(() => {
-        updateTimelineLength();
-    }, []);
+    const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
     useEffect(() => {
+        if (isLoaded) {
+            updateTimelineLength();
+        }
+    }, [isLoaded]);
+
+    useEffect(() => {
+        if (!isLoaded) return;
         const proximityYToLockPosition = window.innerHeight / 3;
         if (experienceSectionParentRef.current!) setLockPosition();
         if (isCenterAlignedWithViewport(experienceSectionParentRef.current!) < proximityYToLockPosition) lockPosition();
@@ -322,7 +327,7 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
             scrollTimeline(scrollAmount);
         }
         if (isBeforeLockPosition(proximityYToLockPosition)) unlockPosition();
-    }, [scrolled]);
+    }, [isLoaded, scrolled]);
 
     const updateTimelineLength = (): void => {
         const offset = 10;
@@ -341,10 +346,10 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
             const isNotPastUnlockPosition = state.unlockPosition === null || scrolled < state.unlockPosition
 
             if (isNotPastUnlockPosition) {
-                setState({
-                    ...state,
+                setState(prevState => ({
+                    ...prevState,
                     isLocked: true
-                });
+                }));
             }
         }
     }
@@ -353,25 +358,25 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
         if (experienceSectionParentRef.current === null) return;
         const currentPosition = experienceSectionParentRef.current!.parentElement!.getBoundingClientRect().top + (scrolled ?? 0);
         if (!state.isLocked && state.lockPosition !== currentPosition) {
-            setState({
-                ...state,
+            setState(prevState => ({
+                ...prevState,
                 lockPosition: currentPosition
-            });
+            }));
         }
     }
 
     const unlockPosition = (): void => {
         if (state.isLocked) {
-            setState({
-                ...state,
+            setState(prevState => ({
+                ...prevState,
                 isLocked: false
-            });
+            }));
             scrollTimeline(0);
         }
     }
 
     const scrollTimeline = (scrollXAmount: number): void => {
-        if (state.isLocked) {
+        if (isLoaded && state.isLocked) {
             const transformValue = `translate(${scrollXAmount}px, 0)`;
             experienceSectionScrollRef.current!.style.transform = transformValue;
         }
@@ -432,6 +437,14 @@ const ExperienceSection: React.FC<IExperienceSectionProps> = ({ scrolled }) => {
             <BlackHole />
         </div>
     ), [mapExperienceSectionItems]);
+
+    useEffect(() => {
+        setIsLoaded(true);
+    }, []);
+
+    if (!isLoaded) {
+        return (<></>);
+    };
 
     return (
         <article className="landing-page-card flex flex-col justify-start overflow-hidden experience-section-parent-container" ref={experienceSectionParentRef}>

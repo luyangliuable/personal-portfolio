@@ -1,25 +1,15 @@
-import React, { Component, createRef, RefObject } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import "./CodingCat.css";
 import { gsap } from 'gsap';
+import ICodingCatProps from "./Interface/ICodingCatProps";
 
-import ICodingCatProps from './Interface/ICodingCatProps';
-import ICodingCatState from './Interface/ICodingCatState';
+const CodingCat: React.FC<ICodingCatProps> = ({showAnimation}) => {
+    const codingCatRef = useRef<SVGGElement | null>(null);
+    const [animation, setAnimation] = useState<gsap.core.Timeline | null>(null);
+    const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
-// import ChristmasHat from "./ChristmasHat/ChristmasHat";
-
-class CodingCat extends Component<ICodingCatProps, ICodingCatState> {
-    constructor(props: ICodingCatProps) {
-        super(props);
-        this.state = {
-        };
-    }
-
-    // svg group
-    codingCatRef: RefObject<any> = createRef();
-
-    componentDidMount(): void {
-        // Inspired By
-        // https://codepen.io/abeatrize/pen/LJqYey
+    useEffect(() => {
+        if (!isLoaded) return;
 
         const ID = "coding-cat";
         const s = (selector: string) => `#${ID} ${selector}`;
@@ -42,7 +32,6 @@ class CodingCat extends Component<ICodingCatProps, ICodingCatState> {
             orange = style.getPropertyValue("--orange"),
             cyan = style.getPropertyValue("--cyan");
 
-
         const animatePawState = (selector: string) =>
             gsap.fromTo(
                 selector,
@@ -56,7 +45,7 @@ class CodingCat extends Component<ICodingCatProps, ICodingCatState> {
                 }
             );
 
-        const tl = gsap.timeline();
+        const tl: gsap.core.Timeline = gsap.timeline();
 
         tl.add(animatePawState(cat.pawLeft.up), "start")
             .add(animatePawState(cat.pawRight.down), "start")
@@ -71,39 +60,44 @@ class CodingCat extends Component<ICodingCatProps, ICodingCatState> {
             repeat: -1,
         });
 
-
-        this.setState({
-            ...this.state,
-            animation: tl
-        });
-
+        setAnimation(tl);
         tl.pause();
-    }
 
-    componentDidUpdate(prevProps: Readonly<ICodingCatProps>, prevState: Readonly<ICodingCatState>, snapshot?: any): void {
-        // Stops all the tweens in the timeline
-        if (this.props.showAnimtion && this.state.animation) {
-            this.state.animation.resume();
-        } else if (this.props !== prevProps && !this.props.showAnimtion && this.state.animation) {
-            this.state.animation.pause();
+        return () => {
+            tl.kill();
+        };
+    }, [isLoaded]);
+
+    useEffect(() => {
+        if (!isLoaded) return;
+        if (showAnimation && animation) {
+            animation.resume();
+        } else if (!showAnimation && animation) {
+            animation.pause();
         }
-    }
+    }, [isLoaded, showAnimation, animation]);
 
-    togglePixelatedFilter(): void {
-        const svgGroup = this.codingCatRef.current;
+    const togglePixelatedFilter = () => {
+        const svgGroup = codingCatRef.current!;
         if (!svgGroup) return;
         if (svgGroup.getAttribute("filter") !== "url(#pixelate)") {
             svgGroup.setAttribute("filter", "url(#pixelate)");
         } else {
             svgGroup.setAttribute("filter", "")
         }
+    };
+
+    const className = ["coding-cat-container"];
+
+    useEffect(() => {
+        setIsLoaded(true);
+    }, [])
+
+    if (!isLoaded) {
+        return (<></>);
     }
 
-
-    render() {
-        const className = ["coding-cat-container"];
-
-        return (
+    return (
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 783.55 354.91" className={className.join(" ")}>
                 <defs>
                 <filter id="pixelate" x="0" y="0">
@@ -114,7 +108,7 @@ class CodingCat extends Component<ICodingCatProps, ICodingCatState> {
                     <feMorphology operator="dilate" radius="3" />
                 </filter>
                 </defs>
-                <g id="coding-cat" ref={this.codingCatRef} onClick={() => this.togglePixelatedFilter()}>
+                <g id="coding-cat" ref={codingCatRef} onClick={() => togglePixelatedFilter()}>
                     <g className="head">
                         <path d="M280.4,221l383.8,62.6a171.4,171.4,0,0,0-9.2-40.5,174,174,0,0,0-28.7-50.5,163.3,163.3,0,0,0,3.2-73.8c-11.6-1.9-42,14.2-44.5,17.5-19.6-24-88.5-52.7-153.7-48.1A78.8,78.8,0,0,0,398,67.1c-9.8,2.9-19,29.7-19.4,33.7a320,320,0,0,0-31.7,23.6c-14,11.8-28.9,24.4-42.5,44.3A173,173,0,0,0,280.4,221Z"></path>
                         <path d="M396.6,178.6c.4.9,2.7,6.5,8.5,8.4s13.4-1.2,17.2-7.9c-.9,7.5,3.8,14.3,10.4,16a14.4,14.4,0,0,0,15-5.7"></path>
@@ -210,7 +204,6 @@ class CodingCat extends Component<ICodingCatProps, ICodingCatState> {
                 </g>
             </svg >
         );
-    }
 }
 
-export default CodingCat;
+export default React.memo(CodingCat);

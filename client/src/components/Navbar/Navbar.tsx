@@ -23,6 +23,7 @@ const NavBar: React.FC<INavbarProps> = (props) => {
     const navbarSubmenu = useRef<HTMLDivElement>();
 
     const [navBarHeight, setNavBarHeight] = useState(0);
+    const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
     const links = useMemo(() => {
         return linksData.links
@@ -43,10 +44,10 @@ const NavBar: React.FC<INavbarProps> = (props) => {
         const element = navbar.current!;
         const height = element?.getBoundingClientRect().height || 0;
         setNavBarHeight(height);
-    }, [])
+    }, [isLoaded])
 
     const updateScrolledProgress = (progress: number) => {
-        if (scrollProgress) {
+        if (isLoaded && scrollProgress) {
             scrollProgress.current!.style.width = `${progress * 100}vw`;
             const blueEnd = 95 + progress * 4.5;
             scrollProgress.current!.style.background = `linear-gradient(to right,  var(--dark-mode-purple-2), ${blueEnd}%, #00bfff)`;
@@ -86,20 +87,11 @@ const NavBar: React.FC<INavbarProps> = (props) => {
         window.addEventListener("click", hideBurgerMenu);
     }
 
-    useEffect(() => {
-        initializeNavBar();
-        setupNavHoverEffect();
-
-        return () => {
-            window.removeEventListener("click", hideBurgerMenu);
-        };
-    }, [])
-
     const setupNavHoverEffect = () => {
         const navbarLeftTarget = navbarLeft.current!;
         const selectedNavlinkWindowTarget = selectedNavlinkWindow.current!;
 
-        if (navbarLeftTarget && selectedNavlinkWindow) {
+        if (isLoaded && navbarLeftTarget && selectedNavlinkWindow) {
             Array.from(navbarLeftTarget.children).forEach((child, index) => {
                 if (child !== selectedNavlinkWindowTarget) {
                     child.addEventListener("mouseover", () => {
@@ -265,6 +257,23 @@ const NavBar: React.FC<INavbarProps> = (props) => {
     const navbarBurgerPanel = useMemo(() => (
         <NavBurgerPanel links={links} burgerPanel={burgerPanel} />
     ), [state.dropdownMenuLinkDisplay]);
+
+    useEffect(() => {
+        initializeNavBar();
+        setupNavHoverEffect();
+
+        return () => {
+            window.removeEventListener("click", hideBurgerMenu);
+        };
+    }, [isLoaded])
+
+    useEffect(() => {
+        setIsLoaded(true);
+    }, [])
+
+    if (!isLoaded) {
+        return (<></>);
+    }
 
     return (
         <>

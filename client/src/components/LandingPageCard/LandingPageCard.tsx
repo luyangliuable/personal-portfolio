@@ -3,7 +3,6 @@ import './LandingPageCard.css';
 import { ILandingPageCardProps, LandingPageCardType } from "./Interface/ILandingPageCardProps";
 import SequentialRiseSpan from '../Atoms/SequentialRiseSpan/SequentialRiseSpan';
 
-
 class LandingPageCard extends Component<ILandingPageCardProps, any> {
 
     constructor(props: ILandingPageCardProps) {

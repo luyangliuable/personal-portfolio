@@ -23,8 +23,6 @@ class ImageRepository extends Repository {
             url = `${idOrUrl}?compression=${compression ?? 100}`;
         };
 
-        console.log(url);
-
         if (this.cache.has(url)) return this.cache.get(url)!;
 
         if (this.ongoingRequests.has(url)) return this.ongoingRequests.get(url)!;

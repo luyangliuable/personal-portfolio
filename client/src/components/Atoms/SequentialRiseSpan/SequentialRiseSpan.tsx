@@ -15,6 +15,7 @@ const SequentialRiseSpan: React.FC<ISequentialRiseSpanProps> = ({ calculationAdj
     const spanItemRef = useRef<HTMLDivElement>(null);
     const [wrappedLines, setWrappedLines] = useState([]);
     const [lineRefs, setLineRefs] = useState<RefObject<any>[]>([]);
+    const [isLoaded, setIsLoaded] = useState<boolean>(false);
     const [measuredLettersPerLine, setMeasuredLettersPerLine] = useState<number>(numberOfLettersPerLine ?? 0);
 
     const calculateLettersPerLine = () => {
@@ -42,6 +43,7 @@ const SequentialRiseSpan: React.FC<ISequentialRiseSpanProps> = ({ calculationAdj
     }
 
     useEffect(() => {
+        if (!isLoaded) return;
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) slideUp(entry.target, observer)
@@ -51,8 +53,7 @@ const SequentialRiseSpan: React.FC<ISequentialRiseSpanProps> = ({ calculationAdj
             if (ref.current) observer.observe(ref.current);
         });
         return () => observer.disconnect();
-    }, [lineRefs]);
-
+    }, [isLoaded, lineRefs]);
 
     useEffect(() => {
         if (measuredLettersPerLine === 0) calculateLettersPerLine();
@@ -60,9 +61,11 @@ const SequentialRiseSpan: React.FC<ISequentialRiseSpanProps> = ({ calculationAdj
         return () => {
             window.removeEventListener('resize', calculateLettersPerLine);
         }
-    }, []);
+    }, [isLoaded]);
 
     useEffect(() => {
+        if (!isLoaded) return;
+
         let currentLine = '';
         let lines: string[] = [];
         const finalNumberOfLettersPerLine = numberOfLettersPerLine ?? Math.min(Math.max(measuredLettersPerLine, (minNumberOfLettersPerLine ?? 0)), (maxNumberOfLettersPerLine ?? Number.MAX_SAFE_INTEGER))
@@ -88,7 +91,15 @@ const SequentialRiseSpan: React.FC<ISequentialRiseSpanProps> = ({ calculationAdj
             return LineElement;
         });
         setWrappedLines(linesElements);
-    }, [children, elementType, className, measuredLettersPerLine, minNumberOfLettersPerLine]);
+    }, [isLoaded, children, elementType, className, measuredLettersPerLine, minNumberOfLettersPerLine]);
+
+    useEffect(() => {
+        setIsLoaded(true);
+    }, [])
+
+    if (!isLoaded) {
+        return (<></>);
+    }
 
     return (
         <div className="sequential-rise-span" ref={spanItemRef}>
