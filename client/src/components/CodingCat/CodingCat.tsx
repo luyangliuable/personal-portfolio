@@ -206,4 +206,4 @@ const CodingCat: React.FC<ICodingCatProps> = ({showAnimation}) => {
         );
 }
 
-export default React.memo(CodingCat);
+export default CodingCat;

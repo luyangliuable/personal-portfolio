@@ -43,6 +43,7 @@
     }
 
     .nav-burger-panel-hide {
+        visibility: hidden;
         transform: translate(100%, var(--navbar-height));
     }
 
