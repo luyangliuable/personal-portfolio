@@ -1,6 +1,9 @@
 use crate::utils::{ markdown_util, local_image_util };
 use rocket::{http::Status};
+use std::io::Error;
 use std::env;
+
+
 use std::collections::HashMap;
 
 #[get("/health")]
@@ -8,15 +11,14 @@ pub fn check_health() -> &'static str {
     "Hello, world!"
 }
 
-
 #[get("/check_env_variable")]
 pub fn check_env_variable() -> Result<String, Status> {
     let mut result = String::new();
-
-    let mut checks: HashMap<&str, fn() -> Result<String, std::io::Error>> = HashMap::new();
+    let mut checks: HashMap<&str, fn() -> Result<String, Error>> = HashMap::new();
 
     checks.insert("markdown", markdown_util::markdown_store_location);
     checks.insert("image", local_image_util::image_store_location);
+    checks.insert("note", markdown_util::notes_store_location);
 
     for (check_name, check_method) in &checks {
         match check_method() {

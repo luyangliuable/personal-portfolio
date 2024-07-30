@@ -85,4 +85,4 @@ jobs:
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          script: "sudo systemctl daemon-reload && sudo systemctl restart personal_portfolio_client.service"
+          script: "sudo systemctl daemon-reload && sudo systemctl restart personal_portfolio_server.service"

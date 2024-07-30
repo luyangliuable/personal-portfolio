@@ -34,7 +34,6 @@ impl PostController  {
 
 pub fn get(&self, id: String, redis_con: &mut redis::Connection) -> Result<Json<Post>, Status> {
 
-        // check if cached file exists
         let value: Option<String> = redis_con.get(&id).unwrap_or(None);
         if let Some(res) = value {
             let post: Post = serde_json::from_str(&res).unwrap();
@@ -49,7 +48,7 @@ pub fn get(&self, id: String, redis_con: &mut redis::Connection) -> Result<Json<
                 _ => Ok(blog_post),
             })
             .and_then(|blog_post| {
-                markdown_util::get_post_content_for_post(blog_post)
+                markdown_util::get_content(blog_post)
                     .map_err(|_| Status::NotFound)
                     .and_then(|blog_post_content| {
                         let _: () = Self::cache_data(redis_con, &id, blog_post_content.clone())?;
