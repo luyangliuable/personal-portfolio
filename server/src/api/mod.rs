@@ -5,3 +5,4 @@ pub mod local_image;
 pub mod note;
 pub mod message;
 pub mod proxy;
+pub mod config;

@@ -6,3 +6,4 @@ pub mod local_image_model;
 pub mod note_model;
 pub mod utils;
 pub mod message_model;
+pub mod config_model;

@@ -17,6 +17,7 @@ use repository::mongo_repo::MongoRepo;
 use repository::local_image_repo::LocalImageRepo;
 use repository::message_repo::MessageRepo;
 use repository::note_repo::NoteRepo;
+use repository::config_repo::ConfigRepo;
 use config::cors::CORS;
 
 use controller::{ post_controller::PostController, local_image_controller::LocalImageController };
@@ -28,6 +29,7 @@ use models::user_model::User;
 use models::local_image_model::LocalImage;
 use models::message_model::Message;
 use models::note_model::Note;
+use models::config_model::Config;
 
 #[get("/")]
 fn index() -> &'static str {
@@ -47,6 +49,7 @@ async fn rocket() -> _ {
     let local_image_repo = LocalImageRepo(MongoRepo::<LocalImage>::init("LocalImage", &*DB).await);
     let message_repo = MessageRepo(MongoRepo::<Message>::init("Message", &*DB).await);
     let note_repo = NoteRepo(MongoRepo::<Note>::init("Note", &*DB).await);
+    let config_repo = ConfigRepo(MongoRepo::<Config>::init("Config", &*DB).await);
 
     let post_controller = PostController::new(post_repo);
     let local_image_controller = LocalImageController::new(local_image_repo);
@@ -60,6 +63,7 @@ async fn rocket() -> _ {
         .manage(post_controller)
         .manage(local_image_controller)
         .manage(note_repo)
+        .manage(config_repo)
 
         .mount("/api/", routes![index])
 
@@ -92,6 +96,10 @@ async fn rocket() -> _ {
         .mount("/api/", routes![api::note::index_note])
         .mount("/api/", routes![api::note::get_note])
         .mount("/api/", routes![api::note::get_all_note])
+
+        .mount("/api/", routes![api::config::insert_config])
+        .mount("/api/", routes![api::config::update_config])
+        .mount("/api/", routes![api::config::get_config])
 
         .attach(CORS)
 }
