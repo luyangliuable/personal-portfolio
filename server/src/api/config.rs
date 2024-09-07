@@ -17,13 +17,25 @@ pub fn insert_config(config_repo: &State<ConfigRepo>, new_config: Json<Config>) 
     }
 }
 
+#[get("/config/<key>")]
+pub fn get_config(key: String, config_repo: &State<ConfigRepo>) -> Result<String, Status> {
+    match config_repo.0.get_all() {
+        Ok(configs) => {
+            let found_value = configs.into_iter().find_map(|config| {
+                if config.key == key {
+                    Some(config.value)
+                } else {
+                    None
+                }
+            });
 
-#[get("/config/<id>")]
-pub fn get_config(id: String, config_repo: &State<ConfigRepo>) -> Result<String, Status> {
-    ObjectId::from_str(&id)
-        .map_err(|_| Status::BadRequest)
-        .and_then(|object_id| config_repo.0.get(object_id).map_err(|_| Status::InternalServerError))
-        .and_then(|config| Ok(config.value))
+            match found_value {
+                Some(value) => Ok(value),
+                None => Err(Status::NotFound),
+            }
+        }
+        Err(_) => Err(Status::InternalServerError),
+    }
 }
 
 #[patch("/config/<id>", data = "<new_config>")]
