@@ -26,4 +26,5 @@ pub struct Post {
     pub image: Option<ObjectId>,
     pub checksum: Option<String>,
     pub body: String,
+    pub is_locked: Option<bool>,
 }

@@ -35,11 +35,3 @@ redis = "0.25.3"
 version = "2.2.0"
 default-features = false
 features = ["sync"]
-
-
-[global.tls]
-certs = "./cert.pem"
-key = "./key.pem"
-
-[development]
-tls = { certs = "./certs.pem", key = "./key.pem" }
